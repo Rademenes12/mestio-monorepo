@@ -1,0 +1,90 @@
+# System Projektowy (Design System) & Master Grid: Zgłoś Awarię
+
+Dokument ten opisuje tożsamość wizualną (Visual Identity), system UI/UX oraz master grid dla aplikacji **Zgłoś Awarię**.
+
+---
+
+## 🎨 Wizualizacja Interfejsu (UI Mockups)
+
+Zgodnie z Twoimi sugestiami i najlepszymi praktykami mobilnego UX, podzieliliśmy interfejsy w zależności od roli użytkownika:
+
+1. **Pulpit Mieszkańca (Mieszkaniec):** Maksymalnie prosty, mobilny widok. U góry znajduje się wyróżniający się przycisk "Zgłoś Nową Awarię". Poniżej wyświetlana jest czysta, pionowa lista własnych zgłoszeń mieszkańca wraz z ich aktualnymi statusami ("Nowe", "W toku", "Zrealizowane").
+2. **Pulpit Zarządu / Administratora (Zarząd):** Kompleksowy i analityczny pulpit zawierający wykresy, statystyki awarii w spółdzielni, panel do wysyłania komunikatów (broadcast) do mieszkańców oraz listę wszystkich zgłoszonych incydentów.
+3. **Portal Serwisanta (Technik):** Panel ułatwiający konserwatorom sprawne podnoszenie, procesowanie i zamykanie przydzielonych napraw.
+
+````carousel
+![Pulpit Mieszkańca](C:/Users/fortu/.gemini/antigravity-ide/brain/c4131253-ead0-436d-a828-cf78090df7b3/resident_mobile_ui_1782058956828.png)
+<!-- slide -->
+![Pulpit Zarządu (Administrator)](C:/Users/fortu/.gemini/antigravity-ide/brain/c4131253-ead0-436d-a828-cf78090df7b3/admin_mobile_ui_1782058970950.png)
+<!-- slide -->
+![Portal Technika & Serwisanta](C:/Users/fortu/.gemini/antigravity-ide/brain/c4131253-ead0-436d-a828-cf78090df7b3/technician_ui_mockup_1782058645095.png)
+<!-- slide -->
+![Rejestracja Adresu (LockScreen)](C:/Users/fortu/.gemini/antigravity-ide/brain/c4131253-ead0-436d-a828-cf78090df7b3/lock_screen_mockup_1782058634513.png)
+````
+
+---
+
+## 🎨 Paleta Kolorów (Design Tokens)
+
+Wybraliśmy harmonijną i nowoczesną paletę kolorów, zoptymalizowaną pod kątem kontrastu, czytelności i wysokiej estetyki premium. Zrezygnowaliśmy z generycznych barw na rzecz dopracowanych odcieni HSL:
+
+### 🌟 Kolory Główne i Akcenty
+*   **Electric Indigo (`#5E5CE6`)** - Kolor wiodący (Primary). Używany dla brandingu, kluczowych akcji i przycisków zatwierdzających.
+*   **Cyan Glow (`#0A84FF`)** - Kolor drugorzędny (Secondary). Używany do elementów interaktywnych, przełączników i aktywnych zakładek.
+*   **Amber Alert (`#FF9F0A`)** - Kolor uwagi. Oznacza zgłoszenia "W toku" lub alerty techniczne średniego stopnia.
+*   **Neon Mint (`#30D158`)** - Kolor sukcesu. Oznacza zgłoszenia "Zrealizowane" oraz stany pełnego połączenia z bazą.
+*   **Crimson Coral (`#FF453A`)** - Kolor błędów. Używany inline do komunikatów o braku sieci lub błędach formularza.
+
+### 🌗 Kolory Tła i Paneli (Dark vs Light)
+| Element | Dark Mode | Light Mode |
+| --- | --- | --- |
+| **Główne Tło (Canvas)** | `#0F0F1A` (Głęboki obsydian) | `#F5F7FA` (Jasny szary marmur) |
+| **Tło Kart (Cards)** | `#1C1C2E` z 80% opacity (Szkło) | `#FFFFFF` (Czysta biel) |
+| **Granice (Borders)** | Wyraźne, z opacity 12% | Subtelne, z opacity 8% |
+| **Tekst Główny** | `#FFFFFF` (Czysta biel) | `#1A1A24` (Ciemny węgiel) |
+| **Tekst Drugorzędny** | `#8E8E9F` (Mętny szary) | `#636375` (Stonowany szary) |
+
+---
+
+## 📐 Siatka i Układ (Master Grid Specification)
+
+Układ opiera się na **8-punktowej skali spacingu** (8, 16, 24, 32, 48), co gwarantuje matematyczną spójność układu w Flutterze na każdym ekranie urządzenia mobilnego.
+
+### 📱 Główne Reguły Layoutu:
+*   **Marginesy Zewnętrzne (Outer Margins):** `24.0` na tabletach i dużych telefonach, `16.0` na mniejszych urządzeniach (dostosowywane przez `MediaQuery` lub `SafeArea`).
+*   **Promień Zaokrąglenia (Border Radius):**
+    *   Karty główne: `16.0` (delikatnie zaokrąglone) lub `24.0` (dla dużych banerów).
+    *   Przyciski i Inputy: `12.0` (nowoczesny kształt, wygodny pod kciuk).
+*   **Wysokość Elementów Dotykowych (Touch Targets):** Wszystkie elementy interaktywne mają minimum `48.0` wysokości/szerokości (zgodnie z wytycznymi Android/iOS UX).
+
+---
+
+## 📝 Typografia (Typography Hierarchy)
+
+Aplikacja wykorzystuje nowoczesny, geometryczny font bezszeryfowy (np. **Outfit** lub **Inter** z Google Fonts):
+
+*   **Nagłówek Ekranu (Headline L):** `28sp / Bold` - do kluczowych tytułów sekcji na pulpicie.
+*   **Tytuł Sekcji (Title M):** `18sp / SemiBold` - nagłówki kart, kategorie.
+*   **Tekst Główny (Body M):** `14sp / Medium` - opisy usterek, notatki techniczne.
+*   **Tekst Pomocniczy (Caption):** `11sp / Regular` - statusy offline, metadane GPS, informacje o kompresji.
+
+---
+
+## ⚙️ Komponenty UI i UX Flow
+
+### 1. Welcome & LockScreen (Rejestracja i Profil)
+*   **UX:** Jeśli użytkownik wchodzi po raz pierwszy, przechodzi przez elegancki formularz wyboru adresu (`LockScreen`). Zastosowaliśmy tam nowoczesne rozwijane menu (dropdowny) oraz pole na kod zaproszenia ze spółdzielni.
+*   **UI:** Tło gradientowe płynnie przechodzące od ciemnego indygo do czerni, minimalne białe karty, wyraźny przycisk CTA na dole ekranu.
+
+### 2. Dashboard (Pulpit Lokatora)
+*   **HUD Statusu:** Na samej górze wyświetlana jest szklana karta lokatora z adresem (`Budynek / Kładka / Mieszkanie`) oraz kropką statusową połączenia (Online/Offline).
+*   **Dedykowane Alerty:** Sekcja ogłoszeń, która filtruje wiadomości zarządu spółdzielni i wyświetla tylko te, które dotyczą budynku lub kładki danego mieszkańca (np. *"Brak wody w Budynku 1 w dniu 22.06"*).
+*   **Kategorie Awarii:** Grid składający się z 4-6 dużych kart z ikonami (Winda, Elektryka, Hydraulika, Części wspólne). Kliknięcie otwiera formularz zgłoszenia z animacją transition.
+
+### 3. Zaawansowane Formularze (Zgłaszanie Usterki)
+*   **Wsparcie Offline:** Formularz pozwala zapisać zgłoszenie lokalnie, gdy nie ma zasięgu w piwnicy czy windzie.
+*   **Kompresja Zdjęć:** Dodany panel informuje lokatora o zaoszczędzonym transferze dzięki naszej kompresji zdjęć (np. `-75% rozmiaru pliku`) oraz szacowanym czasie wysyłki na słabym łączu 3G. Gwarantuje to wysoki poziom przejrzystości (transparency UX).
+
+### 4. Portal Serwisanta (Technician Portal)
+*   **Lista Zadań:** Filtrowana za pomocą zakładek (Nowe, W toku, Zamknięte).
+*   **Akcje Szybkie:** Przyciski "Rozpocznij" i "Zakończ" automatycznie zmieniają status, dodają wpis i generują kartę na tablicy Trello spółdzielni oraz symulują powiadomienie FCM.

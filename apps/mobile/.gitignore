@@ -1,0 +1,87 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.build/
+.buildlog/
+.history
+.svn/
+.swiftpm/
+**/xcshareddata/swiftpm/
+migrate_working_dir/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Keep only shared VS Code workspace config in git.
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/settings.json
+!.vscode/tasks.json
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+/build/
+/coverage/
+**/ios/Flutter/ephemeral/
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+
+# Android signing
+*.jks
+*.p12
+key.properties
+
+# Apple Sign In / other raw credential exports - these tend to get dropped
+# as "just docs" but contain real private keys (.p8) or tokens.
+*.p8
+*_CREDENTIALS.md
+*_CREDENTIALS.txt
+
+# Android build reports
+android/build/reports/
+/android/app/release
+
+# Local Firebase config
+**/google-services.json
+**/GoogleService-Info.plist
+keys/
+
+# Temp
+tmp/
+temp/
+.temp/
+
+# Custom
+config/api-keys.json
+android/key.properties
+.mcp.json
+opencode.json
+.agents/mcp_config.json
+devtools_options.yaml
+.env
+.codex/environments/
+.codex/config.toml
+.claude/skills/
+assets/images/store/screenshots/

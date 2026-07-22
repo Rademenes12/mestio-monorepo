@@ -1,0 +1,49 @@
+workflows:
+  mestio-build:
+    name: Mestio CI/CD
+    max_build_duration: 60
+    environment:
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+      vars:
+        PACKAGE_NAME: "com.pawelpasik.mestio"
+    scripts:
+      - name: Set up key.properties
+        script: |
+          echo "storeFile=$(echo "$CM_KEYSTORE_PATH")" >> android/key.properties
+          echo "storePassword=$CM_KEYSTORE_PASSWORD" >> android/key.properties
+          echo "keyAlias=$CM_KEY_ALIAS" >> android/key.properties
+          echo "keyPassword=$CM_KEY_PASSWORD" >> android/key.properties
+      - name: Get Flutter packages
+        script: flutter pub get
+      - name: Static analysis
+        script: flutter analyze lib/ test/
+      - name: Run tests
+        script: flutter test --reporter compact
+        test_report: tests.json
+      - name: Build Android .aab
+        script: |
+          flutter build appbundle --release \
+            --obfuscate --split-debug-info=build/symbols/android
+      - name: Build iOS (unsigned - see note below)
+        script: |
+          flutter build ios --release --no-codesign \
+            --obfuscate --split-debug-info=build/symbols/ios
+        # NOTE: this only produces an unsigned .app for verification builds.
+        # It does NOT produce a signed .ipa and cannot be uploaded to App
+        # Store Connect / TestFlight as-is. To ship to iOS, this workflow
+        # needs: (1) an ios_signing block referencing a distribution
+        # certificate + provisioning profile (or automatic signing via an
+        # App Store Connect API key configured in Codemagic's UI), and
+        # (2) `flutter build ipa --release --export-options-plist=...`
+        # instead of `flutter build ios --no-codesign`, plus a publishing.
+        # app_store_connect section to actually upload the build.
+    artifacts:
+      - build/app/outputs/bundle/release/*.aab
+      - build/ios/iphoneos/*.app
+      - build/symbols/**
+    publishing:
+      email:
+        recipients:
+          - aivolux@gmail.com

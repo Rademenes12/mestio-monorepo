@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build outputs
+.next/
+dist/
+out/
+
+# Testing
+coverage/
+
+# IDE
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env files
+.env
+.env.local
+.env.*.local
+
+# Turbo
+.turbo/
+
+# Flutter (if we add it later)
+build/
+*.apk
+*.aab
+*.ipa
+
+# Logs
+*.log
+npm-debug.log*

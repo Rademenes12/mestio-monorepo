@@ -1,0 +1,74 @@
+# Szczegółowy Opis Aplikacji "Zgłoś Awarię"
+
+Niniejszy dokument przedstawia pełny opis architektury funkcjonalnej, interfejsów użytkownika (UI) oraz doświadczenia użytkownika (UX) w podziale na dedykowane role systemowe.
+
+---
+
+## 🎨 Wizualizacje Interfejsów (Makiety)
+
+Oto pełne zestawienie ekranów aplikacji przygotowanych na bazie ustaleń projektowych i wdrożonych w systemie wizualnym:
+
+````carousel
+![1. Pulpit Mieszkańca](C:/Users/fortu/.gemini/antigravity-ide/brain/c4131253-ead0-436d-a828-cf78090df7b3/resident_mobile_ui_1782058956828.png)
+<!-- slide -->
+![2. Pulpit Zarządu i Administratora](C:/Users/fortu/.gemini/antigravity-ide/brain/c4131253-ead0-436d-a828-cf78090df7b3/admin_mobile_ui_1782058970950.png)
+<!-- slide -->
+![3. Portal Technika i Serwisanta](C:/Users/fortu/.gemini/antigravity-ide/brain/c4131253-ead0-436d-a828-cf78090df7b3/technician_ui_mockup_1782058645095.png)
+<!-- slide -->
+![4. Ekran Blokady / Rejestracji Adresu](C:/Users/fortu/.gemini/antigravity-ide/brain/c4131253-ead0-436d-a828-cf78090df7b3/lock_screen_mockup_1782058634513.png)
+````
+
+---
+
+## 📱 1. Pulpit Mieszkańca (Lokatora)
+
+Interfejs mieszkańca został zaprojektowany z myślą o prostocie i szybkości działania w sytuacjach stresowych (awaria w budynku).
+
+### Kluczowe Elementy UX/UI:
+*   **Przycisk CTA "Zgłoś Nową Awarię":** Duży, kontrastowy przycisk w kolorze *Electric Indigo* umieszczony u góry ekranu. Pozwala na natychmiastowe przejście do formularza zgłoszeniowego jednym tąpnięciem.
+*   **Lista Własnych Zgłoszeń:** Znajduje się bezpośrednio pod przyciskiem CTA. Lokator widzi chronologicznie ułożoną listę zgłoszonych przez siebie usterek.
+*   **Statusy Zgłoszeń:** Każda pozycja na liście ma czytelny wskaźnik statusu:
+    *   `Nowe` – usterka wysłana do systemu.
+    *   `W toku` (kolor pomarańczowy) – przypisano technika, trwa naprawa.
+    *   `Zrealizowane` (kolor zielony) – usterka została naprawiona i zamknięta.
+*   **Alerty Spółdzielcze (Broadcasts):** Lokalne powiadomienia wysyłane przez zarząd (np. planowane wyłączenia wody lub prądu), widoczne bezpośrednio w sekcji ogłoszeń tylko dla mieszkańców danego budynku lub kładki.
+*   **HUD Statusu Lokalu:** Stały, szklany panel informacyjny prezentujący bieżący adres (Budynek / Kładka / Mieszkanie) wraz ze statusem połączenia (Online/Offline).
+
+---
+
+## 📊 2. Pulpit Zarządu i Administratora (Zarząd)
+
+Dedykowany widok dla pracowników spółdzielni i administratorów sieci. Posiada charakter analityczno-zarządczy.
+
+### Kluczowe Elementy UX/UI:
+*   **Karty Statystyk (KPI):** Trzy główne liczniki na samej górze ekranu przedstawiające:
+    *   `Aktywne zgłoszenia` (wymagające natychmiastowej uwagi).
+    *   `W toku` (przypisane i procesowane przez serwisantów).
+    *   `Rozwiązane` (zamknięte w bieżącym okresie rozliczeniowym).
+*   **Wykresy Podsumowujące:** Moduł graficzny do śledzenia trendów awarii (np. kategorie najczęstszych usterek, średni czas naprawy).
+*   **Panel Nadawania Komunikatów (Broadcast Panel):** Proste narzędzie umożliwiające administratorom natychmiastowe rozesłanie wiadomości (np. *"Prace techniczne na kładce B"* lub *"Awaria windy w budynku 3"*) do wszystkich lokatorów przypisanych do określonej lokalizacji.
+*   **Pełny Rejestr Zgłoszeń:** Tabela/lista zawierająca globalny przegląd wszystkich awarii w spółdzielni z możliwością szybkiego przypisania technika z listy lub zmiany priorytetu.
+
+---
+
+## 🛠️ 3. Portal Technika i Serwisanta (Technik)
+
+Przejrzysty i uproszczony interfejs przeznaczony dla konserwatorów pracujących w terenie.
+
+### Kluczowe Elementy UX/UI:
+*   **Filtrowanie Zadań:** Proste zakładki u góry ekranu (`Nowe`, `W toku`, `Zakończone`) pozwalające na natychmiastowy podgląd przydzielonych zleceń.
+*   **Szybkie Akcje:**
+    *   Przycisk **"Rozpocznij"** – zmienia status usterki na "W toku", rejestruje czas rozpoczęcia i wysyła powiadomienie do mieszkańca.
+    *   Przycisk **"Zakończ"** – finalizuje zgłoszenie, automatycznie aktualizuje stan w bazie, zamyka powiązaną kartę na tablicy Trello spółdzielni i wysyła push do lokatora.
+*   **Szczegóły Techniczne:** Podgląd opisu usterki, dołączonego zdjęcia oraz metadanych (np. dokładna klatka, kładka, telefon kontaktowy do lokatora).
+
+---
+
+## 🔑 4. Ekran Rejestracji i Profilu (LockScreen)
+
+Pierwszy ekran, z którym styka się użytkownik. Zabezpiecza aplikację przed dostępem osób spoza spółdzielni.
+
+### Kluczowe Elementy UX/UI:
+*   **Wygodny Kreator:** Zaimplementowany zgodnie z wytycznymi bezpiecznych formularzy mobilnych. Zawiera nowoczesne listy rozwijane (dropdowny) do łatwego i szybkiego wyboru budynku, kładki oraz numeru lokalu.
+*   **Weryfikacja Kodem:** Pole na kod zaproszenia udostępniony przez spółdzielnię mieszkaniową, co eliminuje potrzebę tradycyjnej, skomplikowanej rejestracji.
+*   **Autoryzacja Supabase:** Integruje się bezszelestnie z systemem logowania anonimowego (Anonymous Auth) z zachowaniem unikalnego ID w bazie danych i możliwością późniejszego pełnego upgrade'u profilu.

@@ -1,0 +1,346 @@
+import 'package:flutter/material.dart';
+import '../../../../core/theme/app_colors.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../core/di/injection.dart';
+import '../../../../l10n/l10n.dart';
+import '../../../../shared/error_messages.dart';
+import '../cubit/reset_password_cubit.dart';
+
+class ResetPasswordScreen extends StatelessWidget {
+  const ResetPasswordScreen({required this.email, super.key});
+
+  final String email;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider<ResetPasswordCubit>(
+      create: (_) => getIt<ResetPasswordCubit>(),
+      child: _ResetPasswordView(email: email),
+    );
+  }
+}
+
+class _ResetPasswordView extends StatefulWidget {
+  const _ResetPasswordView({required this.email});
+
+  final String email;
+
+  @override
+  State<_ResetPasswordView> createState() => _ResetPasswordViewState();
+}
+
+class _ResetPasswordViewState extends State<_ResetPasswordView> {
+  late final TextEditingController _codeController;
+  late final TextEditingController _passwordController;
+  late final TextEditingController _confirmPasswordController;
+  late final FocusNode _codeFocusNode;
+  late final FocusNode _passwordFocusNode;
+  late final FocusNode _confirmPasswordFocusNode;
+
+  @override
+  void initState() {
+    super.initState();
+    _codeController = TextEditingController();
+    _passwordController = TextEditingController();
+    _confirmPasswordController = TextEditingController();
+    _codeFocusNode = FocusNode();
+    _passwordFocusNode = FocusNode();
+    _confirmPasswordFocusNode = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    _codeController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    _codeFocusNode.dispose();
+    _passwordFocusNode.dispose();
+    _confirmPasswordFocusNode.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
+    return BlocListener<ResetPasswordCubit, ResetPasswordState>(
+      listener: (context, state) {
+        if (state.successKey != 'password_reset_completed') return;
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(l10n.passwordResetSuccessSnackbar)),
+        );
+        context.read<ResetPasswordCubit>().clearFeedback();
+      },
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Scaffold(
+          backgroundColor: AppColors.lightCanvas,
+          extendBodyBehindAppBar: true,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back_ios_new, color: Color(0xFF1A1A24)),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ),
+          body: SafeArea(
+            top: false,
+            child: LayoutBuilder(
+            builder: (context, constraints) {
+              final height = constraints.maxHeight;
+              final imageContainerHeight = height * 0.28;
+              final theme = Theme.of(context);
+
+              return SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: height),
+                  child: IntrinsicHeight(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        // Top Building Header with Fade
+                        SizedBox(
+                          height: imageContainerHeight,
+                          child: Stack(
+                            children: [
+                              Positioned.fill(
+                                child: ShaderMask(
+                                  shaderCallback: (rect) {
+                                    return const LinearGradient(
+                                      begin: Alignment.topCenter,
+                                      end: Alignment.bottomCenter,
+                                      colors: [Colors.black, Colors.transparent],
+                                      stops: [0.65, 1.0],
+                                    ).createShader(
+                                      Rect.fromLTRB(0, 0, rect.width, rect.height),
+                                    );
+                                  },
+                                  blendMode: BlendMode.dstIn,
+                                  child: Image.asset(
+                                    'assets/images/building_image.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        // Form Section
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                            child: Center(
+                              child: ConstrainedBox(
+                                constraints: const BoxConstraints(maxWidth: 420),
+                                child: BlocBuilder<ResetPasswordCubit, ResetPasswordState>(
+                                  builder: (context, state) {
+                                    final isLoading = state.isLoading;
+
+                                    return PopScope(
+                                      canPop: !isLoading,
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                                        children: [
+                                          Text(
+                                            l10n.resetPasswordTitle,
+                                            style: theme.textTheme.headlineMedium?.copyWith(
+                                              fontWeight: FontWeight.w800,
+                                              color: const Color(0xFF1A1A24),
+                                              fontSize: 26,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 8),
+                                          Text(
+                                            l10n.resetPasswordBody(widget.email),
+                                            style: theme.textTheme.bodyMedium?.copyWith(
+                                              color: const Color(0xFF636375),
+                                            ),
+                                          ),
+                                          const SizedBox(height: 24),
+                                          TextField(
+                                            controller: _codeController,
+                                            focusNode: _codeFocusNode,
+                                            enabled: !isLoading,
+                                            keyboardType: TextInputType.text,
+                                            textCapitalization: TextCapitalization.none,
+                                            autofillHints: const [AutofillHints.oneTimeCode],
+                                            decoration: InputDecoration(
+                                              labelText: l10n.resetCodeFieldLabel,
+                                              prefixIcon: const Icon(Icons.vpn_key_outlined, color: Color(0xFF0A84FF)),
+                                              filled: true,
+                                              fillColor: const Color(0xFFF5F7FA),
+                                              border: OutlineInputBorder(
+                                                borderRadius: BorderRadius.circular(12),
+                                                borderSide: BorderSide.none,
+                                              ),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.circular(12),
+                                                borderSide: BorderSide(color: Colors.black.withValues(alpha: 0.05)),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.circular(12),
+                                                borderSide: const BorderSide(color: Color(0xFF0A84FF), width: 1.5),
+                                              ),
+                                              labelStyle: const TextStyle(color: Color(0xFF636375)),
+                                            ),
+                                            textInputAction: TextInputAction.next,
+                                            onSubmitted: (_) =>
+                                                _passwordFocusNode.requestFocus(),
+                                          ),
+                                          const SizedBox(height: 16),
+                                          TextField(
+                                            controller: _passwordController,
+                                            focusNode: _passwordFocusNode,
+                                            enabled: !isLoading,
+                                            keyboardType: TextInputType.visiblePassword,
+                                            textCapitalization: TextCapitalization.none,
+                                            autofillHints: const [AutofillHints.newPassword],
+                                            obscureText: true,
+                                            decoration: InputDecoration(
+                                              labelText: l10n.passwordFieldLabel,
+                                              prefixIcon: const Icon(Icons.lock_outline, color: Color(0xFF0A84FF)),
+                                              filled: true,
+                                              fillColor: const Color(0xFFF5F7FA),
+                                              border: OutlineInputBorder(
+                                                borderRadius: BorderRadius.circular(12),
+                                                borderSide: BorderSide.none,
+                                              ),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.circular(12),
+                                                borderSide: BorderSide(color: Colors.black.withValues(alpha: 0.05)),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.circular(12),
+                                                borderSide: const BorderSide(color: Color(0xFF0A84FF), width: 1.5),
+                                              ),
+                                              labelStyle: const TextStyle(color: Color(0xFF636375)),
+                                            ),
+                                            textInputAction: TextInputAction.next,
+                                            onSubmitted: (_) =>
+                                                _confirmPasswordFocusNode.requestFocus(),
+                                          ),
+                                          const SizedBox(height: 16),
+                                          TextField(
+                                            controller: _confirmPasswordController,
+                                            focusNode: _confirmPasswordFocusNode,
+                                            enabled: !isLoading,
+                                            keyboardType: TextInputType.visiblePassword,
+                                            textCapitalization: TextCapitalization.none,
+                                            autofillHints: const [AutofillHints.newPassword],
+                                            obscureText: true,
+                                            decoration: InputDecoration(
+                                              labelText: l10n.confirmPasswordFieldLabel,
+                                              prefixIcon: const Icon(Icons.lock_outline, color: Color(0xFF0A84FF)),
+                                              filled: true,
+                                              fillColor: const Color(0xFFF5F7FA),
+                                              border: OutlineInputBorder(
+                                                borderRadius: BorderRadius.circular(12),
+                                                borderSide: BorderSide.none,
+                                              ),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.circular(12),
+                                                borderSide: BorderSide(color: Colors.black.withValues(alpha: 0.05)),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.circular(12),
+                                                borderSide: const BorderSide(color: Color(0xFF0A84FF), width: 1.5),
+                                              ),
+                                              labelStyle: const TextStyle(color: Color(0xFF636375)),
+                                            ),
+                                            textInputAction: TextInputAction.done,
+                                            onSubmitted: (_) => _submit(context),
+                                          ),
+                                          if (state.errorKey != null) ...[
+                                            const SizedBox(height: 16),
+                                            SelectableText(
+                                              messageForErrorKey(l10n, state.errorKey),
+                                              style: TextStyle(
+                                                color: theme.colorScheme.error,
+                                              ),
+                                            ),
+                                          ],
+                                          const SizedBox(height: 24),
+                                          SizedBox(
+                                            width: double.infinity,
+                                            height: 56,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                gradient: const LinearGradient(
+                                                  colors: [Color(0xFF0A84FF), Color(0xFF5E5CE6)],
+                                                  begin: Alignment.centerLeft,
+                                                  end: Alignment.centerRight,
+                                                ),
+                                                borderRadius: BorderRadius.circular(28),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: const Color(0xFF5E5CE6).withValues(alpha: 0.25),
+                                                    blurRadius: 16,
+                                                    offset: const Offset(0, 6),
+                                                  ),
+                                                ],
+                                              ),
+                                              child: Material(
+                                                color: Colors.transparent,
+                                                child: InkWell(
+                                                  onTap: isLoading ? null : () => _submit(context),
+                                                  borderRadius: BorderRadius.circular(28),
+                                                  child: Center(
+                                                    child: isLoading
+                                                        ? const SizedBox(
+                                                            width: 24,
+                                                            height: 24,
+                                                            child: CircularProgressIndicator(
+                                                              strokeWidth: 2.5,
+                                                              color: Colors.white,
+                                                            ),
+                                                          )
+                                                        : Text(
+                                                            l10n.resetPasswordButtonLabel,
+                                                            style: const TextStyle(
+                                                              color: Colors.white,
+                                                              fontSize: 18,
+                                                              fontWeight: FontWeight.bold,
+                                                            ),
+                                                          ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(height: 16),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            },
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _submit(BuildContext context) {
+    FocusScope.of(context).unfocus();
+    context.read<ResetPasswordCubit>().resetPassword(
+      email: widget.email,
+      code: _codeController.text,
+      newPassword: _passwordController.text,
+      confirmPassword: _confirmPasswordController.text,
+    );
+  }
+}

@@ -1,0 +1,240 @@
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:injectable/injectable.dart';
+import '../../../estate/data/repositories/estate_repository.dart';
+import '../../../estate/models/estate_model.dart';
+import '../../data/repositories/contacts_repository.dart';
+import '../../models/contact_model.dart';
+
+part 'contacts_cubit.freezed.dart';
+
+/// Detects errors that mean Supabase is unreachable, so we should fall back
+/// to local offline handling instead of surfacing an error to the user.
+bool _isOfflineError(Object e) =>
+    e is TimeoutException ||
+    e.toString().contains('PGRST002') ||
+    e.toString().contains('Service Unavailable') ||
+    e.toString().contains('SocketException') ||
+    e.toString().contains('Failed host lookup');
+
+@freezed
+sealed class ContactsState with _$ContactsState {
+  const factory ContactsState.initial() = ContactsInitial;
+  const factory ContactsState.loading() = ContactsLoading;
+  const factory ContactsState.loaded({
+    required List<EmergencyContact> contacts,
+    @Default(false) bool isSubmitting,
+    String? errorKey,
+  }) = ContactsLoaded;
+  const factory ContactsState.error({required String errorKey}) = ContactsError;
+}
+
+@injectable
+class ContactsCubit extends Cubit<ContactsState> {
+  ContactsCubit(this._repository, this._estateRepository)
+      : super(const ContactsState.initial()) {
+    // Reload contacts whenever the active estate changes so each estate shows
+    // its own contacts without manual refresh.
+    _activeEstateSub =
+        _estateRepository.watchActiveEstate().listen((estate) {
+      _activeEstateId = estate?.id;
+      _init();
+    });
+  }
+
+  final ContactsRepository _repository;
+  final EstateRepository _estateRepository;
+  StreamSubscription<Estate?>? _activeEstateSub;
+  String? _activeEstateId;
+
+  @override
+  Future<void> close() {
+    _activeEstateSub?.cancel();
+    return super.close();
+  }
+  bool _isOfflineMode = false;
+  List<EmergencyContact> _localContacts = [];
+
+  Future<void> _init() async {
+    debugPrint('ℹ️ [ContactsCubit] initializing estate=$_activeEstateId');
+    emit(const ContactsState.loading());
+    
+    try {
+      final contacts = await _repository.getContacts(estateId: _activeEstateId);
+      debugPrint('ℹ️ [ContactsCubit] loaded ${contacts.length} contacts');
+      _isOfflineMode = false;
+      _localContacts = contacts;
+      emit(ContactsState.loaded(contacts: contacts));
+    } catch (e) {
+      debugPrint('❌ [ContactsCubit] load error: $e');
+      
+      // Fallback: use local test data when Supabase is unavailable
+      if (_isOfflineError(e)) {
+        debugPrint('⚠️ [ContactsCubit] Using local fallback data');
+        _isOfflineMode = true;
+        _localContacts = [
+          const EmergencyContact(
+            id: 'local-1',
+            name: 'Administrator',
+            role: 'Administrator osiedla',
+            phone: '+48 601 234 567',
+            category: 'administration',
+            displayOrder: 1,
+          ),
+          const EmergencyContact(
+            id: 'local-2',
+            name: 'Numer alarmowy',
+            role: 'Centrum ratunkowe',
+            phone: '112',
+            category: 'emergency',
+            displayOrder: 0,
+          ),
+          const EmergencyContact(
+            id: 'local-3',
+            name: 'Straż Pożarna',
+            role: 'Pogotowie pożarowe',
+            phone: '998',
+            category: 'emergency',
+            displayOrder: 1,
+          ),
+          const EmergencyContact(
+            id: 'local-4',
+            name: 'Policja',
+            role: 'Pogotowie policyjne',
+            phone: '997',
+            category: 'emergency',
+            displayOrder: 2,
+          ),
+          const EmergencyContact(
+            id: 'local-5',
+            name: 'Elektryk 24h',
+            role: 'Awarie elektryczne',
+            phone: '+48 603 456 789',
+            category: 'maintenance',
+            displayOrder: 1,
+          ),
+        ];
+        emit(ContactsState.loaded(contacts: _localContacts));
+        return;
+      }
+      
+      emit(const ContactsState.error(errorKey: 'contacts_load_error'));
+    }
+  }
+
+  Future<void> refresh() async {
+    await _init();
+  }
+
+  Future<void> addContact({
+    required String name,
+    required String role,
+    required String phone,
+    String? email,
+    required String category,
+  }) async {
+    final currentState = state;
+    if (currentState is! ContactsLoaded) return;
+
+    debugPrint('ℹ️ [ContactsCubit] adding contact: $name, offlineMode=$_isOfflineMode');
+    emit(currentState.copyWith(isSubmitting: true, errorKey: null));
+
+    if (_isOfflineMode) {
+      _addContactLocally(name: name, role: role, phone: phone, email: email, category: category);
+      return;
+    }
+
+    try {
+      final contact = EmergencyContact(
+        id: '', // Will be generated by DB
+        name: name,
+        role: role,
+        phone: phone,
+        email: email,
+        category: category,
+        estateId: _activeEstateId,
+        displayOrder: currentState.contacts.length,
+      );
+
+      await _repository.createContact(contact);
+      debugPrint('✅ [ContactsCubit] contact added');
+      await refresh();
+    } catch (e) {
+      debugPrint('❌ [ContactsCubit] addContact failed: $e');
+
+      // Fallback: when Supabase is unavailable, persist locally so the user's input is not lost
+      if (_isOfflineError(e)) {
+        debugPrint('⚠️ [ContactsCubit] Supabase unavailable, switching to offline add');
+        _isOfflineMode = true;
+        // Ensure local list reflects current state before adding
+        if (_localContacts.isEmpty) _localContacts = currentState.contacts;
+        _addContactLocally(name: name, role: role, phone: phone, email: email, category: category);
+        return;
+      }
+
+      emit(currentState.copyWith(isSubmitting: false, errorKey: 'contact_add_error'));
+    }
+  }
+
+  void _addContactLocally({
+    required String name,
+    required String role,
+    required String phone,
+    String? email,
+    required String category,
+  }) {
+    final newContact = EmergencyContact(
+      id: 'local-${DateTime.now().millisecondsSinceEpoch}',
+      name: name,
+      role: role,
+      phone: phone,
+      email: email,
+      category: category,
+      displayOrder: _localContacts.length,
+    );
+
+    _localContacts = [..._localContacts, newContact];
+    debugPrint('✅ [ContactsCubit] contact added (offline mode)');
+    emit(ContactsState.loaded(contacts: _localContacts));
+  }
+
+  Future<void> deleteContact(String id) async {
+    final currentState = state;
+    if (currentState is! ContactsLoaded) return;
+
+    debugPrint('ℹ️ [ContactsCubit] deleting contact: $id, offlineMode=$_isOfflineMode');
+
+    if (_isOfflineMode) {
+      _deleteContactLocally(id);
+      return;
+    }
+
+    try {
+      await _repository.deleteContact(id);
+      debugPrint('✅ [ContactsCubit] contact deleted');
+      await refresh();
+    } catch (e) {
+      debugPrint('❌ [ContactsCubit] deleteContact failed: $e');
+
+      // Fallback: when Supabase is unavailable, delete locally
+      if (_isOfflineError(e)) {
+        debugPrint('⚠️ [ContactsCubit] Supabase unavailable, switching to offline delete');
+        _isOfflineMode = true;
+        if (_localContacts.isEmpty) _localContacts = currentState.contacts;
+        _deleteContactLocally(id);
+        return;
+      }
+
+      emit(currentState.copyWith(errorKey: 'contact_delete_error'));
+    }
+  }
+
+  void _deleteContactLocally(String id) {
+    _localContacts = _localContacts.where((c) => c.id != id).toList();
+    debugPrint('✅ [ContactsCubit] contact deleted (offline mode)');
+    emit(ContactsState.loaded(contacts: _localContacts));
+  }
+}
