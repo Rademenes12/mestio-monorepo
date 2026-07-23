@@ -148,119 +148,83 @@ class AppTheme {
         brightness: Brightness.dark,
         fontFamily: AppFonts.body,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: AppColors.azure,
-          primary: AppColors.azure,
-          secondary: AppColors.cyanGlow,
-          error: AppColors.danger,
+          seedColor: AppColors.accent,
+          primary: AppColors.accent,
+          secondary: AppColors.purple,
+          error: AppColors.error,
+          surface: AppColors.card,
           brightness: Brightness.dark,
         ),
-        scaffoldBackgroundColor: AppColors.darkCanvas,
+        scaffoldBackgroundColor: AppColors.bg,
         cardTheme: CardThemeData(
-          color: AppColors.darkCard,
+          color: AppColors.card,
           elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppColors.radiusCard),
+            side: BorderSide.none,
           ),
         ),
         appBarTheme: const AppBarTheme(
           centerTitle: true,
           elevation: 0,
-          backgroundColor: AppColors.darkCard,
-          foregroundColor: AppColors.darkTextPrimary,
+          backgroundColor: AppColors.bgSecondary,
+          foregroundColor: AppColors.textPrimary,
         ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.azure,
-            foregroundColor: Colors.white,
-            minimumSize: const Size(0, AppColors.minTouchHeight),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(AppColors.radiusButton),
-            ),
-            elevation: 0,
-          ),
-        ),
-        outlinedButtonTheme: OutlinedButtonThemeData(
-          style: OutlinedButton.styleFrom(
-            foregroundColor: AppColors.azure,
-            side: const BorderSide(color: AppColors.azure),
-            minimumSize: const Size(0, AppColors.minTouchHeight),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(AppColors.radiusButton),
-            ),
-          ),
-        ),
-        inputDecorationTheme: InputDecorationTheme(
-          filled: true,
-          fillColor: AppColors.darkCard,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(AppColors.radiusButton),
-            borderSide: const BorderSide(color: AppColors.darkBorder),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(AppColors.radiusButton),
-            borderSide: const BorderSide(color: AppColors.darkBorder),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(AppColors.radiusButton),
-            borderSide: const BorderSide(color: AppColors.azure, width: 2),
-          ),
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: AppColors.spacingSm,
-            vertical: AppColors.spacingXs,
-          ),
-        ),
-        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
           type: BottomNavigationBarType.fixed,
-          selectedItemColor: AppColors.azure,
-          unselectedItemColor:
-              AppColors.darkTextSecondary.withValues(alpha: 0.6),
-          backgroundColor: AppColors.darkCard,
+          selectedItemColor: AppColors.accent,
+          unselectedItemColor: AppColors.textMuted,
+          backgroundColor: AppColors.card,
+        ),
+        dividerTheme: const DividerThemeData(
+          color: AppColors.cardBorder,
+          thickness: 1,
         ),
         textTheme: const TextTheme(
           headlineLarge: TextStyle(
             fontFamily: AppFonts.header,
             fontSize: 28,
             fontWeight: FontWeight.bold,
-            color: AppColors.darkTextPrimary,
+            color: AppColors.textPrimary,
           ),
           headlineMedium: TextStyle(
             fontFamily: AppFonts.header,
             fontSize: 24,
             fontWeight: FontWeight.w600,
-            color: AppColors.darkTextPrimary,
+            color: AppColors.textPrimary,
           ),
           titleLarge: TextStyle(
             fontFamily: AppFonts.header,
             fontSize: 20,
             fontWeight: FontWeight.w600,
-            color: AppColors.darkTextPrimary,
+            color: AppColors.textPrimary,
           ),
           titleMedium: TextStyle(
             fontFamily: AppFonts.header,
             fontSize: 18,
             fontWeight: FontWeight.w600,
-            color: AppColors.darkTextPrimary,
+            color: AppColors.textPrimary,
           ),
           bodyLarge: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w500,
-            color: AppColors.darkTextPrimary,
+            color: AppColors.textPrimary,
           ),
           bodyMedium: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w500,
-            color: AppColors.darkTextPrimary,
+            color: AppColors.textPrimary,
           ),
           bodySmall: TextStyle(
             fontSize: 11,
             fontWeight: FontWeight.w400,
-            color: AppColors.darkTextSecondary,
+            color: AppColors.textSecondary,
           ),
           labelSmall: TextStyle(
             fontFamily: AppFonts.mono,
             fontSize: 11,
             fontWeight: FontWeight.w500,
-            color: AppColors.darkTextSecondary,
+            color: AppColors.textMuted,
             letterSpacing: 0.5,
           ),
         ),

@@ -4,17 +4,30 @@ import { cookies } from "next/headers";
 import { EstateSwitcher } from "./estate-switcher";
 import { SidebarNav, type NavItem } from "./sidebar-nav";
 
+import {
+  LayoutDashboard,
+  ClipboardList,
+  Users,
+  Phone,
+  CheckSquare,
+  Megaphone,
+  Scale,
+  Building2,
+  FileText,
+  Settings,
+} from "lucide-react";
+
 const NAV_ITEMS: Omit<NavItem, "badge">[] = [
-  { href: "/", label: "Pulpit", icon: "◉" },
-  { href: "/reports", label: "Tablica spraw", icon: "☰" },
-  { href: "/contacts", label: "Kontakty", icon: "👤" },
-  { href: "/phones", label: "Telefony", icon: "☎" },
-  { href: "/tasks", label: "Zadania", icon: "✓" },
-  { href: "/announcements", label: "Komunikaty", icon: "✉" },
-  { href: "/resolutions", label: "Uchwały", icon: "⚖" },
-  { href: "/estate", label: "Osiedle", icon: "⌂" },
-  { href: "/invoices", label: "Faktury", icon: "📄" },
-  { href: "/settings", label: "Ustawienia", icon: "⚙" },
+  { href: "/", label: "Pulpit", icon: LayoutDashboard },
+  { href: "/reports", label: "Tablica spraw", icon: ClipboardList },
+  { href: "/contacts", label: "Kontakty", icon: Users },
+  { href: "/phones", label: "Telefony", icon: Phone },
+  { href: "/tasks", label: "Zadania", icon: CheckSquare },
+  { href: "/announcements", label: "Komunikaty", icon: Megaphone },
+  { href: "/resolutions", label: "Uchwały", icon: Scale },
+  { href: "/estate", label: "Osiedle", icon: Building2 },
+  { href: "/invoices", label: "Faktury", icon: FileText },
+  { href: "/settings", label: "Ustawienia", icon: Settings },
 ];
 
 export default async function AppLayout({
@@ -85,49 +98,58 @@ export default async function AppLayout({
           : undefined,
   }));
 
+  const userInitials = user.email?.slice(0, 2).toUpperCase() ?? "UZ";
+
   return (
-    <div className="min-h-screen flex">
-      <aside className="w-64 bg-ink text-white flex flex-col fixed inset-y-0 left-0 z-30">
-        <div className="p-6">
-          <h1 className="text-xl font-heading font-bold tracking-tight">
-            Mestio
-          </h1>
-          <p className="text-xs text-white/50 mt-1">Panel Zarządu</p>
+    <div className="flex min-h-screen">
+      {/* ── Sidebar ── */}
+      <aside className="fixed inset-y-0 left-0 z-50 flex w-[220px] flex-col overflow-hidden border-r" style={{ borderColor: "rgba(59, 130, 246, 0.08)" }}>
+        {/* Logo */}
+        <div className="flex items-center gap-3 px-4 py-4 h-16">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#8864f0] to-[#4da3ff] flex items-center justify-center shrink-0">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M14 7a4 4 0 0 1-5.3 5.3L4 17l3 3 4.7-4.7A4 4 0 0 0 17 10l-2.2 2.2-2-2L15 8z"/>
+            </svg>
+          </div>
+          <div>
+            <div className="font-heading font-bold text-base text-white leading-tight">Mestio</div>
+            <div className="font-mono text-[8px] tracking-[0.6px]" style={{ color: "#7F96B5" }}>PANEL · ZARZĄD</div>
+          </div>
         </div>
 
+        {/* Estate switcher */}
+        <div className="px-3 mb-1">
+          <EstateSwitcher
+            estates={
+              (estates ?? []).map((e) => ({ id: e.id, name: e.name })) as {
+                id: string;
+                name: string;
+              }[]
+            }
+            activeId={activeEstateId}
+          />
+        </div>
+
+        {/* Navigation */}
         <SidebarNav items={navItems} />
 
-        <div className="p-4 border-t border-white/10">
-          <div className="text-xs text-white/40 truncate">{user.email}</div>
-          <form action="/auth/signout" method="post" className="mt-2">
-            <button className="text-[13px] text-white/60 hover:text-white transition-colors min-h-[36px] -ml-1 px-1">
-              Wyloguj się
-            </button>
-          </form>
+        {/* User footer */}
+        <div className="border-t px-4 py-3" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#8864f0] to-[#4da3ff] flex items-center justify-center shrink-0">
+              <span className="font-heading font-bold text-xs text-white">{userInitials}</span>
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-sm font-medium text-white truncate">{user.email?.split("@")[0] ?? "Użytkownik"}</div>
+              <div className="font-mono text-[10px] tracking-[0.3px]" style={{ color: "#7F96B5" }}>Zarząd osiedla</div>
+            </div>
+          </div>
         </div>
       </aside>
 
-      <div className="flex-1 ml-64">
-        <header className="sticky top-0 z-20 bg-paper/80 backdrop-blur-sm border-b border-ink/5">
-          <div className="flex items-center justify-between px-8 py-3">
-            <div>
-              <h2 className="text-sm font-medium text-ink/50">
-                Aktywne osiedle
-              </h2>
-              <EstateSwitcher
-                estates={estates ?? []}
-                activeId={activeEstateId}
-              />
-            </div>
-            <div className="flex items-center gap-3">
-              <div className="h-9 w-9 rounded-full bg-azure flex items-center justify-center text-white text-sm font-semibold">
-                {user.email?.[0].toUpperCase()}
-              </div>
-            </div>
-          </div>
-        </header>
-
-        <main className="p-8">{children}</main>
+      {/* ── Main content ── */}
+      <div className="flex-1 ml-[220px] flex flex-col min-w-0">
+        <main className="flex-1 overflow-y-auto p-6">{children}</main>
       </div>
     </div>
   );

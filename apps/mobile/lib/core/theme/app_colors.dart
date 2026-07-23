@@ -1,16 +1,26 @@
 import 'package:flutter/material.dart';
 
-/// FixFlow Design System color tokens.
-///
-/// New palette (Phase 1 redesign):
-/// ink, blueprint, azure, amber, mint, muted, paper, mist.
-///
-/// Legacy aliases (electricIndigo → azure, etc.) are kept for backward
-/// compatibility so the existing UI picks up the new values automatically.
+/// Mestio Design System color tokens — Erste Bank-inspired palette.
+/// Synchronized with packages/design-tokens/src/index.ts (web).
 class AppColors {
   AppColors._();
 
-  // ───── New Design System Tokens ─────
+  // ═══════════════ Dark Theme (Erste-inspired) ═══════════════
+
+  /// Deep navy background #0A1628
+  static const Color bg = Color(0xFF0A1628);
+  static const Color bgSecondary = Color(0xFF0F1E36);
+  static const Color bgTertiary = Color(0xFF132238);
+
+  /// Card surfaces
+  static const Color card = Color(0xFF132238);
+  static const Color cardHover = Color(0xFF1A2D47);
+  static const Color surface = Color(0xFF1A2D47);
+
+  /// Card borders (rgba(59, 130, 246, 0.12))
+  static const Color cardBorder = Color(0x1F3B82F6);
+
+  // ═══════════════ Light Theme (original) ═══════════════
 
   /// Deep navy, base text color (#0E1A2B)
   static const Color ink = Color(0xFF0E1A2B);
@@ -36,50 +46,28 @@ class AppColors {
   /// Borders & separators (#E2E9F2)
   static const Color mist = Color(0xFFE2E9F2);
 
-  /// Card border (#EAF0F7)
-  static const Color cardBorder = Color(0xFFEAF0F7);
+  /// Card border (light) (#EAF0F7)
+  static const Color lightCardBorder = Color(0xFFEAF0F7);
 
-  /// Danger / destructive actions (kept for errors)
+  /// Danger / destructive (#D64545)
   static const Color danger = Color(0xFFD64545);
 
-  // ───── Legacy Aliases → New Tokens ─────
-  // Existing code references these names; they now resolve to the new palette.
+  // ───── Status colors (shared across themes) ─────
 
-  /// electricIndigo → azure (primary accent)
-  static const Color electricIndigo = azure;
+  static const Color success = Color(0xFF10B981);
+  static const Color warning = Color(0xFFF59E0B);
+  static const Color error = Color(0xFFEF4444);
+  static const Color info = Color(0xFF3B82F6);
+  static const Color accent = Color(0xFF3B82F6);
+  static const Color purple = Color(0xFF8864F0);
 
-  /// cyanGlow — kept unchanged for dark mode accents
-  static const Color cyanGlow = Color(0xFF0A84FF);
+  // ───── Dark mode text ─────
 
-  /// amberAlert → amber
-  static const Color amberAlert = amber;
+  static const Color textPrimary = Color(0xFFF8FAFC);
+  static const Color textSecondary = Color(0xFF94A3B8);
+  static const Color textMuted = Color(0xFF64748B);
 
-  /// neonMint → mint
-  static const Color neonMint = mint;
-
-  /// crimsonCoral → danger (error/destructive)
-  static const Color crimsonCoral = danger;
-
-  // ───── Dark Mode ─────
-
-  static const Color darkCanvas = Color(0xFF0F0F1A);
-  static const Color darkCard = Color(0xFF1C1C2E);
-  static const Color darkBorder = Color(0x1FFFFFFF);
-  static const Color darkTextPrimary = Color(0xFFFFFFFF);
-  static const Color darkTextSecondary = Color(0xFF8E8E9F);
-
-  // ───── Light Mode ─────
-
-  /// lightCanvas → paper
-  static const Color lightCanvas = paper;
-
-  static const Color lightCard = Color(0xFFFFFFFF);
-
-  /// lightBorder → cardBorder
-  static const Color lightBorder = cardBorder;
-
-  /// lightTextPrimary → ink
-  static const Color lightTextPrimary = ink;
+  // ───── Light mode text ─────
 
   static const Color lightTextSecondary = Color(0xFF636375);
 
@@ -93,10 +81,30 @@ class AppColors {
 
   // ───── Border Radius ─────
 
+  static const double radiusSm = 8.0;
+  static const double radiusMd = 12.0;
   static const double radiusCard = 16.0;
   static const double radiusButton = 12.0;
+  static const double radiusXl = 24.0;
 
   // ───── Touch Targets ─────
 
   static const double minTouchHeight = 48.0;
+
+  // ───── Legacy Aliases (backward compat) ─────
+
+  static const Color electricIndigo = azure;
+  static const Color cyanGlow = info;
+  static const Color amberAlert = amber;
+  static const Color neonMint = mint;
+  static const Color crimsonCoral = danger;
+  static const Color darkCanvas = bg;
+  static const Color darkCard = card;
+  static const Color darkBorder = Color(0x1FFFFFFF); // rgba(255,255,255,0.12)
+  static const Color darkTextPrimary = textPrimary;
+  static const Color darkTextSecondary = textSecondary;
+  static const Color lightCanvas = paper;
+  static const Color lightCard = Color(0xFFFFFFFF);
+  static const Color lightBorder = lightCardBorder;
+  static const Color lightTextPrimary = ink;
 }

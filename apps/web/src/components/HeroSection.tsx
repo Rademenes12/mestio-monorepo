@@ -1,174 +1,271 @@
 import Link from "next/link";
+import { colors } from "@mestio/design-tokens";
+import {
+  Smartphone,
+  CheckCircle,
+  ArrowRight,
+  Sparkles,
+  Bell,
+  MessageSquare,
+  Wrench,
+} from "lucide-react";
 
 const HERO_STATS = [
   { value: "5", label: "ról w jednej apce" },
   { value: "∞", label: "użytkowników bez limitu" },
-  { value: "0%", label: "prowizji w aplikacji" },
-  { value: "<60s", label: "na zgłoszenie usterki" },
+  { value: "0%", label: "prowizji" },
+  { value: "<60s", label: "zgłoszenie usterki" },
 ];
 
-const STATUSES = [
-  { label: "Nowe", color: "#3E7BD6", reached: true, icon: "M12 7v10M7 12h10" },
+const STATUS_FLOW = [
+  { label: "Nowe", icon: "M12 7v10M7 12h10", color: colors.info, done: true },
   {
     label: "W realizacji",
-    color: "#F2A900",
-    reached: true,
     icon: "M9.5 8l6 4-6 4z",
+    color: colors.warning,
+    done: true,
     active: true,
   },
   {
     label: "Zamknięte",
-    color: "#2E9E6B",
-    reached: false,
     icon: "M6 12l3.5 4 8.5-8",
+    color: colors.success,
+    done: false,
   },
 ];
 
 export default function HeroSection() {
   return (
-    <section className="max-w-[1160px] mx-auto px-6 pt-[70px] pb-10 grid grid-cols-[1.15fr_0.85fr] gap-12 items-center">
-      <div>
-        <span className="inline-flex items-center gap-2 px-[13px] py-[6px] rounded-full bg-[#EAF0F7] text-blueprint font-mono text-[11.5px] font-semibold tracking-[0.3px]">
-          Dla zarządców nieruchomości, wspólnot i osiedli
-        </span>
+    <section className="relative overflow-hidden">
+      {/* Subtle background gradient — Erste-like soft glow */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: `radial-gradient(ellipse 80% 60% at 50% -10%, ${colors.navyLight}15, transparent 70%)`,
+        }}
+      />
 
-        <h1 className="font-heading font-bold text-[48px] leading-[1.08] tracking-[-1.2px] mt-5 text-ink">
-          Zgłoszenia usterek na osiedlu — wreszcie pod kontrolą
-        </h1>
-
-        <p className="text-[17px] leading-relaxed text-[#4A5A6E] mt-[18px] max-w-[520px]">
-          Mestio to aplikacja, w której mieszkaniec zgłasza usterkę w kilka
-          sekund, a zarządca, zarząd i serwis prowadzą ją od &bdquo;Nowe&rdquo; aż po
-          &bdquo;Zamknięte&rdquo; — z historią, powiadomieniami na telefonach
-          wszystkich użytkowników i pełną kontrolą dostępu.
-        </p>
-
-        <div className="flex gap-3 mt-7">
-          <Link
-            href="/zamow"
-            className="text-[15px] font-semibold text-white bg-gradient-to-br from-azure to-blueprint py-[14px] px-6 rounded-[13px] shadow-[0_10px_24px_rgba(23,58,106,.28)] hover:brightness-110 transition-all"
-          >
-            Zamów dla swojego osiedla
-          </Link>
-          <a
-            href="#jak-to-dziala"
-            className="text-[15px] font-semibold text-blueprint bg-white border border-[#D8E2EF] py-[14px] px-6 rounded-[13px] hover:bg-[#F4F7FB] transition-colors"
-          >
-            Jak to działa
-          </a>
-        </div>
-
-        <div className="flex items-center gap-[7px] mt-4 text-sm text-[#1f7a4d] font-semibold">
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#2E9E6B"
-            strokeWidth="2.6"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M20 6L9 17l-5-5" />
-          </svg>
-          Pierwsze 3 miesiące gratis &middot; bez karty na start
-        </div>
-
-        <div className="flex gap-[26px] mt-[34px]">
-          {HERO_STATS.map((stat) => (
-            <div key={stat.label}>
-              <div className="font-heading font-bold text-[26px] text-blueprint">
-                {stat.value}
-              </div>
-              <div className="text-[12.5px] text-[#7C8AA0] mt-[2px]">
-                {stat.label}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="bg-white border border-[#E9EEF5] rounded-[22px] p-[22px] shadow-[0_30px_60px_rgba(14,26,43,.12)]">
-        <div className="flex items-center justify-between">
-          <span className="font-mono text-xs font-semibold text-[#8A98AB]">
-            MS-2041
-          </span>
-          <span className="inline-flex items-center gap-[5px] px-[9px] py-[3px] rounded-full bg-amber/[.13] text-[#B37D00] font-mono text-[10.5px] font-semibold">
-            <span className="w-[6px] h-[6px] rounded-full bg-amber inline-block" />
-            W realizacji
-          </span>
-        </div>
-
-        <div className="font-heading font-semibold text-lg mt-3">
-          Cieknący kran w łazience
-        </div>
-        <div className="font-mono text-[11.5px] text-[#7C8AA0] mt-[6px]">
-          Hydraulika &middot; Budynek A &middot; m. 14
-        </div>
-
-        <div className="flex items-start mt-[22px]">
-          {STATUSES.map((status, i) => (
-            <div key={status.label} className="flex items-start">
-              {i > 0 && (
-                <div
-                  className="flex-1 h-[3px] mt-[18px] rounded-[2px]"
-                  style={{
-                    background:
-                      STATUSES[i - 1].reached ? status.color : "#E2E9F2",
-                    minWidth: 40,
-                  }}
-                />
-              )}
-              <div className="flex flex-col items-center w-[78px]">
-                <div
-                  className="w-[38px] h-[38px] rounded-full flex items-center justify-center shrink-0"
-                  style={{
-                    background: status.reached ? status.color : "#fff",
-                    color: status.reached ? "#fff" : "#B6C2D2",
-                    border: status.reached
-                      ? "none"
-                      : "2px solid #E2E9F2",
-                    boxShadow: status.active
-                      ? `0 0 0 5px ${status.color}29`
-                      : "none",
-                  }}
-                >
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d={status.icon} />
-                  </svg>
-                </div>
-                <div
-                  className="mt-2 font-heading font-semibold text-[11.5px]"
-                  style={{
-                    color: status.reached ? "#0E1A2B" : "#9FACBD",
-                  }}
-                >
-                  {status.label}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-[22px] pt-4 border-t border-[#F0F3F8] flex items-center gap-[10px]">
-          <div className="w-[30px] h-[30px] rounded-full bg-[#EAF0F7] flex items-center justify-center font-heading text-[11px] font-semibold text-blueprint">
-            MW
-          </div>
+      <div className="max-w-7xl mx-auto px-6 pt-28 pb-16">
+        <div className="grid grid-cols-[1.2fr_0.8fr] gap-14 items-center">
+          {/* ── Left: Content ── */}
           <div>
-            <div className="text-[12.5px] font-semibold">
-              Marek Wójcik &middot; Serwis
+            {/* Badge */}
+            <div
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold"
+              style={{
+                background: `${colors.accent}12`,
+                color: colors.accent,
+                border: `1px solid ${colors.accent}25`,
+              }}
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              Dla zarządców nieruchomości, wspólnot i osiedli
             </div>
-            <div className="font-mono text-[10.5px] text-[#9AA7B8]">
-              Notatka: wymiana zaworu, ETA 14:00
+
+            {/* Heading */}
+            <h1
+              className="font-heading font-bold text-[52px] leading-[1.06] tracking-[-1.5px] mt-6"
+              style={{ color: colors.text }}
+            >
+              Zgłoszenia usterek na osiedlu
+              <br />
+              <span
+                className="bg-gradient-to-r from-[#8864f0] to-[#4da3ff] bg-clip-text text-transparent"
+              >
+                wreszcie pod kontrolą
+              </span>
+            </h1>
+
+            <p
+              className="text-base leading-relaxed mt-5 max-w-[480px]"
+              style={{ color: colors.textSecondary }}
+            >
+              Mestio to aplikacja, w której mieszkaniec zgłasza usterkę w kilka
+              sekund, a zarządca, zarząd i serwis prowadzą ją od &bdquo;Nowe&rdquo; aż
+              do &bdquo;Zamknięte&rdquo; — z historią, powiadomieniami na telefonie i
+              pełną kontrolą.
+            </p>
+
+            {/* CTA Buttons */}
+            <div className="flex gap-3 mt-8">
+              <Link
+                href="/zamow"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-white px-5 py-3 rounded-xl transition-all duration-200 hover:brightness-110"
+                style={{
+                  background: `linear-gradient(135deg, #8864f0, ${colors.accent})`,
+                  boxShadow: `0 8px 24px ${colors.accent}35`,
+                }}
+              >
+                Zamów dla swojego osiedla
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+              <a
+                href="#jak-to-dziala"
+                className="inline-flex items-center text-sm font-semibold px-5 py-3 rounded-xl transition-colors duration-200"
+                style={{
+                  background: `${colors.surface}`,
+                  color: colors.text,
+                  border: `1px solid ${colors.cardBorder}`,
+                }}
+              >
+                Jak to działa
+              </a>
+            </div>
+
+            {/* Trust line */}
+            <div className="flex items-center gap-2 mt-4 text-xs font-medium" style={{ color: colors.success }}>
+              <CheckCircle className="w-4 h-4" />
+              Pierwsze 3 miesiące gratis · bez karty na start
+            </div>
+
+            {/* Stats row */}
+            <div className="flex gap-8 mt-10 pt-6" style={{ borderTop: `1px solid ${colors.cardBorder}` }}>
+              {HERO_STATS.map((stat) => (
+                <div key={stat.label}>
+                  <div className="font-heading font-bold text-xl" style={{ color: colors.accent }}>
+                    {stat.value}
+                  </div>
+                  <div className="text-xs mt-0.5" style={{ color: colors.textMuted }}>
+                    {stat.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* ── Right: App preview card (Erste-inspired) ── */}
+          <div
+            className="rounded-2xl p-6"
+            style={{
+              background: colors.card,
+              border: `1px solid ${colors.cardBorder}`,
+              boxShadow: `0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px ${colors.glassBorder}`,
+            }}
+          >
+            {/* Card header */}
+            <div className="flex items-center justify-between mb-4">
+              {/* Device indicator */}
+              <div className="flex items-center gap-2">
+                <Smartphone className="w-4 h-4" style={{ color: colors.textMuted }} />
+                <span className="font-mono text-xs font-semibold" style={{ color: colors.textMuted }}>
+                  MS-2041
+                </span>
+              </div>
+              {/* Status badge */}
+              <span
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold"
+                style={{
+                  background: `${colors.warning}15`,
+                  color: colors.warning,
+                  border: `1px solid ${colors.warning}30`,
+                }}
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-current inline-block" />
+                W realizacji
+              </span>
+            </div>
+
+            {/* Title */}
+            <h3 className="font-heading font-semibold text-lg" style={{ color: colors.text }}>
+              Cieknący kran w łazience
+            </h3>
+            <p className="font-mono text-xs mt-1.5" style={{ color: colors.textMuted }}>
+              Hydraulika · Budynek A · m. 14
+            </p>
+
+            {/* Progress steps (Erste-style status flow) */}
+            <div className="flex items-center mt-6 mb-5">
+              {STATUS_FLOW.map((status, i) => (
+                <div key={status.label} className="flex items-center flex-1">
+                  {i > 0 && (
+                    <div
+                      className="flex-1 h-0.5 mx-1 rounded"
+                      style={{
+                        background: STATUS_FLOW[i - 1].done
+                          ? `${status.color}50`
+                          : colors.cardBorder,
+                        height: 2,
+                      }}
+                    />
+                  )}
+                  <div className="flex flex-col items-center">
+                    <div
+                      className="w-8 h-8 rounded-full flex items-center justify-center"
+                      style={{
+                        background: status.done ? status.color : "transparent",
+                        border: status.done ? "none" : `2px solid ${colors.cardBorder}`,
+                        color: status.done ? "#fff" : colors.textMuted,
+                        boxShadow: status.active
+                          ? `0 0 0 4px ${status.color}25`
+                          : "none",
+                      }}
+                    >
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d={status.icon} />
+                      </svg>
+                    </div>
+                    <span
+                      className="mt-1.5 font-heading font-semibold text-[10px]"
+                      style={{ color: status.done ? colors.text : colors.textMuted }}
+                    >
+                      {status.label}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Activity row */}
+            <div
+              className="flex items-center gap-3 pt-4 mt-2"
+              style={{ borderTop: `1px solid ${colors.cardBorder}` }}
+            >
+              <div
+                className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold"
+                style={{ background: `${colors.accent}15`, color: colors.accent }}
+              >
+                MW
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="text-sm font-medium" style={{ color: colors.text }}>
+                  Marek Wójcik · Serwis
+                </div>
+                <div className="flex items-center gap-1.5 text-xs mt-0.5" style={{ color: colors.textMuted }}>
+                  <MessageSquare className="w-3 h-3" />
+                  <span className="truncate">Wymiana zaworu, ETA 14:00</span>
+                </div>
+              </div>
+              <Bell className="w-4 h-4" style={{ color: colors.textMuted }} />
+            </div>
+
+            {/* Bottom action bar — Erste-inspired */}
+            <div
+              className="flex items-center gap-3 mt-4 pt-3"
+              style={{ borderTop: `1px solid ${colors.cardBorder}` }}
+            >
+              <button
+                className="flex-1 flex items-center justify-center gap-1.5 text-xs font-semibold py-2 rounded-lg transition-colors"
+                style={{ background: `${colors.accent}12`, color: colors.accent }}
+              >
+                <MessageSquare className="w-3.5 h-3.5" />
+                Wyślij wiadomość
+              </button>
+              <button
+                className="flex-1 flex items-center justify-center gap-1.5 text-xs font-semibold py-2 rounded-lg transition-colors"
+                style={{ background: `${colors.success}12`, color: colors.success }}
+              >
+                <Wrench className="w-3.5 h-3.5" />
+                Zmień status
+              </button>
             </div>
           </div>
         </div>

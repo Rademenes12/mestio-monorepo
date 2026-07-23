@@ -1,93 +1,118 @@
+import { colors } from "@mestio/design-tokens";
+import {
+  ClipboardList,
+  Users,
+  Bell,
+  History,
+  Megaphone,
+  Building2,
+  Sparkles,
+} from "lucide-react";
+
 const FEATURES = [
   {
-    icon: "M8 5H6.8A1.8 1.8 0 0 0 5 6.8V19a1.8 1.8 0 0 0 1.8 1.8h10.4A1.8 1.8 0 0 0 19 19V6.8A1.8 1.8 0 0 0 17.2 5H16M8.6 5.4a1.4 1.4 0 0 1 1.4-1.4h4a1.4 1.4 0 0 1 1.4 1.4 1 1 0 0 1-1 1H9.6a1 1 0 0 1-1-1zM8.5 11h7M8.5 14.5h5",
+    icon: ClipboardList,
     title: "Zgłoszenia ze statusem",
-    desc: "Nowe → W realizacji → Zamknięte, z priorytetem i terminem SLA.",
-    color: "#3E7BD6",
+    desc: "Nowe → W realizacji → Zamknięte, z priorytetem i terminem SLA. Jak ticket w profesjonalnym helpdesku.",
+    color: colors.accent,
   },
   {
-    icon: "M12 12.5a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM5 20a7 7 0 0 1 14 0",
+    icon: Users,
     title: "Pięć ról",
-    desc: "Mieszkaniec, zarząd, zarządca nieruchomości, serwis, ochrona — każdy widzi to, co powinien.",
-    color: "#173A6A",
+    desc: "Mieszkaniec, zarząd, zarządca nieruchomości, serwis, ochrona — każdy widzi to, co powinien. Role z precyzyjnymi uprawnieniami.",
+    color: colors.navyLight,
   },
   {
-    icon: "M12 4a5 5 0 0 0-5 5v3l-1.6 2.5h13.2L17 12V9a5 5 0 0 0-5-5zM9.5 18a2.5 2.5 0 0 0 5 0",
-    title: "Powiadomienia",
-    desc: "Push o zmianie statusu i nowych ogłoszeniach na telefonach wszystkich ról — nikt nic nie przegapi.",
-    color: "#F2A900",
+    icon: Bell,
+    title: "Powiadomienia push",
+    desc: "Natychmiastowe powiadomienia o zmianie statusu i nowych ogłoszeniach na telefonach wszystkich użytkowników — nikt nic nie przegapi.",
+    color: colors.warning,
   },
   {
-    icon: "M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0zM12 7v5l3 2",
+    icon: History,
     title: "Ślad audytowy",
-    desc: "Pełna historia zmian — dowód dla mieszkańców i przy reklamacjach.",
-    color: "#2E9E6B",
+    desc: "Pełna historia każdej zmiany — dowód dla mieszkańców, zarządu i przy reklamacjach. Kto, kiedy, co zrobił.",
+    color: colors.success,
   },
   {
-    icon: "M5 10v4h3l7 4V6l-7 4H5zM18 9.2a3 3 0 0 1 0 5.6",
+    icon: Megaphone,
     title: "Ogłoszenia",
-    desc: "Komunikaty do mieszkańców z datą wygaśnięcia — potem znikają.",
-    color: "#173A6A",
+    desc: "Komunikaty do mieszkańców z datą wygaśnięcia — potem znikają automatycznie. Żadnego spamowania starszymi treściami.",
+    color: colors.navyLight,
   },
   {
-    icon: "M4 21V9l8-5 8 5v12M9 21v-6h6v6",
+    icon: Building2,
     title: "Struktura osiedla",
-    desc: "Budynki, klatki, piętra i garaże — mieszkaniec wybiera lokal przy rejestracji.",
-    color: "#3E7BD6",
+    desc: "Budynki, klatki, piętra i garaże — mieszkaniec wybiera lokal przy rejestracji. Automatyczne przypisanie do odpowiedniego zarządcy.",
+    color: colors.accent,
   },
 ];
 
-function hexToRgba(hex: string, alpha: number): string {
-  const num = parseInt(hex.slice(1), 16);
-  return `rgba(${(num >> 16) & 255},${(num >> 8) & 255},${num & 255},${alpha})`;
-}
-
 export default function FeaturesSection() {
   return (
-    <section id="funkcje" className="max-w-[1160px] mx-auto px-6 pt-[50px] pb-5">
+    <section id="funkcje" className="max-w-7xl mx-auto px-6 py-20">
       <div className="text-center">
-        <h2 className="font-heading font-bold text-[32px] tracking-[-0.6px] text-ink">
+        <div
+          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold mb-4"
+          style={{
+            background: `${colors.accent}10`,
+            color: colors.accent,
+            border: `1px solid ${colors.accent}20`,
+          }}
+        >
+          <Sparkles className="w-3.5 h-3.5" />
+          Funkcje
+        </div>
+        <h2
+          className="font-heading font-bold text-3xl tracking-[-0.6px]"
+          style={{ color: colors.text }}
+        >
           Wszystko, czego potrzebuje osiedle
         </h2>
-        <p className="text-base text-[#4A5A6E] mt-[10px]">
+        <p
+          className="text-sm mt-3 max-w-xl mx-auto"
+          style={{ color: colors.textSecondary }}
+        >
           Jedna aplikacja dla mieszkańców, zarządu, zarządcy nieruchomości, serwisu i ochrony.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[18px] mt-[34px]">
-        {FEATURES.map((feature) => (
-          <div
-            key={feature.title}
-            className="bg-white rounded-[22px] p-6 shadow-[0_2px_14px_rgba(14,26,43,.06)]"
-          >
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-10">
+        {FEATURES.map((feature) => {
+          const Icon = feature.icon;
+          return (
             <div
-              className="w-11 h-11 rounded-[12px] flex items-center justify-center"
+              key={feature.title}
+              className="group rounded-2xl border p-6 transition-all duration-200"
               style={{
-                background: hexToRgba(feature.color, 0.12),
-                color: feature.color,
+                background: colors.card,
+                borderColor: colors.cardBorder,
               }}
             >
-              <svg
-                width="22"
-                height="22"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.9"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+              <div
+                className="w-11 h-11 rounded-xl flex items-center justify-center transition-colors duration-200 mb-4"
+                style={{ background: `${feature.color}14` }}
               >
-                <path d={feature.icon} />
-              </svg>
+                <Icon
+                  className="w-5 h-5"
+                  style={{ color: feature.color }}
+                />
+              </div>
+              <h3
+                className="font-heading font-semibold text-base"
+                style={{ color: colors.text }}
+              >
+                {feature.title}
+              </h3>
+              <p
+                className="text-sm leading-relaxed mt-2"
+                style={{ color: colors.textSecondary }}
+              >
+                {feature.desc}
+              </p>
             </div>
-            <h3 className="font-heading font-semibold text-[17px] mt-[15px] text-ink">
-              {feature.title}
-            </h3>
-            <p className="text-sm text-[#5A6B80] leading-relaxed mt-[7px]">
-              {feature.desc}
-            </p>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );
