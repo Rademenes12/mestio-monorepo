@@ -1,3 +1,4 @@
+// Force rebuild 2026-07-28-v2
 "use client";
 
 import { createClient } from "@/lib/supabase/client";
