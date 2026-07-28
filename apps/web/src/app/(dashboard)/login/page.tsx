@@ -94,13 +94,13 @@ export default function LoginPage() {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center p-4"
+      className="min-h-screen w-full flex items-center justify-center p-4"
       style={{ background: "#F6F8FB" }}
     >
-      <div className="w-full max-w-sm">
+      <div className="w-full max-w-[420px] mx-auto">
         {/* Logo + nagłówek */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-[8px] mb-4"
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-[14px] mb-4 shadow-[0_4px_12px_rgba(62,123,214,0.3)]"
             style={{ background: "#3E7BD6" }}>
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff"
               strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round">
@@ -117,7 +117,7 @@ export default function LoginPage() {
 
         {/* Formularz */}
         <div
-          className="bg-white rounded-[8px] p-6"
+          className="bg-white rounded-[20px] p-8 shadow-[0_4px_24px_rgba(14,26,43,0.06)]"
           style={{
             border: "1px solid #E9EEF5",
           }}

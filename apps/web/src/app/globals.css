@@ -60,15 +60,6 @@
   --radius-xl: 12px;
   --radius-full: 9999px;
 
-  /* Spacing */
-  --spacing-xs: 4px;
-  --spacing-sm: 8px;
-  --spacing-md: 16px;
-  --spacing-lg: 24px;
-  --spacing-xl: 32px;
-  --spacing-2xl: 48px;
-  --spacing-3xl: 64px;
-
   /* Legacy compatibility */
   --color-ink: var(--color-text);
   --color-blueprint: var(--color-navy-light);
