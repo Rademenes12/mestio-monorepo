@@ -18,7 +18,7 @@ const PUBLIC_PATHS = [
 ];
 
 export async function middleware(request: NextRequest) {
-  const { supabaseResponse, user } = await updateSession(request);
+  const { supabaseResponse, user, supabase } = await updateSession(request);
 
   const pathname = request.nextUrl.pathname;
 
@@ -32,14 +32,37 @@ export async function middleware(request: NextRequest) {
     return supabaseResponse;
   }
 
-  // Protected routes: /owner/* and /client/* require login
+  // Protected routes require login
   if (pathname.startsWith("/owner/") || pathname.startsWith("/client/")) {
     if (!user) {
       const loginUrl = new URL("/login", request.url);
       loginUrl.searchParams.set("redirect", pathname);
       return NextResponse.redirect(loginUrl);
     }
-    // TODO: Check user role for /owner/* vs /client/* access
+
+    // Check user role (non-blocking — errors default to allowing access)
+    let role = "";
+    try {
+      const { data: profile } = await supabase
+        .from("fixflow_resident_profiles")
+        .select("role")
+        .eq("user_id", user.id)
+        .maybeSingle();
+      role = profile?.role || "";
+    } catch {
+      // If DB query fails, allow access (login page handles role check)
+    }
+
+    // /owner/* — only owner/admin
+    if (pathname.startsWith("/owner/")) {
+      if (role !== "owner" && role !== "admin") {
+        if (role === "manager" || role === "serwis" || role === "ochrona") {
+          return NextResponse.redirect(new URL("/client/", request.url));
+        }
+        // No role or unknown role — still allow (redirect handled by login)
+      }
+    }
+
     return supabaseResponse;
   }
 

@@ -9,8 +9,8 @@ export default function PublicLayout({
   return (
     <>
       <Navbar
-        ctaLabel="Wypróbuj za darmo"
-        ctaHref="/register"
+        ctaLabel="Zamów Mestio"
+        ctaHref="/zamow"
       />
       <main id="main-content" className="flex-1">
         {children}

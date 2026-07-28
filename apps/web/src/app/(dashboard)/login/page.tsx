@@ -34,7 +34,32 @@ export default function LoginPage() {
       return;
     }
 
-    router.push(redirectTo);
+    // After login, determine redirect based on user role
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (user) {
+      const { data: profile } = await supabase
+        .from("fixflow_resident_profiles")
+        .select("role")
+        .eq("user_id", user.id)
+        .maybeSingle();
+
+      const role = profile?.role || "";
+
+      if (role === "owner" || role === "admin") {
+        router.push("/owner/dashboard");
+      } else if (role === "manager" || role === "serwis" || role === "ochrona") {
+        router.push("/client/");
+      } else if (redirectTo !== "/") {
+        router.push(redirectTo);
+      } else {
+        router.push("/client/");
+      }
+    } else {
+      router.push(redirectTo);
+    }
     router.refresh();
   };
 

@@ -101,24 +101,27 @@ export default async function AppLayout({
   const userInitials = user.email?.slice(0, 2).toUpperCase() ?? "UZ";
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen bg-[#F8F9FB]">
       {/* ── Sidebar ── */}
-      <aside className="fixed inset-y-0 left-0 z-50 flex w-[220px] flex-col overflow-hidden border-r" style={{ borderColor: "rgba(59, 130, 246, 0.08)" }}>
+      <aside
+        className="fixed inset-y-0 left-0 z-50 flex w-[240px] flex-col overflow-hidden"
+        style={{ background: "#0E1A2B" }}
+      >
         {/* Logo */}
-        <div className="flex items-center gap-3 px-4 py-4 h-16">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#8864f0] to-[#4da3ff] flex items-center justify-center shrink-0">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round">
+        <div className="flex items-center gap-3 px-4 h-16 shrink-0" style={{ borderBottom: "1px solid rgba(255,255,255,.08)" }}>
+          <div className="w-8 h-8 rounded-[9px] shrink-0 flex items-center justify-center" style={{ background: "linear-gradient(135deg,#3E7BD6,#173A6A)" }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round">
               <path d="M14 7a4 4 0 0 1-5.3 5.3L4 17l3 3 4.7-4.7A4 4 0 0 0 17 10l-2.2 2.2-2-2L15 8z"/>
             </svg>
           </div>
           <div>
-            <div className="font-heading font-bold text-base text-white leading-tight">Mestio</div>
-            <div className="font-mono text-[8px] tracking-[0.6px]" style={{ color: "#7F96B5" }}>PANEL · ZARZĄD</div>
+            <div className="font-heading font-bold text-base leading-tight" style={{ color: "#fff" }}>Mestio</div>
+            <div style={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: "9px", color: "#7F96B5", letterSpacing: ".5px" }}>PANEL ZARZĄDU</div>
           </div>
         </div>
 
         {/* Estate switcher */}
-        <div className="px-3 mb-1">
+        <div className="px-3 mt-3 mb-1">
           <EstateSwitcher
             estates={
               (estates ?? []).map((e) => ({ id: e.id, name: e.name })) as {
@@ -134,21 +137,21 @@ export default async function AppLayout({
         <SidebarNav items={navItems} />
 
         {/* User footer */}
-        <div className="border-t px-4 py-3" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
+        <div className="px-3 py-3 shrink-0" style={{ borderTop: "1px solid rgba(255,255,255,.08)" }}>
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#8864f0] to-[#4da3ff] flex items-center justify-center shrink-0">
-              <span className="font-heading font-bold text-xs text-white">{userInitials}</span>
+            <div className="w-7 h-7 rounded-full shrink-0 flex items-center justify-center" style={{ background: "#3E7BD6" }}>
+              <span className="font-heading font-bold text-[10px] text-white">{userInitials}</span>
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-sm font-medium text-white truncate">{user.email?.split("@")[0] ?? "Użytkownik"}</div>
-              <div className="font-mono text-[10px] tracking-[0.3px]" style={{ color: "#7F96B5" }}>Zarząd osiedla</div>
+              <div className="text-[12px] font-semibold truncate" style={{ color: "#D5DEEC" }}>{user.email?.split("@")[0] ?? "Użytkownik"}</div>
+              <div style={{ fontSize: "10px", color: "#7F96B5" }}>Zarząd osiedla</div>
             </div>
           </div>
         </div>
       </aside>
 
       {/* ── Main content ── */}
-      <div className="flex-1 ml-[220px] flex flex-col min-w-0">
+      <div className="flex-1 ml-[240px] flex flex-col min-w-0">
         <main className="flex-1 overflow-y-auto p-6">{children}</main>
       </div>
     </div>

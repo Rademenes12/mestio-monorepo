@@ -1,48 +1,61 @@
 @import "tailwindcss";
 
-/* ── Erste Bank-inspired dark theme ── */
+/* ── Mestio light theme (design ref) ── */
 @theme inline {
-  /* Navy primary */
-  --color-navy: #1E3A5F;
-  --color-navy-light: #2B6CB0;
-  --color-navy-ice: #E8F0FE;
+  /* Blue primary */
+  --color-navy: #173A6A;
+  --color-navy-light: #3E7BD6;
+  --color-navy-ice: #EAF0F7;
 
   /* Accent blues */
-  --color-accent: #3B82F6;
-  --color-accent-hover: #60A5FA;
+  --color-accent: #3E7BD6;
+  --color-accent-hover: #2A5FA8;
 
   /* Background layers */
-  --color-bg: #0A1628;
-  --color-bg-secondary: #0F1E36;
-  --color-card: #132238;
-  --color-surface: #1A2D47;
+  --color-bg: #F6F8FB;
+  --color-bg-secondary: #F0F3F8;
+  --color-card: #FFFFFF;
+  --color-surface: #F8F9FB;
 
   /* Text */
-  --color-text: #F8FAFC;
-  --color-text-secondary: #94A3B8;
-  --color-text-muted: #64748B;
+  --color-text: #0E1A2B;
+  --color-text-secondary: #4A5A6E;
+  --color-text-muted: #7C8AA0;
+  --color-text-light: #9AA7B8;
 
   /* Status */
-  --color-success: #10B981;
-  --color-warning: #F59E0B;
+  --color-success: #2E9E6B;
+  --color-success-muted: rgba(46, 158, 107, 0.12);
+  --color-warning: #F2A900;
+  --color-warning-muted: rgba(242, 169, 0, 0.13);
   --color-error: #EF4444;
-  --color-info: #3B82F6;
+  --color-info: #3E7BD6;
+
+  /* Dark section */
+  --color-dark-bg: #0E1A2B;
+  --color-dark-text: #D5DEEC;
+  --color-dark-text-muted: #9FB2CC;
+  --color-dark-text-dim: #8FA6C4;
+  --color-dark-border: rgba(255, 255, 255, 0.12);
 
   /* Glassmorphism */
-  --color-glass-bg: rgba(19, 34, 56, 0.8);
-  --color-glass-border: rgba(59, 130, 246, 0.15);
-  --glass-blur: 16px;
+  --color-glass-bg: rgba(246, 248, 251, 0.85);
+  --color-glass-border: #E2E9F2;
+  --glass-blur: 10px;
 
   /* Shadows */
-  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.4);
-  --shadow-elevated: 0 8px 32px rgba(0, 0, 0, 0.5);
-  --shadow-glow: 0 0 24px rgba(59, 130, 246, 0.25);
+  --shadow-card: 0 2px 14px rgba(14, 26, 43, 0.06);
+  --shadow-elevated: 0 30px 60px rgba(14, 26, 43, 0.12);
+  --shadow-glow: 0 10px 24px rgba(23, 58, 106, 0.28);
+  --shadow-card-hover: 0 4px 16px rgba(14, 26, 43, 0.10);
+  --shadow-sidebar: 0 2px 12px rgba(14, 26, 43, 0.06);
+  --shadow-dark-glow: 0 24px 50px rgba(23, 58, 106, 0.28);
 
   /* Radius */
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
+  --radius-sm: 4px;
+  --radius-md: 11px;
+  --radius-lg: 13px;
+  --radius-xl: 22px;
   --radius-full: 9999px;
 
   /* Spacing */
@@ -54,12 +67,12 @@
   --spacing-2xl: 48px;
   --spacing-3xl: 64px;
 
-  /* Legacy compatibility — map old names to new Erste palette */
+  /* Legacy compatibility */
   --color-ink: var(--color-text);
-  --color-blueprint: var(--color-navy);
+  --color-blueprint: var(--color-navy-light);
   --color-azure: var(--color-accent);
   --color-amber: var(--color-warning);
-  --color-paper: var(--color-bg);
+  --color-paper: var(--color-card);
   --color-background: var(--color-bg);
   --color-foreground: var(--color-text);
 
@@ -107,20 +120,33 @@ code, .mono, pre {
 
 .glass-card:hover {
   box-shadow: var(--shadow-elevated);
-  border-color: rgba(59, 130, 246, 0.3);
+  border-color: rgba(62, 123, 214, 0.25);
 }
 
-/* ── Card with soft shadow ── */
+/* ── Mestio card with soft shadow ── */
 .card-soft {
   background: var(--color-card);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-xl);
   box-shadow: var(--shadow-card);
   transition: box-shadow 250ms ease, transform 250ms ease;
 }
 
 .card-soft:hover {
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-1px);
+}
+
+/* ── Mestio card with border ── */
+.card-bordered {
+  background: var(--color-card);
+  border: 1px solid var(--color-glass-border);
+  border-radius: var(--radius-xl);
+  transition: box-shadow 250ms ease, border-color 250ms ease;
+}
+
+.card-bordered:hover {
   box-shadow: var(--shadow-elevated);
-  transform: translateY(-2px);
+  border-color: rgba(62, 123, 214, 0.2);
 }
 
 /* ── Subtle surface ── */
@@ -139,26 +165,26 @@ code, .mono, pre {
 
 /* ── Divider ── */
 .divider {
-  border-color: rgba(248, 250, 252, 0.08);
+  border-color: rgba(0, 0, 0, 0.06);
 }
 
-/* ── Scrollbar (dark) ── */
+/* ── Scrollbar (light) ── */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-bg);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(248, 250, 252, 0.12);
+  background: rgba(0, 0, 0, 0.12);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(248, 250, 252, 0.2);
+  background: rgba(0, 0, 0, 0.2);
 }
 
 /* ── Micro-animations ── */
@@ -201,6 +227,6 @@ code, .mono, pre {
 
 /* ── Selection ── */
 ::selection {
-  background: rgba(59, 130, 246, 0.3);
+  background: rgba(62, 123, 214, 0.15);
   color: var(--color-text);
 }

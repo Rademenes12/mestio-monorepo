@@ -28,10 +28,15 @@ export function EstateSwitcher({
         });
         router.refresh();
       }}
-      className="text-sm bg-transparent border border-white/20 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-azure/40 focus:border-azure cursor-pointer min-h-[36px]"
+      className="text-sm rounded-lg px-3 py-2 focus:outline-none focus:ring-2 cursor-pointer min-h-[36px] w-full"
+      style={{
+        background: "rgba(255,255,255,.08)",
+        border: "1px solid rgba(255,255,255,.12)",
+        color: "#D5DEEC",
+      }}
     >
       {estates.map((est) => (
-        <option key={est.id} value={est.id} className="text-ink">
+        <option key={est.id} value={est.id}>
           {est.name}
         </option>
       ))}
