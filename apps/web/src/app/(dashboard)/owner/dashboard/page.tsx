@@ -72,24 +72,24 @@ export default async function DashboardPage() {
     console.error("[DashboardPage] Non-fatal DB fetch error:", err);
   }
 
-  const activeLeads = leads.filter((l) => l.stage === "active");
-  const trialLeads = leads.filter((l) => ["onboarding", "won"].includes(l.stage));
-  const mrr = activeLeads.reduce((sum, l) => sum + (l.mrr || 0), 0);
+  const activeLeads = (leads || []).filter((l) => l?.stage === "active");
+  const trialLeads = (leads || []).filter((l) => ["onboarding", "won"].includes(l?.stage || ""));
+  const mrr = activeLeads.reduce((sum, l) => sum + (l?.mrr || 0), 0);
 
-  const leadsPending = leads.filter((l) => l.stage === "lead");
-  const leadsInProgress = leads.filter((l) => ["contact", "demo", "offer"].includes(l.stage));
-  const leadsWon = leads.filter((l) => l.stage === "won");
+  const leadsPending = (leads || []).filter((l) => l?.stage === "lead");
+  const leadsInProgress = (leads || []).filter((l) => ["contact", "demo", "offer"].includes(l?.stage || ""));
+  const leadsWon = (leads || []).filter((l) => l?.stage === "won");
 
   // ── Pipeline stages ──
   const pipelineStages = [
-    { stage: "lead", label: "Lead", count: leads.filter((l) => l.stage === "lead").length, color: "#3E7BD6" },
-    { stage: "contact", label: "Kontakt", count: leads.filter((l) => l.stage === "contact").length, color: "#2B6CB0" },
-    { stage: "demo", label: "Demo", count: leads.filter((l) => l.stage === "demo").length, color: "#F2A900" },
-    { stage: "offer", label: "Oferta", count: leads.filter((l) => l.stage === "offer").length, color: "#C98800" },
-    { stage: "won", label: "Wygrana", count: leads.filter((l) => l.stage === "won").length, color: "#2E9E6B" },
+    { stage: "lead", label: "Lead", count: (leads || []).filter((l) => l?.stage === "lead").length, color: "#3E7BD6" },
+    { stage: "contact", label: "Kontakt", count: (leads || []).filter((l) => l?.stage === "contact").length, color: "#2B6CB0" },
+    { stage: "demo", label: "Demo", count: (leads || []).filter((l) => l?.stage === "demo").length, color: "#F2A900" },
+    { stage: "offer", label: "Oferta", count: (leads || []).filter((l) => l?.stage === "offer").length, color: "#C98800" },
+    { stage: "won", label: "Wygrana", count: (leads || []).filter((l) => l?.stage === "won").length, color: "#2E9E6B" },
   ];
 
-  const pipelineTotal = pipelineStages.reduce((s, p) => s + p.count, 0);
+  const pipelineTotal = pipelineStages.reduce((s, p) => s + (p?.count || 0), 0);
 
   // ── Action queue ──
   const actionQueue: {
@@ -100,7 +100,7 @@ export default async function DashboardPage() {
   if (leadsPending.length) {
     actionQueue.push({
       title: `${leadsPending.length} ${leadsPending.length === 1 ? "lead czeka" : "leady czekają"} na kontakt`,
-      subtitle: leadsPending.slice(0, 3).map((l) => l.company_name).join(", "),
+      subtitle: leadsPending.slice(0, 3).map((l) => l?.company_name || "Klient").join(", "),
       tag: "Lead", color: colors.info,
       icon: Zap, cta: "Zadzwoń dziś", link: "/pipeline",
     });
@@ -108,7 +108,7 @@ export default async function DashboardPage() {
   if (leadsInProgress.length) {
     actionQueue.push({
       title: `${leadsInProgress.length} rozmów w toku`,
-      subtitle: leadsInProgress.slice(0, 3).map((l) => l.company_name).join(", "),
+      subtitle: leadsInProgress.slice(0, 3).map((l) => l?.company_name || "Klient").join(", "),
       tag: "W toku", color: colors.warning,
       icon: Clock, cta: "Kontynuuj", link: "/pipeline",
     });
@@ -116,14 +116,14 @@ export default async function DashboardPage() {
   if (trialLeads.length) {
     actionQueue.push({
       title: `${trialLeads.length} ${trialLeads.length === 1 ? "próba kończy się" : "próby kończą się"} wkrótce`,
-      subtitle: trialLeads.slice(0, 3).map((l) => l.company_name).join(", "),
+      subtitle: trialLeads.slice(0, 3).map((l) => l?.company_name || "Klient").join(", "),
       tag: "Próba", color: colors.warning,
       icon: AlertTriangle, cta: "Przedłuż", link: "/customers",
     });
   }
 
-  const overdueTotal = overdueInvoices.reduce((s, i) => s + i.amount, 0);
-  const overdueCount = overdueInvoices.length;
+  const overdueTotal = (overdueInvoices || []).reduce((s, i) => s + (i?.amount || 0), 0);
+  const overdueCount = (overdueInvoices || []).length;
 
   // ── Shortcuts ──
   const shortcuts: Shortcut[] = [
@@ -134,14 +134,14 @@ export default async function DashboardPage() {
   ];
 
   // ── Tasks as timeline events ──
-  const taskEvents: TimelineEvent[] = openTasks.slice(0, 6).map((t) => ({
-    id: t.id,
-    time: t.due_date ?? t.created_at,
-    user: t.crm_leads?.company_name ?? "—",
-    action: t.priority === "high" ? "Priorytet" : t.priority === "medium" ? "Średni" : "Niski",
-    description: t.title,
+  const taskEvents: TimelineEvent[] = (openTasks || []).slice(0, 6).map((t) => ({
+    id: t?.id || String(Math.random()),
+    time: t?.due_date ?? t?.created_at ?? new Date().toISOString(),
+    user: t?.crm_leads?.company_name ?? "—",
+    action: t?.priority === "high" ? "Priorytet" : t?.priority === "medium" ? "Średni" : "Niski",
+    description: t?.title || "Zadanie",
     href: `/tasks`,
-    type: t.priority === "high" ? "created" : "updated",
+    type: t?.priority === "high" ? "created" : "updated",
   }));
 
   return (
@@ -150,7 +150,7 @@ export default async function DashboardPage() {
       <div>
         <h1 className="font-heading font-bold text-xl text-ink">Pulpit</h1>
         <p className="text-sm text-ink/50 mt-0.5">
-          Witaj w panelu zarządzania — {activeLeads.length} aktywnych klientów, MRR {mrr.toLocaleString("pl-PL")} zł
+          Witaj w panelu zarządzania — {activeLeads.length} aktywnych klientów, MRR {(mrr || 0).toLocaleString("pl-PL")} zł
         </p>
       </div>
 
