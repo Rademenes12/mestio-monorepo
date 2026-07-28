@@ -1,10 +1,12 @@
+"use client";
+
 /**
- * CRM-Owner Dashboard (Erste Mobile inspired)
+ * CRM-Owner Dashboard (Stratify Light Premium inspired)
  * "Pulpit" — KPI cards with trends, pipeline visual, action queue, team tasks.
  */
-import { createClient } from "@/lib/supabase/server";
+import { useEffect, useState } from "react";
+import { createClient } from "@/lib/supabase/client";
 import type { CrmLead, CrmTask } from "@/lib/types";
-import { runAutomations } from "@/lib/automations";
 import Link from "next/link";
 import { colors } from "@mestio/design-tokens";
 import {
@@ -16,61 +18,89 @@ import {
   UserPlus,
   DollarSign,
   BarChart3,
-  ArrowRight,
   CheckCircle,
   Clock,
 } from "lucide-react";
 import {
-  KpiCard,
   SkrotyBar,
   WidgetCard,
-  ActivityTimeline,
   StratifyKpiCard,
-  StratifyActivityStream,
 } from "@mestio/ui";
-import type { Shortcut, TimelineEvent, ActivityEvent } from "@mestio/ui";
+import type { Shortcut } from "@mestio/ui";
 
-function tint(hex: string, alpha: number): string {
-  const n = parseInt(hex.slice(1), 16);
-  return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${alpha})`;
+function PipelineVisual({
+  stages,
+  total,
+}: {
+  stages: { stage: string; label: string; count: number; color: string }[];
+  total: number;
+}) {
+  return (
+    <div className="space-y-3">
+      <div className="flex h-3 w-full rounded-full overflow-hidden bg-gray-100 p-0.5">
+        {stages.map((st) => {
+          const pct = total > 0 ? (st.count / total) * 100 : 0;
+          if (pct === 0) return null;
+          return (
+            <div
+              key={st.stage}
+              style={{ width: `${pct}%`, background: st.color }}
+              className="h-full first:rounded-l-full last:rounded-r-full transition-all"
+              title={`${st.label}: ${st.count}`}
+            />
+          );
+        })}
+      </div>
+      <div className="grid grid-cols-5 gap-2 pt-1">
+        {stages.map((st) => (
+          <div key={st.stage} className="text-center">
+            <div className="flex items-center justify-center gap-1.5 mb-1">
+              <span className="w-2 h-2 rounded-full shrink-0" style={{ background: st.color }} />
+              <span className="text-xs text-gray-500 font-medium truncate">{st.label}</span>
+            </div>
+            <p className="text-sm font-bold text-gray-900">{st.count}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
 
-export default async function DashboardPage() {
-  let leads: CrmLead[] = [];
-  let openTasks: (CrmTask & { crm_leads: { company_name: string } | null })[] = [];
-  let overdueInvoices: { status: string; amount: number }[] = [];
+export default function DashboardPage() {
+  const [leads, setLeads] = useState<CrmLead[]>([]);
+  const [openTasks, setOpenTasks] = useState<(CrmTask & { crm_leads: { company_name: string } | null })[]>([]);
+  const [overdueInvoices, setOverdueInvoices] = useState<{ status: string; amount: number }[]>([]);
 
-  try {
-    const supabase = await createClient();
-    await supabase.auth.getUser().catch(() => null);
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const supabase = createClient();
+        const [leadsRes, tasksRes, invoicesRes] = await Promise.allSettled([
+          supabase.from("crm_leads").select("*"),
+          supabase
+            .from("crm_tasks")
+            .select("*, crm_leads(company_name)")
+            .eq("done", false)
+            .order("due_date", { ascending: true })
+            .limit(8),
+          supabase.from("crm_invoices").select("status, amount").eq("status", "overdue"),
+        ]);
 
-    // Silnik automatyzacji - uruchamiamy w tle bez blokowania
-    runAutomations(supabase).catch(() => 0);
-
-    // ── Safe Parallel Queries (Promise.allSettled) ──
-    const [leadsRes, tasksRes, invoicesRes] = await Promise.allSettled([
-      supabase.from("crm_leads").select("*"),
-      supabase
-        .from("crm_tasks")
-        .select("*, crm_leads(company_name)")
-        .eq("done", false)
-        .order("due_date", { ascending: true })
-        .limit(8),
-      supabase.from("crm_invoices").select("status, amount").eq("status", "overdue"),
-    ]);
-
-    if (leadsRes.status === "fulfilled" && leadsRes.value.data) {
-      leads = (leadsRes.value.data as CrmLead[]) ?? [];
+        if (leadsRes.status === "fulfilled" && leadsRes.value.data) {
+          setLeads(leadsRes.value.data as CrmLead[]);
+        }
+        if (tasksRes.status === "fulfilled" && tasksRes.value.data) {
+          setOpenTasks(tasksRes.value.data as (CrmTask & { crm_leads: { company_name: string } | null })[]);
+        }
+        if (invoicesRes.status === "fulfilled" && invoicesRes.value.data) {
+          setOverdueInvoices(invoicesRes.value.data as { status: string; amount: number }[]);
+        }
+      } catch (err) {
+        console.error("[DashboardPage] DB load error:", err);
+      }
     }
-    if (tasksRes.status === "fulfilled" && tasksRes.value.data) {
-      openTasks = (tasksRes.value.data as (CrmTask & { crm_leads: { company_name: string } | null })[]) ?? [];
-    }
-    if (invoicesRes.status === "fulfilled" && invoicesRes.value.data) {
-      overdueInvoices = (invoicesRes.value.data as { status: string; amount: number }[]) ?? [];
-    }
-  } catch (err) {
-    console.error("[DashboardPage] Non-fatal DB fetch error:", err);
-  }
+    fetchData();
+  }, []);
 
   const activeLeads = (leads || []).filter((l) => l?.stage === "active");
   const trialLeads = (leads || []).filter((l) => ["onboarding", "won"].includes(l?.stage || ""));
@@ -78,7 +108,6 @@ export default async function DashboardPage() {
 
   const leadsPending = (leads || []).filter((l) => l?.stage === "lead");
   const leadsInProgress = (leads || []).filter((l) => ["contact", "demo", "offer"].includes(l?.stage || ""));
-  const leadsWon = (leads || []).filter((l) => l?.stage === "won");
 
   // ── Pipeline stages ──
   const pipelineStages = [
@@ -133,17 +162,6 @@ export default async function DashboardPage() {
     { label: "Raport", icon: BarChart3, href: "/reports", accentColor: "#173A6A" },
   ];
 
-  // ── Tasks as timeline events ──
-  const taskEvents: TimelineEvent[] = (openTasks || []).slice(0, 6).map((t) => ({
-    id: t?.id || String(Math.random()),
-    time: t?.due_date ?? t?.created_at ?? new Date().toISOString(),
-    user: t?.crm_leads?.company_name ?? "—",
-    action: t?.priority === "high" ? "Priorytet" : t?.priority === "medium" ? "Średni" : "Niski",
-    description: t?.title || "Zadanie",
-    href: `/tasks`,
-    type: t?.priority === "high" ? "created" : "updated",
-  }));
-
   return (
     <div className="space-y-6 animate-fade-in">
       {/* ── Header ── */}
@@ -165,7 +183,7 @@ export default async function DashboardPage() {
             value={activeLeads.length}
             change="+14%"
             changeType="positive"
-            timeframe={`MRR ${mrr.toLocaleString("pl-PL")} zł`}
+            timeframe={`MRR ${(mrr || 0).toLocaleString("pl-PL")} zł`}
             icon={Users}
             iconBgColor="bg-blue-50"
             iconColor="text-[#3E7BD6]"
@@ -187,7 +205,7 @@ export default async function DashboardPage() {
           <StratifyKpiCard
             title="Zaległe Faktury"
             value={overdueCount}
-            change={overdueCount > 0 ? `${overdueTotal.toLocaleString("pl-PL")} zł` : "0 zł"}
+            change={overdueCount > 0 ? `${(overdueTotal || 0).toLocaleString("pl-PL")} zł` : "0 zł"}
             changeType={overdueCount > 0 ? "negative" : "neutral"}
             timeframe={overdueCount > 0 ? "Wymaga ponaglenia" : "Brak opóźnień"}
             icon={DollarSign}
@@ -199,8 +217,8 @@ export default async function DashboardPage() {
           <StratifyKpiCard
             title="Otwarte Zadania"
             value={openTasks.length}
-            change={`${openTasks.filter((t) => t.due_date && new Date(t.due_date) < new Date()).length} po terminie`}
-            changeType={openTasks.filter((t) => t.due_date && new Date(t.due_date) < new Date()).length > 0 ? "negative" : "positive"}
+            change={`${openTasks.filter((t) => t?.due_date && new Date(t.due_date) < new Date()).length} po terminie`}
+            changeType={openTasks.filter((t) => t?.due_date && new Date(t.due_date) < new Date()).length > 0 ? "negative" : "positive"}
             timeframe="Do zrealizowania"
             icon={FileText}
             iconBgColor="bg-amber-50"
@@ -210,7 +228,7 @@ export default async function DashboardPage() {
       </div>
 
       {/* ── Middle row: Pipeline + Action queue ── */}
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* Pipeline visual */}
         <WidgetCard
           title="Pipeline"
@@ -219,7 +237,7 @@ export default async function DashboardPage() {
               Otwórz →
             </Link>
           }
-          className="col-span-2"
+          className="lg:col-span-2"
         >
           <PipelineVisual stages={pipelineStages} total={pipelineTotal} />
         </WidgetCard>
@@ -262,9 +280,6 @@ export default async function DashboardPage() {
                         >
                           {card.tag}
                         </span>
-                        <span className="text-xs font-medium" style={{ color: card.color }}>
-                          {card.cta} →
-                        </span>
                       </div>
                     </div>
                   </Link>
@@ -273,175 +288,6 @@ export default async function DashboardPage() {
             </div>
           )}
         </WidgetCard>
-      </div>
-
-      {/* ── Bottom row: Tasks + Recent activity ── */}
-      <div className="grid grid-cols-2 gap-4">
-        {/* Tasks */}
-        <WidgetCard
-          title="Zadania"
-          action={
-            <Link href="/tasks" className="text-xs font-medium" style={{ color: colors.accent }}>
-              Zespół →
-            </Link>
-          }
-        >
-          {openTasks.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-6 text-sm" style={{ color: colors.textMuted }}>
-              <CheckCircle className="w-8 h-8 mb-2 opacity-40" />
-              <p>Brak otwartych zadań</p>
-            </div>
-          ) : (
-            <div className="space-y-1">
-              {openTasks.slice(0, 6).map((task) => {
-                const overdue = task.due_date && new Date(task.due_date) < new Date();
-                return (
-                  <Link
-                    key={task.id}
-                    href="/tasks"
-                    className="flex items-center gap-3 py-2.5 px-3 rounded-xl transition-colors"
-                    style={{ borderBottom: `1px solid ${colors.cardBorder}` }}
-                  >
-                    <div
-                      className="w-2 h-2 rounded-full shrink-0"
-                      style={{
-                        background:
-                          task.priority === "high"
-                            ? colors.error
-                            : task.priority === "medium"
-                              ? colors.warning
-                              : colors.textMuted,
-                      }}
-                    />
-                    <span className="text-sm flex-1 truncate" style={{ color: colors.text }}>
-                      {task.title}
-                    </span>
-                    <span className="text-xs shrink-0" style={{ color: colors.textMuted }}>
-                      {task.crm_leads?.company_name ?? "—"}
-                    </span>
-                    {overdue && (
-                      <span
-                        className="text-[10px] px-2 py-0.5 rounded-full font-semibold shrink-0"
-                        style={{ background: `${colors.error}15`, color: colors.error }}
-                      >
-                        PO TERMINIE
-                      </span>
-                    )}
-                  </Link>
-                );
-              })}
-            </div>
-          )}
-        </WidgetCard>
-
-        {/* Pipeline summary */}
-        <WidgetCard title="Pipeline — podsumowanie">
-          <div className="space-y-1">
-            {[
-              { label: "Nowe leady", count: leadsPending.length, color: colors.info, href: "/pipeline" },
-              { label: "W toku", count: leadsInProgress.length, color: colors.warning, href: "/pipeline" },
-              { label: "Wygrane", count: leadsWon.length, color: colors.success, href: "/pipeline" },
-              { label: "Aktywni klienci", count: activeLeads.length, color: colors.accent, href: "/customers" },
-              { label: "Zaległe faktury", count: overdueCount, color: colors.error, href: "/invoices" },
-            ].map((item) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                className="flex items-center justify-between py-2.5 px-3 rounded-xl transition-colors"
-                style={{ borderBottom: `1px solid ${colors.cardBorder}` }}
-              >
-                <div className="flex items-center gap-2.5">
-                  <div className="w-2 h-2 rounded-full" style={{ background: item.color }} />
-                  <span className="text-sm" style={{ color: colors.text }}>
-                    {item.label}
-                  </span>
-                </div>
-                <span className="text-sm font-bold" style={{ color: colors.text }}>
-                  {item.count}
-                </span>
-              </Link>
-            ))}
-          </div>
-        </WidgetCard>
-      </div>
-
-      {/* ── Activity timeline ── */}
-      {taskEvents.length > 0 && (
-        <WidgetCard
-          title="Ostatnie zadania"
-          subtitle="Najnowsze aktywności"
-          action={
-            <Link href="/tasks" className="text-xs font-medium" style={{ color: colors.accent }}>
-              Wszystkie zadania →
-            </Link>
-          }
-        >
-          <ActivityTimeline events={taskEvents} />
-        </WidgetCard>
-      )}
-    </div>
-  );
-}
-
-/* ── Pipeline visual component ── */
-function PipelineVisual({
-  stages,
-  total,
-}: {
-  stages: { stage: string; label: string; count: number; color: string }[];
-  total: number;
-}) {
-  if (total === 0) {
-    return (
-      <div className="flex flex-col items-center justify-center py-8 text-sm" style={{ color: colors.textMuted }}>
-        <Users className="w-8 h-8 mb-2 opacity-40" />
-        <p>Brak leadów w pipeline</p>
-      </div>
-    );
-  }
-
-  return (
-    <div className="pt-2">
-      {/* Funnel bar */}
-      <div className="flex h-8 rounded-lg overflow-hidden mb-4">
-        {stages.map((s) => {
-          const pct = Math.round((s.count / total) * 100);
-          if (pct === 0) return null;
-          return (
-            <div
-              key={s.stage}
-              className="flex items-center justify-center text-[11px] font-semibold text-white transition-all"
-              style={{
-                width: `${pct}%`,
-                background: s.color,
-                opacity: 0.85,
-              }}
-              title={`${s.label}: ${s.count}`}
-            >
-              {pct > 10 ? s.count : null}
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Stage cards */}
-      <div className="flex gap-2">
-        {stages.map((s) => (
-          <Link
-            key={s.stage}
-            href="/pipeline"
-            className="flex-1 rounded-xl p-3 text-center transition-opacity hover:opacity-85"
-            style={{ background: tint(s.color, 0.08) }}
-          >
-            <div className="w-2 h-2 rounded-full mx-auto mb-1.5" style={{ background: s.color }} />
-            <p className="text-xs font-semibold" style={{ color: `${s.color}cc` }}>
-              {s.label}
-            </p>
-            <p className="text-lg font-bold mt-0.5" style={{ color: colors.text }}>
-              {s.count}
-            </p>
-          </Link>
-        ))}
       </div>
     </div>
   );
