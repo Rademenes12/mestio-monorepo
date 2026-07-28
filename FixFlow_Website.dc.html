@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#F6F8FB}
+a{text-decoration:none;color:inherit}
+input,textarea,button{font-family:inherit;border:none;background:none}
+input:focus,textarea:focus{outline:none}
+</style>
+</helmet>
+<div style="width:100%;min-height:100vh;background:#F6F8FB;font-family:'IBM Plex Sans',system-ui,sans-serif;color:#0E1A2B">
+
+  <!-- NAV -->
+  <div style="position:sticky;top:0;z-index:50;background:rgba(246,248,251,.85);backdrop-filter:blur(10px);border-bottom:1px solid #E2E9F2">
+    <div style="max-width:1160px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px">
+      <div onClick="{{ goHome }}" style="display:flex;align-items:center;gap:10px;cursor:pointer">
+        <div style="width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#3E7BD6,#173A6A);display:flex;align-items:center;justify-content:center"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M14 7a4 4 0 0 1-5.3 5.3L4 17l3 3 4.7-4.7A4 4 0 0 0 17 10l-2.2 2.2-2-2L15 8z"></path></svg></div>
+        <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;letter-spacing:-.4px">Mestio</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:26px">
+        <sc-for list="{{ navLinks }}" as="n" hint-placeholder-count="4"><span onClick="{{ n.onClick }}" style="font-size:14px;font-weight:500;color:#3A4759;cursor:pointer">{{ n.label }}</span></sc-for>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <span onClick="{{ goKontakt }}" style="font-size:14px;font-weight:600;color:#173A6A;padding:9px 14px;cursor:pointer">Zaloguj</span>
+        <span onClick="{{ goReg }}" style="font-size:14px;font-weight:600;color:#fff;background:linear-gradient(135deg,#3E7BD6,#173A6A);padding:10px 18px;border-radius:11px;cursor:pointer;box-shadow:0 6px 16px rgba(23,58,106,.25)">Zamów Mestio</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== HOME ===== -->
+  <sc-if value="{{ isHome }}">
+  <div>
+    <!-- HERO -->
+    <div style="max-width:1160px;margin:0 auto;padding:70px 24px 40px;display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center">
+      <div>
+        <div style="display:inline-flex;align-items:center;gap:8px;padding:6px 13px;border-radius:999px;background:#EAF0F7;color:#173A6A;font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:.3px">Dla zarządców i wspólnot mieszkaniowych</div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:48px;line-height:1.08;letter-spacing:-1.2px;margin-top:20px">Zgłoszenia usterek na osiedlu — wreszcie pod kontrolą</div>
+        <div style="font-size:17px;line-height:1.6;color:#4A5A6E;margin-top:18px;max-width:520px">Mestio to aplikacja, w której mieszkaniec zgłasza usterkę w kilka sekund, a zarząd i serwis prowadzą ją od „Nowe" aż po „Zamknięte" — z historią, powiadomieniami i pełną kontrolą dostępu.</div>
+        <div style="display:flex;gap:12px;margin-top:28px">
+          <span onClick="{{ goReg }}" style="font-size:15px;font-weight:600;color:#fff;background:linear-gradient(135deg,#3E7BD6,#173A6A);padding:14px 24px;border-radius:13px;cursor:pointer;box-shadow:0 10px 24px rgba(23,58,106,.28)">Zamów dla swojego osiedla</span>
+          <a href="#jak" style="font-size:15px;font-weight:600;color:#173A6A;background:#fff;border:1px solid #D8E2EF;padding:14px 24px;border-radius:13px;cursor:pointer">Jak to działa</a>
+        </div>
+        <div style="display:flex;align-items:center;gap:7px;margin-top:16px;font-size:14px;color:#1f7a4d;font-weight:600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2E9E6B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Pierwsze 3 miesiące gratis · bez karty na start</div>
+        <div style="display:flex;gap:26px;margin-top:34px">
+          <sc-for list="{{ heroStats }}" as="s" hint-placeholder-count="3"><div><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:26px;color:#173A6A">{{ s.v }}</div><div style="font-size:12.5px;color:#7C8AA0;margin-top:2px">{{ s.k }}</div></div></sc-for>
+        </div>
+      </div>
+      <!-- app preview card (signature status) -->
+      <div style="background:#fff;border:1px solid #E9EEF5;border-radius:22px;padding:22px;box-shadow:0 30px 60px rgba(14,26,43,.12)">
+        <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:#8A98AB">FX-2041</span><span style="display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:999px;background:rgba(242,169,0,.13);color:#B37D00;font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600"><i style="width:6px;height:6px;border-radius:999px;background:#F2A900;display:inline-block"></i>W realizacji</span></div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:18px;margin-top:12px">Cieknący kran w łazience</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#7C8AA0;margin-top:6px">Hydraulika · Budynek A · m. 14</div>
+        <div style="display:flex;align-items:flex-start;margin-top:22px">
+          <sc-for list="{{ heroTrack }}" as="t" hint-placeholder-count="5">
+            <sc-if value="{{ t.isNode }}"><div style="display:flex;flex-direction:column;align-items:center;width:78px"><div style="{{ t.circle }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ t.icon }}"></path></svg></div><div style="{{ t.label }}">{{ t.name }}</div></div></sc-if>
+            <sc-if value="{{ t.isConn }}"><div style="{{ t.style }}"></div></sc-if>
+          </sc-for>
+        </div>
+        <div style="margin-top:22px;padding-top:16px;border-top:1px solid #F0F3F8;display:flex;align-items:center;gap:10px"><div style="width:30px;height:30px;border-radius:999px;background:#EAF0F7;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;color:#173A6A">MW</div><div><div style="font-size:12.5px;font-weight:600">Marek Wójcik · Serwis</div><div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#9AA7B8">Notatka: wymiana zaworu, ETA 14:00</div></div></div>
+      </div>
+    </div>
+
+    <!-- PROBLEM/SOLUTION -->
+    <div style="max-width:1160px;margin:0 auto;padding:40px 24px">
+      <div style="background:#0E1A2B;border-radius:24px;padding:44px;display:grid;grid-template-columns:1fr 1fr;gap:40px;background-image:radial-gradient(600px 300px at 90% 0%,rgba(62,123,214,.25),transparent 60%)">
+        <div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:#8FA6C4">Bez Mestio</div>
+          <div style="display:flex;flex-direction:column;gap:14px;margin-top:16px">
+            <sc-for list="{{ painPoints }}" as="p" hint-placeholder-count="3"><div style="display:flex;gap:10px;align-items:flex-start"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6B7A90" stroke-width="2" stroke-linecap="round" style="flex-shrink:0;margin-top:1px"><path d="M6 6l12 12M18 6L6 18"></path></svg><span style="font-size:14.5px;color:#C7D2E0;line-height:1.5">{{ p }}</span></div></sc-for>
+          </div>
+        </div>
+        <div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:#7FE0AE">Z Mestio</div>
+          <div style="display:flex;flex-direction:column;gap:14px;margin-top:16px">
+            <sc-for list="{{ gainPoints }}" as="g" hint-placeholder-count="3"><div style="display:flex;gap:10px;align-items:flex-start"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2E9E6B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><path d="M5 12l5 5 9-11"></path></svg><span style="font-size:14.5px;color:#fff;line-height:1.5">{{ g }}</span></div></sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FEATURES -->
+    <div style="max-width:1160px;margin:0 auto;padding:50px 24px 20px">
+      <div style="text-align:center"><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:32px;letter-spacing:-.6px">Wszystko, czego potrzebuje osiedle</div><div style="font-size:16px;color:#4A5A6E;margin-top:10px">Jedna aplikacja dla mieszkańców, zarządu, serwisu i ochrony.</div></div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px">
+        <sc-for list="{{ features }}" as="f" hint-placeholder-count="6">
+          <div style="background:#fff;border:none;border-radius:22px;padding:24px;box-shadow:0 2px 14px rgba(14,26,43,.06)">
+            <div style="width:44px;height:44px;border-radius:12px;background:{{ f.bg }};display:flex;align-items:center;justify-content:center;color:{{ f.color }}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="{{ f.icon }}"></path></svg></div>
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:17px;margin-top:15px">{{ f.title }}</div>
+            <div style="font-size:14px;color:#5A6B80;line-height:1.55;margin-top:7px">{{ f.desc }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <div id="jak" style="max-width:1160px;margin:0 auto;padding:56px 24px">
+      <div style="text-align:center"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.7px;text-transform:uppercase;color:#8A98AB">Jak to działa</div><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:32px;letter-spacing:-.6px;margin-top:8px">Trzy kroki do uruchomienia</div></div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px">
+        <sc-for list="{{ steps }}" as="s" hint-placeholder-count="3">
+          <div style="background:#fff;border:none;border-radius:22px;padding:26px;position:relative;box-shadow:0 2px 14px rgba(14,26,43,.06)">
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;color:#fff;width:34px;height:34px;border-radius:999px;background:linear-gradient(135deg,#3E7BD6,#173A6A);display:flex;align-items:center;justify-content:center">{{ s.n }}</div>
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:17px;margin-top:15px">{{ s.title }}</div>
+            <div style="font-size:14px;color:#5A6B80;line-height:1.55;margin-top:8px">{{ s.desc }}</div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="text-align:center;margin-top:18px;font-size:13.5px;color:#7C8AA0">Firma płaci raz na stronie — mieszkańcy pobierają aplikację za darmo i wpisują kod. Bez opłat w aplikacji.</div>
+    </div>
+
+    <!-- PRICING -->
+    <div id="cennik" style="max-width:1160px;margin:0 auto;padding:40px 24px">
+      <div style="text-align:center"><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:32px;letter-spacing:-.6px">Prosty cennik za osiedle</div><div style="font-size:16px;color:#4A5A6E;margin-top:10px">Płaci firma zarządzająca. Rozliczenie miesięczne, faktura VAT. Anuluj kiedy chcesz.</div>
+      <div style="display:inline-flex;align-items:center;gap:8px;margin-top:16px;padding:8px 16px;border-radius:999px;background:rgba(46,158,107,.12);color:#1f7a4d;font-weight:600;font-size:14px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2E9E6B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"></path></svg>Pierwsze 3 miesiące gratis — bez zobowiązań</div></div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:34px;align-items:stretch">
+        <sc-for list="{{ plans }}" as="p" hint-placeholder-count="3">
+          <div style="{{ p.card }}">
+            <sc-if value="{{ p.popular }}"><div style="position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:#F2A900;color:#3a2a00;font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;padding:4px 12px;border-radius:999px;white-space:nowrap">Najczęściej wybierany</div></sc-if>
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:18px;color:{{ p.titleColor }}">{{ p.name }}</div>
+            <div style="font-size:13px;color:{{ p.subColor }};margin-top:4px">{{ p.forWho }}</div>
+            <div style="display:flex;align-items:baseline;gap:6px;margin-top:16px;flex-wrap:wrap"><span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:26px;color:{{ p.titleColor }};letter-spacing:-.6px">{{ p.price }}</span><span style="font-size:13px;color:{{ p.subColor }}">{{ p.per }}</span></div>
+            <div style="height:1px;background:{{ p.divider }};margin:18px 0"></div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <sc-for list="{{ p.feats }}" as="ft" hint-placeholder-count="4"><div style="display:flex;gap:9px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="{{ p.check }}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><path d="M5 12l5 5 9-11"></path></svg><span style="font-size:13.5px;color:{{ p.featColor }};line-height:1.45">{{ ft }}</span></div></sc-for>
+            </div>
+            <div onClick="{{ p.onClick }}" style="{{ p.btn }}">{{ p.cta }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- REFERRAL -->
+    <div style="max-width:1160px;margin:0 auto;padding:40px 24px">
+      <div style="background:linear-gradient(135deg,#173A6A,#0E1A2B);border-radius:24px;padding:40px;display:flex;align-items:center;justify-content:space-between;gap:30px;flex-wrap:wrap">
+        <div style="max-width:620px">
+          <div style="display:inline-flex;align-items:center;gap:7px;padding:5px 12px;border-radius:999px;background:rgba(242,169,0,.16);color:#F2A900;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.4px">Program poleceń</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KONKURS / GRYWALIZACJA -->
+    <div style="max-width:1160px;margin:0 auto;padding:0 24px 40px">
+      <div style="background:#fff;border-radius:24px;padding:40px;box-shadow:0 2px 12px rgba(14,26,43,.06)">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px">
+          <div style="max-width:640px">
+            <div style="display:inline-flex;align-items:center;gap:7px;padding:5px 12px;border-radius:999px;background:rgba(46,158,107,.12);color:#1f7a4d;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.4px">Konkurs Mestio</div>
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:26px;margin-top:14px;letter-spacing:-.4px">Które osiedle najszybciej uchwala uchwały?</div>
+            <div style="font-size:15px;color:#4A5A6E;margin-top:10px;line-height:1.6">Co miesiąc nagradzamy zarządy i administratorów, którzy najsprawniej prowadzą głosowania nad uchwałami. 1. miejsce: miesiąc abonamentu gratis. Pełny <a href="#" style="color:#3E7BD6;font-weight:600">regulamin konkursu</a>.</div>
+          </div>
+          <div style="min-width:260px;flex:1">
+            <sc-for list="{{ contestLeaders }}" as="l" hint-placeholder-count="3">
+              <div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #F1F5FA"><span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;width:26px">{{ l.medal }}</span><span style="flex:1;font-size:13.5px;font-weight:500">{{ l.name }}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7C8AA0">{{ l.avgHours }}h śr.</span></div>
+            </sc-for>
+          </div>
+        </div>
+      </div>1px;font-weight:600">Program poleceń</div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:26px;color:#fff;margin-top:14px;letter-spacing:-.4px">Polecasz Mestio innemu zarządcy? Oboje zyskujecie.</div>
+          <div style="font-size:15px;color:#C7D2E0;margin-top:10px;line-height:1.55">Za każde osiedle, które dołączy z Twojego polecenia, dostajesz <b style="color: rgb(255, 255, 255);">1 miesiąc gratis</b>, a polecony — 20% zniżki na start przez pierwsze 6 miesiecy.</div>
+        </div>
+        <span onClick="{{ goReg }}" style="font-size:15px;font-weight:600;color:#0E1A2B;background:#fff;padding:14px 24px;border-radius:13px;cursor:pointer;white-space:nowrap">Zdobądź swój link</span>
+      </div>
+    </div>
+
+    <!-- BLOG TEASER -->
+    <div style="max-width:1160px;margin:0 auto;padding:40px 24px">
+      <div style="display:flex;align-items:baseline;justify-content:space-between"><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:26px;letter-spacing:-.5px">Baza wiedzy dla wspólnot</div><span onClick="{{ goBlog }}" style="font-size:14px;font-weight:600;color:#3E7BD6;cursor:pointer">Zobacz wszystkie →</span></div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px">
+        <sc-for list="{{ postsPreview }}" as="b" hint-placeholder-count="3">
+          <div onClick="{{ goBlog }}" style="background:#fff;border:none;border-radius:22px;overflow:hidden;cursor:pointer;box-shadow:0 2px 14px rgba(14,26,43,.06)">
+            <div style="height:130px;background:{{ b.cover }}"></div>
+            <div style="padding:18px"><div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#8A98AB;text-transform:uppercase;letter-spacing:.4px">{{ b.tag }}</div><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;margin-top:8px;line-height:1.3">{{ b.title }}</div><div style="font-size:13px;color:#5A6B80;line-height:1.5;margin-top:7px">{{ b.excerpt }}</div></div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div style="max-width:820px;margin:0 auto;padding:50px 24px">
+      <div style="text-align:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:30px;letter-spacing:-.5px">Częste pytania</div>
+      <div style="display:flex;flex-direction:column;gap:12px;margin-top:26px">
+        <sc-for list="{{ faqs }}" as="q" hint-placeholder-count="4">
+          <div onClick="{{ q.onClick }}" style="background:#fff;border:none;border-radius:20px;box-shadow:0 2px 12px rgba(14,26,43,.06);padding:18px 20px;cursor:pointer">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px"><span style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15.5px">{{ q.q }}</span><span style="{{ q.sign }}">+</span></div>
+            <sc-if value="{{ q.open }}"><div style="font-size:14px;color:#5A6B80;line-height:1.6;margin-top:11px">{{ q.a }}</div></sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- FINAL CTA -->
+    <div style="max-width:1160px;margin:0 auto;padding:20px 24px 70px">
+      <div style="background:linear-gradient(135deg,#3E7BD6,#173A6A);border-radius:24px;padding:52px;text-align:center;box-shadow:0 24px 50px rgba(23,58,106,.28)">
+        <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:32px;color:#fff;letter-spacing:-.6px">Gotowy uporządkować zgłoszenia?</div>
+        <div style="font-size:16px;color:rgba(255,255,255,.82);margin-top:12px">Uruchom Mestio dla swojego osiedla w kilka minut.</div>
+        <span onClick="{{ goReg }}" style="display:inline-block;margin-top:24px;font-size:16px;font-weight:600;color:#173A6A;background:#fff;padding:15px 30px;border-radius:13px;cursor:pointer">Zamów Mestio</span>
+        <div style="font-size:13.5px;color:rgba(255,255,255,.85);margin-top:14px;font-weight:500">Pierwsze 3 miesiące gratis · anuluj kiedy chcesz</div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ===== REJESTRACJA / CHECKOUT ===== -->
+  <sc-if value="{{ isReg }}">
+    <div style="max-width:960px;margin:0 auto;padding:50px 24px 70px">
+      <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:32px;letter-spacing:-.6px">Zamów Mestio dla osiedla</div>
+      <div style="font-size:15px;color:#4A5A6E;margin-top:8px">Rejestrujesz firmę / zarząd. Płatność odbywa się bezpiecznie przez Stripe — w aplikacji mieszkańca nie ma żadnych opłat.</div>
+      <div style="display:grid;grid-template-columns:1.3fr .9fr;gap:22px;margin-top:28px;align-items:start">
+        <div style="background:#fff;border:none;border-radius:22px;box-shadow:0 2px 14px rgba(14,26,43,.06);padding:24px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.6px;text-transform:uppercase;color:#8A98AB;margin-bottom:9px">Wybierz plan</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap"><sc-for list="{{ planPicker }}" as="p" hint-placeholder-count="3"><div onClick="{{ p.onClick }}" style="{{ p.style }}">{{ p.name }} · {{ p.price }}</div></sc-for></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px">
+            <div><div style="{{ lbl }}">Nazwa firmy / wspólnoty</div><input placeholder="np. Atlanti Sp. z o.o." style="{{ inp }}"></div>
+            <div><div style="{{ lbl }}">NIP</div><input placeholder="000-000-00-00" style="{{ inp }}"></div>
+            <div><div style="{{ lbl }}">Imię i nazwisko</div><input placeholder="Osoba kontaktowa" style="{{ inp }}"></div>
+            <div><div style="{{ lbl }}">Telefon</div><input placeholder="600 000 000" style="{{ inp }}"></div>
+            <div style="grid-column:1 / -1"><div style="{{ lbl }}">E-mail (logowanie do panelu)</div><input placeholder="biuro@firma.pl" style="{{ inp }}"></div>
+            <div style="grid-column:1 / -1"><div style="{{ lbl }}">Nazwa osiedla</div><input placeholder="np. Osiedle Słoneczne Wzgórza" style="{{ inp }}"></div>
+          </div>
+          <div onClick="{{ goStripe }}" style="margin-top:22px;display:flex;align-items:center;justify-content:center;gap:9px;background:#635BFF;color:#fff;font-weight:600;font-size:15px;padding:15px;border-radius:13px;cursor:pointer">Przejdź do bezpiecznej płatności <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"></path></svg></div>
+          <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-top:12px;font-size:12px;color:#9AA7B8"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9AA7B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10V8a6 6 0 0 1 12 0v2M5 10h14v10H5z"></path></svg>Płatność obsługuje Stripe. Nie przechowujemy danych karty.</div>
+        </div>
+        <div style="background:#0E1A2B;border-radius:18px;padding:24px;color:#fff">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.6px;text-transform:uppercase;color:#8FA6C4">Co dostajesz</div>
+          <div style="display:flex;flex-direction:column;gap:12px;margin-top:16px">
+            <sc-for list="{{ regBenefits }}" as="r" hint-placeholder-count="4"><div style="display:flex;gap:9px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7FE0AE" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><path d="M5 12l5 5 9-11"></path></svg><span style="font-size:13.5px;color:#D5DEEC;line-height:1.45">{{ r }}</span></div></sc-for>
+          </div>
+          <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.12);font-size:12.5px;color:#9FB2CC;line-height:1.55">Po opłaceniu automatycznie utworzymy Twoje osiedle i wygenerujemy <b style="color:#fff">kody zaproszeń</b> dla mieszkańców.</div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ===== SUCCESS ===== -->
+  <sc-if value="{{ isSuccess }}">
+    <div style="max-width:720px;margin:0 auto;padding:60px 24px 80px;text-align:center">
+      <div style="width:72px;height:72px;border-radius:999px;background:rgba(46,158,107,.13);display:flex;align-items:center;justify-content:center;margin:0 auto"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#2E9E6B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"></path></svg></div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:30px;letter-spacing:-.5px;margin-top:20px">Płatność zakończona sukcesem</div>
+      <div style="font-size:16px;color:#4A5A6E;margin-top:10px;line-height:1.6">Twoje osiedle jest już aktywne. Poniżej znajdziesz kod zaproszenia dla mieszkańców — skopiuj go i wyślij dalej.</div>
+
+      <div style="background:#fff;border:none;border-radius:22px;box-shadow:0 2px 14px rgba(14,26,43,.06);padding:24px;margin-top:26px;box-shadow:0 10px 30px rgba(14,26,43,.08)">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.6px;text-transform:uppercase;color:#8A98AB">Kod zaproszenia</div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-top:12px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:30px;letter-spacing:2px;color:#173A6A">{{ exampleCode }}</span>
+          <div onClick="{{ copyCode }}" style="display:flex;align-items:center;gap:6px;padding:9px 14px;border-radius:11px;background:#EAF0F7;color:#173A6A;font-size:13px;font-weight:600;cursor:pointer"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#173A6A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 9h10v10H9zM5 15V5h10"></path></svg>Kopiuj</div>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#9AA7B8;margin-top:12px">Ważny 30 dni · limit użyć wg planu · zarządzasz nim w panelu</div>
+      </div>
+
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.6px;text-transform:uppercase;color:#8A98AB;margin:28px 0 12px">Pobierz aplikację dla mieszkańców</div>
+      <div style="display:flex;gap:12px;justify-content:center">
+        <div onClick="{{ notifyStore }}" style="display:flex;align-items:center;gap:9px;background:#0E1A2B;color:#fff;padding:13px 20px;border-radius:13px;cursor:pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M16.4 12.6c0-2 1.6-2.9 1.7-3-1-1.4-2.4-1.6-2.9-1.6-1.2-.1-2.4.7-3 .7-.6 0-1.6-.7-2.6-.7-1.3 0-2.6.8-3.3 2-1.4 2.4-.4 6 1 8 .7 1 1.4 2 2.4 2 1 0 1.3-.6 2.5-.6s1.5.6 2.5.6 1.7-1 2.3-2c.7-1.1 1-2.2 1-2.3-.1 0-2-.8-2-3.1zM14.5 6.3c.5-.7.9-1.6.8-2.5-.8 0-1.7.5-2.3 1.2-.5.6-.9 1.5-.8 2.4.9.1 1.8-.4 2.3-1.1z"></path></svg><div style="text-align:left"><div style="font-size:9px;opacity:.8">Pobierz z</div><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px">App Store</div></div></div>
+        <div onClick="{{ notifyStore }}" style="display:flex;align-items:center;gap:9px;background:#0E1A2B;color:#fff;padding:13px 20px;border-radius:13px;cursor:pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 3l11 9-11 9z" fill="#3E7BD6"></path><path d="M4 3l8 6-8 6z" fill="#2E9E6B"></path><path d="M15 12l4-2.3v4.6z" fill="#F2A900"></path></svg><div style="text-align:left"><div style="font-size:9px;opacity:.8">Pobierz z</div><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px">Google Play</div></div></div>
+      </div>
+      <div onClick="{{ goHome }}" style="margin-top:30px;font-size:14px;font-weight:600;color:#3E7BD6;cursor:pointer">← Wróć na stronę główną</div>
+    </div>
+  </sc-if>
+
+  <!-- ===== BLOG ===== -->
+  <sc-if value="{{ isBlog }}">
+    <div style="max-width:1000px;margin:0 auto;padding:50px 24px 70px">
+      <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:32px;letter-spacing:-.6px">Baza wiedzy dla wspólnot i zarządców</div>
+      <div style="font-size:15px;color:#4A5A6E;margin-top:8px">Praktyczne poradniki: prawo, techniczne przeglądy, komunikacja z mieszkańcami.</div>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:28px">
+        <sc-for list="{{ posts }}" as="b" hint-placeholder-count="6">
+          <div style="background:#fff;border:none;border-radius:22px;box-shadow:0 2px 14px rgba(14,26,43,.06);overflow:hidden">
+            <div style="height:140px;background:{{ b.cover }}"></div>
+            <div style="padding:20px"><div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#8A98AB;text-transform:uppercase;letter-spacing:.4px">{{ b.tag }} · {{ b.read }}</div><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:18px;margin-top:8px;line-height:1.3">{{ b.title }}</div><div style="font-size:13.5px;color:#5A6B80;line-height:1.55;margin-top:8px">{{ b.excerpt }}</div><div style="font-size:13px;font-weight:600;color:#3E7BD6;margin-top:12px">Czytaj →</div></div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="margin-top:26px;background:linear-gradient(135deg,#173A6A,#0E1A2B);border-radius:22px;padding:26px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap">
+        <div style="max-width:520px"><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:19px;color:#fff">Chcesz taki artykuł co tydzień?</div><div style="font-size:13.5px;color:#C7D2E0;margin-top:6px;line-height:1.5">Zapisz się na newsletter dla zarządców — praktyczne poradniki prosto na skrzynkę.</div></div>
+        <div style="display:flex;gap:8px">
+          <input value="{{ newsletterEmail }}" onChange="{{ setNewsletterEmail }}" placeholder="twój e-mail" style="width:220px;font-size:13.5px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:11px;padding:11px 14px;color:#fff"/>
+          <div onClick="{{ subscribeNewsletter }}" style="background:#fff;color:#173A6A;font-weight:600;font-size:13.5px;padding:11px 18px;border-radius:11px;cursor:pointer;white-space:nowrap">Zapisz się</div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ===== KONTAKT ===== -->
+  <sc-if value="{{ isKontakt }}">
+    <div style="max-width:960px;margin:0 auto;padding:50px 24px 70px">
+      <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:32px;letter-spacing:-.6px">Kontakt</div>
+      <div style="font-size:15px;color:#4A5A6E;margin-top:8px">Masz pytanie o wdrożenie Mestio? Napisz — odpowiadamy w 1 dzień roboczy.</div>
+      <div style="display:grid;grid-template-columns:1.2fr .8fr;gap:22px;margin-top:28px;align-items:start">
+        <div style="background:#fff;border:none;border-radius:22px;box-shadow:0 2px 14px rgba(14,26,43,.06);padding:24px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+            <div><div style="{{ lbl }}">Imię i nazwisko</div><input style="{{ inp }}"></div>
+            <div><div style="{{ lbl }}">E-mail</div><input style="{{ inp }}"></div>
+          </div>
+          <div style="margin-top:14px"><div style="{{ lbl }}">Wiadomość</div><textarea style="width:100%;min-height:120px;resize:none;font-size:14px;background:#F4F7FB;border-radius:11px;padding:13px 14px;color:#0E1A2B"></textarea></div>
+          <div onClick="{{ notifySent }}" style="margin-top:16px;display:inline-block;background:linear-gradient(135deg,#3E7BD6,#173A6A);color:#fff;font-weight:600;font-size:15px;padding:14px 26px;border-radius:13px;cursor:pointer">Wyślij wiadomość</div>
+        </div>
+        <div style="background:#fff;border:none;border-radius:22px;box-shadow:0 2px 14px rgba(14,26,43,.06);padding:24px">
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <sc-for list="{{ contactInfo }}" as="c" hint-placeholder-count="3"><div><div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.6px;text-transform:uppercase;color:#8A98AB">{{ c.k }}</div><div style="font-size:14.5px;font-weight:500;margin-top:4px">{{ c.v }}</div></div></sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ===== POLITYKA / RODO ===== -->
+  <sc-if value="{{ isLegal }}">
+    <div style="max-width:820px;margin:0 auto;padding:50px 24px 70px">
+      <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:30px;letter-spacing:-.5px">{{ legalTitle }}</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#9AA7B8;margin-top:8px">Ostatnia aktualizacja: [data] · Szablon do uzupełnienia danymi firmy</div>
+      <div style="display:flex;flex-direction:column;gap:22px;margin-top:26px">
+        <sc-for list="{{ legalSections }}" as="s" hint-placeholder-count="5">
+          <div><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:18px">{{ s.h }}</div><div style="font-size:14.5px;color:#4A5A6E;line-height:1.65;margin-top:8px">{{ s.b }}</div></div>
+        </sc-for>
+      </div>
+      <div style="margin-top:28px;background:#EAF0F7;border-radius:12px;padding:16px 18px;font-size:13px;color:#5A6B80;line-height:1.55">To szablon informacyjny, nie porada prawna. Przed publikacją uzupełnij pola [ ] i skonsultuj treść z prawnikiem / IOD.</div>
+    </div>
+  </sc-if>
+
+  <!-- FOOTER -->
+  <div style="background:#0E1A2B;color:#fff;margin-top:20px">
+    <div style="max-width:1160px;margin:0 auto;padding:44px 24px 30px;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:30px">
+      <div>
+        <div style="display:flex;align-items:center;gap:9px"><div style="width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,#3E7BD6,#173A6A);display:flex;align-items:center;justify-content:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M14 7a4 4 0 0 1-5.3 5.3L4 17l3 3 4.7-4.7A4 4 0 0 0 17 10l-2.2 2.2-2-2L15 8z"></path></svg></div><span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px">Mestio</span></div>
+        <div style="font-size:13px;color:#9FB2CC;margin-top:12px;line-height:1.6;max-width:260px">Zgłoszenia usterek na osiedlu — od „Nowe" po „Zamknięte", pod pełną kontrolą.</div>
+      </div>
+      <div><div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.6px;text-transform:uppercase;color:#7F96B5;margin-bottom:12px">Produkt</div><div style="display:flex;flex-direction:column;gap:9px"><span onClick="{{ goHome }}" style="font-size:13.5px;color:#C7D2E0;cursor:pointer">Funkcje</span><span onClick="{{ goHome }}" style="font-size:13.5px;color:#C7D2E0;cursor:pointer">Cennik</span><span onClick="{{ goReg }}" style="font-size:13.5px;color:#C7D2E0;cursor:pointer">Zamów</span></div></div>
+      <div><div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.6px;text-transform:uppercase;color:#7F96B5;margin-bottom:12px">Firma</div><div style="display:flex;flex-direction:column;gap:9px"><span onClick="{{ goBlog }}" style="font-size:13.5px;color:#C7D2E0;cursor:pointer">Blog</span><span onClick="{{ goKontakt }}" style="font-size:13.5px;color:#C7D2E0;cursor:pointer">Kontakt</span></div></div>
+      <div><div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.6px;text-transform:uppercase;color:#7F96B5;margin-bottom:12px">Prawne</div><div style="display:flex;flex-direction:column;gap:9px"><span onClick="{{ goPolityka }}" style="font-size:13.5px;color:#C7D2E0;cursor:pointer">Polityka prywatności</span><span onClick="{{ goRodo }}" style="font-size:13.5px;color:#C7D2E0;cursor:pointer">RODO</span><span onClick="{{ goRegulamin }}" style="font-size:13.5px;color:#C7D2E0;cursor:pointer">Regulamin</span></div></div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,.1)"><div style="max-width:1160px;margin:0 auto;padding:18px 24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px"><span style="font-size:12px;color:#7F94B0">© 2026 Mestio · [Twoja firma] · NIP [000-000-00-00]</span><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7F94B0">Zbudowano dla wspólnot mieszkaniowych</span></div></div>
+  </div>
+
+  <sc-if value="{{ hasToast }}"><div style="position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:#0E1A2B;color:#fff;font-size:13px;font-weight:500;padding:13px 22px;border-radius:999px;box-shadow:0 10px 30px rgba(14,26,43,.4);z-index:80">{{ toast }}</div></sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state={page:'home',plan:'standard',toast:null,openFaq:0};
+  tint(hex,a){const n=parseInt(hex.slice(1),16);return 'rgba('+((n>>16)&255)+','+((n>>8)&255)+','+(n&255)+','+a+')';}
+  go(p){this.setState({page:p});try{window.scrollTo(0,0);}catch(e){}}
+  notify(m){clearTimeout(this._t);this.setState({toast:m});this._t=setTimeout(()=>this.setState({toast:null}),2000);}
+
+  renderVals(){
+    const S=this.state;
+    const navLinks=[{label:'Funkcje',onClick:()=>this.go('home')},{label:'Jak to działa',onClick:()=>this.go('home')},{label:'Cennik',onClick:()=>this.go('home')},{label:'Blog',onClick:()=>this.go('blog')}];
+
+    const heroStats=[{v:'4',k:'role w jednej apce'},{v:'0%',k:'prowizji w aplikacji'},{v:'<60s',k:'na zgłoszenie usterki'}];
+    const NC=['#3E7BD6','#F2A900','#2E9E6B'],NI=['M12 7v10M7 12h10','M9.5 8l6 4-6 4z','M6 12l3.5 4 8.5-8'],NN=['Nowe','W realizacji','Zamknięte'];
+    const heroTrack=[];for(let i=0;i<3;i++){if(i>0)heroTrack.push({isConn:true,style:{flex:1,height:3,marginTop:18,borderRadius:2,background:i<=1?NC[i]:'#E2E9F2'}});const reached=i<=1;heroTrack.push({isNode:true,icon:NI[i],name:NN[i],circle:{width:38,height:38,borderRadius:999,display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,background:reached?NC[i]:'#fff',color:reached?'#fff':'#B6C2D2',border:reached?'none':'2px solid #E2E9F2',boxShadow:i===1?('0 0 0 5px '+this.tint(NC[1],.16)):'none'},label:{marginTop:8,fontFamily:"'Space Grotesk',sans-serif",fontWeight:600,fontSize:11.5,color:reached?'#0E1A2B':'#9FACBD'}});}
+
+    const painPoints=['Zgłoszenia giną w SMS-ach, telefonach i grupach na Facebooku','Mieszkaniec nie wie, czy ktoś się zajął sprawą','Zarząd nie ma historii ani dowodu, co i kiedy naprawiono','Serwis dostaje niejasne opisy bez zdjęć i lokalizacji'];
+    const gainPoints=['Jeden strumień zgłoszeń ze statusem i historią','Mieszkaniec widzi status i dostaje powiadomienia','Pełny ślad audytowy — kto, co i kiedy zrobił','Zdjęcia, PDF i dokładna lokalizacja w każdym zgłoszeniu'];
+
+    const mk=(icon,title,desc,color)=>({icon,title,desc,color,bg:this.tint(color,.12)});
+    const features=[
+      mk('M8 5H6.8A1.8 1.8 0 0 0 5 6.8V19a1.8 1.8 0 0 0 1.8 1.8h10.4A1.8 1.8 0 0 0 19 19V6.8A1.8 1.8 0 0 0 17.2 5H16M8.6 5.4a1.4 1.4 0 0 1 1.4-1.4h4a1.4 1.4 0 0 1 1.4 1.4 1 1 0 0 1-1 1H9.6a1 1 0 0 1-1-1zM8.5 11h7M8.5 14.5h5','Zgłoszenia ze statusem','Nowe → W realizacji → Zamknięte, z priorytetem i terminem SLA.','#3E7BD6'),
+      mk('M12 12.5a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM5 20a7 7 0 0 1 14 0','Cztery role','Mieszkaniec, zarząd, serwis, ochrona — każdy widzi to, co powinien.','#173A6A'),
+      mk('M12 4a5 5 0 0 0-5 5v3l-1.6 2.5h13.2L17 12V9a5 5 0 0 0-5-5zM9.5 18a2.5 2.5 0 0 0 5 0','Powiadomienia','Push o zmianie statusu i nowych ogłoszeniach — nikt nic nie przegapi.','#F2A900'),
+      mk('M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0zM12 7v5l3 2','Ślad audytowy','Pełna historia zmian — dowód dla mieszkańców i przy reklamacjach.','#2E9E6B'),
+      mk('M5 10v4h3l7 4V6l-7 4H5zM18 9.2a3 3 0 0 1 0 5.6','Ogłoszenia','Komunikaty do mieszkańców z datą wygaśnięcia — potem znikają.','#173A6A'),
+      mk('M4 21V9l8-5 8 5v12M9 21v-6h6v6','Struktura osiedla','Budynki, klatki, piętra i garaże — mieszkaniec wybiera lokal przy rejestracji.','#3E7BD6'),
+    ];
+
+    const steps=[
+      {n:'1',title:'Zamawiasz na stronie',desc:'Rejestrujesz firmę/zarząd i opłacasz plan przez Stripe. Faktura VAT automatycznie.'},
+      {n:'2',title:'Tworzymy osiedle i kody',desc:'Po płatności powstaje Twoje osiedle, a Ty dostajesz kody zaproszeń dla mieszkańców.'},
+      {n:'3',title:'Mieszkańcy dołączają',desc:'Pobierają darmową aplikację, wpisują kod i od razu mogą zgłaszać usterki.'},
+    ];
+
+    const planData=[
+      {key:'start',name:'Start',forWho:'Małe wspólnoty · do 30 mieszkań',price:'79 zł',per:'/ mies.',popular:false,feats:['1 osiedle · do 30 mieszkań','Zgłoszenia + statusy','Ogłoszenia i telefony','Powiadomienia push'],cta:'Wybierz Start'},
+      {key:'standard',name:'Standard',forWho:'Średnie osiedla · do 100 mieszkań',price:'179 zł',per:'/ mies.',popular:true,feats:['Do 100 mieszkań','Priorytety + SLA','Ślad audytowy i CSAT','Integracja Trello'],cta:'Wybierz Standard'},
+      {key:'pro',name:'Pro',forWho:'Duże osiedla · do 300 mieszkań',price:'349 zł',per:'/ mies.',popular:false,feats:['Do 300 mieszkań','Wszystkie funkcje','Priorytetowe wsparcie','Onboarding zespołu'],cta:'Wybierz Pro'},
+      {key:'enterprise',name:'Enterprise',forWho:'Zarządcy z kilkoma osiedlami',price:'Wycena',per:'indywidualna',popular:false,feats:['Kilka osiedli w jednym panelu','Wszystkie funkcje','Dedykowany opiekun','Umowa SLA i wdrożenie'],cta:'Porozmawiajmy'},
+    ];
+    const plans=planData.map(p=>({name:p.name,forWho:p.forWho,price:p.price,per:p.per,popular:p.popular,cta:p.cta,feats:p.feats,onClick:()=>{this.setState({plan:p.key});this.go('rejestracja');},
+      card:{background:p.popular?'#0E1A2B':'#fff',border:'1px solid '+(p.popular?'#0E1A2B':'#EAF0F7'),borderRadius:20,padding:'28px 24px',position:'relative',boxShadow:p.popular?'0 24px 50px rgba(14,26,43,.28)':'0 2px 10px rgba(14,26,43,.05)',display:'flex',flexDirection:'column'},
+      titleColor:p.popular?'#fff':'#0E1A2B',subColor:p.popular?'#9FB2CC':'#7C8AA0',divider:p.popular?'rgba(255,255,255,.14)':'#EEF2F8',featColor:p.popular?'#D5DEEC':'#3A4759',check:p.popular?'#7FE0AE':'#2E9E6B',
+      btn:{marginTop:'auto',paddingTop:0,textAlign:'center',padding:'13px',borderRadius:12,fontWeight:600,fontSize:14.5,cursor:'pointer',marginTop:22,background:p.popular?'#fff':'linear-gradient(135deg,#3E7BD6,#173A6A)',color:p.popular?'#0E1A2B':'#fff'}}));
+
+    const planPicker=planData.map(p=>({name:p.name,price:p.price,onClick:()=>this.setState({plan:p.key}),style:{padding:'9px 14px',borderRadius:11,fontSize:13,fontWeight:600,cursor:'pointer',background:S.plan===p.key?this.tint('#3E7BD6',.13):'#F4F7FB',color:S.plan===p.key?'#173A6A':'#5A6B80',border:'1px solid '+(S.plan===p.key?'#3E7BD6':'#E2E9F2')}}));
+
+    const covers=['linear-gradient(135deg,#3E7BD6,#173A6A)','linear-gradient(135deg,#F2A900,#C98800)','linear-gradient(135deg,#2E9E6B,#173A6A)','linear-gradient(135deg,#6B7A90,#173A6A)','linear-gradient(135deg,#173A6A,#3E7BD6)','linear-gradient(135deg,#3E7BD6,#2E9E6B)'];
+    const postData=[
+      {tag:'Prawo',read:'6 min',title:'Obowiązkowe przeglądy techniczne w bloku — kalendarz na 2026',excerpt:'Kominiarski, gazowy, elektryczny, wind — kiedy, jak często i kto odpowiada.'},
+      {tag:'Zarządzanie',read:'5 min',title:'Jak skrócić czas naprawy usterek o połowę',excerpt:'Priorytety, SLA i jasny obieg zgłoszeń — praktyczny przewodnik dla zarządu.'},
+      {tag:'Wspólnota',read:'4 min',title:'Komunikacja z mieszkańcami bez chaosu na grupach',excerpt:'Dlaczego ogłoszenia z terminem wygaśnięcia działają lepiej niż posty na FB.'},
+      {tag:'Finanse',read:'7 min',title:'Fundusz remontowy — jak planować wydatki na usterki',excerpt:'Dane z historii zgłoszeń jako podstawa budżetu wspólnoty.'},
+      {tag:'Technologia',read:'5 min',title:'RODO we wspólnocie — co wolno, a czego nie',excerpt:'Dane osobowe mieszkańców, zdjęcia usterek i zgody — bez ryzyka.'},
+      {tag:'Poradnik',read:'3 min',title:'Jak zgłaszać usterki, żeby serwis od razu wiedział, o co chodzi',excerpt:'Zdjęcie, lokalizacja, opis — mini-instrukcja dla mieszkańca.'},
+    ];
+    const posts=postData.map((p,i)=>({...p,cover:covers[i%covers.length]}));
+    const postsPreview=posts.slice(0,3);
+
+    const faqData=[
+      {q:'Czy mieszkańcy płacą za aplikację?',a:'Nie. Aplikacja jest w pełni darmowa dla mieszkańców, serwisu i ochrony. Opłatę wnosi firma zarządzająca lub zarząd wspólnoty na stronie — a pierwsze 3 miesiące są gratis.'},
+      {q:'Jak działa płatność?',a:'Płatność obsługuje Stripe na naszej stronie. Otrzymujesz fakturę VAT. Po opłaceniu tworzymy Twoje osiedle i kody zaproszeń dla mieszkańców.'},
+      {q:'Czy mogę zrezygnować?',a:'Tak, subskrypcję możesz anulować w dowolnym momencie. Dostęp działa do końca opłaconego okresu.'},
+      {q:'Czy dane są bezpieczne?',a:'Tak. Każde osiedle jest odseparowane, dostęp kontrolują reguły serwerowe, a zdjęcia trafiają do prywatnego magazynu. Zgodnie z RODO.'},
+    ];
+    const faqs=faqData.map((f,i)=>({q:f.q,a:f.a,open:S.openFaq===i,onClick:()=>this.setState({openFaq:S.openFaq===i?-1:i}),sign:{fontFamily:"'Space Grotesk',sans-serif",fontWeight:600,fontSize:20,color:'#3E7BD6',transform:S.openFaq===i?'rotate(45deg)':'none',transition:'transform .15s'}}));
+
+    const regBenefits=['Panel zarządu w aplikacji (tryb biura)','Kody zaproszeń dla mieszkańców','Wszystkie funkcje wybranego planu','Faktura VAT i wsparcie e-mail'];
+    const contactInfo=[{k:'E-mail',v:'kontakt@mestio.pl'},{k:'Telefon',v:'+48 600 000 000'},{k:'Adres',v:'[Twoja firma], [ulica], [miasto]'},{k:'NIP',v:'[000-000-00-00]'}];
+
+    const isLegal=S.page==='polityka'||S.page==='rodo'||S.page==='regulamin';
+    let legalTitle='',legalSections=[];
+    if(S.page==='polityka'){legalTitle='Polityka prywatności';legalSections=[
+      {h:'1. Administrator danych',b:'Administratorem danych osobowych jest [Twoja firma] z siedzibą w [adres], NIP [000-000-00-00], e-mail: kontakt@mestio.pl.'},
+      {h:'2. Jakie dane zbieramy',b:'Imię i nazwisko, adres e-mail, numer telefonu, adres lokalu (budynek, klatka, piętro, mieszkanie), treść i zdjęcia zgłoszeń oraz — za zgodą — lokalizację zgłoszenia.'},
+      {h:'3. Cel i podstawa przetwarzania',b:'Dane przetwarzamy w celu świadczenia usługi Mestio (obsługa zgłoszeń), na podstawie umowy (art. 6 ust. 1 lit. b RODO) oraz uzasadnionego interesu (lit. f) i zgody tam, gdzie jest wymagana (lit. a).'},
+      {h:'4. Odbiorcy danych',b:'Dostawcy infrastruktury: Supabase (baza i uwierzytelnianie), Firebase (powiadomienia), Stripe (płatności). Dane widzą wyłącznie osoby z Twojego osiedla w zakresie swojej roli.'},
+      {h:'5. Okres przechowywania',b:'Dane przechowujemy przez czas trwania konta oraz przez okres wymagany przepisami. Zgłoszenia i zdjęcia usuwamy zgodnie z polityką retencji.'},
+      {h:'6. Twoje prawa',b:'Masz prawo dostępu, sprostowania, usunięcia, ograniczenia i przenoszenia danych oraz wniesienia sprzeciwu i skargi do PUODO. Konto i dane usuniesz w aplikacji („Usuń konto").'},
+      {h:'7. Pliki cookies',b:'Strona używa niezbędnych plików cookies oraz — za zgodą — analitycznych. Zgodę możesz wycofać w ustawieniach przeglądarki.'},
+    ];}
+    if(S.page==='rodo'){legalTitle='Informacja RODO';legalSections=[
+      {h:'Klauzula informacyjna',b:'Zgodnie z art. 13 RODO informujemy o zasadach przetwarzania danych osobowych użytkowników Mestio.'},
+      {h:'Administrator i kontakt',b:'Administrator: [Twoja firma], [adres], NIP [000-000-00-00]. Kontakt w sprawie danych: rodo@mestio.pl. Inspektor Ochrony Danych: [imię i nazwisko / „nie powołano"].'},
+      {h:'Zakres i cel',b:'Przetwarzamy dane niezbędne do obsługi zgłoszeń usterek i komunikacji na osiedlu. Nie sprzedajemy danych i nie profilujemy użytkowników w celach marketingowych bez zgody.'},
+      {h:'Minimalizacja i bezpieczeństwo',b:'Zbieramy tylko dane potrzebne do działania usługi. Zdjęcia pozbawiamy metadanych lokalizacji (EXIF). Dostęp chronią serwerowe reguły izolujące dane każdego osiedla.'},
+      {h:'Prawo do usunięcia',b:'Usunięcie konta w aplikacji trwale kasuje dane użytkownika: profil, zgłoszenia, komentarze, załączniki i tokeny powiadomień.'},
+      {h:'Podmioty przetwarzające',b:'Supabase, Firebase (Google), Stripe — działający na podstawie umów powierzenia, z serwerami w UE lub z odpowiednimi zabezpieczeniami transferu.'},
+    ];}
+    if(S.page==='regulamin'){legalTitle='Regulamin';legalSections=[
+      {h:'1. Postanowienia ogólne',b:'Regulamin określa zasady korzystania z aplikacji i serwisu Mestio świadczonego przez [Twoja firma].'},
+      {h:'2. Rodzaje kont',b:'Konto płatnika (firma/zarząd) oraz konta użytkowników (mieszkaniec, serwis, ochrona) dołączające do osiedla kodem zaproszenia.'},
+      {h:'3. Płatności',b:'Opłaty subskrypcyjne wnosi płatnik przez Stripe. Do każdej płatności wystawiamy fakturę VAT. Subskrypcję można anulować w dowolnym momencie.'},
+      {h:'4. Odpowiedzialność',b:'Mestio jest narzędziem do obsługi zgłoszeń; nie zastępuje służb ratunkowych. W sytuacjach zagrożenia należy dzwonić pod numery alarmowe.'},
+      {h:'5. Reklamacje',b:'Reklamacje przyjmujemy na adres kontakt@mestio.pl i rozpatrujemy w terminie 14 dni.'},
+    ];}
+
+    return {
+      navLinks,heroStats,heroTrack,painPoints,gainPoints,features,steps,plans,planPicker,posts,postsPreview,faqs,regBenefits,contactInfo,
+      isHome:S.page==='home',isReg:S.page==='rejestracja',isBlog:S.page==='blog',isKontakt:S.page==='kontakt',isSuccess:S.page==='success',isLegal,legalTitle,legalSections,
+      contestLeaders:[{medal:'🥇',name:'Zielone Tarasy (DOM-BUD)',avgHours:38},{medal:'🥈',name:'Słoneczne Wzgórza (Atlanti)',avgHours:52},{medal:'🥉',name:'Rezydencja Park (KZN)',avgHours:71}],
+      exampleCode:'A2B4-C6D8-E9F2',copyCode:()=>this.notify('Kod skopiowany do schowka'),notifyStore:()=>this.notify('Tu link do sklepu (demo)'),
+      goHome:()=>this.go('home'),goReg:()=>this.go('rejestracja'),goBlog:()=>this.go('blog'),goKontakt:()=>this.go('kontakt'),goPolityka:()=>this.go('polityka'),goRodo:()=>this.go('rodo'),goRegulamin:()=>this.go('regulamin'),
+      goStripe:()=>this.go('success'),notifySent:()=>this.notify('Dziękujemy! Odezwiemy się wkrótce.'),
+      newsletterEmail:S.newsletterEmail||'',setNewsletterEmail:e=>this.setState({newsletterEmail:e.target.value}),subscribeNewsletter:()=>{this.notify('Zapisano na newsletter — trafi do CRM jako lead');this.setState({newsletterEmail:''});},
+      lbl:{fontFamily:"'IBM Plex Mono',monospace",fontSize:10,letterSpacing:'.5px',textTransform:'uppercase',color:'#8A98AB',marginBottom:6},
+      inp:{width:'100%',fontSize:14,background:'#F4F7FB',borderRadius:11,padding:'12px 13px',color:'#0E1A2B'},
+      hasToast:!!S.toast,toast:S.toast,
+    };
+  }
+}
+</script>
+</body>
+</html>

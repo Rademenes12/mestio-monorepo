@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>*{box-sizing:border-box}body{margin:0}</style>
+</helmet>
+<div style="width:1780px;background:#F6F8FB;background-image:linear-gradient(rgba(62,123,214,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(62,123,214,.05) 1px,transparent 1px);background-size:30px 30px;font-family:'IBM Plex Sans',system-ui,sans-serif;color:#0E1A2B;padding:44px 48px 56px">
+
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px;border-bottom:2px solid #E2E9F2;padding-bottom:22px">
+    <div style="display:flex;align-items:center;gap:13px">
+      <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#3E7BD6,#173A6A);display:flex;align-items:center;justify-content:center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M14 7a4 4 0 0 1-5.3 5.3L4 17l3 3 4.7-4.7A4 4 0 0 0 17 10l-2.2 2.2-2-2L15 8z"/></svg></div>
+      <div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:30px;letter-spacing:-.6px">Mestio — mapa aplikacji i przepływów</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7C8AA0;margin-top:4px;letter-spacing:.3px">Role · rejestracja · cykl życia zgłoszenia · komunikacja · widoczność · cykl konta</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <sc-for list="{{ legend }}" as="l" hint-placeholder-count="4"><div style="display:flex;align-items:center;gap:6px;padding:5px 11px;border-radius:999px;background:#fff;border:1px solid #E2E9F2"><span style="width:9px;height:9px;border-radius:999px;background:{{ l.color }}"></span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#3A4759">{{ l.label }}</span></div></sc-for>
+    </div>
+  </div>
+
+  <!-- BAND 1: ROLES + ONBOARDING -->
+  <div style="display:flex;align-items:center;gap:10px;margin:30px 0 16px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.8px;color:#8A98AB;text-transform:uppercase">01 · Role i rejestracja</span><div style="flex:1;height:1px;background:#E2E9F2"></div><span style="font-size:12.5px;color:#7C8AA0">Wybór roli → dane → (lokalizacja / nazwa firmy) → kod zaproszenia. Lokalizację podaje <b>tylko mieszkaniec</b>.</span></div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
+    <sc-for list="{{ roles }}" as="r" hint-placeholder-count="4">
+      <div style="background:#fff;border:1px solid #EAF0F7;border-top:4px solid {{ r.color }};border-radius:16px;padding:18px 17px;display:flex;flex-direction:column">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;background:{{ r.color }}">{{ r.initial }}</div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16.5px;line-height:1.1">{{ r.name }}</div>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.6px;text-transform:uppercase;color:#9AA7B8;margin:16px 0 8px">Rejestracja</div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <sc-for list="{{ r.steps }}" as="s" hint-placeholder-count="3">
+            <div style="display:flex;align-items:flex-start;gap:8px"><span style="flex-shrink:0;width:18px;height:18px;border-radius:999px;background:{{ r.color }}1f;color:{{ r.color }};font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center;margin-top:1px">{{ s.n }}</span><span style="font-size:12px;line-height:1.35;color:#3A4759">{{ s.t }}</span></div>
+          </sc-for>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.6px;text-transform:uppercase;color:#9AA7B8;margin:16px 0 8px">Może / nie może</div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <sc-for list="{{ r.items }}" as="c" hint-placeholder-count="4">
+            <div style="display:flex;align-items:flex-start;gap:7px"><span style="{{ c.icon }}"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="{{ c.path }}"/></svg></span><span style="font-size:11.5px;line-height:1.35;color:{{ c.textColor }}">{{ c.t }}</span></div>
+          </sc-for>
+        </div>
+        <div style="margin-top:14px;padding-top:12px;border-top:1px dashed #E2E9F2;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#7C8AA0">↳ ląduje na: <b style="color:#0E1A2B">{{ r.landing }}</b></div>
+      </div>
+    </sc-for>
+  </div>
+
+  <!-- BAND 2: TICKET LIFECYCLE -->
+  <div style="display:flex;align-items:center;gap:10px;margin:34px 0 16px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.8px;color:#8A98AB;text-transform:uppercase">02 · Cykl życia zgłoszenia</span><div style="flex:1;height:1px;background:#E2E9F2"></div><span style="font-size:12.5px;color:#7C8AA0">Zgłoszenie zawsze trafia do zarządu/administratora — także to od ochrony, niezależnie od wskazanego adresata.</span></div>
+  <div style="display:flex;align-items:stretch;gap:0">
+    <sc-for list="{{ pipeline }}" as="p" hint-placeholder-count="5">
+      <div style="flex:1;background:#fff;border:1px solid #EAF0F7;border-radius:16px;padding:16px 15px;display:flex;flex-direction:column;position:relative">
+        <div style="display:flex;align-items:center;justify-content:space-between"><span style="width:26px;height:26px;border-radius:999px;background:{{ p.color }};color:#fff;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center">{{ p.n }}</span><span style="display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:999px;background:{{ p.color }}1f;color:{{ p.color }};font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;white-space:nowrap">{{ p.statusLabel }}</span></div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13.5px;color:{{ p.color }};margin-top:12px">{{ p.actor }}</div>
+        <div style="font-size:12px;line-height:1.45;color:#3A4759;margin-top:6px">{{ p.action }}</div>
+      </div>
+      <sc-if value="{{ p.arrow }}"><div style="width:34px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B6C2D2" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg></div></sc-if>
+    </sc-for>
+  </div>
+  <div style="margin-top:12px;display:flex;gap:12px">
+    <div style="flex:1;background:rgba(107,122,144,.08);border:1px solid rgba(107,122,144,.28);border-radius:13px;padding:12px 15px;display:flex;align-items:center;gap:10px"><span style="width:9px;height:9px;border-radius:999px;background:#6B7A90;flex-shrink:0"></span><span style="font-size:12px;color:#3A4759">Ścieżka alternatywna: zarząd/administrator może ustawić <b style="color:#6B7A90">Odrzucone</b> — stan terminalny, dostępny <b>wyłącznie</b> dla biura.</span></div>
+    <div style="flex:1;background:rgba(242,169,0,.09);border:1px solid rgba(242,169,0,.32);border-radius:13px;padding:12px 15px;display:flex;align-items:center;gap:10px"><span style="width:9px;height:9px;border-radius:999px;background:#F2A900;flex-shrink:0"></span><span style="font-size:12px;color:#3A4759">Każda zmiana zapisuje się w <b style="color:#8a6200">śladzie audytowym</b> zgłoszenia (kto, co, kiedy) i wywołuje powiadomienie.</span></div>
+  </div>
+
+  <!-- BAND 3: COMMUNICATION CHANNELS -->
+  <div style="display:flex;align-items:center;gap:10px;margin:34px 0 16px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.8px;color:#8A98AB;text-transform:uppercase">03 · Komunikacja między rolami</span><div style="flex:1;height:1px;background:#E2E9F2"></div></div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+    <sc-for list="{{ channels }}" as="c" hint-placeholder-count="6">
+      <div style="background:#fff;border:1px solid #EAF0F7;border-left:4px solid {{ c.color }};border-radius:16px;padding:16px 16px">
+        <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px">{{ c.title }}</div>
+        <div style="display:flex;flex-direction:column;gap:9px;margin-top:13px">
+          <div style="display:flex;align-items:center;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:.5px;color:#9AA7B8;width:34px">OD</span><span style="font-size:12px;color:#0E1A2B;font-weight:500">{{ c.from }}</span></div>
+          <div style="display:flex;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="{{ c.color }}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v13M6 13l6 6 6-6"/></svg></div>
+          <div style="display:flex;align-items:center;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:.5px;color:#9AA7B8;width:34px">DO</span><span style="font-size:12px;color:#0E1A2B;font-weight:500">{{ c.to }}</span></div>
+        </div>
+        <div style="margin-top:13px;padding-top:11px;border-top:1px dashed #E2E9F2;font-size:11.5px;line-height:1.4;color:#7C8AA0">{{ c.note }}</div>
+      </div>
+    </sc-for>
+  </div>
+
+  <!-- BAND 4: VISIBILITY MATRIX + ACCOUNT -->
+  <div style="display:flex;gap:22px;margin-top:34px;align-items:flex-start">
+    <div style="flex:1.55">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.8px;color:#8A98AB;text-transform:uppercase">04 · Macierz uprawnień — kto co może</span><div style="flex:1;height:1px;background:#E2E9F2"></div></div>
+      <div style="background:#fff;border:1px solid #EAF0F7;border-radius:16px;overflow:hidden">
+        <div style="display:grid;grid-template-columns:1.9fr repeat(4,1fr);background:#0E1A2B">
+          <div style="padding:12px 16px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.5px;color:rgba(255,255,255,.6);text-transform:uppercase">Czynność</div>
+          <sc-for list="{{ matrixCols }}" as="m" hint-placeholder-count="4"><div style="padding:12px 6px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px"><span style="width:24px;height:24px;border-radius:999px;background:{{ m.color }};color:#fff;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center">{{ m.initial }}</span><span style="font-size:9.5px;color:rgba(255,255,255,.7);line-height:1">{{ m.short }}</span></div></sc-for>
+        </div>
+        <sc-for list="{{ matrixRows }}" as="row" hint-placeholder-count="10">
+          <div style="{{ row.style }}">
+            <div style="padding:11px 16px;font-size:12.5px;color:#3A4759;display:flex;align-items:center">{{ row.cap }}</div>
+            <sc-for list="{{ row.cells }}" as="c" hint-placeholder-count="4"><div style="display:flex;align-items:center;justify-content:center"><span style="{{ c.style }}">{{ c.sym }}</span></div></sc-for>
+          </div>
+        </sc-for>
+      </div>
+      <div style="margin-top:10px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#9AA7B8">M — Mieszkaniec · Z — Zarząd/Admin · S — Serwisant · O — Ochrona &nbsp;|&nbsp; ✓ pełne · ● ograniczone · — brak</div>
+    </div>
+
+    <div style="flex:1">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.8px;color:#8A98AB;text-transform:uppercase">05 · Cykl życia konta</span><div style="flex:1;height:1px;background:#E2E9F2"></div></div>
+      <div style="background:#fff;border:1px solid #EAF0F7;border-radius:16px;padding:8px 18px">
+        <sc-for list="{{ account }}" as="a" hint-placeholder-count="7">
+          <div style="display:flex;gap:13px;align-items:stretch">
+            <div style="display:flex;flex-direction:column;align-items:center"><span style="width:30px;height:30px;border-radius:999px;background:{{ a.bg }};color:{{ a.fg }};border:2px solid {{ a.ring }};font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:12px">{{ a.n }}</span><div style="{{ a.line }}"></div></div>
+            <div style="padding:14px 0"><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13.5px;color:{{ a.titleColor }}">{{ a.label }}</div><div style="font-size:11.5px;line-height:1.4;color:#7C8AA0;margin-top:3px">{{ a.sub }}</div></div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;align-items:center;gap:10px;margin:34px 0 16px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.8px;color:#8A98AB;text-transform:uppercase">06 · Stan integracji między prototypami</span><div style="flex:1;height:1px;background:#E2E9F2"></div><span style="font-size:12.5px;color:#7C8AA0">Które dane są dziś wspólne w architekturze docelowej, a które w prototypach żyją jako odrębne demo.</span></div>
+  <div style="background:#fff;border:1px solid #EAF0F7;border-radius:16px;overflow:hidden">
+    <div style="display:grid;grid-template-columns:1.6fr .6fr .6fr .6fr 2.6fr;background:#0E1A2B">
+      <div style="padding:11px 16px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.5px;color:rgba(255,255,255,.6);text-transform:uppercase">Dane / funkcja</div>
+      <div style="padding:11px 6px;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:rgba(255,255,255,.7)">Apka</div>
+      <div style="padding:11px 6px;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:rgba(255,255,255,.7)">CRM klienta</div>
+      <div style="padding:11px 6px;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:rgba(255,255,255,.7)">CRM Owner</div>
+      <div style="padding:11px 16px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.5px;color:rgba(255,255,255,.6);text-transform:uppercase">Uwaga</div>
+    </div>
+    <sc-for list="{{ integrationRows }}" as="row" hint-placeholder-count="10">
+      <div style="display:grid;grid-template-columns:1.6fr .6fr .6fr .6fr 2.6fr;border-top:1px solid #F1F5FA">
+        <div style="padding:11px 16px;font-size:12.5px;color:#3A4759;display:flex;align-items:center">{{ row.name }}</div>
+        <div style="display:flex;align-items:center;justify-content:center"><sc-if value="{{ row.app }}"><span style="color:#2E9E6B;font-weight:700">✓</span></sc-if><sc-if value="{{ row.appNo }}"><span style="color:#C7D0DC">—</span></sc-if></div>
+        <div style="display:flex;align-items:center;justify-content:center"><sc-if value="{{ row.crmK }}"><span style="color:#2E9E6B;font-weight:700">✓</span></sc-if><sc-if value="{{ row.crmKNo }}"><span style="color:#C7D0DC">—</span></sc-if></div>
+        <div style="display:flex;align-items:center;justify-content:center"><sc-if value="{{ row.crmO }}"><span style="color:#2E9E6B;font-weight:700">✓</span></sc-if><sc-if value="{{ row.crmONo }}"><span style="color:#C7D0DC">—</span></sc-if></div>
+        <div style="padding:11px 16px;font-size:11.5px;color:#7C8AA0;line-height:1.4;display:flex;align-items:center">{{ row.note }}</div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="margin-top:30px;padding-top:18px;border-top:2px solid #E2E9F2;display:flex;justify-content:space-between;align-items:center">
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#9AA7B8">Mestio · dokument referencyjny do weryfikacji przepływu przez AI/zespół</span>
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#9AA7B8">Statusy: Nowe → W realizacji → Zamknięte · Odrzucone (terminalny)</span>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  C={m:'#3E7BD6',z:'#173A6A',s:'#C98800',o:'#6B7A90',ok:'#2E9E6B',amber:'#F2A900',mut:'#6B7A90'};
+  tint(hex,a){const n=parseInt(hex.slice(1),16);return 'rgba('+((n>>16)&255)+','+((n>>8)&255)+','+(n&255)+','+a+')';}
+  renderVals(){
+    const C=this.C;
+    const CK='M5 12l5 5 9-11', CR='M6 6l12 12M18 6L6 18';
+    const okIcon={flexShrink:0,width:15,height:15,borderRadius:999,display:'flex',alignItems:'center',justifyContent:'center',background:this.tint(C.ok,.15),color:C.ok,marginTop:1};
+    const noIcon={flexShrink:0,width:15,height:15,borderRadius:999,display:'flex',alignItems:'center',justifyContent:'center',background:this.tint('#C0392B',.12),color:'#C0392B',marginTop:1};
+    const mk=(cans,cannots)=>cans.map(t=>({t,ok:true,icon:okIcon,path:CK,textColor:'#3A4759'})).concat(cannots.map(t=>({t,ok:false,icon:noIcon,path:CR,textColor:'#93A0B0'})));
+    const steps=arr=>arr.map((t,i)=>({n:i+1,t}));
+
+    const roles=[
+      {name:'Mieszkaniec',initial:'M',color:C.m,landing:'Pulpit mieszkańca',steps:steps(['Wybór roli','Imię, e-mail, telefon','Lokalizacja: budynek › klatka › piętro › nr','Kod zaproszenia']),items:mk(['Tworzy zgłoszenie (zdjęcia, PDF)','Śledzi status i historię','Ocenia realizację (CSAT ★)','Czyta ogłoszenia i telefony'],['Nie zmienia statusu','Nie nadaje priorytetu'])},
+      {name:'Zarząd / Administrator',initial:'Z',color:C.z,landing:'Tryb biura',steps:steps(['Wybór roli','Dane kontaktowe','Kod / utworzenie osiedla']),items:mk(['Buduje strukturę osiedla','Przypisuje serwisanta i kategorię','Zmienia status + Odrzucone','Nadaje priorytet i SLA','Publikuje ogłoszenia (wygasają)','Zarządza telefonami','Integracja Trello'],[])},
+      {name:'Serwisant',initial:'S',color:C.s,landing:'Portal serwisanta',steps:steps(['Wybór roli','Dane kontaktowe','Nazwa serwisanta / firmy','Kod zaproszenia']),items:mk(['Widzi przypisane + kolejkę','Sam zgłasza zauważoną usterkę (do biura)','Zmienia status realizacji','Notatka serwisowa (dla mieszkańca)','Notatki zespołu (wewnętrzne)'],['Nie odrzuca zgłoszeń','Nie przypisuje serwisu'])},
+      {name:'Ochrona',initial:'O',color:C.o,landing:'Pulpit zdarzeń',steps:steps(['Wybór roli','Dane kontaktowe','Kod zaproszenia']),items:mk(['Tworzy zdarzenie','Nadaje priorytet','Kieruje do zarządu / serwisu'],['Nie zmienia statusu','Nie odrzuca'])},
+    ];
+
+    const legend=[{label:'Nowe',color:C.m},{label:'W realizacji',color:C.amber},{label:'Zamknięte',color:C.ok},{label:'Odrzucone',color:C.o}];
+
+    const praw=[
+      {n:1,actor:'Mieszkaniec / Ochrona',action:'Tworzy zgłoszenie: kategoria, lokalizacja (GPS lub ręcznie), opis, zdjęcia, PDF, „inne dla zarządu”.',statusLabel:'Nowe',color:C.m},
+      {n:2,actor:'Zarząd / Administrator',action:'Przyjmuje, przypisuje serwisanta, ustawia kategorię i priorytet/SLA.',statusLabel:'→ W realizacji',color:C.amber},
+      {n:3,actor:'Serwisant',action:'Realizuje pracę, dodaje notatkę serwisową i notatki zespołu, komentuje → wraca do biura.',statusLabel:'W realizacji',color:C.amber},
+      {n:4,actor:'Zarząd / Administrator',action:'Weryfikuje wykonanie i domyka zgłoszenie (lub odrzuca).',statusLabel:'Zamknięte',color:C.ok},
+      {n:5,actor:'Mieszkaniec',action:'Dostaje powiadomienie o zamknięciu i ocenia realizację gwiazdkami.',statusLabel:'CSAT ★',color:C.m},
+    ];
+    const pipeline=praw.map((p,i)=>({...p,arrow:i<praw.length-1}));
+
+    const channels=[
+      {title:'Ogłoszenia',color:C.z,from:'Zarząd / Administrator',to:'Mieszkańcy (zakres) + Ochrona',note:'Z datą i godziną wygaśnięcia — po tym czasie znikają automatycznie.'},
+      {title:'Telefony / Kontakty',color:C.ok,from:'Zarząd / Administrator',to:'Wszystkie role (odczyt + dzwoń)',note:'Dodaje, edytuje i kasuje tylko biuro; pozostali tylko przeglądają.'},
+      {title:'Struktura osiedla',color:C.m,from:'Zarząd / Administrator',to:'Mieszkaniec — wybór przy rejestracji',note:'Drzewo: budynek › klatka › piętro / garaż (do -4).'},
+      {title:'Notatki zespołu',color:C.s,from:'Zarząd ⇄ Serwisant',to:'Kanał wewnętrzny',note:'Niewidoczne dla mieszkańca. Mieszkaniec widzi tylko notatkę serwisową.'},
+      {title:'Zgłoszenie serwisu — biuro',color:C.s,from:'Serwisant (zauważona usterka)',to:'Zarząd + Administrator',note:'Serwisant sam dodaje zgłoszenie. Widoczne wyłącznie dla biura — nie dla mieszkańców.'},
+      {title:'Zgłoszenie serwisu — rozszerzone',color:C.s,from:'Serwisant (zauważona usterka)',to:'Administrator + Zarząd + Ochrona',note:'Ten sam kanał, ale z powiadomieniem ochrony. Wybór zakresu przy tworzeniu.'},
+    ];
+
+    const matrixCols=[{initial:'M',short:'Mieszk.',color:C.m},{initial:'Z',short:'Zarząd',color:C.z},{initial:'S',short:'Serwis',color:C.s},{initial:'O',short:'Ochrona',color:C.o}];
+    const F=2,L=1,N=0; // full / limited / none
+    const rowsDef=[
+      ['Tworzy zgłoszenie',[F,F,L,F]],
+      ['Zmienia status',[N,F,F,N]],
+      ['Status „Odrzucone”',[N,F,N,N]],
+      ['Nadaje priorytet / SLA',[N,F,N,F]],
+      ['Przypisuje serwisanta',[N,F,N,N]],
+      ['Notatki zespołu (wewn.)',[N,F,F,N]],
+      ['Publikuje ogłoszenia',[N,F,N,N]],
+      ['Edytuje telefony',[N,F,N,N]],
+      ['Buduje strukturę osiedla',[N,F,N,N]],
+      ['Ocenia realizację (CSAT)',[F,N,N,N]],
+    ];
+    const cell=v=>{
+      if(v===2)return {sym:'✓',style:{width:22,height:22,borderRadius:999,display:'flex',alignItems:'center',justifyContent:'center',fontFamily:"'IBM Plex Mono',monospace",fontSize:12,fontWeight:600,background:this.tint(C.ok,.15),color:C.ok}};
+      if(v===1)return {sym:'●',style:{width:22,height:22,borderRadius:999,display:'flex',alignItems:'center',justifyContent:'center',fontSize:11,background:this.tint(C.amber,.16),color:'#B37D00'}};
+      return {sym:'—',style:{width:22,height:22,display:'flex',alignItems:'center',justifyContent:'center',fontFamily:"'IBM Plex Mono',monospace",fontSize:13,color:'#C7D0DC'}};
+    };
+    const matrixRows=rowsDef.map((r,i)=>({cap:r[0],cells:r[1].map(cell),style:{display:'grid',gridTemplateColumns:'1.9fr repeat(4,1fr)',borderTop:'1px solid #F1F5FA',background:i%2?'#FBFCFE':'#fff'}}));
+
+    const accRaw=[
+      {label:'Rejestracja + wybór roli',sub:'Konto zakładane w max 3 krokach.',kind:'start'},
+      {label:'Dołączenie do osiedla',sub:'Kod zaproszenia od zarządu.',kind:'norm'},
+      {label:'Wskazanie lokalu',sub:'Tylko mieszkaniec: budynek › klatka › piętro › nr.',kind:'norm'},
+      {label:'Codzienne użytkowanie',sub:'Zgłoszenia, statusy, ogłoszenia, telefony.',kind:'norm'},
+      {label:'Powiadomienia push',sub:'Zmiany statusu i nowe ogłoszenia.',kind:'norm'},
+      {label:'Wyloguj się',sub:'Zakończenie sesji, konto pozostaje.',kind:'norm'},
+      {label:'Usuń konto',sub:'Trwałe usunięcie danych użytkownika.',kind:'end'},
+    ];
+    const account=accRaw.map((a,i)=>{const end=a.kind==='end',start=a.kind==='start';const col=end?'#C0392B':start?C.m:C.z;return {n:i+1,label:a.label,sub:a.sub,bg:this.tint(col,end?.1:.13),fg:col,ring:this.tint(col,.35),titleColor:end?'#C0392B':'#0E1A2B',line:{width:2,flex:1,background:i===accRaw.length-1?'transparent':'#E2E9F2',margin:'2px auto 0'}};});
+
+    const integrationRows=[
+      {name:'Zgłoszenia (reports)',app:true,crmK:true,crmO:false,note:'Wspólna tabela fixflow_reports — w produkcji jedno źródło prawdy dla aplikacji i CRM klienta.'},
+      {name:'Uchwały / głosowania',app:true,crmK:true,crmO:false,note:'UWAGA: w prototypach to DWA oddzielne zestawy demo (VOTES w app, resolutions w CRM klienta) — wymaga wspólnej tabeli resolutions w Supabase.'},
+      {name:'Telefony / kontakty',app:true,crmK:true,crmO:false,note:'CRM klienta zarządza, aplikacja odczytuje wg roli (admin: pełna lista; reszta: alarmowe+serwis).'},
+      {name:'Kody zaproszeń',app:true,crmK:true,crmO:true,note:'Generowane w CRM klienta (per rola), realizowane przy rejestracji w aplikacji; Twój CRM widzi je przy provisioning nowego klienta.'},
+      {name:'Dokumenty / umowy / faktury',app:false,crmK:true,crmO:true,note:'Generowane w Twoim CRM (Owner) → status i pliki widoczne w CRM klienta jako read-only.'},
+      {name:'Komunikaty / ogłoszenia',app:true,crmK:true,crmO:false,note:'Tworzone w CRM klienta z targetowaniem (budynek/klatka/piętro z drzewka Osiedla) → push do aplikacji.'},
+      {name:'Pomieszczenia mieszkańca',app:true,crmK:true,crmO:false,note:'Mieszkaniec uzupełnia w Profilu (lub prośbą) — widoczne w karcie kontaktu w CRM klienta.'},
+      {name:'Opinie i pomysły (feedback)',app:true,crmK:false,crmO:true,note:'Formularz w Profilu aplikacji (wszystkie role) trafia WYŁĄCZNIE do Twojego CRM — nigdy do CRM klienta.'},
+      {name:'Ranking uchwał (grywalizacja)',app:false,crmK:false,crmO:true,note:'Liczony w Twoim CRM z danych uchwał wszystkich klientów; publikowany też na stronie WWW.'},
+      {name:'Blog',app:false,crmK:false,crmO:true,note:'Pisany w Twoim CRM → tabela blog_posts → wyświetlany na stronie WWW (SEO).'},
+    ];
+    return {legend,roles,pipeline,channels,matrixCols,matrixRows,account,integrationRows:integrationRows.map(r=>({...r,appNo:!r.app,crmKNo:!r.crmK,crmONo:!r.crmO}))};
+  }
+}
+</script>
+</body>
+</html>

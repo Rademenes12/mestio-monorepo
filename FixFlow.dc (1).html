@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0E1A2B}
+input,textarea,button,select{font-family:inherit;border:none;background:none}
+input:focus,textarea:focus,select:focus{outline:none}
+::-webkit-scrollbar{width:0;height:0;display:none}
+@keyframes sheetUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes toastIn{from{opacity:0;transform:translate(-50%,14px)}to{opacity:1;transform:translate(-50%,0)}}
+</style>
+</helmet>
+<div style="min-height:100vh;width:100%;background:#0E1A2B;background-image:radial-gradient(1100px 520px at 50% -8%,rgba(62,123,214,.16),transparent 60%),linear-gradient(rgba(62,123,214,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(62,123,214,.06) 1px,transparent 1px);background-size:auto,28px 28px,28px 28px;display:flex;flex-direction:column;align-items:center;padding:24px 16px 48px">
+
+  <div style="width:100%;max-width:780px;display:flex;align-items:flex-end;justify-content:space-between;gap:18px;flex-wrap:wrap">
+    <div>
+      <div style="display:flex;align-items:center;gap:9px">
+        <div style="width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,#3E7BD6,#173A6A);display:flex;align-items:center;justify-content:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M14 7a4 4 0 0 1-5.3 5.3L4 17l3 3 4.7-4.7A4 4 0 0 0 17 10l-2.2 2.2-2-2L15 8z"/></svg></div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px;color:#fff;letter-spacing:-.4px">Mestio</div>
+      </div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:rgba(255,255,255,.45);margin-top:5px;letter-spacing:.3px">Prototyp · zespół deweloperski</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:rgba(255,255,255,.4);letter-spacing:.6px;text-transform:uppercase">Podgląd roli</div>
+      <div style="display:inline-flex;gap:4px;padding:4px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);flex-wrap:wrap">
+        <sc-for list="{{ roleTabs }}" as="r" hint-placeholder-count="4">
+          <div onClick="{{ r.onClick }}" style="{{ r.style }}">{{ r.label }}</div>
+        </sc-for>
+      </div>
+      <div onClick="{{ openReg }}" style="display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.72);font-family:'IBM Plex Sans',sans-serif;font-size:11.5px;font-weight:500;cursor:pointer">Ekran rejestracji →</div>
+    </div>
+  </div>
+
+  <div style="margin-top:24px">
+    <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" width="402" height="860" hint-size="402px,860px">
+
+      <div style="height:100%;display:flex;flex-direction:column;position:relative;background:#F6F8FB;font-family:'IBM Plex Sans',system-ui,sans-serif;color:#0E1A2B;overflow:hidden">
+
+        <sc-if value="{{ isList }}">
+          <div style="flex-shrink:0;padding:56px 18px 14px;background:#fff;box-shadow:0 2px 10px rgba(14,26,43,.05);position:relative;z-index:5">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+              <div onClick="{{ openEstate }}" style="display:flex;align-items:center;gap:9px;cursor:pointer;min-width:0">
+                <div style="width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#3E7BD6,#173A6A);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;color:#fff;flex-shrink:0">{{ estateInitial }}</div>
+                <div style="min-width:0">
+                  <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14.5px;color:#0E1A2B;line-height:1.1;max-width:168px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ estateName }}</div>
+                  <div style="display:flex;align-items:center;gap:4px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;margin-top:3px">zmień osiedle <svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="#8A98AB" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+                <span style="{{ roleChipStyle }}">{{ roleChip }}</span>
+                <div onClick="{{ openNotif }}" style="width:36px;height:36px;border-radius:999px;background:#F4F7FB;display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5A6B80" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4a5 5 0 0 0-5 5v3l-1.6 2.5h13.2L17 12V9a5 5 0 0 0-5-5zM9.5 18a2.5 2.5 0 0 0 5 0"/></svg>
+                  <span style="position:absolute;top:8px;right:9px;width:7px;height:7px;border-radius:999px;background:#F2A900;border:1.5px solid #fff"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="flex:1;overflow-y:auto;position:relative">
+            <div style="padding:18px 16px 96px">
+
+              <sc-if value="{{ isHome }}">
+                <sc-if value="{{ isZarzad }}">
+                  <div data-screen-label="Pulpit (Zarząd)">
+                    <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:24px;letter-spacing:-.4px">Pulpit</div>
+                    <div style="font-size:13px;color:#7C8AA0;margin-top:3px">Przegląd zgłoszeń · {{ estateName }}</div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px">
+                      <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="4">
+                        <div onClick="{{ k.onClick }}" style="background:#fff;border:none;border-radius:20px;box-shadow:0 2px 12px rgba(14,26,43,.06);padding:13px 14px;cursor:pointer">
+                          <div style="display:flex;align-items:center;gap:7px"><span style="{{ k.dot }}"></span><span style="font-size:12px;color:#5A6B80">{{ k.label }}</span></div>
+                          <div style="{{ k.numStyle }}">{{ k.value }}</div>
+                        </div>
+                      </sc-for>
+                    </div>
+                    <sc-if value="{{ hasLatestAnnZ }}">
+                      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;margin:20px 0 9px 2px">Najnowszy komunikat</div>
+                      <div style="background:#fff;border:none;border-radius:20px;box-shadow:0 2px 12px rgba(14,26,43,.06);padding:14px 15px;display:flex;gap:12px">
+                        <div style="width:34px;height:34px;border-radius:10px;background:rgba(23,58,106,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#173A6A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 10v4h3l7 4V6l-7 4H5zM18 9.2a3 3 0 0 1 0 5.6"/></svg></div>
+                        <div style="min-width:0"><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13.5px;line-height:1.3">{{ latestAnnZTitle }}</div><div style="font-size:12px;color:#5A6B80;line-height:1.5;margin-top:3px">{{ latestAnnZBody }}</div></div>
+                      </div>
+                    </sc-if>
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin:22px 0 11px">
+                      <span style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px">Zgłoszenia</span>
+                      <span onClick="{{ goReports }}" style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#3E7BD6;cursor:pointer">wszystkie →</span>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:10px">
+                      <sc-for list="{{ allRecent }}" as="item" hint-placeholder-count="5">
+                        <div onClick="{{ item.onClick }}" style="{{ item.card }}">
+                          <div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:#8A98AB;letter-spacing:.4px">{{ item.id }}</span><span style="{{ item.pill }}"><i style="{{ item.dot }}"></i>{{ item.statusLabel }}</span></div>
+                          <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;line-height:1.25;margin-top:8px">{{ item.title }}</div>
+                          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#7C8AA0;margin-top:6px">{{ item.category }} · {{ item.loc }}</div>
+                          <div style="{{ item.barBg }}"><div style="{{ item.bar }}"></div></div>
+                          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px"><div style="display:flex;align-items:center;gap:7px"><span style="width:22px;height:22px;border-radius:999px;background:#EAF0F7;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:600;color:#173A6A">{{ item.initial }}</span><span style="font-size:12px;color:#5A6B80">{{ item.who }}</span></div><span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#9AA7B8">{{ item.when }}</span></div>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </div>
+                </sc-if>
+
+                <sc-if value="{{ isResident }}">
+                  <div data-screen-label="Pulpit (Mieszkaniec)">
+                    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+                      <div><div style="font-size:15px;color:#7C8AA0">Dzień dobry,</div><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:26px;letter-spacing:-.5px;margin-top:1px">{{ residentFirst }}</div></div>
+                      <div style="width:44px;height:44px;border-radius:999px;background:linear-gradient(135deg,#3E7BD6,#173A6A);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;color:#fff;flex-shrink:0">{{ residentInitials }}</div>
+                    </div>
+
+                    <div style="background:#fff;border:none;border-radius:20px;box-shadow:0 2px 12px rgba(14,26,43,.06);padding:15px 16px;margin-top:16px;box-shadow:0 1px 2px rgba(14,26,43,.04)">
+                      <div style="display:flex;align-items:center;gap:10px"><span style="width:11px;height:11px;border-radius:999px;flex-shrink:0;background:{{ statusColor }}"></span><span style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px">{{ residentShortLoc }}</span></div>
+                      <div style="display:inline-flex;align-items:center;gap:6px;margin-top:11px;padding:4px 11px;border-radius:999px;background:{{ statusPillBg }};color:{{ statusColor }}"><span style="font-size:11.5px;font-weight:600">{{ buildingStatus }}</span></div>
+                    </div>
+
+                    <sc-if value="{{ hasLatestAnn }}">
+                      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;margin:22px 0 9px 2px">Najnowszy komunikat</div>
+                      <div style="background:#fff;border:none;border-radius:20px;box-shadow:0 2px 12px rgba(14,26,43,.06);padding:14px 15px;display:flex;gap:12px">
+                        <div style="width:34px;height:34px;border-radius:10px;background:rgba(23,58,106,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#173A6A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 10v4h3l7 4V6l-7 4H5zM18 9.2a3 3 0 0 1 0 5.6"/></svg></div>
+                        <div style="min-width:0"><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13.5px;line-height:1.3">{{ latestAnnTitle }}</div><div style="font-size:12px;color:#5A6B80;line-height:1.5;margin-top:3px">{{ latestAnnBody }}</div></div>
+                      </div>
+                    </sc-if>
+
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin:22px 0 10px">
+                      <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase">Aktywność</span>
+                      <span onClick="{{ goReports }}" style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#3E7BD6;cursor:pointer">wszystkie →</span>
+                    </div>
+                    <sc-if value="{{ emptyList }}"><div style="background:#fff;border:1px dashed #D8E2EF;border-radius:14px;padding:26px;text-align:center;color:#9AA7B8;font-size:13px">Brak aktywności. Dotknij „+", aby dodać zgłoszenie.</div></sc-if>
+                    <div style="display:flex;flex-direction:column;gap:10px">
+                      <sc-for list="{{ feed }}" as="f" hint-placeholder-count="3">
+                        <div onClick="{{ f.onClick }}" style="background:#fff;border:none;border-radius:20px;box-shadow:0 2px 12px rgba(14,26,43,.06);padding:12px 13px;display:flex;align-items:center;gap:12px;cursor:pointer">
+                          <div style="{{ f.iconWrap }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="{{ f.sw }}" stroke-linecap="round" stroke-linejoin="round"><path d="{{ f.icon }}"/></svg></div>
+                          <div style="flex:1;min-width:0"><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13.5px;line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ f.head }}</div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#9AA7B8;margin-top:3px">{{ f.id }} · {{ f.when }}</div></div>
+                          <span style="{{ f.pill }}">{{ f.statusLabel }}</span>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </div>
+                </sc-if>
+
+                <sc-if value="{{ isSerw }}">
+                  <div data-screen-label="Portal serwisanta">
+                    <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:24px;letter-spacing:-.4px">Kolejka serwisowa</div>
+                    <div style="font-size:13px;color:#7C8AA0;margin-top:3px">{{ estateName }}</div>
+                    <div style="display:flex;align-items:center;gap:7px;margin:20px 0 11px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#F2A900" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 7a4 4 0 0 1-5.3 5.3L4 17l3 3 4.7-4.7A4 4 0 0 0 17 10"/></svg><span style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px">Przypisane do Ciebie</span></div>
+                    <sc-if value="{{ noAssigned }}"><div style="background:#fff;border:1px dashed #D8E2EF;border-radius:14px;padding:20px;text-align:center;color:#9AA7B8;font-size:13px">Brak przypisanych zgłoszeń.</div></sc-if>
+                    <div style="display:flex;flex-direction:column;gap:10px">
+                      <sc-for list="{{ assignedMe }}" as="item" hint-placeholder-count="2">
+                        <div onClick="{{ item.onClick }}" style="{{ item.card }}">
+                          <div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:#8A98AB;letter-spacing:.4px">{{ item.id }}</span><span style="{{ item.pill }}"><i style="{{ item.dot }}"></i>{{ item.statusLabel }}</span></div>
+                          <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;line-height:1.25;margin-top:8px">{{ item.title }}</div>
+                          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#7C8AA0;margin-top:6px">{{ item.category }} · {{ item.loc }}</div>
+                        </div>
+                      </sc-for>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:7px;margin:22px 0 11px"><span style="width:8px;height:8px;border-radius:999px;background:#3E7BD6"></span><span style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px">Nieprzypisane w osiedlu</span></div>
+                    <div style="display:flex;flex-direction:column;gap:10px">
+                      <sc-for list="{{ queue }}" as="item" hint-placeholder-count="3">
+                        <div onClick="{{ item.onClick }}" style="{{ item.card }}">
+                          <div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:#8A98AB;letter-spacing:.4px">{{ item.id }}</span><span style="{{ item.pill }}"><i style="{{ item.dot }}"></i>{{ item.statusLabel }}</span></div>
+                          <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;line-height:1.25;margin-top:8px">{{ item.title }}</div>
+                          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#7C8AA0;margin-top:6px">{{ item.category }} · {{ item.loc }}</div>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </div>
+                </sc-if>
+              </sc-if>
+
+              <sc-if value="{{ isReports }}">
+                <div data-screen-label="Lista zgłoszeń">
+                  <div style="display:flex;align-items:baseline;gap:9px"><span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:24px;letter-spacing:-.4px">Zgłoszenia</span><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#9AA7B8">{{ listCount }}</span></div>
+                  <div style="display:flex;align-items:center;gap:8px;margin-top:12px;background:#fff;border:1px solid #E2E9F2;border-radius:12px;padding:10px 12px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9AA7B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg><input value="{{ query }}" onChange="{{ setQuery }}" placeholder="Szukaj: tytuł, numer, kategoria…" style="flex:1;font-size:13px;color:#0E1A2B;background:none"/></div>
+                  <div style="display:flex;gap:8px;margin-top:14px;overflow-x:auto;padding-bottom:2px">
+                    <sc-for list="{{ chips }}" as="c" hint-placeholder-count="5">
+                      <div onClick="{{ c.onClick }}" style="{{ c.style }}"><span>{{ c.label }}</span><span style="{{ c.countStyle }}">{{ c.count }}</span></div>
+                    </sc-for>
+                  </div>
+                  <sc-if value="{{ emptyList }}"><div style="background:#fff;border:1px dashed #D8E2EF;border-radius:14px;padding:30px;text-align:center;color:#9AA7B8;font-size:13px;margin-top:14px">Brak zgłoszeń dla tego filtra.</div></sc-if>
+                  <div style="display:flex;flex-direction:column;gap:10px;margin-top:14px">
+                    <sc-for list="{{ listItems }}" as="item" hint-placeholder-count="5">
+                      <div onClick="{{ item.onClick }}" style="{{ item.card }}">
+                        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:#8A98AB;letter-spacing:.4px">{{ item.id }}</span><span style="{{ item.pill }}"><i style="{{ item.dot }}"></i>{{ item.statusLabel }}</span></div>
+                        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><span style="{{ item.levelPill }}"><i style="{{ item.levelDot }}"></i>{{ item.level }}</span><sc-if value="{{ item.overdue }}"><span style="{{ item.overdueBadge }}"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Po terminie</span></sc-if></div>
+                        <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;line-height:1.25;margin-top:8px">{{ item.title }}</div>
+                        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#7C8AA0;margin-top:6px">{{ item.category }} · {{ item.loc }}</div>
+                        <div style="{{ item.barBg }}"><div style="{{ item.bar }}"></div></div>
+                        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px"><div style="display:flex;align-items:center;gap:7px"><span style="width:22px;height:22px;border-radius:999px;background:#EAF0F7;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:600;color:#173A6A">{{ item.initial }}</span><span style="font-size:12px;color:#5A6B80">{{ item.who }}</span></div><span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#9AA7B8">{{ item.when }}</span></div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ isEstate }}">
+                <div data-screen-label="Osiedle (struktura)">
+                  <div style="display:flex;align-items:center;justify-content:space-between">
+                    <div><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:24px;letter-spacing:-.4px">Osiedle</div><div style="font-size:13px;color:#7C8AA0;margin-top:3px">Struktura · {{ estateName }}</div></div>
+                  </div>
+                  <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;margin:18px 0 9px 2px">Struktura — budynek › klatki › piętra</div>
+                  <div style="display:flex;flex-direction:column;gap:10px">
+                    <sc-for list="{{ tree }}" as="b" hint-placeholder-count="3">
+                      <div style="background:#fff;border:1px solid #EAF0F7;border-left:3px solid {{ b.accent }};border-radius:14px;overflow:hidden">
+                        <div onClick="{{ b.toggle }}" style="display:flex;align-items:center;gap:9px;padding:13px 14px;cursor:pointer">
+                          <span style="{{ b.chev }}"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#9AA7B8" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5l8 7-8 7"/></svg></span>
+                          <div style="{{ b.iconWrap }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{{ b.icon }}"/></svg></div>
+                          <span style="flex:1;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px">{{ b.name }}</span>
+                          <span style="{{ b.badge }}">{{ b.kind }}</span>
+                        </div>
+                        <sc-if value="{{ b.open }}">
+                          <div style="padding:2px 14px 14px 34px">
+                            <sc-if value="{{ b.isRes }}">
+                              <div style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:#8A98AB;letter-spacing:.5px;text-transform:uppercase;margin-bottom:7px">Klatki</div>
+                              <div style="display:flex;flex-wrap:wrap;gap:6px">
+                                <sc-for list="{{ b.stairs }}" as="s" hint-placeholder-count="2"><span style="{{ b.stairChip }}">Klatka {{ s.label }}</span></sc-for>
+                                <span onClick="{{ b.addStair }}" style="{{ b.addChip }}">+ klatka</span>
+                              </div>
+                              <div style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:#8A98AB;letter-spacing:.5px;text-transform:uppercase;margin:13px 0 7px">Piętra</div>
+                              <div style="display:flex;flex-wrap:wrap;gap:6px">
+                                <sc-for list="{{ b.floors }}" as="f" hint-placeholder-count="4"><span style="{{ b.floorChip }}">{{ f.label }}</span></sc-for>
+                                <span onClick="{{ b.addFloor }}" style="{{ b.addChip }}">+ piętro</span>
+                              </div>
+                            </sc-if>
+                            <sc-if value="{{ b.isGarage }}">
+                              <div style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:#8A98AB;letter-spacing:.5px;text-transform:uppercase;margin-bottom:7px">Poziomy (do -4)</div>
+                              <div style="display:flex;flex-wrap:wrap;gap:6px">
+                                <sc-for list="{{ b.levels }}" as="l" hint-placeholder-count="2"><span style="{{ b.floorChip }}">{{ l.label }}</span></sc-for>
+                                <span onClick="{{ b.addFloor }}" style="{{ b.addChip }}">+ poziom</span>
+                              </div>
+                            </sc-if>
+                          </div>
+                        </sc-if>
+                      </div>
+                    </sc-for>
+                  </div>
+                  <div style="display:flex;gap:9px;margin-top:14px">
+                    <div onClick="{{ addBuilding }}" style="flex:1;display:flex;align-items:center;justify-content:center;gap:7px;border:1.5px dashed #C7D4E4;border-radius:12px;padding:13px;color:#173A6A;font-size:12.5px;font-weight:600;cursor:pointer">+ Budynek</div>
+                    <div onClick="{{ addGarage }}" style="flex:1;display:flex;align-items:center;justify-content:center;gap:7px;border:1.5px dashed #C7D4E4;border-radius:12px;padding:13px;color:#173A6A;font-size:12.5px;font-weight:600;cursor:pointer">+ Garaż</div>
+                  </div>
+                  <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;margin:22px 0 9px 2px">Konserwacja prewencyjna</div>
+                  <div style="display:flex;flex-direction:column;gap:9px">
+                    <sc-for list="{{ maintenance }}" as="m" hint-placeholder-count="4">
+                      <div style="background:#fff;border:1px solid #EAF0F7;border-radius:13px;padding:12px 13px;display:flex;align-items:center;gap:11px">
+                        <div style="width:34px;height:34px;border-radius:10px;background:rgba(46,158,107,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#2E9E6B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v6h6M20 20v-6h-6M20 9A8 8 0 0 0 6 5M4 15a8 8 0 0 0 14 4"/></svg></div>
+                        <div style="flex:1;min-width:0"><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13.5px">{{ m.title }}</div><div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#7C8AA0;margin-top:2px">{{ m.freq }} · następny: {{ m.next }}</div></div>
+                        <div onClick="{{ m.onClick }}" style="font-family:'IBM Plex Sans',sans-serif;font-size:11.5px;font-weight:600;color:#173A6A;border:1px solid #E2E9F2;border-radius:9px;padding:7px 10px;cursor:pointer;flex-shrink:0">Wykonano</div>
+                      </div>
+                    </sc-for>
+                  </div>
+                  <div style="margin-top:14px;display:flex;align-items:flex-start;gap:9px;background:rgba(62,123,214,.06);border:1px solid rgba(62,123,214,.2);border-radius:13px;padding:12px 13px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3E7BD6" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><path d="M12 16v-4M12 8h.01"/><circle cx="12" cy="12" r="9"/></svg><span style="font-size:12px;line-height:1.5;color:#3A4759">Strukturę buduje zarząd. Mieszkaniec podczas rejestracji wybiera z niej blok, klatkę i piętro (także garaż do -4).</span></div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ isVotes }}">
+                <div data-screen-label="Uchwały">
+                  <div style="display:flex;align-items:center;justify-content:space-between">
+                    <div><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:24px;letter-spacing:-.4px">Uchwały</div><div style="font-size:13px;color:#7C8AA0;margin-top:3px">{{ votesSub }}</div></div>
+                    <sc-if value="{{ canCreateVote }}"><div onClick="{{ openVoteComposer }}" style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#3E7BD6,#173A6A);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round"><path d="M12 6v12M6 12h12"/></svg></div></sc-if>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:12px;margin-top:16px">
+                    <sc-for list="{{ votes }}" as="v" hint-placeholder-count="3">
+                      <div style="background:#fff;border-radius:18px;box-shadow:0 2px 12px rgba(14,26,43,.06);padding:16px 17px">
+                        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span style="{{ v.statePill }}">{{ v.stateLabel }}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:{{ v.deadlineColor }}">{{ v.deadline }}</span></div>
+                        <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;line-height:1.3;margin-top:10px">{{ v.title }}</div>
+                        <div style="font-size:12.5px;color:#5A6B80;line-height:1.5;margin-top:5px">{{ v.desc }}</div>
+                        <sc-if value="{{ v.showTally }}">
+                        <div style="height:8px;border-radius:5px;background:#EDF1F7;margin-top:13px;overflow:hidden;display:flex"><div style="{{ v.forBar }}"></div><div style="{{ v.againstBar }}"></div></div>
+                        <div style="display:flex;justify-content:space-between;margin-top:7px;font-family:'IBM Plex Mono',monospace;font-size:11px"><span style="color:#2E9E6B">Za {{ v.forPct }}%</span><span style="color:#7C8AA0">Udziały: {{ v.turnout }}%</span><span style="color:#C0392B">Przeciw {{ v.againstPct }}%</span></div>
+                        </sc-if>
+                        <sc-if value="{{ v.hideTallyNote }}"><div style="margin-top:12px;font-size:11.5px;color:#9AA7B8;font-style:italic">Wyniki będą widoczne po oddaniu głosu.</div></sc-if>
+                        <sc-if value="{{ v.canVote }}">
+                          <div style="display:flex;gap:9px;margin-top:14px">
+                            <div onClick="{{ v.voteFor }}" style="flex:1;text-align:center;padding:11px;border-radius:11px;background:rgba(46,158,107,.12);color:#1f7a4d;font-weight:600;font-size:13.5px;cursor:pointer">Za</div>
+                            <div onClick="{{ v.voteAgainst }}" style="flex:1;text-align:center;padding:11px;border-radius:11px;background:rgba(192,57,43,.1);color:#a5301f;font-weight:600;font-size:13.5px;cursor:pointer">Przeciw</div>
+                          </div>
+                        </sc-if>
+                        <sc-if value="{{ v.voted }}"><div style="margin-top:13px;display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:11px;background:#F4F7FB"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2E9E6B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg><span style="font-size:12.5px;color:#3A4759;font-weight:500">Twój głos: {{ v.myVote }}</span></div></sc-if>
+                        <sc-if value="{{ v.showResult }}"><div style="margin-top:12px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#7C8AA0">Przegłosowano w {{ v.speed }}</div></sc-if>
+                      </div>
+                    </sc-for>
+                  </div>
+                  <sc-if value="{{ canCreateVote }}"><div style="margin-top:14px;display:flex;align-items:flex-start;gap:9px;background:rgba(242,169,0,.1);border-radius:13px;padding:12px 13px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B37D00" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><path d="M13 2L3 14h9l-1 8 10-12h-9z"/></svg><span style="font-size:12px;line-height:1.5;color:#6b5200">Im szybciej uchwała zostanie przegłosowana, tym wyżej Twoje osiedle w rankingu na mestio.pl.</span></div></sc-if>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ isContacts }}">
+                <div data-screen-label="Telefony">
+                  <div style="display:flex;align-items:center;justify-content:space-between">
+                    <div><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:24px;letter-spacing:-.4px">Telefony</div><div style="font-size:13px;color:#7C8AA0;margin-top:3px">Kontakty alarmowe i serwisowe</div></div>
+                    <sc-if value="{{ canEditContacts }}"><div onClick="{{ addContact }}" style="display:flex;align-items:center;gap:5px;padding:7px 11px;border-radius:999px;background:#173A6A;color:#fff;font-size:12px;font-weight:600;cursor:pointer"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M12 6v12M6 12h12"/></svg>Dodaj</div></sc-if>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:10px;margin-top:16px">
+                    <sc-for list="{{ contacts }}" as="c" hint-placeholder-count="5">
+                      <div style="background:#fff;border:none;border-radius:20px;box-shadow:0 2px 12px rgba(14,26,43,.06);padding:13px 14px;display:flex;align-items:center;gap:12px">
+                        <div style="{{ c.iconWrap }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h3l1.4 4-2 1.4a11 11 0 0 0 5 5l1.4-2 4 1.4V18a2 2 0 0 1-2.1 2A14 14 0 0 1 4 6.1 2 2 0 0 1 6 4z"/></svg></div>
+                        <div onClick="{{ c.onClick }}" style="flex:1;min-width:0;cursor:pointer"><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px">{{ c.name }}</div><div style="font-size:11.5px;color:#7C8AA0;margin-top:2px">{{ c.role }}</div></div>
+                        <div onClick="{{ c.onClick }}" style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:600;color:#173A6A;cursor:pointer">{{ c.phone }}</div>
+                        <sc-if value="{{ canEditContacts }}"><div onClick="{{ c.onDelete }}" style="width:30px;height:30px;border-radius:9px;background:#F6F8FB;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C0392B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M6 7v12a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V7"/></svg></div></sc-if>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ isResidents }}">
+                <div data-screen-label="Mieszkańcy">
+                  <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:24px;letter-spacing:-.4px">Mieszkańcy</div>
+                  <div style="font-size:13px;color:#7C8AA0;margin-top:3px">{{ estateName }}</div>
+                  <div style="display:flex;flex-direction:column;gap:10px;margin-top:16px">
+                    <sc-for list="{{ residents }}" as="m" hint-placeholder-count="5">
+                      <div onClick="{{ m.onClick }}" style="background:#fff;border:none;border-radius:20px;box-shadow:0 2px 12px rgba(14,26,43,.06);padding:12px 14px;display:flex;align-items:center;gap:12px;cursor:pointer">
+                        <div style="width:38px;height:38px;border-radius:999px;background:linear-gradient(135deg,#E2E9F2,#cdd9e8);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px;color:#173A6A;flex-shrink:0">{{ m.initial }}</div>
+                        <div style="flex:1;min-width:0"><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px">{{ m.name }}</div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#7C8AA0;margin-top:2px">{{ m.unit }}</div></div>
+                        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:#173A6A">{{ m.phone }}</span><span style="{{ m.tag }}">{{ m.role }}</span></div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ isAnnouncements }}">
+                <div data-screen-label="Ogłoszenia">
+                  <div style="display:flex;align-items:center;justify-content:space-between">
+                    <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:24px;letter-spacing:-.4px">Ogłoszenia</div>
+                    <sc-if value="{{ canEditContacts }}"><div onClick="{{ openAnn }}" style="display:flex;align-items:center;gap:5px;padding:7px 11px;border-radius:999px;background:#173A6A;color:#fff;font-size:12px;font-weight:600;cursor:pointer"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M12 6v12M6 12h12"/></svg>Nowe</div></sc-if>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:11px;margin-top:16px">
+                    <sc-for list="{{ announcements }}" as="a" hint-placeholder-count="3">
+                      <div style="background:#fff;border:none;border-radius:20px;box-shadow:0 2px 12px rgba(14,26,43,.06);padding:14px 15px">
+                        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span style="{{ a.tag }}">{{ a.target }}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#9AA7B8">{{ a.when }}</span></div>
+                        <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;margin-top:9px">{{ a.title }}</div>
+                        <div style="font-size:12.5px;color:#5A6B80;line-height:1.5;margin-top:5px">{{ a.body }}</div>
+                        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#9AA7B8">{{ a.author }}</span><span style="{{ a.expiryStyle }}"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>{{ a.until }}</span></div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ isProfile }}">
+                <div data-screen-label="Profil">
+                  <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:24px;letter-spacing:-.4px">Profil</div>
+                  <div style="background:#fff;border:none;border-radius:20px;box-shadow:0 2px 12px rgba(14,26,43,.06);padding:18px;margin-top:16px;display:flex;align-items:center;gap:14px">
+                    <div style="width:54px;height:54px;border-radius:999px;background:linear-gradient(135deg,#3E7BD6,#173A6A);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;color:#fff;flex-shrink:0">{{ user.initial }}</div>
+                    <div style="min-width:0;flex:1"><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ user.name }}</div><div style="font-size:12px;color:#7C8AA0;margin-top:2px">{{ user.email }}</div><span style="{{ roleChipStyle }}">{{ user.sub }}</span></div>
+                  </div>
+                  <div style="background:#fff;border:none;border-radius:20px;box-shadow:0 2px 12px rgba(14,26,43,.06);margin-top:14px;overflow:hidden">
+                    <div style="padding:13px 16px;display:flex;justify-content:space-between;border-bottom:1px solid #F1F5FA"><span style="font-size:13px;color:#7C8AA0">Osiedle</span><span style="font-size:13px;font-weight:500">{{ estateName }}</span></div>
+                    <div style="padding:13px 16px;display:flex;justify-content:space-between"><span style="font-size:13px;color:#7C8AA0">Lokalizacja</span><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;text-align:right;max-width:200px">{{ user.loc }}</span></div>
+                  </div>
+
+                  <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;margin:20px 0 9px 4px">{{ joinSectionTitle }}</div>
+                  <div style="background:#fff;border:none;border-radius:20px;box-shadow:0 2px 12px rgba(14,26,43,.06);padding:14px">
+                    <div style="display:flex;align-items:center;gap:9px;margin-bottom:{{ joinStatusGap }}">
+                      <span style="{{ joinStatusDot }}"></span><span style="font-size:12.5px;color:#5A6B80">{{ joinStatusLabel }}</span>
+                    </div>
+                    <sc-if value="{{ showJoinInput }}">
+                      <div style="display:flex;gap:9px">
+                        <input value="{{ codeDraft }}" onChange="{{ setCode }}" placeholder="Kod zaproszenia" style="flex:1;font-family:'IBM Plex Mono',monospace;font-size:13px;background:#F4F7FB;border-radius:10px;padding:11px 12px;color:#0E1A2B"/>
+                        <div onClick="{{ redeem }}" style="display:flex;align-items:center;padding:0 16px;border-radius:10px;background:#3E7BD6;color:#fff;font-weight:600;font-size:13px;cursor:pointer">Zrealizuj</div>
+                      </div>
+                      <div style="font-size:11px;color:#9AA7B8;margin-top:8px;line-height:1.4">{{ joinHint }}</div>
+                    </sc-if>
+                  </div>
+
+                  <sc-if value="{{ isZarzad }}">
+                    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;margin:20px 0 9px 4px">Firma zarządzająca</div>
+                    <div style="background:#fff;border:none;border-radius:20px;box-shadow:0 2px 12px rgba(14,26,43,.06);padding:14px">
+                      <div style="display:flex;justify-content:space-between;gap:10px;padding-bottom:10px;border-bottom:1px solid #F1F5FA"><span style="font-size:13px;color:#7C8AA0">Firma</span><span style="font-size:13px;font-weight:500">Atlanti Sp. z o.o.</span></div>
+                      <div style="display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid #F1F5FA"><span style="font-size:13px;color:#7C8AA0">Umowa do</span><span style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:600;color:#2E9E6B">31 gru 2026</span></div>
+                      <div style="display:flex;justify-content:space-between;gap:10px;padding:10px 0"><span style="font-size:13px;color:#7C8AA0">Kod zaproszenia</span><span style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:600;color:#173A6A">SLON-7K2P</span></div>
+                    </div>
+                    <div style="margin-top:14px;background:linear-gradient(135deg,rgba(62,123,214,.08),rgba(23,58,106,.06));border:1px solid rgba(62,123,214,.22);border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px">
+                      <div style="width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#3E7BD6,#173A6A);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h5v14H4zM10 5h5v9h-5zM16 5h4v6h-4z"/></svg></div>
+                      <div style="flex:1;min-width:0"><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13.5px;color:#173A6A">Panel zarządu</div><div style="font-size:11.5px;color:#5A6B80;margin-top:2px">Pełne zarządzanie: Kanban, kontakty, zadania, osiedle, kody — otwórz na komputerze.</div></div>
+                    </div>
+                    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;margin:20px 0 9px 4px">Dokumenty</div>
+                    <div style="background:#fff;border:none;border-radius:20px;box-shadow:0 2px 12px rgba(14,26,43,.06);overflow:hidden">
+                      <div onClick="{{ openDoc }}" style="display:flex;align-items:center;gap:11px;padding:13px 15px;border-bottom:1px solid #F1F5FA;cursor:pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#173A6A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span style="flex:1;font-size:13px">Umowa o świadczenie usługi</span><span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;font-weight:600;padding:3px 8px;border-radius:999px;background:rgba(46,158,107,.13);color:#1f7a4d">Podpisana</span></div>
+                      <div onClick="{{ openDoc }}" style="display:flex;align-items:center;gap:11px;padding:13px 15px;border-bottom:1px solid #F1F5FA;cursor:pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#173A6A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 100 18 9 9 0 000-18zM12 8v4l3 2"/></svg><span style="flex:1;font-size:13px">Polityka prywatności</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9AA7B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></div>
+                      <div onClick="{{ openDoc }}" style="display:flex;align-items:center;gap:11px;padding:13px 15px;cursor:pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#173A6A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span style="flex:1;font-size:13px">Umowa powierzenia danych (DPA)</span><span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;font-weight:600;padding:3px 8px;border-radius:999px;background:rgba(46,158,107,.13);color:#1f7a4d">Podpisana</span></div>
+                    </div>
+                  </sc-if>
+
+                  <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;margin:20px 0 9px 4px">Rozwój aplikacji</div>
+                  <div onClick="{{ openFeedback }}" style="background:#fff;border:none;border-radius:20px;box-shadow:0 2px 12px rgba(14,26,43,.06);padding:14px;display:flex;align-items:center;gap:11px;cursor:pointer">
+                    <div style="width:34px;height:34px;border-radius:10px;background:rgba(62,123,214,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#3E7BD6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+                    <div style="flex:1;min-width:0"><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13.5px">Zgłoś uwagę lub pomysł</div><div style="font-size:11px;color:#9AA7B8;margin-top:2px">Coś nie działa? Trafi do twórcy: {{ feedbackEmail }}</div></div>
+                    <svg width="8" height="14" viewBox="0 0 8 14" fill="none" stroke="#C7D0DC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l6 6-6 6"/></svg>
+                  </div>
+
+                  <div onClick="{{ logout }}" style="margin-top:14px;display:flex;align-items:center;justify-content:center;gap:8px;background:#fff;border:none;border-radius:20px;box-shadow:0 2px 12px rgba(14,26,43,.06);padding:14px;color:#173A6A;font-size:14px;font-weight:600;cursor:pointer"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#173A6A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M15 17l5-5-5-5M20 12H9M9 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h3"/></svg>Wyloguj się</div>
+                  <div onClick="{{ deleteAcct }}" style="margin-top:12px;text-align:center;color:#C0392B;font-size:13px;font-weight:500;padding:10px;cursor:pointer">Usuń konto</div>
+                </div>
+              </sc-if>
+
+            </div>
+
+            <sc-if value="{{ showFab }}">
+              <div onClick="{{ openComposer }}" style="position:absolute;right:18px;bottom:20px;width:56px;height:56px;border-radius:999px;background:linear-gradient(135deg,#3E7BD6,#173A6A);box-shadow:0 10px 22px rgba(23,58,106,.42);display:flex;align-items:center;justify-content:center;z-index:20;cursor:pointer"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round"><path d="M12 6v12M6 12h12"/></svg></div>
+            </sc-if>
+          </div>
+
+          <div style="flex-shrink:0;background:#fff;box-shadow:0 -2px 12px rgba(14,26,43,.05);padding:10px 4px 28px;display:flex;justify-content:space-around;align-items:flex-start;position:relative;z-index:5">
+            <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="4">
+              <div onClick="{{ n.onClick }}" style="{{ n.style }}">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{{ n.icon }}"/></svg>
+                <span style="font-size:9.5px;font-weight:500;margin-top:3px">{{ n.label }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isDetail }}">
+          <div data-screen-label="Szczegół zgłoszenia" style="height:100%;display:flex;flex-direction:column;background:#F6F8FB">
+            <div style="flex-shrink:0;padding:52px 14px 12px;background:#fff;border-bottom:1px solid #EEF2F8;display:flex;align-items:center;gap:11px">
+              <div onClick="{{ back }}" style="width:36px;height:36px;border-radius:999px;background:#F4F7FB;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0"><svg width="9" height="16" viewBox="0 0 10 18" fill="none" stroke="#173A6A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2L2 9l6 7"/></svg></div>
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:#8A98AB">{{ d.id }}</span>
+              <div style="flex:1"></div>
+              <span style="{{ d.pill }}"><i style="{{ d.dot }}"></i>{{ d.statusLabel }}</span>
+            </div>
+            <div style="flex:1;overflow-y:auto;padding:18px 16px 40px">
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:21px;line-height:1.25;letter-spacing:-.3px">{{ d.title }}</div>
+              <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:11px">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;background:#EAF0F7;color:#173A6A;padding:5px 10px;border-radius:999px">{{ d.category }}</span>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;background:#EAF0F7;color:#5A6B80;padding:5px 10px;border-radius:999px">{{ d.loc }}</span>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;background:#EAF0F7;color:#5A6B80;padding:5px 10px;border-radius:999px">{{ d.created }}</span>
+              </div>
+              <sc-if value="{{ d.pilne }}"><div style="margin-top:13px;display:flex;align-items:center;gap:8px;background:rgba(242,169,0,.12);border:1px solid rgba(242,169,0,.4);border-radius:12px;padding:11px 13px"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#B97D00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.3 3.9 2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg><span style="font-size:12.5px;font-weight:600;color:#8a6200">Zgłoszenie pilne</span></div></sc-if>
+
+              <div style="background:#fff;border:none;border-radius:22px;box-shadow:0 2px 14px rgba(14,26,43,.06);padding:18px 16px 17px;box-shadow:0 2px 10px rgba(14,26,43,.05);margin-top:15px">
+                <div style="display:flex;align-items:center;justify-content:space-between">
+                  <span style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;color:#173A6A;letter-spacing:.2px">Status zgłoszenia</span>
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#9AA7B8">akt. {{ d.when }}</span>
+                </div>
+                <div style="display:flex;align-items:flex-start;margin-top:18px;padding:0 2px">
+                  <sc-for list="{{ track }}" as="t" hint-placeholder-count="5">
+                    <sc-if value="{{ t.isNode }}">
+                      <div style="display:flex;flex-direction:column;align-items:center;width:72px">
+                        <div style="{{ t.circle }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="{{ t.icon }}"/></svg></div>
+                        <div style="{{ t.labelStyle }}">{{ t.label }}</div>
+                        <div style="{{ t.whenStyle }}">{{ t.when }}</div>
+                      </div>
+                    </sc-if>
+                    <sc-if value="{{ t.isConn }}"><div style="{{ t.style }}"></div></sc-if>
+                  </sc-for>
+                </div>
+                <sc-if value="{{ isRejected }}"><div style="margin-top:14px;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#6B7A90;background:#EFF2F6;border-radius:10px;padding:9px">Odrzucone — decyzja zarządu / administratora</div></sc-if>
+              </div>
+
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;margin:22px 0 8px 2px">Opis</div>
+              <div style="background:#fff;border:none;border-radius:20px;box-shadow:0 2px 12px rgba(14,26,43,.06);padding:14px;font-size:13.5px;line-height:1.55;color:#3A4759">{{ d.desc }}</div>
+
+              <div style="background:#fff;border:none;border-radius:20px;box-shadow:0 2px 12px rgba(14,26,43,.06);padding:14px 14px 12px;margin-top:16px;display:flex;flex-direction:column">
+                <div style="display:flex;align-items:center;gap:7px;margin-bottom:11px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;font-weight:600">{{ correspondenceTitle }}</span></div>
+                <div style="display:flex;flex-direction:column;gap:8px;max-height:340px;overflow-y:auto;padding:2px 2px 4px">
+                  <sc-for list="{{ chatMsgs }}" as="m" hint-placeholder-count="2">
+                    <div style="{{ m.row }}">
+                      <div style="{{ m.bubble }}">
+                        <sc-if value="{{ m.photo }}"><div style="width:150px;height:100px;border-radius:12px;background:linear-gradient(135deg,rgba(62,123,214,.25),rgba(23,58,106,.25));margin-bottom:{{ m.photoMargin }};display:flex;align-items:center;justify-content:center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h3l2-2h6l2 2h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.2"/></svg></div></sc-if>
+                        <sc-if value="{{ m.hasText }}"><div style="font-size:13px;line-height:1.45;color:{{ m.textColor }}">{{ m.text }}</div></sc-if>
+                        <div style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:{{ m.timeColor }};margin-top:4px;text-align:right">{{ m.when }}</div>
+                      </div>
+                    </div>
+                  </sc-for>
+                  <sc-if value="{{ noResidentMsgs }}"><div style="font-size:12.5px;color:#9AA7B8;padding:10px 2px;text-align:center">Brak wiadomości. Napisz pierwszą wiadomość poniżej.</div></sc-if>
+                </div>
+                <sc-if value="{{ showResidentInput }}">
+                  <sc-if value="{{ hasChatPhoto }}"><div style="display:flex;align-items:center;gap:8px;background:#F4F7FB;border-radius:11px;padding:8px 10px;margin-top:8px"><div style="width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,#3E7BD6,#173A6A);flex-shrink:0"></div><span style="flex:1;font-size:12px;color:#5A6B80">Zdjęcie gotowe do wysłania</span><span onClick="{{ clearChatPhoto }}" style="font-size:11px;color:#C0392B;cursor:pointer;font-weight:600">Usuń</span></div></sc-if>
+                  <div style="display:flex;gap:8px;margin-top:10px;align-items:flex-end">
+                    <div onClick="{{ addChatPhoto }}" style="display:flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:11px;background:#F4F7FB;cursor:pointer;flex-shrink:0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5A6B80" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h3l2-2h6l2 2h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.2"/></svg></div>
+                    <input value="{{ residentMsgDraft }}" onChange="{{ setResidentMsg }}" placeholder="{{ residentMsgPlaceholder }}" style="flex:1;font-size:13px;background:#F4F7FB;border-radius:11px;padding:11px 13px;color:#0E1A2B;min-height:42px"/>
+                    <div onClick="{{ sendResidentMsg }}" style="display:flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:11px;background:#3E7BD6;cursor:pointer;flex-shrink:0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></div>
+                  </div>
+                  <div style="font-size:10.5px;color:#9AA7B8;margin-top:6px;line-height:1.4">{{ correspondenceHint }}</div>
+                </sc-if>
+              </div>
+
+              <sc-if value="{{ hasGallery }}">
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;margin:18px 0 8px 2px">Zdjęcia ({{ galleryCount }})</div>
+                <div style="display:flex;gap:9px;overflow-x:auto;padding-bottom:2px">
+                  <sc-for list="{{ gallery }}" as="g" hint-placeholder-count="3"><div style="{{ g.style }}"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#3E7BD6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h3l2-2h6l2 2h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.2"/></svg></div></sc-for>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ d.hasInfo }}">
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;margin:18px 0 8px 2px">Informacja dla zarządu</div>
+                <div style="background:rgba(242,169,0,.07);border:1px solid rgba(242,169,0,.3);border-left:3px solid #F2A900;border-radius:12px;padding:13px 14px;font-size:13px;line-height:1.5;color:#7a5800">{{ d.info }}</div>
+              </sc-if>
+
+              <sc-if value="{{ d.hasPdf }}">
+                <div onClick="{{ openPdf }}" style="margin-top:14px;display:flex;align-items:center;gap:11px;background:#fff;border:1px solid #EAF0F7;border-radius:12px;padding:12px 13px;cursor:pointer"><div style="width:34px;height:34px;border-radius:9px;background:rgba(192,57,43,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#C0392B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5z"/><path d="M14 3v5h5"/></svg></div><span style="flex:1;font-size:12.5px;font-weight:500">{{ d.pdf }}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#3E7BD6">otwórz</span></div>
+              </sc-if>
+
+              <sc-if value="{{ hasTech }}">
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;margin:20px 0 8px 2px">Notatka serwisowa</div>
+                <div style="background:rgba(62,123,214,.06);border:1px solid rgba(62,123,214,.22);border-left:3px solid #3E7BD6;border-radius:12px;padding:13px 14px;font-size:13px;line-height:1.5;color:#1f3a5f">{{ d.tech }}</div>
+              </sc-if>
+
+              <div style="background:#fff;border:none;border-radius:20px;box-shadow:0 2px 12px rgba(14,26,43,.06);margin-top:16px;overflow:hidden">
+                <div style="padding:12px 15px;display:flex;justify-content:space-between;border-bottom:1px solid #F1F5FA"><span style="font-size:12.5px;color:#7C8AA0">Zgłaszający</span><span style="font-size:12.5px;font-weight:500">{{ d.reporter }}</span></div>
+                <div style="padding:12px 15px;display:flex;justify-content:space-between"><span style="font-size:12.5px;color:#7C8AA0">Przypisany serwis</span><span style="font-size:12.5px;font-weight:500">{{ d.assigned }}</span></div>
+              </div>
+
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;margin:22px 0 10px 2px">Historia / ślad audytowy</div>
+              <div style="background:#fff;border:none;border-radius:20px;box-shadow:0 2px 12px rgba(14,26,43,.06);padding:15px 15px 4px">
+                <sc-for list="{{ timeline }}" as="e" hint-placeholder-count="3">
+                  <div style="display:flex;gap:11px">
+                    <div style="display:flex;flex-direction:column;align-items:center;align-self:stretch"><span style="{{ e.dot }}"></span><div style="{{ e.line }}"></div></div>
+                    <div style="padding-bottom:13px"><div style="font-size:13px;font-weight:600;color:#0E1A2B">{{ e.label }}</div><div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#9AA7B8;margin-top:3px">{{ e.by }} · {{ e.when }}</div></div>
+                  </div>
+                </sc-for>
+              </div>
+
+              <sc-if value="{{ closed }}">
+                <div style="margin-top:16px;background:#fff;border:none;border-radius:20px;box-shadow:0 2px 12px rgba(14,26,43,.06);padding:15px">
+                  <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px">Ocena realizacji</div>
+                  <div style="font-size:12px;color:#7C8AA0;margin-top:3px">{{ rateHint }}</div>
+                  <div style="display:flex;gap:8px;margin-top:11px">
+                    <sc-for list="{{ rateStars }}" as="s" hint-placeholder-count="5">
+                      <div onClick="{{ s.onClick }}" style="{{ s.style }}"><svg width="27" height="27" viewBox="0 0 24 24" fill="{{ s.fill }}" stroke="{{ s.stroke }}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9 6.8 19.2l1-5.8L3.5 9.2l5.9-.9z"/></svg></div>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ canPriority }}">
+                <div onClick="{{ togglePriority }}" style="{{ prioRowStyle }}"><div style="display:flex;align-items:center;gap:9px"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#C98800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V4M4 4h11l-1.5 3L15 10H4"/></svg><span style="font-size:13.5px;font-weight:600">Priorytet pilny</span></div><span style="{{ prioBadge }}">{{ prioText }}</span></div>
+              </sc-if>
+
+              <sc-if value="{{ canLevel }}">
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;margin:22px 0 9px 2px">Priorytet i SLA</div>
+                <div style="display:flex;flex-wrap:wrap;gap:8px"><sc-for list="{{ levelOpts }}" as="l" hint-placeholder-count="4"><div onClick="{{ l.onClick }}" style="{{ l.style }}">{{ l.label }}</div></sc-for></div>
+                <div style="{{ dueStyle }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>{{ dueLabel }}</div>
+              </sc-if>
+
+              <sc-if value="{{ canChange }}">
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;margin:22px 0 9px 2px">Zmień status</div>
+                <div style="display:flex;flex-wrap:wrap;gap:8px">
+                  <sc-for list="{{ statusOpts }}" as="o" hint-placeholder-count="4"><div onClick="{{ o.onClick }}" style="{{ o.style }}">{{ o.label }}</div></sc-for>
+                </div>
+                <sc-if value="{{ isSerw }}"><div style="font-size:11px;color:#9AA7B8;margin-top:7px;line-height:1.4">Status „Odrzucone" nadaje wyłącznie zarząd / administrator.</div></sc-if>
+              </sc-if>
+
+              <sc-if value="{{ canAssign }}">
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;margin:20px 0 9px 2px">Przypisz serwisanta</div>
+                <div style="display:flex;flex-wrap:wrap;gap:8px">
+                  <sc-for list="{{ assignees }}" as="a" hint-placeholder-count="3"><div onClick="{{ a.onClick }}" style="{{ a.style }}">{{ a.name }}</div></sc-for>
+                </div>
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;margin:18px 0 9px 2px">Kategoria</div>
+                <div style="display:flex;flex-wrap:wrap;gap:7px">
+                  <sc-for list="{{ cats }}" as="c" hint-placeholder-count="6"><div onClick="{{ c.onClick }}" style="{{ c.style }}">{{ c.name }}</div></sc-for>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ showTeam }}">
+              <div style="background:#F4F1EA;border:1px solid #E4DCC8;border-radius:20px;padding:16px;margin-top:16px">
+                <div style="display:flex;align-items:center;gap:7px;margin-bottom:11px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A6A2E;letter-spacing:.6px;text-transform:uppercase;font-weight:600">🔒 Notatki zespołu</span><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;background:rgba(138,106,46,.14);color:#8A6A2E;padding:2px 7px;border-radius:999px">wewnętrzne — niewidoczne dla mieszkańca</span></div>
+                <sc-if value="{{ hasComments }}">
+                  <div style="display:flex;flex-direction:column;gap:9px">
+                    <sc-for list="{{ comments }}" as="c" hint-placeholder-count="2">
+                      <div style="background:#fff;border:1px solid #EAF0F7;border-radius:13px;padding:11px 13px">
+                        <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px"><span style="width:20px;height:20px;border-radius:999px;background:#EAF0F7;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:9px;font-weight:600;color:#173A6A">{{ c.initial }}</span><span style="font-size:12px;font-weight:600">{{ c.author }}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#9AA7B8">{{ c.role }}</span></div>
+                        <div style="font-size:12.5px;line-height:1.5;color:#3A4759">{{ c.text }}</div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ noComments }}"><div style="font-size:12.5px;color:#9AA7B8;padding:4px 2px">Brak notatek. Dodaj pierwszą.</div></sc-if>
+                <div style="display:flex;gap:8px;margin-top:11px">
+                  <input value="{{ commentDraft }}" onChange="{{ setComment }}" placeholder="Dodaj notatkę zespołu…" style="flex:1;font-size:13px;background:#fff;border:1px solid #E2E9F2;border-radius:11px;padding:11px 13px;color:#0E1A2B"/>
+                  <div onClick="{{ sendComment }}" style="display:flex;align-items:center;justify-content:center;width:44px;border-radius:11px;background:#173A6A;cursor:pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></div>
+                </div>
+              </div>
+              </sc-if>
+
+              <sc-if value="{{ readOnly }}">
+                <div style="margin-top:20px;display:flex;align-items:flex-start;gap:9px;background:#fff;border:1px solid #EAF0F7;border-radius:13px;padding:13px 14px"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#3E7BD6" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><path d="M12 16v-4M12 8h.01"/><circle cx="12" cy="12" r="9"/></svg><span style="font-size:12.5px;line-height:1.5;color:#5A6B80">Status zmienia zarząd lub serwis. Otrzymasz powiadomienie o każdej zmianie.</span></div>
+              </sc-if>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ showReg }}">
+          <div data-screen-label="Rejestracja" style="height:100%;display:flex;flex-direction:column;background:#0E1A2B;background-image:radial-gradient(700px 380px at 50% -10%,rgba(62,123,214,.3),transparent 60%);overflow-y:auto">
+            <div style="padding:54px 22px 30px;display:flex;flex-direction:column;min-height:100%">
+              <div style="display:flex;align-items:center;justify-content:space-between">
+                <div style="display:flex;align-items:center;gap:9px"><div style="width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,#3E7BD6,#173A6A);display:flex;align-items:center;justify-content:center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M14 7a4 4 0 0 1-5.3 5.3L4 17l3 3 4.7-4.7A4 4 0 0 0 17 10l-2.2 2.2-2-2L15 8z"/></svg></div><span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:19px;color:#fff">Mestio</span></div>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:rgba(255,255,255,.5)">Krok {{ regStep }}/{{ regTotal }}</span>
+              </div>
+              <div style="display:flex;gap:6px;margin-top:18px"><sc-for list="{{ regDots }}" as="d" hint-placeholder-count="3"><div style="{{ d.style }}"></div></sc-for></div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:23px;color:#fff;margin-top:20px;letter-spacing:-.3px">{{ regTitle }}</div>
+              <div style="font-size:12.5px;color:rgba(255,255,255,.55);margin-top:4px">{{ regSubtitle }}</div>
+
+              <div style="background:#fff;border-radius:20px;padding:18px;margin-top:18px">
+
+                <sc-if value="{{ regShowContact }}">
+                  <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;margin-bottom:8px">Rola</div>
+                  <div style="display:flex;gap:6px;flex-wrap:wrap"><sc-for list="{{ regRoles }}" as="r" hint-placeholder-count="4"><div onClick="{{ r.onClick }}" style="{{ r.style }}">{{ r.label }}</div></sc-for></div>
+                  <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;margin:16px 0 7px">Imię i nazwisko</div>
+                  <input placeholder="np. Anna Kowalska" style="width:100%;font-size:14px;background:#F4F7FB;border-radius:11px;padding:12px 13px;color:#0E1A2B"/>
+                  <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;margin:14px 0 7px">E-mail</div>
+                  <input placeholder="adres@poczta.pl" style="width:100%;font-size:14px;background:#F4F7FB;border-radius:11px;padding:12px 13px;color:#0E1A2B"/>
+                  <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;margin:14px 0 7px">Telefon</div>
+                  <input placeholder="600 000 000" style="width:100%;font-size:14px;background:#F4F7FB;border-radius:11px;padding:12px 13px;color:#0E1A2B"/>
+                </sc-if>
+
+                <sc-if value="{{ regShowFirm }}">
+                  <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#C98800;letter-spacing:.6px;text-transform:uppercase;margin-bottom:7px">Nazwa serwisanta / firmy</div>
+                  <input value="{{ reg.serw }}" onChange="{{ setRegServ }}" placeholder="np. Marek Wójcik — Hydraulika" style="width:100%;font-size:14px;background:rgba(242,169,0,.08);border:1px solid rgba(242,169,0,.4);border-radius:11px;padding:12px 13px;color:#0E1A2B"/>
+                  <div style="font-size:11.5px;color:#7C8AA0;margin-top:8px;line-height:1.45">Ta nazwa pojawi się jako „przypisany serwisant" przy zgłoszeniach skierowanych do Ciebie. Serwisant nie podaje lokalizacji mieszkania.</div>
+                </sc-if>
+
+                <sc-if value="{{ regShowLoc }}">
+                  <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;margin-bottom:8px">Budynek</div>
+                  <div style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ regBuildings }}" as="b" hint-placeholder-count="3"><div onClick="{{ b.onClick }}" style="{{ b.style }}">{{ b.name }}</div></sc-for></div>
+                  <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;margin:15px 0 8px">Klatka</div>
+                  <div style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ regStairs }}" as="s" hint-placeholder-count="2"><div onClick="{{ s.onClick }}" style="{{ s.style }}">Klatka {{ s.name }}</div></sc-for></div>
+                  <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;margin:15px 0 8px">Piętro</div>
+                  <div style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ regFloors }}" as="f" hint-placeholder-count="6"><div onClick="{{ f.onClick }}" style="{{ f.style }}">{{ f.label }}</div></sc-for></div>
+                  <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;margin:15px 0 8px">Numer mieszkania</div>
+                  <input value="{{ reg.apt }}" onChange="{{ setRegApt }}" placeholder="np. 14" style="width:100%;font-size:14px;background:#F4F7FB;border-radius:11px;padding:12px 13px;color:#0E1A2B"/>
+                </sc-if>
+
+                <sc-if value="{{ regShowCode }}">
+                  <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;margin-bottom:9px">Podsumowanie</div>
+                  <div style="background:#F4F7FB;border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:9px">
+                    <sc-for list="{{ regSummary }}" as="r" hint-placeholder-count="2"><div style="display:flex;justify-content:space-between;gap:10px"><span style="font-size:12px;color:#7C8AA0">{{ r.k }}</span><span style="font-size:12.5px;font-weight:600;text-align:right">{{ r.v }}</span></div></sc-for>
+                  </div>
+                  <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;margin:16px 0 7px">Kod zaproszenia do osiedla</div>
+                  <input placeholder="np. SLO-7K2P" style="width:100%;font-family:'IBM Plex Mono',monospace;font-size:13px;background:#F4F7FB;border-radius:11px;padding:12px 13px;color:#0E1A2B"/>
+                  <div style="font-size:11.5px;color:#7C8AA0;margin-top:8px;line-height:1.45">Kod otrzymasz od zarządu osiedla. Bez kodu konto poczeka na akceptację.</div>
+                </sc-if>
+
+              </div>
+
+              <div style="display:flex;gap:10px;margin-top:18px">
+                <div onClick="{{ regBack }}" style="flex:1;text-align:center;padding:15px;border-radius:14px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:#fff;font-weight:600;font-size:14px;cursor:pointer">{{ regBackLabel }}</div>
+                <div onClick="{{ regNext }}" style="flex:1.7;text-align:center;padding:15px;border-radius:14px;background:linear-gradient(135deg,#3E7BD6,#173A6A);color:#fff;font-weight:600;font-size:15px;cursor:pointer;box-shadow:0 10px 24px rgba(23,58,106,.35)">{{ regNextLabel }}</div>
+              </div>
+              <div onClick="{{ closeReg }}" style="margin-top:13px;text-align:center;color:rgba(255,255,255,.55);font-size:12.5px;cursor:pointer">Mam już konto — wróć do aplikacji</div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ composer }}">
+          <div style="position:absolute;inset:0;z-index:40;background:rgba(14,26,43,.45);animation:fade .18s ease" onClick="{{ closeComposer }}"></div>
+          <div style="position:absolute;left:0;right:0;bottom:0;z-index:41;background:#F6F8FB;border-radius:26px 26px 0 0;box-shadow:0 -10px 40px rgba(14,26,43,.25);animation:sheetUp .26s cubic-bezier(.22,1,.36,1);max-height:94%;display:flex;flex-direction:column">
+            <div style="display:flex;justify-content:center;padding:10px 0 4px"><div style="width:38px;height:4px;border-radius:999px;background:#D4DEEA"></div></div>
+            <div style="overflow-y:auto;padding:8px 18px 26px">
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;letter-spacing:-.3px">{{ composerTitle }}</div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;margin:16px 0 7px">Tytuł</div>
+              <input value="{{ nf.title }}" onChange="{{ setTitle }}" placeholder="np. Cieknący kran w łazience" style="width:100%;font-size:14px;background:#fff;border:1px solid #E2E9F2;border-radius:12px;padding:13px 14px;color:#0E1A2B"/>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;margin:16px 0 8px">Kategoria</div>
+              <div style="display:flex;flex-wrap:wrap;gap:7px">
+                <sc-for list="{{ nfCats }}" as="c" hint-placeholder-count="6"><div onClick="{{ c.onClick }}" style="{{ c.style }}">{{ c.name }}</div></sc-for>
+              </div>
+
+              <sc-if value="{{ canSetRecipient }}">
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;margin:16px 0 8px">Skieruj do</div>
+                <div style="display:flex;gap:7px;flex-wrap:wrap"><sc-for list="{{ nfRecipients }}" as="r" hint-placeholder-count="3"><div onClick="{{ r.onClick }}" style="{{ r.style }}">{{ r.label }}</div></sc-for></div>
+                <div style="font-size:11px;color:#9AA7B8;margin-top:6px;line-height:1.4">Zgłoszenie zawsze trafia również do zarządu i administracji.</div>
+              </sc-if>
+
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;margin:16px 0 7px">Lokalizacja</div>
+              <div style="display:flex;gap:8px"><div onClick="{{ locAuto }}" style="{{ nfLocAutoStyle }}">Z urządzenia (GPS)</div><div onClick="{{ locManualMode }}" style="{{ nfLocManualStyle }}">Wpisz ręcznie</div></div>
+              <sc-if value="{{ nfManualMode }}"><input value="{{ nf.locManual }}" onChange="{{ setLocManual }}" placeholder="np. Budynek A · kl. II · p. 3 · m. 14" style="width:100%;font-size:13.5px;background:#fff;border:1px solid #E2E9F2;border-radius:12px;padding:12px 14px;margin-top:8px;color:#0E1A2B"/></sc-if>
+              <sc-if value="{{ nfAutoMode }}"><div style="display:flex;align-items:center;gap:9px;background:#fff;border:1px solid #E2E9F2;border-radius:12px;padding:13px 14px;margin-top:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3E7BD6" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.3-7-11a7 7 0 0 1 14 0c0 4.7-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#3A4759">{{ nf.loc }}</span></div></sc-if>
+
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;margin:16px 0 7px">Opis</div>
+              <textarea value="{{ nf.desc }}" onChange="{{ setDesc }}" placeholder="Opisz problem…" style="width:100%;min-height:72px;resize:none;font-size:13.5px;line-height:1.5;background:#fff;border:1px solid #E2E9F2;border-radius:12px;padding:13px 14px;color:#0E1A2B"></textarea>
+
+              <sc-if value="{{ infoOn }}">
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;margin:16px 0 7px">Inne — informacja dla zarządu</div>
+                <input value="{{ nf.info }}" onChange="{{ setInfo }}" placeholder="np. przyjedzie policja / straż, dostęp od 8:00" style="width:100%;font-size:13.5px;background:#fff;border:1px solid #E2E9F2;border-radius:12px;padding:12px 14px;color:#0E1A2B"/>
+              </sc-if>
+
+              <div onClick="{{ addPhoto }}" style="margin-top:13px;display:flex;align-items:center;justify-content:center;gap:8px;border:1.5px dashed #C7D4E4;border-radius:12px;padding:14px;color:#5A6B80;font-size:13px;cursor:pointer;background:#fff"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#5A6B80" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h3l2-2h6l2 2h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.2"/></svg>{{ photoLabel }}</div>
+              <div onClick="{{ addPdf }}" style="margin-top:9px;display:flex;align-items:center;justify-content:center;gap:8px;border:1.5px dashed #C7D4E4;border-radius:12px;padding:14px;color:#5A6B80;font-size:13px;cursor:pointer;background:#fff"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5A6B80" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5z"/><path d="M14 3v5h5"/></svg>{{ pdfLabel }}</div>
+
+              <sc-if value="{{ prioAllowed }}">
+                <div onClick="{{ toggleNfPrio }}" style="{{ nfPrioStyle }}"><div style="display:flex;align-items:center;gap:9px"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#C98800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V4M4 4h11l-1.5 3L15 10H4"/></svg><span style="font-size:13.5px;font-weight:600;color:#0E1A2B">Oznacz jako pilne</span></div><span style="{{ nfPrioBadge }}">{{ nfPrioText }}</span></div>
+                <div style="font-size:11px;color:#9AA7B8;margin-top:6px;line-height:1.4">Priorytet nadają tylko zarząd, administrator i ochrona.</div>
+              </sc-if>
+
+              <div style="margin-top:13px;display:flex;align-items:center;gap:7px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#9AA7B8"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9AA7B8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Data zgłoszenia: {{ nowStamp }}</div>
+
+              <div style="display:flex;gap:10px;margin-top:18px">
+                <div onClick="{{ closeComposer }}" style="flex:1;text-align:center;padding:14px;border-radius:13px;background:#EAF0F7;color:#5A6B80;font-weight:600;font-size:14px;cursor:pointer">Anuluj</div>
+                <div onClick="{{ submit }}" style="flex:1.6;text-align:center;padding:14px;border-radius:13px;background:linear-gradient(135deg,#3E7BD6,#173A6A);color:#fff;font-weight:600;font-size:14px;cursor:pointer">Wyślij zgłoszenie</div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ annComposer }}">
+          <div style="position:absolute;inset:0;z-index:40;background:rgba(14,26,43,.45);animation:fade .18s ease" onClick="{{ closeAnn }}"></div>
+          <div style="position:absolute;left:0;right:0;bottom:0;z-index:41;background:#F6F8FB;border-radius:26px 26px 0 0;box-shadow:0 -10px 40px rgba(14,26,43,.25);animation:sheetUp .26s cubic-bezier(.22,1,.36,1);max-height:92%;display:flex;flex-direction:column">
+            <div style="display:flex;justify-content:center;padding:10px 0 4px"><div style="width:38px;height:4px;border-radius:999px;background:#D4DEEA"></div></div>
+            <div style="overflow-y:auto;padding:8px 18px 26px">
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;letter-spacing:-.3px">Nowe ogłoszenie</div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;margin:16px 0 7px">Tytuł</div>
+              <input value="{{ annDraft.title }}" onChange="{{ setAnnTitle }}" placeholder="np. Przerwa w dostawie wody" style="width:100%;font-size:14px;background:#fff;border:1px solid #E2E9F2;border-radius:12px;padding:13px 14px;color:#0E1A2B"/>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;margin:14px 0 7px">Treść</div>
+              <textarea value="{{ annDraft.body }}" onChange="{{ setAnnBody }}" placeholder="Treść komunikatu…" style="width:100%;min-height:70px;resize:none;font-size:13.5px;line-height:1.5;background:#fff;border:1px solid #E2E9F2;border-radius:12px;padding:13px 14px;color:#0E1A2B"></textarea>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;margin:14px 0 7px">Zakres</div>
+              <div style="display:flex;flex-wrap:wrap;gap:7px"><sc-for list="{{ annTargets }}" as="t" hint-placeholder-count="3"><div onClick="{{ t.onClick }}" style="{{ t.style }}">{{ t.label }}</div></sc-for></div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;margin:16px 0 7px">Widoczne do (potem znika)</div>
+              <div style="display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #E2E9F2;border-radius:12px;padding:6px 8px 6px 13px">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3E7BD6" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                <input value="{{ annDate }}" onChange="{{ setAnnDate }}" type="date" style="flex:1;font-size:13.5px;color:#0E1A2B;background:none"/>
+                <input value="{{ annTime }}" onChange="{{ setAnnTime }}" type="time" style="width:96px;font-size:13.5px;color:#0E1A2B;background:#F4F7FB;border-radius:9px;padding:9px"/>
+              </div>
+              <div style="font-size:11px;color:#9AA7B8;margin-top:7px;line-height:1.4">Po tej dacie i godzinie ogłoszenie automatycznie zniknie z aplikacji mieszkańców.</div>
+              <div style="display:flex;gap:10px;margin-top:18px">
+                <div onClick="{{ closeAnn }}" style="flex:1;text-align:center;padding:14px;border-radius:13px;background:#EAF0F7;color:#5A6B80;font-weight:600;font-size:14px;cursor:pointer">Anuluj</div>
+                <div onClick="{{ submitAnn }}" style="flex:1.6;text-align:center;padding:14px;border-radius:13px;background:linear-gradient(135deg,#3E7BD6,#173A6A);color:#fff;font-weight:600;font-size:14px;cursor:pointer">Opublikuj</div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ showFeedback }}">
+          <div style="position:absolute;inset:0;z-index:42;background:rgba(14,26,43,.45);animation:fade .18s ease" onClick="{{ closeFeedback }}"></div>
+          <div style="position:absolute;left:0;right:0;bottom:0;z-index:43;background:#F6F8FB;border-radius:26px 26px 0 0;box-shadow:0 -10px 40px rgba(14,26,43,.25);animation:sheetUp .26s cubic-bezier(.22,1,.36,1);padding-bottom:30px">
+            <div style="display:flex;justify-content:center;padding:10px 0 4px"><div style="width:38px;height:4px;border-radius:999px;background:#D4DEEA"></div></div>
+            <div style="padding:8px 18px 8px">
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;letter-spacing:-.3px">Zgłoś uwagę do twórcy</div>
+              <div style="font-size:12.5px;color:#7C8AA0;margin-top:4px;line-height:1.5">Coś nie działa, brakuje funkcji albo masz pomysł? Napisz — pomaga rozwijać aplikację.</div>
+              <div style="display:flex;gap:7px;margin-top:14px"><sc-for list="{{ feedbackTypes }}" as="t" hint-placeholder-count="3"><div onClick="{{ t.onClick }}" style="{{ t.style }}">{{ t.label }}</div></sc-for></div>
+              <textarea value="{{ feedbackDraft }}" onChange="{{ setFeedback }}" placeholder="Twoja uwaga lub pomysł…" style="width:100%;min-height:96px;resize:none;font-size:13.5px;line-height:1.5;background:#fff;border:1px solid #E2E9F2;border-radius:12px;padding:13px 14px;color:#0E1A2B;margin-top:12px"></textarea>
+              <div style="display:flex;align-items:center;gap:7px;margin-top:10px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#9AA7B8"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9AA7B8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4M12 3l7 4v5c0 5-3.5 8-7 9-3.5-1-7-4-7-9V7z"/></svg>Trafi bezpośrednio do panelu Mestio — zobaczymy je i przeanalizujemy.</div>
+              <div onClick="{{ sendFeedback }}" style="margin-top:16px;text-align:center;padding:14px;border-radius:13px;background:linear-gradient(135deg,#3E7BD6,#173A6A);color:#fff;font-weight:600;font-size:14px;cursor:pointer">Wyślij uwagę</div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ notifOpen }}">
+          <div style="position:absolute;inset:0;z-index:44;background:rgba(14,26,43,.45);animation:fade .18s ease" onClick="{{ closeNotif }}"></div>
+          <div style="position:absolute;left:0;right:0;top:0;z-index:45;background:#fff;border-radius:0 0 24px 24px;box-shadow:0 12px 36px rgba(14,26,43,.28);padding:52px 16px 18px;animation:fade .2s ease">
+            <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px">Powiadomienia</span><div onClick="{{ closeNotif }}" style="width:30px;height:30px;border-radius:999px;background:#F4F7FB;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#5A6B80" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></div></div>
+            <div style="display:flex;flex-direction:column;gap:9px;margin-top:14px;max-height:300px;overflow-y:auto">
+              <sc-if value="{{ hasNotifs }}">
+                <sc-for list="{{ notifs }}" as="n" hint-placeholder-count="4">
+                  <div onClick="{{ n.onClick }}" style="display:flex;gap:10px;background:#F6F8FB;border:1px solid #EEF2F8;border-radius:13px;padding:12px 13px;cursor:pointer"><span style="{{ n.dot }}"></span><div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:600;color:#0E1A2B">{{ n.title }}</div><div style="font-size:11.5px;color:#7C8AA0;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ n.sub }}</div></div><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#9AA7B8;flex-shrink:0">{{ n.when }}</span></div>
+                </sc-for>
+              </sc-if>
+              <sc-if value="{{ noNotifs }}"><div style="text-align:center;color:#9AA7B8;font-size:13px;padding:20px">Brak powiadomień.</div></sc-if>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ estateSheet }}">
+          <div style="position:absolute;inset:0;z-index:40;background:rgba(14,26,43,.45);animation:fade .18s ease" onClick="{{ closeEstate }}"></div>
+          <div style="position:absolute;left:0;right:0;bottom:0;z-index:41;background:#F6F8FB;border-radius:26px 26px 0 0;box-shadow:0 -10px 40px rgba(14,26,43,.25);animation:sheetUp .26s cubic-bezier(.22,1,.36,1);padding-bottom:30px">
+            <div style="display:flex;justify-content:center;padding:10px 0 4px"><div style="width:38px;height:4px;border-radius:999px;background:#D4DEEA"></div></div>
+            <div style="padding:8px 18px 8px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px">Wybierz osiedle</div>
+            <div style="display:flex;flex-direction:column;gap:9px;padding:8px 16px 0">
+              <sc-for list="{{ estates }}" as="e" hint-placeholder-count="2">
+                <div onClick="{{ e.onClick }}" style="{{ e.row }}">
+                  <div style="width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#3E7BD6,#173A6A);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;color:#fff;flex-shrink:0">{{ e.initial }}</div>
+                  <span style="flex:1;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14.5px">{{ e.name }}</span>
+                  <sc-if value="{{ e.active }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3E7BD6" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4 10-10"/></svg></sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ phoneComposer }}">
+          <div onClick="{{ closePhoneComposer }}" style="position:absolute;inset:0;background:rgba(14,26,43,.45);z-index:70;display:flex;align-items:flex-end;justify-content:center">
+            <div style="background:#F6F8FB;border-radius:22px 22px 0 0;width:100%;max-height:80%;overflow-y:auto;padding:20px 18px 30px" onClick="event.stopPropagation()">
+              <div style="width:38px;height:4px;border-radius:99px;background:#D8E2EF;margin:0 auto 16px"></div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px">Nowy kontakt telefoniczny</div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;margin:16px 0 7px">Nazwa</div>
+              <input value="{{ newPhone.name }}" onChange="{{ setPhoneName }}" placeholder="np. Konserwator wind" style="width:100%;font-size:14px;background:#fff;border-radius:11px;padding:12px 13px;color:#0E1A2B"/>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;margin:14px 0 7px">Opis / rola</div>
+              <input value="{{ newPhone.role }}" onChange="{{ setPhoneRole }}" placeholder="np. Kone serwis" style="width:100%;font-size:14px;background:#fff;border-radius:11px;padding:12px 13px;color:#0E1A2B"/>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;letter-spacing:.6px;text-transform:uppercase;margin:14px 0 7px">Numer telefonu</div>
+              <input value="{{ newPhone.phone }}" onChange="{{ setPhonePhone }}" placeholder="600 000 000" style="width:100%;font-family:'IBM Plex Mono',monospace;font-size:14px;background:#fff;border-radius:11px;padding:12px 13px;color:#0E1A2B"/>
+              <div style="display:flex;gap:10px;margin-top:20px">
+                <div onClick="{{ closePhoneComposer }}" style="flex:1;text-align:center;padding:13px;border-radius:13px;background:#EAF0F7;color:#5A6B80;font-weight:600;font-size:14px;cursor:pointer">Anuluj</div>
+                <div onClick="{{ submitPhone }}" style="flex:1.6;text-align:center;padding:13px;border-radius:13px;background:linear-gradient(135deg,#3E7BD6,#173A6A);color:#fff;font-weight:600;font-size:14px;cursor:pointer">Dodaj kontakt</div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ hasToast }}">
+          <div style="position:absolute;left:50%;bottom:96px;z-index:60;transform:translateX(-50%);background:#0E1A2B;color:#fff;font-size:12.5px;font-weight:500;padding:11px 18px;border-radius:999px;box-shadow:0 8px 24px rgba(14,26,43,.4);white-space:nowrap;animation:toastIn .22s ease">{{ toast }}</div>
+        </sc-if>
+
+      </div>
+
+    </x-import>
+  </div>
+
+  <div style="margin-top:18px;font-family:'IBM Plex Sans',sans-serif;font-size:12px;color:rgba(255,255,255,.4);text-align:center;max-width:440px;line-height:1.5">Kliknij kartę zgłoszenia, zmień status, przełącz rolę i osiedle. „Ekran rejestracji" u góry pokazuje rejestrację. Wszystkie interakcje są na żywo.</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:820,&quot;height&quot;:980},&quot;feedbackEmail&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;aivolux@gmail.com&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Rozwój&quot;,&quot;label&quot;:&quot;E-mail twórcy (uwagi)&quot;},&quot;enableInfoField&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Zgłoszenia&quot;,&quot;label&quot;:&quot;Pole „Inne — informacja dla zarządu”&quot;},&quot;defaultAnnouncementHours&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:184,&quot;min&quot;:1,&quot;max&quot;:336,&quot;step&quot;:1,&quot;unit&quot;:&quot;h&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Ogłoszenia&quot;,&quot;label&quot;:&quot;Domyślny czas widoczności ogłoszenia&quot;}}">
+class Component extends DCLogic {
+  state = {
+    role:'zarzad', estateId:'e1', screen:'home', selectedId:null,
+    filterStatus:'all', estateSheet:false, composer:false, toast:null, notifOpen:false, query:'',
+    commentDraft:'', codeDraft:'', nextId:2042,
+    phoneContacts:[
+      {id:1,name:'Pogotowie awaryjne 24h',role:'Awaria wod-kan / CO',phone:'600 100 200',cat:'awaria'},
+      {id:2,name:'Ochrona osiedla',role:'Patrol całodobowy',phone:'600 100 201',cat:'safe'},
+      {id:3,name:'Biuro Zarządu',role:'Atlanti Sp. z o.o.',phone:'22 100 20 30',cat:'admin'},
+      {id:4,name:'Konserwator wind',role:'Kone serwis',phone:'600 100 202',cat:'awaria'},
+      {id:5,name:'Pogotowie gazowe',role:'Numer alarmowy',phone:'992',cat:'alarm'},
+      {id:6,name:'Numer alarmowy',role:'Straż / Pogotowie / Policja',phone:'112',cat:'alarm'},
+    ],
+    phoneComposer:false, newPhone:{name:'',role:'',phone:'',cat:'awaria'},
+    nf:{title:'',category:'Hydraulika',loc:'',locMode:'auto',locManual:'',desc:'',info:'',priority:false,pdf:'',photoCount:0,recipient:'biuro'},
+    showReg:false, regStep:1, expanded:0, reg:{role:'mieszkaniec',serw:'',building:'Budynek A',stair:'A',floor:'Parter',apt:''},
+    showFeedback:false, feedbackDraft:'', feedbackType:'pomysl',
+    annComposer:false, annDraft:{title:'',body:'',target:'Całe osiedle'}, annDate:'', annTime:'',
+    trello:{key:'',tok:'',list:''},
+    structure:{
+      e1:[{name:'Budynek A',type:'res',stairs:['A','B'],floors:5},{name:'Budynek B',type:'res',stairs:['A'],floors:8},{name:'Budynek C',type:'res',stairs:['A','B'],floors:5},{name:'Garaż podziemny',type:'garage',levels:2}],
+      e2:[{name:'Budynek D',type:'res',stairs:['A'],floors:6},{name:'Garaż G1',type:'garage',levels:4}],
+    },
+    announcements:[
+      {target:'Budynek A',title:'Przerwa w dostawie wody',body:'W dniu 1.07 w godz. 9:00–13:00 nastąpi przerwa w dostawie wody w Budynku A z powodu wymiany zaworów.',when:'2 godz. temu',author:'Biuro Zarządu',until:'do 1 lip 13:00',estate:'e1'},
+      {target:'Całe osiedle',title:'Obowiązkowy przegląd kominiarski',body:'Prosimy o udostępnienie lokali w dniach 5–7 lipca. Harmonogram na tablicach.',when:'wczoraj',author:'Biuro Zarządu',until:'do 7 lip 18:00',estate:'e1'},
+      {target:'Poziom -1',title:'Nowy regulamin parkingu',body:'Od 1 lipca obowiązują nowe zasady parkowania gości na poziomie -1.',when:'3 dni temu',author:'Administrator',until:'do 31 gru 23:59',estate:'e1'},
+    ],
+    reports:[
+      {id:'FX-2041',title:'Cieknący kran w łazience',category:'Hydraulika',status:'nowe',reporter:'Anna Kowalska',email:'anna.k@poczta.pl',building:'Budynek A',kl:'II',floor:'3',apt:'14',assigned:'',desc:'Woda kapie z kranu pod umywalką, pod szafką robi się kałuża. Prosba o szybką interwencję.',when:'2 godz. temu',created:'30 cze 08:10',pilne:false,tech:'',info:'',pdf:'',comments:[],estate:'e1'},
+      {id:'FX-2040',title:'Awaria windy — utknęła między piętrami',category:'Winda',status:'realizacji',reporter:'Jan Nowak',email:'jan.n@poczta.pl',building:'Budynek B',kl:'I',floor:'—',apt:'—',assigned:'Marek Wójcik',desc:'Winda zatrzymuje się na 4 piętrze i nie reaguje na przyciski.',when:'wczoraj',created:'29 cze 16:20',pilne:false,tech:'Wezwano serwis Kone, ETA 14:00. Winda wyłączona z użytku.',info:'Konserwator Kone wjedzie windą techniczną od strony garażu.',pdf:'',comments:[{author:'Marek Wójcik',role:'Serwisant',text:'Jadę na miejsce, będę około 14:00.'},{author:'Biuro Zarządu',role:'Zarząd',text:'Dzięki, mieszkańcy zostali poinformowani komunikatem.'}],estate:'e1'},
+      {id:'FX-2039',title:'Przepalona żarówka na klatce',category:'Oświetlenie',status:'zamkniete',reporter:'Ewa Mazur',email:'ewa.m@poczta.pl',building:'Budynek A',kl:'I',floor:'—',apt:'—',assigned:'Tomasz Lis',desc:'Ciemno na półpiętrze między 2 a 3 piętrem.',when:'3 dni temu',created:'26 cze 11:05',pilne:false,tech:'Wymieniono na LED 9W. Zamknięte.',info:'',pdf:'',comments:[],estate:'e1'},
+      {id:'FX-2038',title:'Domofon nie otwiera drzwi',category:'Domofon',status:'nowe',reporter:'Piotr Zając',email:'piotr.z@poczta.pl',building:'Budynek C',kl:'II',floor:'—',apt:'—',assigned:'',desc:'Po wpisaniu kodu drzwi nie zwalniają zamka. Trzeba czekać aż ktoś otworzy.',when:'5 godz. temu',created:'30 cze 05:30',pilne:false,tech:'',info:'',pdf:'',comments:[],estate:'e1'},
+      {id:'FX-2037',title:'Brak ciepłej wody w pionie',category:'Hydraulika',status:'realizacji',reporter:'Anna Kowalska',email:'anna.k@poczta.pl',building:'Budynek A',kl:'II',floor:'3',apt:'14',assigned:'Tomasz Lis',desc:'Od rana brak ciepłej wody na całym pionie mieszkania 14.',when:'8 godz. temu',created:'30 cze 02:00',pilne:false,tech:'Zgłoszone do kotłowni, planowana wymiana zaworu mieszającego.',info:'',pdf:'protokół_kotłownia.pdf',comments:[{author:'Tomasz Lis',role:'Serwisant',text:'Sprawdzam kotłownię, możliwa wymiana zaworu.'}],estate:'e1'},
+      {id:'FX-2036',title:'Graffiti na elewacji od parkingu',category:'Dach/Elewacja',status:'odrzucone',reporter:'Anonim',email:'-',building:'Budynek B',kl:'',floor:'—',apt:'—',assigned:'',desc:'Napisy sprayem na ścianie od strony parkingu.',when:'4 dni temu',created:'25 cze 09:40',pilne:false,tech:'Poza zakresem serwisu technicznego — przekazane do firmy sprzątającej.',info:'',pdf:'',comments:[],estate:'e1'},
+      {id:'FX-2035',title:'Zalany parking podziemny -2',category:'Parking',status:'realizacji',reporter:'Anna Kowalska',email:'anna.k@poczta.pl',building:'Budynek A',kl:'',floor:'-2',apt:'—',assigned:'Marek Wójcik',desc:'Woda stoi przy miejscach 40-48, poziom rośnie. Ryzyko zalania aut.',when:'12 godz. temu',created:'29 cze 22:00',pilne:true,tech:'Pompa w drodze, sektor C zamknięty do odwołania.',info:'Przyjedzie straż pożarna z pompą ok. 23:00 — proszę zwolnić wjazd.',pdf:'',comments:[{author:'Marek Wójcik',role:'Serwisant',text:'Sektor C zamknięty, czekam na pompę.'}],estate:'e1'},
+      {id:'FX-2034',title:'Niedziałające oświetlenie parkingu',category:'Oświetlenie',status:'zamkniete',reporter:'Patrol — Ochrona',email:'ochrona@mestio',building:'Budynek A',kl:'',floor:'-1',apt:'—',assigned:'Tomasz Lis',desc:'Czujnik zmierzchu nie załącza świateł na -1.',when:'6 dni temu',created:'23 cze 19:30',pilne:false,tech:'Wymieniono czujnik zmierzchu. Zamknięte.',info:'',pdf:'',comments:[],estate:'e1'},
+      {id:'FX-2033',title:'Skarga: hałas po godz. 22',category:'Administracja',status:'nowe',reporter:'Hanna Lis',email:'hanna.l@poczta.pl',building:'Budynek C',kl:'I',floor:'5',apt:'31',assigned:'',desc:'Powtarzający się hałas z mieszkania powyżej w nocy. Sprawa dla zarządu.',when:'30 godz. temu',created:'28 cze 23:15',pilne:false,tech:'',info:'',pdf:'',comments:[],estate:'e1'},
+      {id:'FX-2032',title:'Uszkodzona barierka przy wejściu',category:'Dach/Elewacja',status:'nowe',reporter:'Jan Nowak',email:'jan.n@poczta.pl',building:'Budynek B',kl:'I',floor:'0',apt:'—',assigned:'',desc:'Luźna barierka przy schodach wejściowych, ryzyko upadku.',when:'18 godz. temu',created:'29 cze 14:00',pilne:true,tech:'',info:'',pdf:'',comments:[],estate:'e1'},
+      {id:'FX-2030',title:'Otwarta brama garażowa w nocy',category:'Parking',status:'nowe',reporter:'Patrol — Ochrona',email:'ochrona@mestio',building:'Budynek A',kl:'',floor:'-1',apt:'—',assigned:'',desc:'Brama garażowa nie domyka się o 23:40, pozostaje otwarta.',when:'1 dzień temu',created:'29 cze 23:40',pilne:false,tech:'',info:'',pdf:'',comments:[],estate:'e1'},
+      {id:'FX-1108',title:'Przeciek w stropie garażu',category:'Hydraulika',status:'realizacji',reporter:'Robert Wilk',email:'robert.w@poczta.pl',building:'Budynek D',kl:'',floor:'-1',apt:'—',assigned:'Tomasz Lis',desc:'Woda sączy się ze stropu w garażu po deszczu.',when:'10 godz. temu',created:'30 cze 03:00',pilne:false,tech:'Uszczelnienie w toku.',info:'',pdf:'',comments:[],estate:'e2'},
+      {id:'FX-1107',title:'Wymiana zamka w bramie',category:'Domofon',status:'nowe',reporter:'Maria Dąb',email:'maria.d@poczta.pl',building:'Budynek E',kl:'I',floor:'—',apt:'—',assigned:'',desc:'Zacina się zamek w bramie głównej.',when:'2 dni temu',created:'28 cze 10:10',pilne:false,tech:'',info:'',pdf:'',comments:[],estate:'e2'},
+    ],
+  };
+
+  STAT={nowe:{label:'Nowe',color:'#3E7BD6'},realizacji:{label:'W realizacji',color:'#F2A900'},zamkniete:{label:'Zamknięte',color:'#2E9E6B'},odrzucone:{label:'Odrzucone',color:'#6B7A90'}};
+  LV={'Niski':{c:'#6B7A90',h:168},'Normalny':{c:'#3E7BD6',h:72},'Wysoki':{c:'#F2A900',h:24},'Krytyczny':{c:'#C0392B',h:4}};
+  MAINT=[{title:'Przegląd techniczny wind',freq:'co miesiąc',next:'5 lip 2026'},{title:'Przegląd kominiarski / wentylacja',freq:'co rok',next:'12 wrz 2026'},{title:'Deratyzacja i dezynsekcja (DDD)',freq:'co kwartał',next:'1 sie 2026'},{title:'Przegląd gaśnic i hydrantów (PPOŻ)',freq:'co rok',next:'20 lip 2026'},{title:'Czyszczenie separatorów w garażu',freq:'co pół roku',next:'30 sie 2026'}];
+  CATS=['Hydraulika','Elektryka','Winda','Ogrzewanie','Domofon','Oświetlenie','Parking','Dach/Elewacja','Sprzątanie','Zieleń','Zarząd / Administrator'];
+  ROLES=[{key:'mieszkaniec',label:'Mieszkaniec'},{key:'zarzad',label:'Zarząd'},{key:'serwisant',label:'Serwisant'},{key:'ochrona',label:'Ochrona'}];
+  ESTATES=[{id:'e1',name:'Osiedle Słoneczne Wzgórza',initial:'S'},{id:'e2',name:'Rezydencja Park',initial:'R'}];
+  VOTES=[
+    {id:'U-07',title:'Wymiana oświetlenia na LED w częściach wspólnych',desc:'Uchwała w sprawie modernizacji oświetlenia klatek i garażu na energooszczędne LED.',forShares:62,againstShares:8,turnout:70,state:'open',deadline:'do 12 lip',estate:'e1',my:null,speed:''},
+    {id:'U-06',title:'Zwiększenie funduszu remontowego o 0,20 zł/m²',desc:'Podniesienie stawki na fundusz remontowy od 1 sierpnia.',forShares:41,againstShares:37,turnout:78,state:'open',deadline:'do 9 lip',estate:'e1',my:null,speed:''},
+    {id:'U-05',title:'Montaż stojaków rowerowych przy Budynku B',desc:'Zakup i montaż 3 stojaków rowerowych.',forShares:71,againstShares:5,turnout:76,state:'passed',deadline:'zakończona',estate:'e1',my:'Za',speed:'2 dni 4 godz.'},
+  ];
+  IC={home:'M4 11.5 12 5l8 6.5M6 10v9h4v-5h4v5h4v-9',clip:'M8 5H6.8A1.8 1.8 0 0 0 5 6.8V19a1.8 1.8 0 0 0 1.8 1.8h10.4A1.8 1.8 0 0 0 19 19V6.8A1.8 1.8 0 0 0 17.2 5H16M8.6 5.4a1.4 1.4 0 0 1 1.4-1.4h4a1.4 1.4 0 0 1 1.4 1.4 1 1 0 0 1-1 1H9.6a1 1 0 0 1-1-1zM8.5 11h7M8.5 14.5h5',phone:'M6 4h3l1.4 4-2 1.4a11 11 0 0 0 5 5l1.4-2 4 1.4V18a2 2 0 0 1-2.1 2A14 14 0 0 1 4 6.1 2 2 0 0 1 6 4z',user:'M12 12.5a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM5 20a7 7 0 0 1 14 0',mega:'M5 10v4h3l7 4V6l-7 4H5zM18 9.2a3 3 0 0 1 0 5.6',ppl:'M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM4 20a5 5 0 0 1 10 0M15.5 5.3a3 3 0 0 1 0 5.4M16 13.6a5 5 0 0 1 4 6.4',bld:'M4 21V9l8-5 8 5v12M9 21v-6h6v6M8 11h.01M12 11h.01M16 11h.01',vote:'M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11'};
+
+  nav(){const H={key:'home',label:'Pulpit',icon:this.IC.home},R={key:'reports',label:'Zgłoszenia',icon:this.IC.clip},T={key:'contacts',label:'Telefony',icon:this.IC.phone},P={key:'profile',label:'Profil',icon:this.IC.user},V={key:'votes',label:'Uchwały',icon:this.IC.vote};
+    return {mieszkaniec:[H,R,T,V,P],ochrona:[H,R,T,P],serwisant:[H,T,P],zarzad:[H,R,T,V,P]};}
+
+  users(){return {
+    mieszkaniec:{name:'Anna Kowalska',email:'anna.k@poczta.pl',loc:'Budynek A · kl. II · p. 3 · m. 14',sub:'Mieszkaniec',chip:'Mieszkaniec',color:'#3E7BD6',initial:'A'},
+    ochrona:{name:'Patrol — Ochrona',email:'ochrona@mestio',loc:'Osiedle Słoneczne Wzgórza',sub:'Ochrona',chip:'Ochrona',color:'#6B7A90',initial:'O'},
+    serwisant:{name:'Marek Wójcik',email:'marek.w@mestio',loc:'Serwis techniczny · Atlanti',sub:'Serwisant',chip:'Serwis',color:'#C98800',initial:'M'},
+    zarzad:{name:'Biuro Zarządu',email:'biuro@mestio',loc:'Atlanti Sp. z o.o.',sub:'Zarząd / Administrator',chip:'Tryb biura',color:'#173A6A',initial:'B'},
+  };}
+
+  tint(hex,a){const n=parseInt(hex.slice(1),16);return 'rgba('+((n>>16)&255)+','+((n>>8)&255)+','+(n&255)+','+a+')';}
+  stamp(){const d=new Date();const M=['sty','lut','mar','kwi','maj','cze','lip','sie','wrz','paź','lis','gru'];const p=x=>(''+x).padStart(2,'0');return d.getDate()+' '+M[d.getMonth()]+' '+d.getFullYear()+' · '+p(d.getHours())+':'+p(d.getMinutes());}
+
+  setRole(role){const first=this.nav()[role][0].key;this.setState({role,screen:first,selectedId:null,composer:false,estateSheet:false,annComposer:false,showFeedback:false,filterStatus:'all'});}
+  setEstate(id){this.setState({estateId:id,estateSheet:false,selectedId:null});}
+  go(screen){this.setState({screen,selectedId:null});}
+  openReport(id){this.setState({selectedId:id});}
+  back(){this.setState({selectedId:null});}
+  notify(msg){clearTimeout(this._t);this.setState({toast:msg});this._t=setTimeout(()=>this.setState({toast:null}),2000);}
+  setStatus(id,st){const r0=this.state.reports.find(x=>x.id===id);const needsMsg=(st==='zamkniete'||st==='odrzucone');if(r0&&needsMsg&&!(r0.residentMsgs&&r0.residentMsgs.length)){this.notify('Najpierw napisz wiadomość do mieszkańca poniżej ↓');return;}const u=this.users()[this.state.role];this.setState(s=>({reports:s.reports.map(r=>r.id===id?{...r,status:st,when:'przed chwilą',log:[...(r.log||[]),{label:'Zmiana statusu → '+this.STAT[st].label,by:u.name,when:'przed chwilą',color:this.STAT[st].color}]}:r)}));this.notify('Status: '+this.STAT[st].label);}
+  addChatPhoto(){this.setState({chatPhotoPending:true});this.notify('Zdjęcie dodane do wiadomości');}
+  clearChatPhoto(){this.setState({chatPhotoPending:false});}
+  sendResidentMsg(){const id=this.state.selectedId;const t=(this.state.residentMsgDraft||'').trim();const hasPhoto=this.state.chatPhotoPending;if(!id||(!t&&!hasPhoto)){this.notify(!id?'Brak wybranego zgłoszenia':'Wpisz treść wiadomości lub dodaj zdjęcie');return;}const u=this.users()[this.state.role];const mine=this.state.role==='mieszkaniec';this.setState(s=>({residentMsgDraft:'',chatPhotoPending:false,reports:s.reports.map(r=>r.id===id?{...r,residentMsgs:[...(r.residentMsgs||[]),{author:u.name,text:t,photo:hasPhoto,when:'przed chwilą',mine}]}:r)}));this.notify(mine?'Wysłano wiadomość do biura':'Wysłano wiadomość do mieszkańca');}
+  assign(id,name){this.setState(s=>({reports:s.reports.map(r=>{if(r.id!==id)return r;const a=name==='Nieprzypisany'?'':name;return {...r,assigned:a,status:(a&&r.status==='nowe')?'realizacji':r.status,when:'przed chwilą'};})}));this.notify(name==='Nieprzypisany'?'Cofnięto przypisanie':'Przypisano: '+name);}
+  setCat(id,cat){this.setState(s=>({reports:s.reports.map(r=>r.id===id?{...r,category:cat}:r)}));this.notify('Kategoria: '+cat);}
+  setPriority(id,v){this.setState(s=>({reports:s.reports.map(r=>r.id===id?{...r,pilne:v}:r)}));this.notify(v?'Oznaczono jako pilne':'Zdjęto priorytet');}
+  rate(id,n){this.setState(s=>({reports:s.reports.map(r=>r.id===id?{...r,rating:n}:r)}));this.notify('Dziękujemy za ocenę: '+n+'/5');}
+  castVote(id,choice){const v=this.VOTES.find(x=>x.id===id);if(v&&!v.my){v.my=choice;if(choice==='Za')v.forShares+=5;else v.againstShares+=5;this.forceUpdate();}this.notify('Twój głos: '+choice);}
+  openNotif(){this.setState({notifOpen:true});}
+  closeNotif(){this.setState({notifOpen:false});}
+  levelOf(r){if(r.level)return r.level;if(r.pilne)return (r.category==='Parking'||r.category==='Winda')?'Krytyczny':'Wysoki';return ['Winda','Parking','Hydraulika','Ogrzewanie','Domofon'].includes(r.category)?'Normalny':'Niski';}
+  ageHours(r){const w=r.when||'';if(w.indexOf('chwil')>=0)return 0;if(w==='wczoraj')return 24;const m=w.match(/(\d+)/);const n=m?parseInt(m[1],10):0;if(w.indexOf('godz')>=0)return n;if(w.indexOf('dzie')>=0||w.indexOf('dni')>=0)return n*24;return n;}
+  overdueOf(r){const open=(r.status==='nowe'||r.status==='realizacji');return open&&this.ageHours(r)>this.LV[this.levelOf(r)].h;}
+  setLevel(id,lvl){this.setState(s=>({reports:s.reports.map(r=>r.id===id?{...r,level:lvl}:r)}));this.notify('Priorytet: '+lvl);}
+  sendComment(id){const t=(this.state.commentDraft||'').trim();if(!t)return;const u=this.users()[this.state.role];this.setState(s=>({commentDraft:'',reports:s.reports.map(r=>r.id===id?{...r,comments:[...(r.comments||[]),{author:u.name,role:u.sub,text:t}]}:r)}));this.notify('Dodano notatkę');}
+  openComposer(){const u=this.users()[this.state.role];this.setState({composer:true,nf:{title:'',category:'Hydraulika',loc:u.loc,locMode:'auto',locManual:'',desc:'',info:'',priority:false,pdf:'',photoCount:0,recipient:'biuro'}});}
+  closeComposer(){this.setState({composer:false});}
+  setNf(k,v){this.setState(s=>({nf:{...s.nf,[k]:v}}));}
+  submitComposer(){const n=this.state.nf;if(!n.title.trim()){this.notify('Podaj tytuł zgłoszenia');return;}const role=this.state.role;const u=this.users()[role];const id='FX-'+this.state.nextId;const canPrio=role==='zarzad'||role==='ochrona';const loc=n.locMode==='manual'?(n.locManual.trim()||u.loc):u.loc;const rep={id,title:n.title.trim(),category:n.category,status:'nowe',reporter:u.name,email:u.email,building:(loc.split(' · ')[0]||'Budynek A'),kl:'',floor:'—',apt:'—',assigned:'',desc:n.desc.trim()||'Brak opisu.',when:'przed chwilą',created:this.stamp(),pilne:canPrio&&!!n.priority,tech:'',info:n.info.trim(),pdf:n.pdf||'',photos:n.photoCount||0,comments:[],estate:this.state.estateId};this.setState(s=>({reports:[rep,...s.reports],nextId:s.nextId+1,composer:false,screen:'reports',selectedId:null}));this.notify('Zgłoszenie '+id+' wysłane do zarządu');}
+  redeem(){if(!(this.state.codeDraft||'').trim())return;this.setState({codeDraft:''});this.notify('Dołączono do osiedla (demo)');}
+  openPhoneComposer(){this.setState({phoneComposer:true,newPhone:{name:'',role:'',phone:'',cat:'awaria'}});}
+  closePhoneComposer(){this.setState({phoneComposer:false});}
+  setPhone(k,v){this.setState(s=>({newPhone:{...s.newPhone,[k]:v}}));}
+  submitPhone(){const n=this.state.newPhone;if(!n.name.trim()||!n.phone.trim()){this.notify('Podaj nazwę i numer telefonu');return;}this.setState(s=>({phoneComposer:false,phoneContacts:[{id:Date.now(),...n},...s.phoneContacts]}));this.notify('Dodano kontakt telefoniczny');}
+  delPhone(id){this.setState(s=>({phoneContacts:s.phoneContacts.filter(p=>p.id!==id)}));this.notify('Usunięto kontakt');}
+
+  openReg(){this.setState({showReg:true,regStep:1,selectedId:null,composer:false});}
+  closeReg(){this.setState({showReg:false,regStep:1});}
+  setRegRole(r){this.setState(s=>({reg:{...s.reg,role:r}}));}
+  regStepKinds(role){return role==='mieszkaniec'?['contact','loc','code']:role==='serwisant'?['contact','firm','code']:['contact','code'];}
+  regNext(){const kinds=this.regStepKinds(this.state.reg.role);if(this.state.regStep<kinds.length)this.setState(s=>({regStep:s.regStep+1}));else this.doReg();}
+  regBack(){if(this.state.regStep>1)this.setState(s=>({regStep:s.regStep-1}));else this.closeReg();}
+  setReg(k,v){this.setState(s=>({reg:{...s.reg,[k]:v}}));}
+  doReg(){const lbl={mieszkaniec:'Mieszkaniec',zarzad:'Zarząd',serwisant:'Serwisant',ochrona:'Ochrona'}[this.state.reg.role];this.setState({showReg:false});this.notify('Konto utworzone: '+lbl);}
+
+  openFeedback(){this.setState({showFeedback:true,feedbackType:'pomysl'});}
+  closeFeedback(){this.setState({showFeedback:false});}
+  setFeedbackType(t){this.setState({feedbackType:t});}
+  sendFeedback(){const t=(this.state.feedbackDraft||'').trim();if(!t){this.notify('Napisz treść uwagi');return;}this.setState({showFeedback:false,feedbackDraft:''});this.notify('Dziękujemy! Uwaga trafiła do zespołu Mestio.');}
+
+  openAnn(){this.setState({annComposer:true,annDraft:{title:'',body:'',target:'Całe osiedle'},annDate:'',annTime:''});}
+  closeAnn(){this.setState({annComposer:false});}
+  setAnn(k,v){this.setState(s=>({annDraft:{...s.annDraft,[k]:v}}));}
+  submitAnn(){const a=this.state.annDraft;if(!a.title.trim()){this.notify('Podaj tytuł ogłoszenia');return;}const until=(this.state.annDate?('do '+this.state.annDate):'')+(this.state.annTime?(' '+this.state.annTime):'')||'bez limitu';const rec={target:a.target,title:a.title.trim(),body:a.body.trim()||'—',when:'przed chwilą',author:'Biuro Zarządu',until:until.trim(),estate:this.state.estateId};this.setState(s=>({announcements:[rec,...s.announcements],annComposer:false}));this.notify('Ogłoszenie opublikowane');}
+
+  saveTrello(){this.setState(s=>({trello:s.trello}));this.notify('Połączono z Trello (demo)');}
+  setTrello(k,v){this.setState(s=>({trello:{...s.trello,[k]:v}}));}
+  logout(){this.notify('Wylogowano (demo)');}
+  addBuilding(){const est=this.state.estateId;const list=this.state.structure[est]||[];const resCount=list.filter(b=>b.type==='res').length;const letter=String.fromCharCode(65+resCount);this.setState(s=>({structure:{...s.structure,[est]:[...list,{name:'Budynek '+letter,type:'res',stairs:['A'],floors:5}]},expanded:list.length}));this.notify('Dodano Budynek '+letter);}
+  addStair(i){const est=this.state.estateId;this.setState(s=>{const list=s.structure[est].slice();const b={...list[i]};const next=String.fromCharCode(65+((b.stairs||[]).length));b.stairs=[...(b.stairs||[]),next];list[i]=b;return {structure:{...s.structure,[est]:list},expanded:i};});this.notify('Dodano klatkę');}
+  addFloor(i){const est=this.state.estateId;const gar=this.state.structure[est][i].type==='garage';this.setState(s=>{const list=s.structure[est].slice();const b={...list[i]};if(gar)b.levels=(b.levels||1)+1;else b.floors=(b.floors||1)+1;list[i]=b;return {structure:{...s.structure,[est]:list},expanded:i};});this.notify(gar?'Dodano poziom -'+(this.state.structure[est][i].levels):'Dodano piętro');}
+  toggleExpand(i){this.setState(s=>({expanded:s.expanded===i?null:i}));}
+  addGarage(){const est=this.state.estateId;const list=this.state.structure[est]||[];const gCount=list.filter(b=>b.type==='garage').length;this.setState(s=>({structure:{...s.structure,[est]:[...list,{name:'Garaż G'+(gCount+1),type:'garage',levels:4}]}}));this.notify('Dodano garaż (do -4)');}
+
+  visible(){const {reports,estateId,role}=this.state;let l=reports.filter(r=>r.estate===estateId);if(role==='mieszkaniec'||role==='ochrona'){const em=this.users()[role].email;l=l.filter(r=>r.email===em);}if(role==='serwisant'){l=l.filter(r=>r.category!=='Zarząd / Administrator'&&r.category!=='Administracja'&&r.status!=='nowe');}return l;}
+
+  vm(r){const role=this.state.role;const s=this.STAT[r.status];const loc=[r.building,r.kl?('kl. '+r.kl):'',(r.floor&&r.floor!=='—')?('p. '+r.floor):'',(r.apt&&r.apt!=='—')?('m. '+r.apt):''].filter(Boolean).join(' · ');const office=role==='zarzad'||role==='serwisant';const who=office?(r.assigned||'Nieprzypisany'):r.reporter;const pct=r.status==='nowe'?'34%':r.status==='realizacji'?'67%':'100%';const lv=this.levelOf(r);const lc=this.LV[lv].c;const od=this.overdueOf(r);return {
+    id:r.id,title:r.title,category:r.category,loc,when:r.when,who,initial:(who||'?').slice(0,1).toUpperCase(),pilne:!!r.pilne,statusLabel:s.label,onClick:()=>this.openReport(r.id),
+    level:lv,overdue:od,levelPill:{display:'inline-flex',alignItems:'center',gap:5,padding:'3px 9px',borderRadius:999,background:this.tint(lc,.13),color:lc,fontFamily:"'IBM Plex Mono',monospace",fontWeight:600,fontSize:10,whiteSpace:'nowrap'},levelDot:{width:6,height:6,borderRadius:999,background:lc,display:'inline-block',flexShrink:0},overdueBadge:{display:'inline-flex',alignItems:'center',gap:4,padding:'3px 8px',borderRadius:999,background:this.tint('#C0392B',.12),color:'#C0392B',fontFamily:"'IBM Plex Mono',monospace",fontWeight:600,fontSize:10,whiteSpace:'nowrap'},
+    card:{background:'#fff',border:r.pilne?'1px solid rgba(242,169,0,.3)':'none',borderLeft:r.pilne?'3px solid #F2A900':'none',borderRadius:20,padding:'16px 17px 14px',boxShadow:'0 2px 12px rgba(14,26,43,.06)',cursor:'pointer'},
+    pill:{display:'inline-flex',alignItems:'center',gap:5,padding:'3px 9px',borderRadius:999,background:this.tint(s.color,.13),color:s.color,fontFamily:"'IBM Plex Mono',monospace",fontWeight:600,fontSize:10.5,letterSpacing:.2,whiteSpace:'nowrap'},
+    dot:{width:6,height:6,borderRadius:999,background:s.color,display:'inline-block',flexShrink:0},
+    barBg:{height:4,borderRadius:3,background:'#EDF1F7',marginTop:11,overflow:'hidden'},
+    bar:{height:4,borderRadius:3,background:s.color,width:pct},
+  };}
+
+  chip(active,c){return {padding:'6px 11px',borderRadius:999,fontFamily:"'IBM Plex Sans',sans-serif",fontSize:12,fontWeight:active?600:500,cursor:'pointer',background:active?this.tint(c||'#3E7BD6',.13):'#fff',color:active?'#173A6A':'#5A6B80',border:'1px solid '+(active?(c||'#3E7BD6'):'#E2E9F2')};}
+
+  renderVals(){
+    const S=this.state, role=S.role, u=this.users()[role];
+    const P=this.props||{};
+    const feedbackEmail=P.feedbackEmail||'aivolux@gmail.com';
+    const infoOn=P.enableInfoField!==false;
+    const estate=this.ESTATES.find(e=>e.id===S.estateId);
+    const vis=this.visible();
+    const cnt=k=>vis.filter(r=>r.status===k).length;
+    const numStyle={fontFamily:"'Space Grotesk',sans-serif",fontWeight:700,fontSize:30,color:'#0E1A2B',marginTop:6,lineHeight:1};
+    const numSmall={fontFamily:"'Space Grotesk',sans-serif",fontWeight:700,fontSize:22,color:'#0E1A2B',lineHeight:1};
+    const kpiDefs=[['Nowe','nowe','#3E7BD6'],['W realizacji','realizacji','#F2A900'],['Zamknięte','zamkniete','#2E9E6B'],['Odrzucone','odrzucone','#6B7A90']];
+    const kpis=kpiDefs.map(([label,key,color])=>({label,value:cnt(key),dot:{width:8,height:8,borderRadius:999,background:color,display:'inline-block'},numStyle,numSmall}));
+
+    const tabA={padding:'7px 13px',borderRadius:999,fontFamily:"'IBM Plex Sans',sans-serif",fontSize:12.5,fontWeight:600,cursor:'pointer',background:'#3E7BD6',color:'#fff',whiteSpace:'nowrap'};
+    const tabI={padding:'7px 13px',borderRadius:999,fontFamily:"'IBM Plex Sans',sans-serif",fontSize:12.5,fontWeight:500,cursor:'pointer',background:'transparent',color:'rgba(255,255,255,.55)',whiteSpace:'nowrap'};
+    const roleTabs=this.ROLES.map(t=>({key:t.key,label:t.label,onClick:()=>this.setRole(t.key),style: role===t.key?tabA:tabI}));
+
+    const navItems=this.nav()[role].map(n=>{const active=S.screen===n.key;return {key:n.key,label:n.label,icon:n.icon,onClick:()=>this.go(n.key),style:{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',flex:1,cursor:'pointer',padding:'2px 0',color:active?'#173A6A':'#94A1B2'}};});
+
+    const order=['all','nowe','realizacji','zamkniete','odrzucone'];
+    const clabel={all:'Wszystkie',nowe:'Nowe',realizacji:'W realizacji',zamkniete:'Zamknięte',odrzucone:'Odrzucone'};
+    const ccolor={all:'#173A6A',nowe:'#3E7BD6',realizacji:'#F2A900',zamkniete:'#2E9E6B',odrzucone:'#6B7A90'};
+    const chips=order.map(k=>{const count=k==='all'?vis.length:cnt(k);const active=S.filterStatus===k;return {key:k,label:clabel[k],count,onClick:()=>this.setState({filterStatus:k}),style:{display:'inline-flex',alignItems:'center',gap:6,padding:'7px 12px',borderRadius:999,fontFamily:"'IBM Plex Sans',sans-serif",fontSize:12.5,fontWeight:500,cursor:'pointer',whiteSpace:'nowrap',background:active?ccolor[k]:'#fff',color:active?'#fff':'#5A6B80',border:'1px solid '+(active?ccolor[k]:'#E2E9F2')},countStyle:{fontFamily:"'IBM Plex Mono',monospace",fontSize:10,fontWeight:600,opacity:.8}};});
+
+    const q=(S.query||'').trim().toLowerCase();
+    let filtered=S.filterStatus==='all'?vis:vis.filter(r=>r.status===S.filterStatus);
+    if(q)filtered=filtered.filter(r=>(r.title+' '+r.id+' '+r.category+' '+r.building).toLowerCase().includes(q));
+    const listItems=filtered.map(r=>this.vm(r));
+    const pilneList=vis.filter(r=>r.pilne).map(r=>this.vm(r));
+    const recent=vis.slice(0,3).map(r=>this.vm(r));
+    const allRecent=vis.slice(0,6).map(r=>this.vm(r));
+    const assignedMe=vis.filter(r=>r.assigned===u.name).map(r=>this.vm(r));
+    const queue=vis.filter(r=>!r.assigned).map(r=>this.vm(r));
+
+    let d=null,track=[],isRejected=false,statusOpts=[],assignees=[],cats=[],comments=[],canChange=false,canAssign=false,showTeam=false,hasTech=false,canPriority=false,priorityOn=false,timeline=[],closed=false,canRate=false,ratingVal=0,rateStars=[],rateHint='',levelOpts=[],dueLabel='',isOverdue=false,gallery=[];
+    if(S.selectedId){const r=S.reports.find(x=>x.id===S.selectedId);if(r){d={...this.vm(r),desc:r.desc,tech:r.tech,reporter:r.reporter,assigned:r.assigned||'Nieprzypisany',created:r.created,info:r.info||'',hasInfo:!!(r.info&&r.info.trim()),pdf:r.pdf||'',hasPdf:!!(r.pdf&&r.pdf.trim()),residentMsgs:r.residentMsgs||[]};hasTech=!!(r.tech&&r.tech.trim());
+      const idx=r.status==='zamkniete'?2:r.status==='realizacji'?1:0; isRejected=r.status==='odrzucone';
+      const NC=['#3E7BD6','#F2A900','#2E9E6B'],NL=['Nowe','W realizacji','Zamknięte'],NI=['M12 7v10M7 12h10','M9.5 8l6 4-6 4z','M6 12l3.5 4 8.5-8'];
+      for(let i=0;i<3;i++){
+        if(i>0){const filled=!isRejected&&idx>=i;track.push({isConn:true,isNode:false,style:{flex:1,height:3,marginTop:19,borderRadius:2,background:filled?NC[i]:'#E2E9F2'}});}
+        const reached=isRejected?(i===0):(i<=idx);const current=!isRejected&&i===idx;
+        track.push({isNode:true,isConn:false,icon:NI[i],label:NL[i],when:current?r.when:(reached&&i===0?r.created:(reached&&i===2?r.when:'')),
+          circle:reached?{width:38,height:38,borderRadius:999,display:'flex',alignItems:'center',justifyContent:'center',background:NC[i],color:'#fff',boxShadow:current?('0 0 0 5px '+this.tint(NC[i],.16)):'none',flexShrink:0}:{width:38,height:38,borderRadius:999,display:'flex',alignItems:'center',justifyContent:'center',background:'#fff',color:'#B6C2D2',border:'2px solid #E2E9F2',flexShrink:0},
+          labelStyle:{marginTop:9,fontFamily:"'Space Grotesk',sans-serif",fontWeight:600,fontSize:12,color:reached?'#0E1A2B':'#9FACBD',textAlign:'center'},
+          whenStyle:{marginTop:2,fontFamily:"'IBM Plex Mono',monospace",fontSize:9.5,color:'#9FACBD',textAlign:'center',minHeight:12}});
+      }
+      canChange=role==='zarzad'||role==='serwisant';canAssign=role==='zarzad';showTeam=role==='zarzad'||role==='serwisant';
+      canPriority=role==='zarzad'||role==='ochrona';priorityOn=!!r.pilne;
+      const optKeys=role==='zarzad'?['nowe','realizacji','zamkniete','odrzucone']:['realizacji','zamkniete'];
+      statusOpts=optKeys.map(k=>{const c=this.STAT[k].color;const active=r.status===k;return {key:k,label:this.STAT[k].label,onClick:()=>this.setStatus(r.id,k),style:{padding:'9px 13px',borderRadius:11,fontFamily:"'IBM Plex Sans',sans-serif",fontSize:12.5,fontWeight:600,cursor:'pointer',background:active?c:'#fff',color:active?'#fff':'#5A6B80',border:'1.5px solid '+(active?c:'#E2E9F2')}};});
+      assignees=['Marek Wójcik','Tomasz Lis','Ochrona','Nieprzypisany'].map(n=>{const active=(r.assigned||'Nieprzypisany')===n;return {name:n,onClick:()=>this.assign(r.id,n),style:{padding:'7px 12px',borderRadius:999,fontFamily:"'IBM Plex Sans',sans-serif",fontSize:12,fontWeight:500,cursor:'pointer',background:active?'#173A6A':'#fff',color:active?'#fff':'#5A6B80',border:'1px solid '+(active?'#173A6A':'#E2E9F2')}};});
+      cats=this.CATS.map(n=>({name:n,onClick:()=>this.setCat(r.id,n),style:this.chip(r.category===n)}));
+      comments=(r.comments||[]).map(c=>({author:c.author,role:c.role,text:c.text,initial:(c.author||'?').slice(0,1)}));
+      const tl=[{label:'Zgłoszenie utworzone',by:r.reporter,when:r.created,color:'#3E7BD6'}];
+      if(r.assigned)tl.push({label:'Przypisano serwisanta: '+r.assigned,by:'Biuro Zarządu',when:r.when,color:'#173A6A'});
+      if(r.status==='realizacji'||r.status==='zamkniete')tl.push({label:'W realizacji',by:r.assigned||'Serwis',when:r.when,color:'#F2A900'});
+      if(r.status==='zamkniete')tl.push({label:'Zamknięte',by:'Biuro Zarządu',when:r.when,color:'#2E9E6B'});
+      if(r.status==='odrzucone')tl.push({label:'Odrzucone — decyzja biura',by:'Biuro Zarządu',when:r.when,color:'#6B7A90'});
+      (r.log||[]).forEach(l=>tl.push(l));
+      timeline=tl.map((e,i)=>({label:e.label,by:e.by,when:e.when,dot:{width:11,height:11,borderRadius:999,background:e.color||'#173A6A',flexShrink:0,marginTop:2,boxShadow:'0 0 0 3px '+this.tint(e.color||'#173A6A',.16)},line:{width:2,flex:1,background:i===tl.length-1?'transparent':'#E2E9F2',margin:'3px auto 0'}}));
+      closed=r.status==='zamkniete';ratingVal=r.rating||0;canRate=role==='mieszkaniec'&&closed;
+      rateStars=[1,2,3,4,5].map(n=>({n,onClick:canRate?(()=>this.rate(r.id,n)):(()=>{}),style:{cursor:canRate?'pointer':'default',lineHeight:0},fill:n<=ratingVal?'#F2A900':'none',stroke:n<=ratingVal?'#F2A900':'#C7D0DC'}));
+      rateHint=canRate?(ratingVal?'Dziękujemy! Możesz zmienić ocenę.':'Jak oceniasz realizację? Dotknij gwiazdki.'):(ratingVal?('Mieszkaniec ocenił tę realizację.'):'Mieszkaniec jeszcze nie ocenił realizacji.');
+      const lvl=this.levelOf(r);isOverdue=this.overdueOf(r);const sla=this.LV[lvl].h;dueLabel=(r.status==='zamkniete'||r.status==='odrzucone')?'Sprawa zamknięta':(isOverdue?('Po terminie · SLA '+sla+'h przekroczone'):('Termin reakcji: do '+sla+'h od zgłoszenia'));
+      levelOpts=['Niski','Normalny','Wysoki','Krytyczny'].map(L=>{const c=this.LV[L].c;const on=lvl===L;return {label:L,onClick:()=>this.setLevel(r.id,L),style:{padding:'7px 12px',borderRadius:999,fontFamily:"'IBM Plex Sans',sans-serif",fontSize:12,fontWeight:on?600:500,cursor:'pointer',background:on?c:'#fff',color:on?'#fff':'#5A6B80',border:'1px solid '+(on?c:'#E2E9F2')}};});
+      const pc=r.photos!=null?r.photos:(r.pilne?3:2);gallery=Array.from({length:pc}).map((_,i)=>({i,style:{flex:'0 0 auto',width:96,height:96,borderRadius:12,background:'linear-gradient(135deg,'+this.tint('#3E7BD6',.22)+','+this.tint('#173A6A',.22)+')',border:'1px solid #E2E9F2',display:'flex',alignItems:'center',justifyContent:'center'}}));
+    }}
+
+    const nfCats=this.CATS.map(c=>({name:c,onClick:()=>this.setNf('category',c),style:this.chip(S.nf.category===c)}));
+    const secondRecipient=role==='ochrona'?{k:'biuro_serwis',label:'Zarząd / Admin + Serwis'}:{k:'biuro_ochrona',label:'Zarząd / Admin + Ochrona'};
+    const nfRecipients=[{k:'biuro',label:'Zarząd / Administrator'},secondRecipient].map(o=>({label:o.label,onClick:()=>this.setNf('recipient',o.k),style:this.chip(S.nf.recipient===o.k)}));
+    const locChip=(on)=>({flex:1,textAlign:'center',padding:'10px',borderRadius:10,fontSize:12.5,fontWeight:600,cursor:'pointer',background:on?this.tint('#3E7BD6',.13):'#fff',color:on?'#173A6A':'#5A6B80',border:'1px solid '+(on?'#3E7BD6':'#E2E9F2')});
+    const prioBox=(on)=>({display:'flex',alignItems:'center',justifyContent:'space-between',marginTop:14,padding:'13px 14px',borderRadius:12,cursor:'pointer',background:on?this.tint('#F2A900',.12):'#fff',border:'1px solid '+(on?'#F2A900':'#E2E9F2')});
+    const prioBadge=(on)=>({fontFamily:"'IBM Plex Mono',monospace",fontSize:10,fontWeight:600,padding:'3px 9px',borderRadius:999,background:on?'#F2A900':'#EFF2F6',color:on?'#fff':'#9AA7B8'});
+
+    const contacts=S.phoneContacts.filter(c=>role==='zarzad'?true:(c.cat==='awaria'||c.cat==='alarm')).map(c=>{const cl={awaria:'#3E7BD6',safe:'#2E9E6B',admin:'#173A6A',alarm:'#C0392B'}[c.cat]||'#3E7BD6';return {...c,onClick:()=>this.notify('Dzwonię: '+c.name),onDelete:()=>this.delPhone(c.id),iconWrap:{width:38,height:38,borderRadius:11,flexShrink:0,display:'flex',alignItems:'center',justifyContent:'center',background:this.tint(cl,.12),color:cl}};});
+
+    const residents=[
+      {name:'Anna Kowalska',unit:'Budynek A · m. 14',role:'Mieszkaniec',phone:'601 234 567'},
+      {name:'Jan Nowak',unit:'Budynek B · m. 8',role:'Mieszkaniec',phone:'602 345 678'},
+      {name:'Ewa Mazur',unit:'Budynek A · m. 21',role:'Mieszkaniec',phone:'603 456 789'},
+      {name:'Piotr Zając',unit:'Budynek C · m. 3',role:'Mieszkaniec',phone:'604 567 890'},
+      {name:'Hanna Lis',unit:'Budynek C · m. 31',role:'Mieszkaniec',phone:'605 678 901'},
+      {name:'Marek Wójcik',unit:'Serwis techniczny',role:'Serwisant',phone:'606 789 012'},
+    ].map(m=>({...m,initial:m.name.slice(0,1),onClick:()=>this.notify('Dzwonię: '+m.name+' · '+m.phone),tag:{fontFamily:"'IBM Plex Mono',monospace",fontSize:10,fontWeight:600,padding:'3px 8px',borderRadius:999,whiteSpace:'nowrap',background:m.role==='Serwisant'?this.tint('#F2A900',.15):this.tint('#3E7BD6',.12),color:m.role==='Serwisant'?'#C98800':'#3E7BD6'}}));
+
+    const announcements=S.announcements.filter(a=>a.estate===S.estateId).map(a=>({...a,tag:{fontFamily:"'IBM Plex Mono',monospace",fontSize:10,fontWeight:600,padding:'3px 9px',borderRadius:999,background:this.tint('#173A6A',.1),color:'#173A6A'},expiryStyle:{display:'inline-flex',alignItems:'center',fontFamily:"'IBM Plex Mono',monospace",fontSize:10,fontWeight:600,padding:'3px 9px',borderRadius:999,background:this.tint('#F2A900',.13),color:'#9a6b00'}}));
+
+    const estates=this.ESTATES.map(e=>({...e,active:e.id===S.estateId,onClick:()=>this.setEstate(e.id),row:{display:'flex',alignItems:'center',gap:12,padding:'12px 14px',borderRadius:14,cursor:'pointer',background:e.id===S.estateId?this.tint('#3E7BD6',.08):'#fff',border:'1px solid '+(e.id===S.estateId?'#3E7BD6':'#EAF0F7')}}));
+    const isOwnView=(role==='mieszkaniec'||role==='ochrona');
+    const notifs=vis.slice(0,5).map(r=>{const s=this.STAT[r.status];return {id:r.id,title:isOwnView?('Twoje zgłoszenie '+r.id):(r.pilne?('Pilne: '+r.title):('Zgłoszenie '+r.id)),sub:isOwnView?('Aktualny status: '+s.label):r.title,when:r.when,onClick:()=>this.setState({notifOpen:false,selectedId:r.id}),dot:{width:8,height:8,borderRadius:999,background:s.color,flexShrink:0,marginTop:5}};});
+    const closedR=vis.filter(r=>r.status==='zamkniete');const ratedR=closedR.filter(r=>r.rating);const avgSatNum=ratedR.length?(ratedR.reduce((a,r)=>a+r.rating,0)/ratedR.length):0;const avgSat=avgSatNum?avgSatNum.toFixed(1):'—';const avgSatLabel=ratedR.length?(ratedR.length+' z '+closedR.length+' ocen.'):'brak ocen';const avgSpeed=closedR.length?'1,8 dnia':'—';
+
+    const smallLabel={fontFamily:"'IBM Plex Sans',sans-serif",fontSize:12,fontWeight:500,padding:'6px 11px',borderRadius:999,background:this.tint('#3E7BD6',.09),color:'#173A6A',border:'1px solid '+this.tint('#3E7BD6',.25),whiteSpace:'nowrap'};
+    const floorTag={fontFamily:"'IBM Plex Mono',monospace",fontSize:11,fontWeight:500,padding:'5px 10px',borderRadius:8,background:'#F4F7FB',color:'#5A6B80',whiteSpace:'nowrap'};
+    const addTag={fontFamily:"'IBM Plex Sans',sans-serif",fontSize:11.5,fontWeight:600,padding:'6px 11px',borderRadius:999,background:'#fff',color:'#3E7BD6',border:'1px dashed #9CC0EF',cursor:'pointer',whiteSpace:'nowrap'};
+    const tree=(S.structure[S.estateId]||[]).map((b,i)=>{const garage=b.type==='garage';const accent=garage?'#6B7A90':'#3E7BD6';const open=S.expanded===i;const floors=garage?[]:[{label:'Parter'}].concat(Array.from({length:b.floors}).map((_,k)=>({label:'p. '+(k+1)})));const levels=garage?Array.from({length:b.levels}).map((_,k)=>({label:'poziom -'+(k+1)})):[];return {name:b.name,accent,open,isRes:!garage,isGarage:garage,icon:garage?'M3 13l2-6h14l2 6v6h-3v-2H6v2H3zM7 16h.01M17 16h.01':this.IC.bld,iconWrap:{width:32,height:32,borderRadius:9,flexShrink:0,display:'flex',alignItems:'center',justifyContent:'center',background:this.tint(accent,.12),color:accent},kind:garage?'garaż':'mieszkalny',badge:{fontFamily:"'IBM Plex Mono',monospace",fontSize:9.5,fontWeight:600,padding:'3px 8px',borderRadius:999,background:this.tint(accent,.12),color:accent,whiteSpace:'nowrap'},chev:{display:'flex',transition:'transform .16s ease',transform:open?'rotate(90deg)':'none'},toggle:()=>this.toggleExpand(i),stairs:(b.stairs||[]).map(x=>({label:x})),floors,levels,stairChip:smallLabel,floorChip:floorTag,addChip:addTag,addStair:()=>this.addStair(i),addFloor:()=>this.addFloor(i)};});
+
+    const regList=S.structure[S.estateId]||[];
+    const regBuildings=regList.filter(b=>b.type==='res').map(b=>({name:b.name,onClick:()=>this.setReg('building',b.name),style:this.chip(S.reg.building===b.name)}));
+    const curB=regList.find(b=>b.name===S.reg.building&&b.type==='res')||regList.find(b=>b.type==='res');
+    const regStairs=((curB&&curB.stairs)||['A']).map(st=>({name:st,onClick:()=>this.setReg('stair',st),style:this.chip(S.reg.stair===st)}));
+    const maxF=(curB&&curB.floors)||8;
+    const floorVals=['Parter'].concat(Array.from({length:maxF}).map((_,k)=>''+(k+1)));
+    const regFloors=floorVals.map(f=>({label:f==='Parter'?'Parter':('Piętro '+f),onClick:()=>this.setReg('floor',f),style:this.chip(S.reg.floor===f)}));
+    const regRoles=this.ROLES.map(t=>({key:t.key,label:t.label,onClick:()=>this.setRegRole(t.key),style:S.reg.role===t.key?{flex:1,minWidth:70,textAlign:'center',padding:'9px 6px',borderRadius:9,fontFamily:"'IBM Plex Sans',sans-serif",fontSize:12,fontWeight:600,cursor:'pointer',background:'#3E7BD6',color:'#fff'}:{flex:1,minWidth:70,textAlign:'center',padding:'9px 6px',borderRadius:9,fontFamily:"'IBM Plex Sans',sans-serif",fontSize:12,fontWeight:500,cursor:'pointer',background:'#fff',color:'#5A6B80',border:'1px solid #E2E9F2'}}));
+    const annTargets=['Całe osiedle','Budynek A','Budynek B','Budynek C','Klatka A','Poziom -1'].map(t=>({label:t,onClick:()=>this.setAnn('target',t),style:this.chip(S.annDraft.target===t)}));
+
+    const residentFirst=(u.name||'').split(' ')[0]||u.name;
+    const residentInitials=(u.name||'').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+    const residentShortLoc=(u.loc||'').split(' · ').filter(p=>!/^p\. /.test(p)).join(' · ');
+    const openPilne=vis.filter(r=>r.pilne&&(r.status==='nowe'||r.status==='realizacji')).length;
+    const statusColor=openPilne?'#F2A900':'#2E9E6B';
+    const statusPillBg=this.tint(statusColor,.13);
+    const buildingStatus=openPilne?(openPilne+(openPilne>1?' pilne zgłoszenia':' pilne zgłoszenie')):'systemy sprawne';
+    const estAnns=S.announcements.filter(a=>a.estate===S.estateId);
+    const latestAnn=estAnns[0]||null;
+    const feedIcons={zamkniete:{p:'M5 12l5 5 9-11',sw:2.4},realizacji:{p:'M14 7a4 4 0 0 1-5.3 5.3L4 17l3 3 4.7-4.7A4 4 0 0 0 17 10',sw:1.9},nowe:{p:'M12 12h.01',sw:6.5},odrzucone:{p:'M6 6l12 12M18 6L6 18',sw:2.4}};
+    const feed=vis.slice(0,4).map(r=>{const st=this.STAT[r.status];const ic=feedIcons[r.status]||feedIcons.nowe;return {head:r.title,id:r.id,when:r.when,statusLabel:st.label,icon:ic.p,sw:ic.sw,iconWrap:{width:36,height:36,borderRadius:999,flexShrink:0,display:'flex',alignItems:'center',justifyContent:'center',background:this.tint(st.color,.14),color:st.color},pill:{fontFamily:"'IBM Plex Mono',monospace",fontSize:9.5,fontWeight:600,padding:'3px 8px',borderRadius:999,background:this.tint(st.color,.12),color:st.color,whiteSpace:'nowrap',flexShrink:0},onClick:()=>this.openReport(r.id)};});
+
+    const regKinds=this.regStepKinds(S.reg.role);const regTotal=regKinds.length;const regStep=Math.min(S.regStep,regTotal);const regKind=regKinds[regStep-1];
+    const regDots=Array.from({length:regTotal}).map((_,k)=>({style:{flex:1,height:4,borderRadius:2,background:k<regStep?'#3E7BD6':'rgba(255,255,255,.18)'}}));
+    const regTitles={contact:'Twoje dane',loc:'Gdzie mieszkasz?',firm:'Dane serwisanta',code:'Prawie gotowe'};
+    const regSubs={contact:'Wybierz rolę i podaj dane kontaktowe',loc:'Wskaż lokal z gotowej struktury osiedla',firm:'Nazwa widoczna przy przypisanych zgłoszeniach',code:'Dołącz do osiedla kodem zaproszenia'};
+    const regRoleLabel={mieszkaniec:'Mieszkaniec',zarzad:'Zarząd / Administrator',serwisant:'Serwisant',ochrona:'Ochrona'}[S.reg.role];
+    const regSummary=[{k:'Rola',v:regRoleLabel}];
+    if(S.reg.role==='mieszkaniec')regSummary.push({k:'Lokal',v:S.reg.building+' · kl. '+S.reg.stair+' · '+(S.reg.floor||'—')+(S.reg.apt?(' · m. '+S.reg.apt):'')});
+    if(S.reg.role==='serwisant')regSummary.push({k:'Serwisant',v:S.reg.serw||'—'});
+
+    return {
+      isZarzad:role==='zarzad',isResident:role==='mieszkaniec',isSerw:role==='serwisant',isOchrona:role==='ochrona',
+      roleTabs,navItems,estateName:estate.name,estateInitial:estate.initial,roleChip:u.chip,
+      roleChipStyle:{display:'inline-flex',alignItems:'center',marginTop:2,padding:'4px 9px',borderRadius:999,fontFamily:"'IBM Plex Mono',monospace",fontWeight:600,fontSize:10,letterSpacing:.3,background:this.tint(u.color,.13),color:u.color,whiteSpace:'nowrap'},
+      estates,estateSheet:S.estateSheet,openEstate:()=>this.setState({estateSheet:true}),closeEstate:()=>this.setState({estateSheet:false}),
+      isDetail:!!S.selectedId&&!S.showReg,isList:!S.selectedId&&!S.showReg,
+      isHome:S.screen==='home',isReports:S.screen==='reports',isContacts:S.screen==='contacts',isProfile:S.screen==='profile',isAnnouncements:S.screen==='announcements',isResidents:S.screen==='residents',isEstate:S.screen==='estate',
+      kpis,chips,listItems,pilneList,recent,assignedMe,queue,tree,
+      isVotes:S.screen==='votes',votesSub:role==='zarzad'?'Twórz i zliczaj głosy właścicieli':'Głosuj nad uchwałami wspólnoty',canCreateVote:role==='zarzad',openVoteComposer:()=>this.notify('Kreator uchwały (demo) — tytuł, opis, termin, liczenie udziałów'),
+      votes:this.VOTES.filter(v=>v.estate===S.estateId).map(v=>{const tot=v.forShares+v.againstShares;const fp=tot?Math.round(v.forShares/tot*100):0;const ap=100-fp;const open=v.state==='open';const c={open:['#3E7BD6','Głosowanie trwa'],passed:['#2E9E6B','Przegłosowana'],rejected:['#6B7A90','Odrzucona']}[v.state]||['#6B7A90','—'];const voted=!!v.my;const showTally=role!=='mieszkaniec'||voted||!open;return {title:v.title,desc:v.desc,forPct:fp,againstPct:ap,turnout:v.turnout,showTally,hideTallyNote:!showTally,deadline:v.deadline,deadlineColor:open?'#B37D00':'#9AA7B8',stateLabel:c[1],statePill:{display:'inline-flex',alignItems:'center',padding:'3px 10px',borderRadius:999,fontFamily:"'IBM Plex Mono',monospace",fontSize:10.5,fontWeight:600,background:this.tint(c[0],.13),color:c[0]},forBar:{width:fp+'%',background:'#2E9E6B'},againstBar:{width:ap+'%',background:'#C0392B'},canVote:open&&role==='mieszkaniec'&&!v.my,voted:!!v.my,myVote:v.my||'',showResult:!open,speed:v.speed,voteFor:()=>this.castVote(v.id,'Za'),voteAgainst:()=>this.castVote(v.id,'Przeciw')};}),
+      hasPilne:pilneList.length>0,noAssigned:assignedMe.length===0,emptyList:listItems.length===0,listCount:vis.length,
+      greetName:u.name,greetSub:u.loc,user:u,
+      ctaTitle:role==='ochrona'?'Zgłoś zdarzenie':'Masz usterkę?',ctaSub:role==='ochrona'?'Dodaj nowe zdarzenie':'Zgłoś ją w kilka sekund',
+      canEditContacts:role==='zarzad',addContact:()=>this.openPhoneComposer(),
+      phoneComposer:S.phoneComposer,closePhoneComposer:()=>this.closePhoneComposer(),newPhone:S.newPhone,
+      setPhoneName:e=>this.setPhone('name',e.target.value),setPhoneRole:e=>this.setPhone('role',e.target.value),setPhonePhone:e=>this.setPhone('phone',e.target.value),submitPhone:()=>this.submitPhone(),
+      d,track,isRejected,statusOpts,assignees,cats,comments,canChange,canAssign,showTeam,hasTech,
+      canPriority,priorityOn,togglePriority:()=>this.setPriority(S.selectedId,!priorityOn),
+      prioRowStyle:prioBox(priorityOn),prioBadge:prioBadge(priorityOn),prioText:priorityOn?'PILNE':'zwykły',
+      openPdf:()=>this.notify('Otwieranie PDF (demo)'),
+      hasComments:comments.length>0,noComments:comments.length===0,readOnly:role==='mieszkaniec'&&!!S.selectedId,
+      chatMsgs:((d&&d.residentMsgs)||[]).map(m=>{const mine=(role==='mieszkaniec')===(m.mine===true);return {when:m.when,hasText:!!(m.text&&m.text.trim()),text:m.text,photo:!!m.photo,photoMargin:(m.text&&m.text.trim())?'6px':'0',textColor:mine?'#0E1A2B':'#0E1A2B',timeColor:mine?'rgba(14,26,43,.45)':'#9AA7B8',row:{display:'flex',justifyContent:mine?'flex-end':'flex-start'},bubble:{background:mine?'#DCF0FF':'#F1F3F5',borderRadius:mine?'16px 16px 4px 16px':'16px 16px 16px 4px',padding:'9px 12px',maxWidth:'78%'}};}),
+      correspondenceTitle:'Wiadomości',correspondenceHint:'Możesz też wysłać zdjęcie. Napisz wiadomość, zanim zamkniesz lub odrzucisz zgłoszenie.',
+      hasChatPhoto:!!S.chatPhotoPending,addChatPhoto:()=>this.addChatPhoto(),clearChatPhoto:()=>this.clearChatPhoto(),
+      noResidentMsgs:!(d&&d.residentMsgs&&d.residentMsgs.length),residentMsgDraft:S.residentMsgDraft||'',setResidentMsg:e=>this.setState({residentMsgDraft:e.target.value}),showResidentInput:!!S.selectedId,residentMsgPlaceholder:role==='mieszkaniec'?'Napisz do zarządu/administracji…':'Napisz do mieszkańca…',setResidentMsg:e=>this.setState({residentMsgDraft:e.target.value}),sendResidentMsg:()=>this.sendResidentMsg(),
+      commentDraft:S.commentDraft,setComment:e=>this.setState({commentDraft:e.target.value}),sendComment:()=>this.sendComment(S.selectedId),
+      back:()=>this.back(),goReports:()=>this.go('reports'),openComposer:()=>this.openComposer(),closeComposer:()=>this.closeComposer(),
+      composer:S.composer,composerTitle:role==='ochrona'?'Nowe zdarzenie':(role==='serwisant'?'Zgłoszenie serwisowe':'Nowe zgłoszenie'),nf:S.nf,nfCats,nfRecipients,infoOn,canSetRecipient:role==='ochrona'||role==='serwisant',
+      setTitle:e=>this.setNf('title',e.target.value),setDesc:e=>this.setNf('desc',e.target.value),setInfo:e=>this.setNf('info',e.target.value),setLocManual:e=>this.setNf('locManual',e.target.value),
+      locAuto:()=>this.setNf('locMode','auto'),locManualMode:()=>this.setNf('locMode','manual'),nfAutoMode:S.nf.locMode==='auto',nfManualMode:S.nf.locMode==='manual',
+      nfLocAutoStyle:locChip(S.nf.locMode==='auto'),nfLocManualStyle:locChip(S.nf.locMode==='manual'),
+      addPhoto:()=>{const c=(S.nf.photoCount||0)+1;this.setNf('photoCount',c);this.notify('Zdjęcie dodane ('+c+')');},photoLabel:(S.nf.photoCount?('Zdjęcia: '+S.nf.photoCount+' — dodaj kolejne'):'Dodaj zdjęcie'),addPdf:()=>this.setNf('pdf','protokół_usterki.pdf'),pdfLabel:S.nf.pdf?S.nf.pdf:'Załącz dokument PDF',
+      prioAllowed:role==='zarzad'||role==='ochrona',toggleNfPrio:()=>this.setNf('priority',!S.nf.priority),nfPrioStyle:prioBox(S.nf.priority),nfPrioBadge:prioBadge(S.nf.priority),nfPrioText:S.nf.priority?'PILNE':'nie',
+      nowStamp:this.stamp(),submit:()=>this.submitComposer(),
+      showFab:((role==='zarzad'||role==='mieszkaniec'||role==='ochrona'||role==='serwisant')&&(S.screen==='home'||S.screen==='reports'))&&!S.selectedId,
+      residentFirst,residentInitials,residentShortLoc,statusColor,statusPillBg,buildingStatus,
+      hasLatestAnn:!!latestAnn,latestAnnTitle:latestAnn?latestAnn.title:'',latestAnnBody:latestAnn?latestAnn.body:'',feed,
+      hasLatestAnnZ:!!latestAnn,latestAnnZTitle:latestAnn?latestAnn.title:'',latestAnnZBody:latestAnn?latestAnn.body:'',allRecent,
+      contacts,residents,announcements,
+      annComposer:S.annComposer,openAnn:()=>this.openAnn(),closeAnn:()=>this.closeAnn(),annDraft:S.annDraft,annTargets,annDate:S.annDate,annTime:S.annTime,
+      setAnnTitle:e=>this.setAnn('title',e.target.value),setAnnBody:e=>this.setAnn('body',e.target.value),setAnnDate:e=>this.setState({annDate:e.target.value}),setAnnTime:e=>this.setState({annTime:e.target.value}),submitAnn:()=>this.submitAnn(),
+      joinSectionTitle:role==='mieszkaniec'?'Dołącz do osiedla':'Przynależność do osiedla',
+      joinStatusDot:{width:8,height:8,borderRadius:999,background:'#2E9E6B',flexShrink:0},
+      joinStatusLabel:role==='mieszkaniec'?('Aktywny mieszkaniec · '+estate.name):(role==='zarzad'?('Administrator · '+estate.name+' · aktywny'):(role==='serwisant'?('Serwisant · '+estate.name+' · zaakceptowany przez administratora'):('Ochrona · '+estate.name+' · zaakceptowany przez administratora'))),
+      joinStatusGap:12,showJoinInput:true,
+      joinHint:role==='mieszkaniec'?'Kod od zarządu — dołączasz od razu.':(role==='zarzad'?'Kod administratora — wymaga akceptacji zarządu innego osiedla.':'Kod serwisu/ochrony — wymaga akceptacji administratora tego osiedla.'),
+      codeDraft:S.codeDraft,setCode:e=>this.setState({codeDraft:e.target.value}),redeem:()=>this.redeem(),deleteAcct:()=>this.notify('Usuń konto — wymaga potwierdzenia'),openDoc:()=>this.notify('Podgląd dokumentu PDF (demo)'),
+      logout:()=>this.logout(),
+      trelloKey:S.trello.key,trelloTok:S.trello.tok,trelloList:S.trello.list,setTrelloKey:e=>this.setTrello('key',e.target.value),setTrelloTok:e=>this.setTrello('tok',e.target.value),setTrelloList:e=>this.setTrello('list',e.target.value),saveTrello:()=>this.saveTrello(),
+      feedbackEmail,showFeedback:S.showFeedback,openFeedback:()=>this.openFeedback(),closeFeedback:()=>this.closeFeedback(),feedbackDraft:S.feedbackDraft,setFeedback:e=>this.setState({feedbackDraft:e.target.value}),sendFeedback:()=>this.sendFeedback(),
+      feedbackTypes:[{k:'blad',label:'Błąd'},{k:'pomysl',label:'Pomysł'},{k:'pytanie',label:'Pytanie'}].map(t=>({label:t.label,onClick:()=>this.setFeedbackType(t.k),style:{padding:'7px 14px',borderRadius:999,fontSize:12.5,fontWeight:600,cursor:'pointer',background:S.feedbackType===t.k?'#173A6A':'#fff',color:S.feedbackType===t.k?'#fff':'#5A6B80',border:'1px solid '+(S.feedbackType===t.k?'#173A6A':'#E2E9F2')}})),
+      addBuilding:()=>this.addBuilding(),addGarage:()=>this.addGarage(),
+      showReg:S.showReg,openReg:()=>this.openReg(),closeReg:()=>this.closeReg(),reg:S.reg,regRoles,regBuildings,regStairs,regFloors,
+      regStep,regTotal,regDots,regTitle:regTitles[regKind],regSubtitle:regSubs[regKind],
+      regShowContact:regKind==='contact',regShowLoc:regKind==='loc',regShowFirm:regKind==='firm',regShowCode:regKind==='code',
+      regBack:()=>this.regBack(),regNext:()=>this.regNext(),regBackLabel:regStep===1?'Anuluj':'Wstecz',regNextLabel:regStep>=regTotal?'Zarejestruj się':'Dalej',
+      regSummary,regRoleLabel,
+      setRegServ:e=>this.setReg('serw',e.target.value),setRegApt:e=>this.setReg('apt',e.target.value),doReg:()=>this.doReg(),
+      query:S.query,setQuery:e=>this.setState({query:e.target.value}),
+      timeline,closed,canRate,ratingVal,rated:ratingVal>0,rateStars,rateHint,
+      notifOpen:S.notifOpen,openNotif:()=>this.openNotif(),closeNotif:()=>this.closeNotif(),notifs,hasNotifs:notifs.length>0,noNotifs:notifs.length===0,
+      canLevel:role==='zarzad',levelOpts,dueLabel,isOverdue,dueStyle:{display:'flex',alignItems:'center',gap:7,marginTop:11,padding:'10px 12px',borderRadius:11,fontFamily:"'IBM Plex Mono',monospace",fontSize:11.5,fontWeight:600,background:isOverdue?this.tint('#C0392B',.1):'#F4F7FB',color:isOverdue?'#C0392B':'#5A6B80'},
+      gallery,hasGallery:gallery.length>0,galleryCount:gallery.length,
+      maintenance:this.MAINT.map(m=>({...m,onClick:()=>this.notify('Zaplanowano kolejny termin: '+m.title)})),
+      avgSat,avgSatLabel,avgSpeed,
+      hasToast:!!S.toast,toast:S.toast,
+    };
+  }
+}
+</script>
+</body>
+</html>

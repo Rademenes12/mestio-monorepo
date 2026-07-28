@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#EEF2F8}
+input,textarea,button,select{font-family:inherit;border:none;background:none}
+input:focus,textarea:focus{outline:none}
+::-webkit-scrollbar{height:6px;width:6px}::-webkit-scrollbar-thumb{background:#CBD6E4;border-radius:8px}
+</style>
+</helmet>
+<div style="width:1440px;height:900px;display:flex;background:#F6F8FB;font-family:'IBM Plex Sans',system-ui,sans-serif;color:#0E1A2B;overflow:hidden;border-radius:12px;position:relative">
+
+  <!-- SIDEBAR -->
+  <div style="width:220px;flex-shrink:0;background:#0E1A2B;display:flex;flex-direction:column;padding:18px 14px">
+    <div style="display:flex;align-items:center;gap:9px;padding:0 4px">
+      <div style="width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,#3E7BD6,#173A6A);display:flex;align-items:center;justify-content:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M14 7a4 4 0 0 1-5.3 5.3L4 17l3 3 4.7-4.7A4 4 0 0 0 17 10l-2.2 2.2-2-2L15 8z"/></svg></div>
+      <div><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:17px;color:#fff">Mestio</div><div style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:#7F96B5;letter-spacing:.6px">ADMIN · CRM</div></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:2px;margin-top:20px">
+      <sc-for list="{{ navMain }}" as="n" hint-placeholder-count="4">
+        <div onClick="{{ n.onClick }}" style="{{ n.style }}"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{{ n.icon }}"/></svg><span style="flex:1;font-size:13px;font-weight:500">{{ n.label }}</span><sc-if value="{{ n.badge }}"><span style="background:#F2A900;color:#0E1A2B;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;padding:1px 6px;border-radius:999px">{{ n.badge }}</span></sc-if></div>
+      </sc-for>
+      <div onClick="{{ toggleAdv }}" style="display:flex;align-items:center;gap:10px;padding:9px 11px;margin-top:8px;border-top:1px solid rgba(255,255,255,.08);cursor:pointer;color:#7F96B5">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM19.4 13a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-2.9 1.2V21a2 2 0 1 1-4 0v-.1A1.7 1.7 0 0 0 7 19.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0-1.2-2.9H3a2 2 0 1 1 0-4h.1A1.7 1.7 0 0 0 4.7 7l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1A1.7 1.7 0 0 0 9.5 3.8V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 2.9 1.2l.1-.1a2 2 0 1 1 2.8 2.8"/></svg>
+        <span style="flex:1;font-size:12px;font-weight:600;letter-spacing:.3px;text-transform:uppercase">Zaawansowane</span>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="{{ advChevron }}"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <sc-if value="{{ advOpen }}">
+        <sc-for list="{{ navAdv }}" as="n" hint-placeholder-count="8">
+          <div onClick="{{ n.onClick }}" style="{{ n.style }}"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{{ n.icon }}"/></svg><span style="font-size:13px;font-weight:500">{{ n.label }}</span><sc-if value="{{ n.badge }}"><span style="margin-left:auto;background:#F2A900;color:#3a2a00;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;padding:1px 6px;border-radius:999px">{{ n.badge }}</span></sc-if></div>
+      </sc-for>
+    </div>
+    <div style="margin-top:auto;display:flex;align-items:center;gap:9px;padding:10px 8px;border-top:1px solid rgba(255,255,255,.08)">
+      <div style="width:30px;height:30px;border-radius:999px;background:linear-gradient(135deg,#F2A900,#C98800);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:11px;color:#fff">AV</div>
+      <div style="flex:1;min-width:0"><div style="font-size:11.5px;font-weight:600;color:#fff">AIVOLUX</div><div style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:#7F96B5">Właściciel platformy</div></div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0">
+    <div style="height:60px;flex-shrink:0;background:#fff;box-shadow:0 1px 4px rgba(14,26,43,.06);display:flex;align-items:center;justify-content:space-between;padding:0 24px;z-index:2">
+      <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:19px;letter-spacing:-.3px">{{ pageTitle }}</div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="display:flex;align-items:center;gap:7px;background:#F4F7FB;border-radius:10px;padding:8px 12px;width:220px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9AA7B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg><input placeholder="Szukaj…" style="flex:1;font-size:12.5px;color:#0E1A2B"/></div>
+        <sc-if value="{{ showAdd }}"><div onClick="{{ addAction }}" style="display:flex;align-items:center;gap:5px;background:linear-gradient(135deg,#3E7BD6,#173A6A);color:#fff;font-size:12.5px;font-weight:600;padding:8px 14px;border-radius:10px;cursor:pointer"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"><path d="M12 6v12M6 12h12"/></svg>{{ addLabel }}</div></sc-if>
+      </div>
+    </div>
+
+    <div style="flex:1;overflow-y:auto;padding:20px 24px">
+
+      <!-- PULPIT — CENTRUM DOWODZENIA -->
+      <sc-if value="{{ isPulpit }}">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px">
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:17px">Wymaga działania dziś</div>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8A98AB">{{ actionCount }} spraw czeka</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <sc-for list="{{ actionQueue }}" as="a" hint-placeholder-count="5">
+            <div style="background:#fff;border-radius:16px;box-shadow:0 2px 10px rgba(14,26,43,.05);padding:14px 16px;display:flex;align-items:center;gap:13px;border-left:3px solid {{ a.color }}">
+              <div style="{{ a.iconWrap }}"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="{{ a.icon }}"/></svg></div>
+              <div style="flex:1;min-width:0">
+                <div style="display:flex;align-items:center;gap:8px"><span style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13.5px">{{ a.title }}</span><span style="{{ a.tagStyle }}">{{ a.tag }}</span></div>
+                <div style="font-size:12px;color:#7C8AA0;margin-top:2px">{{ a.subtitle }}</div>
+              </div>
+              <div onClick="{{ a.onClick }}" style="flex-shrink:0;display:flex;align-items:center;gap:6px;padding:8px 13px;border-radius:10px;background:#F4F7FB;color:#173A6A;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap">{{ a.cta }}</div>
+            </div>
+          </sc-for>
+          <sc-if value="{{ noActions }}"><div style="background:#fff;border-radius:16px;box-shadow:0 2px 10px rgba(14,26,43,.05);padding:26px;text-align:center;color:#9AA7B8;font-size:13px">Wszystko obsłużone — kolejka pusta. 🎉</div></sc-if>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:22px">
+          <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="4">
+            <div style="background:#fff;border-radius:14px;box-shadow:0 2px 10px rgba(14,26,43,.05);padding:12px 14px"><div style="font-size:11px;color:#7C8AA0">{{ k.label }}</div><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;color:{{ k.color }};margin-top:4px">{{ k.value }}</div></div>
+          </sc-for>
+        </div>
+
+        <div style="margin-top:14px">
+          <div style="background:#fff;border-radius:18px;box-shadow:0 2px 10px rgba(14,26,43,.05);padding:16px 18px">
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13.5px">Ostatnia aktywność</div>
+            <div style="display:flex;flex-direction:column;gap:2px;margin-top:10px">
+              <sc-for list="{{ activity }}" as="a" hint-placeholder-count="4"><div style="display:flex;align-items:center;gap:9px;padding:7px 2px;border-bottom:1px solid #F4F7FB"><span style="width:7px;height:7px;border-radius:999px;background:{{ a.color }};flex-shrink:0"></span><span style="font-size:12px;color:#3A4759;flex:1">{{ a.text }}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#9AA7B8">{{ a.when }}</span></div></sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- KLIENCI -->
+      <sc-if value="{{ isKlienci }}">
+        <div style="background:#fff;border-radius:18px;box-shadow:0 2px 10px rgba(14,26,43,.05);overflow:hidden">
+          <div style="display:grid;grid-template-columns:2fr 1.2fr .8fr .8fr .8fr .6fr;background:#0E1A2B;padding:0 18px">
+            <sc-for list="{{ clientCols }}" as="c" hint-placeholder-count="6"><div style="padding:11px 6px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.4px;color:rgba(255,255,255,.6);text-transform:uppercase">{{ c }}</div></sc-for>
+          </div>
+          <sc-for list="{{ clients }}" as="c" hint-placeholder-count="8">
+            <div onClick="{{ c.onClick }}" style="display:grid;grid-template-columns:2fr 1.2fr .8fr .8fr .8fr .6fr;padding:0 18px;border-bottom:1px solid #F4F7FB;cursor:pointer">
+              <div style="padding:12px 6px;display:flex;align-items:center;gap:9px"><div style="width:30px;height:30px;border-radius:999px;background:{{ c.avatarBg }};display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:11px;color:#fff;flex-shrink:0">{{ c.initial }}</div><div><div style="font-size:13px;font-weight:600">{{ c.company }}</div><div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#9AA7B8">{{ c.contact }}</div></div></div>
+              <div style="padding:12px 6px;font-size:12.5px;color:#5A6B80;display:flex;align-items:center">{{ c.estate }}</div>
+              <div style="padding:12px 6px;display:flex;align-items:center"><span style="{{ c.statusPill }}">{{ c.status }}</span></div>
+              <div style="padding:12px 6px;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:#173A6A;display:flex;align-items:center">{{ c.mrr }}</div>
+              <div style="padding:12px 6px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#7C8AA0;display:flex;align-items:center">{{ c.until }}</div>
+              <div style="padding:12px 6px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5A6B80;display:flex;align-items:center">{{ c.plan }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <!-- PIPELINE -->
+      <sc-if value="{{ isPipeline }}">
+        <div style="display:flex;gap:12px;height:100%;align-items:flex-start;overflow-x:auto;padding-bottom:8px">
+          <sc-for list="{{ pipeline }}" as="col" hint-placeholder-count="5">
+            <div style="flex:0 0 208px;width:208px;background:#EFF3F9;border-radius:14px;padding:10px;display:flex;flex-direction:column;max-height:100%">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:4px 6px 10px"><div style="display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:999px;background:{{ col.color }}"></span><span style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:12.5px">{{ col.label }}</span></div><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:#8A98AB;background:#fff;padding:1px 7px;border-radius:999px">{{ col.count }}</span></div>
+              <div style="display:flex;flex-direction:column;gap:8px;overflow-y:auto">
+                <sc-for list="{{ col.cards }}" as="c" hint-placeholder-count="2">
+                  <div style="background:#fff;border-radius:12px;padding:12px;box-shadow:0 1px 4px rgba(14,26,43,.06)">
+                    <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;line-height:1.3">{{ c.company }}</div>
+                    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#7C8AA0;margin-top:5px">{{ c.contact }}</div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:9px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:#173A6A">{{ c.mrr }}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;padding:2px 7px;border-radius:999px;background:{{ c.srcBg }};color:{{ c.srcColor }}">{{ c.source }}</span></div>
+                    <div onClick="{{ c.onAdvance }}" style="margin-top:9px;display:flex;align-items:center;justify-content:center;gap:6px;padding:7px;border-radius:8px;background:#F4F7FB;color:#173A6A;font-size:11.5px;font-weight:600;cursor:pointer">{{ c.advanceLabel }} <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#173A6A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg></div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <!-- POCZTA -->
+      <sc-if value="{{ isPoczta }}">
+        <div style="display:grid;grid-template-columns:280px 1fr;gap:14px;height:100%">
+          <div style="background:#fff;border-radius:18px;box-shadow:0 2px 10px rgba(14,26,43,.05);overflow:hidden;display:flex;flex-direction:column">
+            <div style="padding:14px 16px;border-bottom:1px solid #F4F7FB;display:flex;align-items:center;justify-content:space-between"><span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.4px;color:#8A98AB;text-transform:uppercase">Wątki</span><span style="{{ mailFilterAll }}" onClick="{{ setMailFilterAll }}">Wszystkie</span></div>
+            <div style="display:flex;gap:6px;padding:8px 12px;border-bottom:1px solid #F4F7FB">
+              <span style="{{ mailFilterActive }}" onClick="{{ setMailFilterActive }}">Aktywne</span>
+              <span style="{{ mailFilterArchived }}" onClick="{{ setMailFilterArchived }}">Archiwum</span>
+            </div>
+            <div style="overflow-y:auto">
+              <sc-for list="{{ threads }}" as="e" hint-placeholder-count="4">
+                <div onClick="{{ e.onClick }}" style="{{ e.row }}">
+                  <div style="flex:1;min-width:0">
+                    <div style="display:flex;align-items:center;gap:6px"><span style="font-size:13px;font-weight:600">{{ e.to }}</span><sc-if value="{{ e.hasDraft }}"><span style="{{ e.draftBadge }}">Szkic AI</span></sc-if></div>
+                    <div style="font-size:11.5px;color:#7C8AA0;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ e.subject }}</div>
+                  </div>
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:#9AA7B8;flex-shrink:0">{{ e.when }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="background:#fff;border-radius:18px;box-shadow:0 2px 10px rgba(14,26,43,.05);padding:20px;display:flex;flex-direction:column;min-height:0">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <div><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px">{{ selEmail.subject }}</div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8A98AB;margin-top:4px">{{ selEmail.to }}</div></div>
+              <div onClick="{{ toggleArchiveThread }}" style="{{ archiveBtnStyle }}">{{ archiveBtnLabel }}</div>
+            </div>
+
+            <div style="flex:1;overflow-y:auto;margin-top:14px;display:flex;flex-direction:column;gap:10px;min-height:0">
+              <sc-for list="{{ selEmail.messages }}" as="m" hint-placeholder-count="3">
+                <div style="{{ m.bubbleWrap }}"><div style="{{ m.bubble }}">{{ m.text }}</div><div style="{{ m.metaStyle }}">{{ m.author }} · {{ m.when }}</div></div>
+              </sc-for>
+            </div>
+
+            <sc-if value="{{ selEmail.hasDraft }}">
+              <div style="margin-top:14px;background:rgba(62,123,214,.06);border:1px solid rgba(62,123,214,.22);border-radius:14px;padding:14px">
+                <div style="display:flex;align-items:center;gap:7px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3E7BD6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3m0 12v3m9-9h-3M6 12H3m14.5-6.5l-2 2m-9 9l-2 2m0-13l2 2m9 9l2 2"/></svg><span style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:12.5px;color:#173A6A">Szkic AI — czeka na Twoją akceptację</span></div>
+                <textarea value="{{ selEmail.draftText }}" onChange="{{ setDraftText }}" style="width:100%;min-height:90px;resize:vertical;font-size:13px;line-height:1.6;background:#fff;border:1px solid #DCE6F5;border-radius:10px;padding:10px 12px;color:#0E1A2B;margin-top:10px"></textarea>
+                <div style="display:flex;gap:8px;margin-top:10px">
+                  <div onClick="{{ approveDraft }}" style="padding:8px 14px;border-radius:9px;background:#173A6A;color:#fff;font-size:12.5px;font-weight:600;cursor:pointer">✓ Zatwierdź i wyślij</div>
+                  <div onClick="{{ discardDraft }}" style="padding:8px 14px;border-radius:9px;background:#fff;border:1px solid #E4EBF3;color:#5A6B80;font-size:12.5px;font-weight:600;cursor:pointer">Odrzuć szkic</div>
+                </div>
+              </div>
+            </sc-if>
+
+            <div style="margin-top:14px;padding-top:14px;border-top:1px solid #F4F7FB">
+              <div style="display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap"><sc-for list="{{ templates }}" as="t" hint-placeholder-count="3"><div onClick="{{ t.onClick }}" style="padding:5px 11px;border-radius:999px;font-size:11.5px;font-weight:500;cursor:pointer;background:#F4F7FB;color:#5A6B80;border:1px solid #E4EBF3">+ {{ t.label }}</div></sc-for></div>
+              <textarea value="{{ composeText }}" onChange="{{ setCompose }}" placeholder="Napisz swobodną wiadomość do klienta…" style="width:100%;min-height:70px;resize:vertical;font-size:13.5px;line-height:1.6;background:#F6F8FB;border:1px solid #E4EBF3;border-radius:10px;padding:11px 13px;color:#0E1A2B"></textarea>
+              <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:9px">
+                <div onClick="{{ askAiDraft }}" style="padding:8px 14px;border-radius:9px;background:#fff;border:1px solid #DCE6F5;color:#3E7BD6;font-size:12.5px;font-weight:600;cursor:pointer">✨ Poproś AI o szkic</div>
+                <div onClick="{{ sendCompose }}" style="padding:8px 16px;border-radius:9px;background:linear-gradient(135deg,#3E7BD6,#173A6A);color:#fff;font-size:12.5px;font-weight:600;cursor:pointer">Wyślij</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- FAKTURY -->
+      <sc-if value="{{ isFaktury }}">
+        <div style="background:#fff;border-radius:18px;box-shadow:0 2px 10px rgba(14,26,43,.05);overflow:hidden">
+          <div style="display:grid;grid-template-columns:1fr 1.5fr 1fr .8fr .8fr .8fr;background:#0E1A2B;padding:0 18px">
+            <sc-for list="{{ invCols }}" as="c" hint-placeholder-count="6"><div style="padding:11px 6px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.4px;color:rgba(255,255,255,.6);text-transform:uppercase">{{ c }}</div></sc-for>
+          </div>
+          <sc-for list="{{ invoices }}" as="iv" hint-placeholder-count="3">
+            <div onClick="{{ iv.onOpen }}" style="display:grid;grid-template-columns:1fr 1.5fr 1fr .8fr .8fr .8fr;padding:0 18px;border-bottom:1px solid #F4F7FB;cursor:pointer">
+              <div style="padding:12px 6px;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:#173A6A">{{ iv.number }}</div>
+              <div style="padding:12px 6px;font-size:13px;color:#3A4759">{{ iv.client }}</div>
+              <div style="padding:12px 6px;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600">{{ iv.amount }}</div>
+              <div style="padding:12px 6px"><span style="{{ iv.statusPill }}">{{ iv.status }}</span></div>
+              <div style="padding:12px 6px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#7C8AA0">{{ iv.date }}</div>
+              <div style="padding:12px 6px"><span style="{{ iv.ksefPill }}">{{ iv.ksef }}</span></div>
+            </div>
+          </sc-for>
+        </div>
+
+        <sc-if value="{{ invModalOpen }}">
+          <div onClick="{{ closeInvModal }}" style="position:fixed;inset:0;background:rgba(14,26,43,.5);display:flex;align-items:center;justify-content:center;z-index:95;padding:24px">
+            <div onClick="{{ noop }}" style="background:#fff;border-radius:20px;box-shadow:0 24px 70px rgba(14,26,43,.4);width:520px;max-width:100%;max-height:88vh;overflow-y:auto">
+              <div style="padding:20px 22px;border-bottom:1px solid #EEF2F8;display:flex;align-items:center;justify-content:space-between">
+                <div><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:17px">{{ invModal.number }}</div><div style="font-size:12px;color:#7C8AA0;margin-top:2px">{{ invModal.client }} · {{ invModal.amount }}</div></div>
+                <div onClick="{{ closeInvModal }}" style="width:28px;height:28px;border-radius:999px;background:#F4F7FB;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;color:#5A6B80">✕</div>
+              </div>
+              <div style="padding:20px 22px">
+                <div style="background:#FAFBFD;border-radius:12px;padding:16px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;line-height:1.7;color:#3A4759;box-shadow:0 1px 4px rgba(14,26,43,.06)">{{ invModal.pdfText }}</div>
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.4px;color:#8A98AB;text-transform:uppercase;margin:18px 0 9px">Checklista</div>
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <sc-for list="{{ invModal.checklist }}" as="c" hint-placeholder-count="3">
+                    <div onClick="{{ c.onToggle }}" style="display:flex;align-items:center;gap:10px;background:#F6F8FB;border-radius:10px;padding:10px 12px;cursor:pointer">
+                      <div style="{{ c.box }}"><sc-if value="{{ c.done }}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg></sc-if></div>
+                      <span style="{{ c.labelStyle }}">{{ c.label }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+      </sc-if>
+
+      <!-- AUTOMATYZACJE -->
+      <sc-if value="{{ isAutomatyzacje }}">
+        <div style="display:flex;justify-content:flex-end;margin-bottom:2px">
+          <div onClick="{{ openAutoModal }}" style="display:flex;align-items:center;gap:6px;background:linear-gradient(135deg,#3E7BD6,#173A6A);color:#fff;font-size:13px;font-weight:600;padding:9px 15px;border-radius:10px;cursor:pointer"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M12 6v12M6 12h12"/></svg>Nowa automatyzacja</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <sc-for list="{{ automations }}" as="a" hint-placeholder-count="4">
+            <div style="background:#fff;border-radius:18px;box-shadow:0 2px 10px rgba(14,26,43,.05);padding:18px 20px;display:flex;align-items:center;gap:14px">
+              <div style="width:40px;height:40px;border-radius:12px;background:{{ a.iconBg }};display:flex;align-items:center;justify-content:center;color:{{ a.iconColor }};flex-shrink:0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="{{ a.icon }}"/></svg></div>
+              <div style="flex:1;min-width:0"><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px">{{ a.title }}</div><div style="font-size:12.5px;color:#7C8AA0;margin-top:3px">{{ a.desc }}</div></div>
+              <div onClick="{{ a.onToggle }}" style="{{ a.toggle }}"><div style="{{ a.knob }}"></div></div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <!-- AI ASYSTENT -->
+      <sc-if value="{{ isAI }}">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <sc-for list="{{ aiTools }}" as="t" hint-placeholder-count="4">
+            <div onClick="{{ t.onClick }}" style="background:#fff;border-radius:18px;box-shadow:0 2px 10px rgba(14,26,43,.05);padding:22px;cursor:pointer">
+              <div style="width:44px;height:44px;border-radius:13px;background:{{ t.bg }};display:flex;align-items:center;justify-content:center;color:{{ t.color }}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="{{ t.icon }}"/></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;margin-top:14px">{{ t.title }}</div>
+              <div style="font-size:13px;color:#5A6B80;line-height:1.5;margin-top:6px">{{ t.desc }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <!-- DOKUMENTY -->
+      <sc-if value="{{ isDokumenty }}">
+        <div style="display:grid;grid-template-columns:280px 1fr;gap:14px">
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ documents }}" as="d" hint-placeholder-count="4">
+              <div onClick="{{ d.onClick }}" style="{{ d.card }}">
+                <div style="display:flex;align-items:center;gap:8px"><span style="{{ d.dot }}"></span><span style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13.5px">{{ d.label }}</span></div>
+                <div style="font-size:11.5px;color:#7C8AA0;margin-top:6px;line-height:1.45">{{ d.desc }}</div>
+              </div>
+            </sc-for>
+            <div onClick="{{ addCustomDoc }}" style="border:1.5px dashed #D4DEEA;border-radius:16px;padding:14px;text-align:center;color:#8A98AB;font-size:12.5px;font-weight:600;cursor:pointer">+ Dodaj własny wzór</div>
+            <div onClick="{{ uploadDocFile }}" style="border:1.5px dashed #D4DEEA;border-radius:16px;padding:14px;text-align:center;color:#8A98AB;font-size:12.5px;font-weight:600;cursor:pointer">⬆ Wgraj plik (.docx/.pdf)</div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div style="background:#fff;border-radius:18px;box-shadow:0 2px 10px rgba(14,26,43,.05);padding:20px">
+              <div style="display:flex;align-items:center;justify-content:space-between">
+                <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px">{{ selDoc.label }}</div>
+                <div onClick="{{ editDocTemplate }}" style="font-size:12px;font-weight:600;color:#3E7BD6;cursor:pointer">Edytuj wzór</div>
+              </div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.4px;color:#8A98AB;text-transform:uppercase;margin:16px 0 8px">Dostępne zmienne — wstawiane automatycznie</div>
+              <div style="display:flex;flex-wrap:wrap;gap:6px">
+                <sc-for list="{{ docVars }}" as="v" hint-placeholder-count="6"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:4px 9px;border-radius:999px;background:#F4F7FB;color:#5A6B80">{{ v }}</span></sc-for>
+              </div>
+              <div style="margin-top:16px;padding:11px 13px;border-radius:11px;background:rgba(62,123,214,.06);border:1px solid rgba(62,123,214,.2);font-size:11.5px;color:#3A4759;line-height:1.5">Ten wzór generujesz z poziomu karty klienta (zakładka Klienci → wybierz klienta → „Wygeneruj umowę"/„Wystaw fakturę"). Tutaj zarządzasz tylko szablonami.</div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- RAPORTY -->
+      <sc-if value="{{ isRaporty }}">
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px">
+          <sc-for list="{{ repKpis }}" as="k" hint-placeholder-count="4">
+            <div style="background:#fff;border-radius:18px;box-shadow:0 2px 10px rgba(14,26,43,.05);padding:18px">
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;text-transform:uppercase;letter-spacing:.4px">{{ k.label }}</div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:26px;margin-top:6px;color:{{ k.color }}">{{ k.value }}</div>
+              <div style="font-size:11.5px;color:#7C8AA0;margin-top:3px">{{ k.sub }}</div>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:14px;margin-top:14px">
+          <div style="background:#fff;border-radius:18px;box-shadow:0 2px 10px rgba(14,26,43,.05);padding:20px">
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px">Lejek sprzedażowy — konwersja między etapami</div>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-top:16px">
+              <sc-for list="{{ funnel }}" as="f" hint-placeholder-count="5">
+                <div>
+                  <div style="display:flex;justify-content:space-between;font-size:12px;color:#5A6B80;margin-bottom:5px"><span style="font-weight:600;color:#0E1A2B">{{ f.label }}</span><span>{{ f.count }} · {{ f.pct }}%</span></div>
+                  <div style="height:10px;background:#F0F3F8;border-radius:6px;overflow:hidden"><div style="{{ f.bar }}"></div></div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="background:#fff;border-radius:18px;box-shadow:0 2px 10px rgba(14,26,43,.05);padding:20px">
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px">Klienci wg planu</div>
+            <div style="display:flex;flex-direction:column;gap:9px;margin-top:14px">
+              <sc-for list="{{ byPlan }}" as="p" hint-placeholder-count="4">
+                <div style="display:flex;align-items:center;gap:10px"><span style="width:9px;height:9px;border-radius:999px;background:{{ p.color }};flex-shrink:0"></span><span style="flex:1;font-size:12.5px;font-weight:500">{{ p.label }}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:#173A6A">{{ p.count }}</span></div>
+              </sc-for>
+            </div>
+            <div style="margin-top:16px;padding-top:14px;border-top:1px solid #F0F3F8">
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A98AB;text-transform:uppercase">Źródła leadów</div>
+              <div style="display:flex;flex-direction:column;gap:7px;margin-top:8px">
+                <sc-for list="{{ bySource }}" as="s" hint-placeholder-count="3"><div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:#5A6B80">{{ s.label }}</span><span style="font-weight:600">{{ s.count }}</span></div></sc-for>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:#fff;border-radius:18px;box-shadow:0 2px 10px rgba(14,26,43,.05);padding:20px;margin-top:14px">
+          <div style="display:flex;align-items:center;justify-content:space-between"><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px">Umowy kończące się wkrótce (ryzyko odnowienia)</div><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#9AA7B8">sortowane wg pilności</span></div>
+          <div style="display:flex;flex-direction:column;margin-top:10px">
+            <sc-for list="{{ repExpiring }}" as="e" hint-placeholder-count="4">
+              <div style="display:flex;align-items:center;gap:12px;padding:10px 4px;border-bottom:1px solid #F1F5FA"><span style="{{ e.dot }}"></span><span style="flex:1;font-size:13px;font-weight:500">{{ e.company }}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#173A6A;font-weight:600">{{ e.mrr }}</span><span style="{{ e.pill }}">{{ e.until }}</span></div>
+            </sc-for>
+            <sc-if value="{{ noRepExpiring }}"><div style="padding:14px 4px;color:#9AA7B8;font-size:12.5px">Brak umów kończących się w najbliższym czasie.</div></sc-if>
+          </div>
+        </div>
+
+        <div onClick="{{ exportReport }}" style="display:inline-flex;align-items:center;gap:8px;margin-top:16px;padding:11px 18px;border-radius:11px;background:#173A6A;color:#fff;font-size:13px;font-weight:600;cursor:pointer"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>Eksportuj raport (CSV)</div>
+      </sc-if>
+
+      <!-- OSIEDLA -->
+      <sc-if value="{{ isOsiedla }}">
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px">
+          <sc-for list="{{ estates }}" as="e" hint-placeholder-count="4">
+            <div style="background:#fff;border-radius:18px;box-shadow:0 2px 10px rgba(14,26,43,.05);padding:20px">
+              <div style="display:flex;align-items:center;gap:10px"><div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#3E7BD6,#173A6A);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;color:#fff">{{ e.initial }}</div><div><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px">{{ e.name }}</div><div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#8A98AB">{{ e.company }}</div></div></div>
+              <div style="display:flex;gap:16px;margin-top:14px">
+                <div><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:#8A98AB;text-transform:uppercase">Mieszkańcy</div><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;margin-top:2px">{{ e.residents }}</div></div>
+                <div><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:#8A98AB;text-transform:uppercase">Zgłoszenia</div><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;margin-top:2px">{{ e.reports }}</div></div>
+                <div><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:#8A98AB;text-transform:uppercase">Plan</div><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;margin-top:2px">{{ e.plan }}</div></div>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-top:14px;padding-top:12px;border-top:1px solid #F4F7FB"><span style="{{ e.statusPill }}">{{ e.status }}</span><span onClick="{{ e.onOpenPanel }}" style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#3E7BD6;cursor:pointer">Otwórz panel →</span></div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <!-- RANKING UCHWAŁ (grywalizacja) -->
+      <sc-if value="{{ isRankingUchwal }}">
+        <div style="background:linear-gradient(135deg,#3E7BD6,#173A6A);border-radius:18px;padding:20px 22px;color:#fff;margin-bottom:16px"><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px">Grywalizacja: kto najszybciej uchwala uchwały</div><div style="font-size:12.5px;color:rgba(255,255,255,.85);margin-top:5px;line-height:1.5">Ranking liczony ze średniego czasu od otwarcia do zamknięcia głosowania. Widoczny też publicznie na stronie WWW jako element konkursu dla zarządów/administratorów.</div></div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <sc-for list="{{ resolutionRanking }}" as="r" hint-placeholder-count="4">
+            <div style="background:#fff;border-radius:16px;box-shadow:0 2px 10px rgba(14,26,43,.05);padding:16px 18px;display:flex;align-items:center;gap:14px">
+              <div style="width:34px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;text-align:center">{{ r.medal }}{{ r.rank }}</div>
+              <div style="flex:1;min-width:0"><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14.5px">{{ r.estate }}</div><div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#8A98AB;margin-top:2px">{{ r.company }} · {{ r.resolved }} uchwał zakończonych</div>
+                <div style="height:6px;border-radius:4px;background:#EDF1F7;margin-top:8px;overflow:hidden"><div style="height:100%;border-radius:4px;background:#2E9E6B;width:{{ r.barWidth }}"></div></div>
+              </div>
+              <div style="text-align:right;flex-shrink:0"><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;color:#173A6A">{{ r.avgHours }}h</div><div style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:#9AA7B8">śr. czas</div></div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <!-- OPINIE I POMYSŁY -->
+      <sc-if value="{{ isOpinie }}">
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <sc-for list="{{ feedbackFilters }}" as="f" hint-placeholder-count="5"><div onClick="{{ f.onClick }}" style="{{ f.style }}">{{ f.label }} <span style="{{ f.countStyle }}">{{ f.count }}</span></div></sc-for>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-top:14px">
+          <sc-for list="{{ feedbackList }}" as="fb" hint-placeholder-count="4">
+            <div style="background:#fff;border:none;border-radius:16px;box-shadow:0 2px 12px rgba(14,26,43,.06);padding:15px 17px">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap">
+                <div style="display:flex;align-items:center;gap:8px"><span style="{{ fb.typePill }}">{{ fb.typeLabel }}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#8A98AB">{{ fb.role }} · {{ fb.estate }}</span></div>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#9AA7B8">{{ fb.when }}</span>
+              </div>
+              <div style="font-size:13.5px;line-height:1.55;color:#0E1A2B;margin-top:9px">{{ fb.text }}</div>
+              <div style="display:flex;gap:7px;margin-top:11px;flex-wrap:wrap"><sc-for list="{{ fb.statusOpts }}" as="s" hint-placeholder-count="4"><div onClick="{{ s.onClick }}" style="{{ s.style }}">{{ s.label }}</div></sc-for></div>
+            </div>
+          </sc-for>
+          <sc-if value="{{ noFeedback }}"><div style="padding:30px;text-align:center;color:#9AA7B8;font-size:13.5px">Brak zgłoszeń w tej kategorii.</div></sc-if>
+        </div>
+      </sc-if>
+
+      <!-- BLOG -->
+      <sc-if value="{{ isBlog }}">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <sc-for list="{{ blogPosts }}" as="b" hint-placeholder-count="3">
+            <div style="background:#fff;border-radius:18px;box-shadow:0 2px 10px rgba(14,26,43,.05);padding:18px 20px;display:flex;align-items:center;gap:16px">
+              <div style="width:80px;height:56px;border-radius:10px;background:{{ b.cover }};flex-shrink:0"></div>
+              <div style="flex:1;min-width:0"><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px">{{ b.title }}</div><div style="font-size:12px;color:#7C8AA0;margin-top:3px">{{ b.category }} · {{ b.date }}</div></div>
+              <span style="{{ b.statusPill }}">{{ b.status }}</span>
+              <div style="display:flex;gap:6px"><div onClick="{{ b.onEdit }}" style="padding:7px 12px;border-radius:9px;background:#F4F7FB;font-size:12px;font-weight:600;color:#173A6A;cursor:pointer">Edytuj</div><sc-if value="{{ b.canPublish }}"><div onClick="{{ b.onPublish }}" style="padding:7px 12px;border-radius:9px;background:#2E9E6B;font-size:12px;font-weight:600;color:#fff;cursor:pointer">Publikuj</div></sc-if></div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <!-- USTAWIENIA -->
+      <sc-if value="{{ isUstawienia }}">
+        <div style="max-width:680px;display:flex;flex-direction:column;gap:14px">
+          <div style="background:#fff;border-radius:18px;box-shadow:0 2px 10px rgba(14,26,43,.05);padding:20px">
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px">Twoje dane</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px">
+              <div><div style="{{ lbl }}">Firma</div><input value="AIVOLUX" style="{{ inp }}"/></div>
+              <div><div style="{{ lbl }}">NIP</div><input value="000-000-00-00" style="{{ inp }}"/></div>
+              <div><div style="{{ lbl }}">E-mail</div><input value="aivolux@gmail.com" style="{{ inp }}"/></div>
+              <div><div style="{{ lbl }}">Telefon</div><input value="600 000 000" style="{{ inp }}"/></div>
+            </div>
+          </div>
+          <div style="background:#fff;border-radius:18px;box-shadow:0 2px 10px rgba(14,26,43,.05);padding:20px">
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px">Integracje</div>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-top:14px">
+              <sc-for list="{{ integrations }}" as="ig" hint-placeholder-count="4">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #F4F7FB"><div><div style="font-size:13.5px;font-weight:600">{{ ig.name }}</div><div style="font-size:11.5px;color:#7C8AA0;margin-top:2px">{{ ig.desc }}</div></div><span style="{{ ig.pill }}">{{ ig.status }}</span></div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="background:#fff;border-radius:18px;box-shadow:0 2px 10px rgba(14,26,43,.05);padding:20px">
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px">Dane sprzedawcy i wzór faktury</div>
+            <div style="font-size:12.5px;color:#7C8AA0;line-height:1.5;margin-top:4px">Ustawiasz raz — system wypełnia je automatycznie na każdej fakturze i generuje PDF.</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px">
+              <div><div style="{{ lbl }}">Nazwa sprzedawcy</div><input value="{{ ownerSettings.company }}" onChange="{{ setOwnCompany }}" style="{{ inp }}"/></div>
+              <div><div style="{{ lbl }}">NIP</div><input value="{{ ownerSettings.nip }}" onChange="{{ setOwnNip }}" style="{{ inp }}"/></div>
+              <div><div style="{{ lbl }}">Nr konta (IBAN)</div><input value="{{ ownerSettings.iban }}" onChange="{{ setOwnIban }}" style="{{ inp }}"/></div>
+              <div><div style="{{ lbl }}">Domyślny termin płatności</div><input value="{{ ownerSettings.termin }}" onChange="{{ setOwnTermin }}" style="{{ inp }}"/></div>
+              <div style="grid-column:1 / -1"><div style="{{ lbl }}">Stopka / uwagi na fakturze</div><input value="{{ ownerSettings.stopka }}" onChange="{{ setOwnStopka }}" style="{{ inp }}"/></div>
+            </div>
+            <sc-if value="{{ settingsDirty }}">
+              <div style="display:flex;align-items:center;gap:10px;margin-top:14px;padding:11px 14px;border-radius:11px;background:rgba(242,169,0,.12);border:1px solid rgba(242,169,0,.35)">
+                <span style="font-size:12.5px;color:#8a6200;flex:1">Masz niezapisane zmiany danych sprzedawcy.</span>
+                <div onClick="{{ discardOwnerSettings }}" style="padding:7px 12px;border-radius:9px;background:#fff;color:#5A6B80;font-size:12px;font-weight:600;cursor:pointer">Cofnij</div>
+                <div onClick="{{ saveOwnerSettings }}" style="padding:7px 14px;border-radius:9px;background:#173A6A;color:#fff;font-size:12px;font-weight:600;cursor:pointer">Zapisz zmiany</div>
+              </div>
+            </sc-if>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.4px;color:#8A98AB;text-transform:uppercase;margin:16px 0 8px">Zmienne wypełniane automatycznie</div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px">
+              <sc-for list="{{ invVars }}" as="v" hint-placeholder-count="6"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:4px 9px;border-radius:999px;background:#F4F7FB;color:#5A6B80">{{ v }}</span></sc-for>
+            </div>
+            <div style="display:flex;align-items:center;gap:9px;margin-top:14px;padding:11px 13px;border-radius:11px;background:rgba(46,158,107,.08);border:1px solid rgba(46,158,107,.25)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2E9E6B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 2M12 3a9 9 0 100 18 9 9 0 000-18z"/></svg><span style="font-size:12px;color:#1f7a4d;line-height:1.4">Faktura powstaje automatycznie w dniu zaksięgowania płatności (webhook Stripe) — bez ręcznego wystawiania.</span></div>
+          </div>
+
+          <div style="background:#fff;border-radius:18px;box-shadow:0 2px 10px rgba(14,26,43,.05);padding:20px">
+            <div style="display:flex;align-items:center;justify-content:space-between"><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px">AI Asystent — klucz API</div><span style="{{ aiStatusPill }}">{{ aiStatusLabel }}</span></div>
+            <div style="font-size:12.5px;color:#7C8AA0;line-height:1.5;margin-top:4px">Klucz zasila „Generuj e-mail”, „Blog writer” i „Analizę churnu”. Wywołania idą przez Edge Function — klucz nigdy nie trafia do przeglądarki klienta.</div>
+            <div style="{{ lbl }};margin-top:16px">Dostawca</div>
+            <div style="display:flex;gap:8px"><sc-for list="{{ aiProviders }}" as="p" hint-placeholder-count="2"><div onClick="{{ p.onClick }}" style="{{ p.style }}">{{ p.label }}</div></sc-for></div>
+            <div style="{{ lbl }};margin-top:14px">Klucz API</div>
+            <input value="{{ ai.key }}" onChange="{{ setAiKey }}" placeholder="sk-…" style="{{ inp }};font-family:'IBM Plex Mono',monospace"/>
+            <div style="{{ lbl }};margin-top:14px">Model</div>
+            <input value="{{ ai.model }}" onChange="{{ setAiModel }}" placeholder="np. gpt-4o / claude-sonnet-4.5" style="{{ inp }}"/>
+            <div style="display:flex;gap:10px;margin-top:16px">
+              <div onClick="{{ saveAi }}" style="flex:1;text-align:center;padding:11px;border-radius:11px;background:linear-gradient(135deg,#3E7BD6,#173A6A);color:#fff;font-weight:600;font-size:13.5px;cursor:pointer">Połącz i zapisz</div>
+            </div>
+          </div>
+
+          <div style="background:#fff;border-radius:18px;box-shadow:0 2px 10px rgba(14,26,43,.05);padding:20px">
+            <div style="display:flex;align-items:center;justify-content:space-between"><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px">Autenti — e-podpis umów</div><span style="{{ autentiStatusPill }}">{{ autentiStatusLabel }}</span></div>
+            <div style="font-size:12.5px;color:#7C8AA0;line-height:1.5;margin-top:4px">Po wygenerowaniu umowy w karcie klienta, PDF trafia przez API Autenti do podpisu — status podpisania wraca automatycznie do CRM.</div>
+            <div style="{{ lbl }};margin-top:16px">Klucz API (Autenti Business)</div>
+            <input value="{{ autenti.key }}" onChange="{{ setAutentiKey }}" placeholder="autenti_live_…" style="{{ inp }};font-family:'IBM Plex Mono',monospace"/>
+            <div style="{{ lbl }};margin-top:14px">Webhook URL (odbiera status podpisu)</div>
+            <input value="{{ autenti.webhook }}" style="{{ inp }};font-family:'IBM Plex Mono',monospace;opacity:.7" placeholder="https://api.mestio.pl/webhooks/autenti"/>
+            <div style="display:flex;gap:8px;margin-top:14px"><sc-for list="{{ autentiModes }}" as="m" hint-placeholder-count="2"><div onClick="{{ m.onClick }}" style="{{ m.style }}">{{ m.label }}</div></sc-for></div>
+            <div style="display:flex;gap:10px;margin-top:16px">
+              <div onClick="{{ saveAutenti }}" style="flex:1;text-align:center;padding:11px;border-radius:11px;background:linear-gradient(135deg,#3E7BD6,#173A6A);color:#fff;font-weight:600;font-size:13.5px;cursor:pointer">Połącz i zapisz</div>
+              <sc-if value="{{ ai.connected }}"><div onClick="{{ disconnectAi }}" style="padding:11px 16px;border-radius:11px;background:#F4F7FB;color:#C0392B;font-weight:600;font-size:13.5px;cursor:pointer">Odłącz</div></sc-if>
+            </div>
+          </div>
+
+          <div style="background:#fff;border-radius:18px;box-shadow:0 2px 10px rgba(14,26,43,.05);padding:20px">
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px">KSeF — tryb pracy</div>
+            <div style="font-size:12.5px;color:#7C8AA0;margin-top:4px">Wystaw kilka faktur testowo, zanim przełączysz na produkcję.</div>
+            <div style="display:flex;gap:8px;margin-top:12px"><sc-for list="{{ ksefModes }}" as="k" hint-placeholder-count="2"><div onClick="{{ k.onClick }}" style="{{ k.style }}">{{ k.label }}</div></sc-for></div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ newClientOpen }}">
+        <div style="position:absolute;inset:0;z-index:70;background:rgba(14,26,43,.5);display:flex;align-items:center;justify-content:center" onClick="{{ closeNewClient }}">
+          <div onClick="{{ noop }}" style="width:480px;background:#F6F8FB;border-radius:18px;box-shadow:0 30px 70px rgba(14,26,43,.4);padding:24px">
+            <div style="display:flex;align-items:center;justify-content:space-between"><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px">Nowy klient</div><div onClick="{{ closeNewClient }}" style="width:28px;height:28px;border-radius:999px;background:#EAF0F7;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#5A6B80" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></div></div>
+            <div style="{{ lbl }};margin-top:14px">Nazwa firmy</div>
+            <input value="{{ newClient.company }}" onChange="{{ setNcCompany }}" placeholder="np. Wspólnota Kwiatowa" style="{{ inp }}"/>
+            <div style="{{ lbl }};margin-top:12px">Osoba kontaktowa</div>
+            <input value="{{ newClient.contact }}" onChange="{{ setNcContact }}" placeholder="Imię i nazwisko" style="{{ inp }}"/>
+            <div style="{{ lbl }};margin-top:12px">Nazwa osiedla</div>
+            <input value="{{ newClient.estate }}" onChange="{{ setNcEstate }}" placeholder="np. Osiedle Kwiatowe" style="{{ inp }}"/>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px">
+              <div><div style="{{ lbl }}">Plan</div><input value="{{ newClient.plan }}" onChange="{{ setNcPlan }}" style="{{ inp }}"/></div>
+              <div><div style="{{ lbl }}">MRR (zł)</div><input value="{{ newClient.mrr }}" onChange="{{ setNcMrr }}" placeholder="179" style="{{ inp }}"/></div>
+            </div>
+            <div style="display:flex;gap:10px;margin-top:18px"><div onClick="{{ closeNewClient }}" style="flex:1;text-align:center;padding:12px;border-radius:11px;background:#EAF0F7;color:#5A6B80;font-weight:600;font-size:13.5px;cursor:pointer">Anuluj</div><div onClick="{{ submitNewClient }}" style="flex:1.6;text-align:center;padding:12px;border-radius:11px;background:linear-gradient(135deg,#3E7BD6,#173A6A);color:#fff;font-weight:600;font-size:13.5px;cursor:pointer">Dodaj klienta</div></div>
+          </div>
+        </div>
+      </sc-if>
+
+    </div>
+  </div>
+
+  <sc-if value="{{ feedbackComposer }}">
+    <div style="position:absolute;inset:0;z-index:70;background:rgba(14,26,43,.5);display:flex;align-items:center;justify-content:center" onClick="{{ closeIdeaComposer }}">
+      <div onClick="{{ noop }}" style="width:480px;background:#F6F8FB;border-radius:18px;box-shadow:0 30px 70px rgba(14,26,43,.4);padding:24px">
+        <div style="display:flex;align-items:center;justify-content:space-between"><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:19px">Dodaj swój pomysł</div><div onClick="{{ closeIdeaComposer }}" style="width:30px;height:30px;border-radius:999px;background:#EAF0F7;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#5A6B80" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></div></div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.5px;text-transform:uppercase;color:#8A98AB;margin:16px 0 7px">Treść</div>
+        <textarea value="{{ newIdea.text }}" onChange="{{ setIdeaText }}" placeholder="Twój pomysł na rozwój Mestio…" style="width:100%;min-height:100px;resize:none;font-size:13.5px;line-height:1.5;background:#fff;border:1px solid #E4EBF3;border-radius:11px;padding:12px 13px;color:#0E1A2B"></textarea>
+        <div style="display:flex;gap:10px;margin-top:18px"><div onClick="{{ closeIdeaComposer }}" style="flex:1;text-align:center;padding:13px;border-radius:11px;background:#EAF0F7;color:#5A6B80;font-weight:600;font-size:14px;cursor:pointer">Anuluj</div><div onClick="{{ submitIdea }}" style="flex:1.6;text-align:center;padding:13px;border-radius:11px;background:linear-gradient(135deg,#3E7BD6,#173A6A);color:#fff;font-weight:600;font-size:14px;cursor:pointer">Dodaj pomysł</div></div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ hasToast }}"><div style="position:absolute;left:50%;bottom:24px;transform:translateX(-50%);background:#0E1A2B;color:#fff;font-size:12.5px;font-weight:500;padding:12px 20px;border-radius:999px;box-shadow:0 10px 30px rgba(14,26,43,.4);z-index:80">{{ toast }}</div></sc-if>
+
+  <sc-if value="{{ clientModalOpen }}">
+    <div onClick="{{ closeClient }}" style="position:fixed;inset:0;background:rgba(14,26,43,.45);display:flex;align-items:center;justify-content:center;z-index:90;padding:24px">
+      <div onClick="{{ noop }}" style="background:#F6F8FB;border-radius:22px;box-shadow:0 20px 60px rgba(14,26,43,.3);width:680px;max-width:100%;max-height:88vh;overflow-y:auto">
+        <div style="padding:22px 24px;background:#0E1A2B;border-radius:22px 22px 0 0;display:flex;align-items:center;justify-content:space-between">
+          <div><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;color:#fff">{{ clientModal.company }}</div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:rgba(255,255,255,.6);margin-top:3px">{{ clientModal.contact }} · {{ clientModal.estate }}</div></div>
+          <div onClick="{{ closeClient }}" style="width:30px;height:30px;border-radius:999px;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;cursor:pointer;color:#fff;font-size:16px">✕</div>
+        </div>
+        <div style="padding:22px 24px">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+            <div style="background:#fff;border-radius:12px;padding:12px 14px"><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:#8A98AB;text-transform:uppercase">Status</div><div style="font-size:13px;font-weight:600;margin-top:4px">{{ clientModal.status }}</div></div>
+            <div style="background:#fff;border-radius:12px;padding:12px 14px"><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:#8A98AB;text-transform:uppercase">MRR</div><div style="font-size:13px;font-weight:600;margin-top:4px">{{ clientModal.mrr }}</div></div>
+            <div style="background:#fff;border-radius:12px;padding:12px 14px"><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:#8A98AB;text-transform:uppercase">Umowa do</div><div style="font-size:13px;font-weight:600;margin-top:4px">{{ clientModal.until }}</div></div>
+          </div>
+
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.4px;color:#8A98AB;text-transform:uppercase;margin:18px 0 8px">Dane kontaktowe</div>
+          <div style="background:#fff;border-radius:12px;padding:4px 14px">
+            <div style="display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid #F1F5FA"><span style="font-size:12px;color:#7C8AA0">Telefon</span><span style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:600">{{ clientModal.phone }}</span></div>
+            <div style="display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid #F1F5FA"><span style="font-size:12px;color:#7C8AA0">E-mail</span><span style="font-size:12.5px;font-weight:500">{{ clientModal.email }}</span></div>
+            <div style="display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid #F1F5FA"><span style="font-size:12px;color:#7C8AA0">NIP</span><span style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:600">{{ clientModal.nip }}</span></div>
+            <div style="display:flex;justify-content:space-between;gap:10px;padding:9px 0"><span style="font-size:12px;color:#7C8AA0">Adres</span><span style="font-size:12.5px;font-weight:500;text-align:right">{{ clientModal.address }}</span></div>
+          </div>
+          <sc-if value="{{ clientModal.notes }}"><div style="margin-top:10px;background:rgba(62,123,214,.06);border-left:3px solid #3E7BD6;border-radius:10px;padding:10px 13px;font-size:12.5px;color:#1f3a5f;line-height:1.5">{{ clientModal.notes }}</div></sc-if>
+
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.4px;color:#8A98AB;text-transform:uppercase;margin:18px 0 8px">Numer konta klienta (do zwrotów)</div>
+          <input value="{{ clientModal.bank }}" onChange="{{ setClientBank }}" placeholder="PL00 0000 0000 0000 0000 0000 0000" style="width:100%;font-family:'IBM Plex Mono',monospace;font-size:12.5px;background:#fff;border-radius:11px;padding:11px 13px;color:#0E1A2B"/>
+
+          <div style="display:flex;align-items:center;justify-content:space-between;margin:18px 0 8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.4px;color:#8A98AB;text-transform:uppercase">Kontakt operacyjny</span></div>
+          <div style="background:#fff;border-radius:12px;padding:11px 14px;font-size:12.5px;color:#3A4759">{{ clientModal.contact }} — bieżąca komunikacja robocza</div>
+
+          <div style="display:flex;align-items:center;justify-content:space-between;margin:16px 0 8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.4px;color:#8A98AB;text-transform:uppercase">Reprezentanci do umowy</span><span onClick="{{ addRep }}" style="font-size:11.5px;font-weight:600;color:#3E7BD6;cursor:pointer">+ Dodaj osobę</span></div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ clientModal.reps }}" as="r" hint-placeholder-count="1">
+              <div style="background:#fff;border-radius:12px;padding:11px 13px;display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:7px;align-items:center">
+                <input value="{{ r.name }}" onChange="{{ r.setName }}" placeholder="Imię i nazwisko" style="font-size:12.5px;background:#F4F7FB;border-radius:8px;padding:8px 10px;color:#0E1A2B"/>
+                <input value="{{ r.position }}" onChange="{{ r.setPosition }}" placeholder="Stanowisko" style="font-size:12.5px;background:#F4F7FB;border-radius:8px;padding:8px 10px;color:#0E1A2B"/>
+                <input value="{{ r.email }}" onChange="{{ r.setEmail }}" placeholder="E-mail" style="font-size:12.5px;background:#F4F7FB;border-radius:8px;padding:8px 10px;color:#0E1A2B"/>
+                <span onClick="{{ r.onRemove }}" style="width:24px;height:24px;border-radius:999px;background:#FDECEC;color:#C0392B;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px">✕</span>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.4px;color:#8A98AB;text-transform:uppercase;margin:20px 0 8px">Wybierz plan do umowy</div>
+          <div style="display:flex;gap:7px"><sc-for list="{{ contractPlans }}" as="p" hint-placeholder-count="4"><div onClick="{{ p.onClick }}" style="{{ p.style }}">{{ p.label }}</div></sc-for></div>
+
+          <div style="margin-top:20px;display:flex;flex-direction:column;gap:9px">
+            <div onClick="{{ genClientContract }}" style="display:flex;align-items:center;gap:10px;padding:14px 16px;border-radius:13px;background:linear-gradient(135deg,#3E7BD6,#173A6A);cursor:pointer">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z"/></svg>
+              <div><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13.5px;color:#fff">Wygeneruj umowę</div><div style="font-size:11px;color:rgba(255,255,255,.75);margin-top:1px">Wypełnia wzór danymi klienta → PDF → e-podpis</div></div>
+            </div>
+            <div onClick="{{ genClientInvoice }}" style="display:flex;align-items:center;gap:10px;padding:14px 16px;border-radius:13px;background:#fff;border:1px solid #E4EBF3;cursor:pointer">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#173A6A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7h6M9 11h6M9 15h4M5 3h14a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/></svg>
+              <div><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13.5px;color:#173A6A">Wystaw fakturę</div><div style="font-size:11px;color:#7C8AA0;margin-top:1px">PDF + wysyłka do KSeF</div></div>
+            </div>
+          </div>
+
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.4px;color:#8A98AB;text-transform:uppercase;margin:20px 0 8px">Historia dokumentów</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ clientModal.docs }}" as="d" hint-placeholder-count="2">
+              <div style="background:#fff;border-radius:11px;padding:11px 13px;display:flex;align-items:center;gap:11px">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#173A6A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z"/></svg>
+                <div style="flex:1;min-width:0"><div style="font-size:12.5px;font-weight:600;text-transform:capitalize">{{ d.type }}</div><div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#9AA7B8;margin-top:1px">{{ d.when }} · {{ d.status }}</div></div>
+              </div>
+            </sc-for>
+            <sc-if value="{{ clientModal.noDocs }}"><div style="font-size:12px;color:#9AA7B8;padding:6px 2px">Brak wygenerowanych dokumentów. Trafią tu automatycznie po wygenerowaniu.</div></sc-if>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ autoModalOpen }}">
+    <div onClick="{{ closeAutoModal }}" style="position:fixed;inset:0;background:rgba(14,26,43,.5);display:flex;align-items:center;justify-content:center;z-index:95;padding:24px">
+      <div onClick="{{ noop }}" style="background:#F6F8FB;border-radius:20px;box-shadow:0 24px 70px rgba(14,26,43,.4);width:480px;max-width:100%;padding:22px">
+        <div style="display:flex;align-items:center;justify-content:space-between"><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:17px">Nowa automatyzacja</div><div onClick="{{ closeAutoModal }}" style="width:28px;height:28px;border-radius:999px;background:#EAF0F7;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;color:#5A6B80">✕</div></div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.4px;color:#8A98AB;text-transform:uppercase;margin:16px 0 7px">Nazwa</div>
+        <input value="{{ newAutomation.name }}" onChange="{{ setAutoName }}" placeholder="np. Ponaglenie po 7 dniach" style="width:100%;font-size:14px;background:#fff;border-radius:11px;padding:11px 13px;color:#0E1A2B"/>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.4px;color:#8A98AB;text-transform:uppercase;margin:14px 0 7px">Grupa docelowa (segment, nie pojedynczy klient)</div>
+        <div style="display:flex;flex-wrap:wrap;gap:7px"><sc-for list="{{ autoSegmentOptions }}" as="c" hint-placeholder-count="6"><div onClick="{{ c.onClick }}" style="{{ c.style }}">{{ c.label }}</div></sc-for></div>
+        <div style="font-size:11px;color:#9AA7B8;margin-top:6px;line-height:1.4">Automatyzacja obejmuje wszystkich pasujących do segmentu — również nowych klientów, którzy do niego wejdą w przyszłości.</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.4px;color:#8A98AB;text-transform:uppercase;margin:14px 0 7px">Wyzwalacz</div>
+        <div style="display:flex;flex-wrap:wrap;gap:7px"><sc-for list="{{ autoTriggers }}" as="t" hint-placeholder-count="4"><div onClick="{{ t.onClick }}" style="{{ t.style }}">{{ t.label }}</div></sc-for></div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.4px;color:#8A98AB;text-transform:uppercase;margin:14px 0 7px">Akcja</div>
+        <div style="display:flex;flex-wrap:wrap;gap:7px"><sc-for list="{{ autoActions }}" as="a" hint-placeholder-count="4"><div onClick="{{ a.onClick }}" style="{{ a.style }}">{{ a.label }}</div></sc-for></div>
+        <div style="display:flex;gap:10px;margin-top:20px"><div onClick="{{ closeAutoModal }}" style="flex:1;text-align:center;padding:12px;border-radius:11px;background:#EAF0F7;color:#5A6B80;font-weight:600;font-size:13.5px;cursor:pointer">Anuluj</div><div onClick="{{ submitAutomation }}" style="flex:1.6;text-align:center;padding:12px;border-radius:11px;background:linear-gradient(135deg,#3E7BD6,#173A6A);color:#fff;font-weight:600;font-size:13.5px;cursor:pointer">Dodaj automatyzację</div></div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ hasDocPreview }}">
+    <div onClick="{{ closeDocPreview }}" style="position:fixed;inset:0;background:rgba(14,26,43,.55);display:flex;align-items:center;justify-content:center;z-index:95;padding:24px">
+      <div onClick="{{ noop }}" style="background:#fff;border-radius:20px;box-shadow:0 24px 70px rgba(14,26,43,.4);width:560px;max-width:100%;max-height:88vh;display:flex;flex-direction:column;overflow:hidden">
+        <div style="padding:18px 22px;border-bottom:1px solid #EEF2F8;display:flex;align-items:center;justify-content:space-between">
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px">{{ docPreview.title }}</div>
+          <div onClick="{{ closeDocPreview }}" style="width:28px;height:28px;border-radius:999px;background:#F4F7FB;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;color:#5A6B80">✕</div>
+        </div>
+        <div style="padding:22px;overflow-y:auto;flex:1;background:#FAFBFD">
+          <pre style="white-space:pre-wrap;font-family:'IBM Plex Mono',monospace;font-size:12.5px;line-height:1.7;color:#1f2937;background:#fff;border-radius:12px;padding:18px;box-shadow:0 1px 4px rgba(14,26,43,.06);margin:0">{{ docPreview.text }}</pre>
+        </div>
+        <div style="padding:16px 22px;border-top:1px solid #EEF2F8;display:flex;gap:10px">
+          <div onClick="{{ closeDocPreview }}" style="flex:1;text-align:center;padding:12px;border-radius:11px;background:#F4F7FB;color:#5A6B80;font-weight:600;font-size:13.5px;cursor:pointer">Anuluj, chcę poprawić</div>
+          <div onClick="{{ confirmSendDoc }}" style="flex:1.4;text-align:center;padding:12px;border-radius:11px;background:linear-gradient(135deg,#3E7BD6,#173A6A);color:#fff;font-weight:600;font-size:13.5px;cursor:pointer">Wygląda dobrze — wyślij</div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state={
+    page:'pulpit',selEmailIdx:0,toast:null,autoStates:{1:true,2:true,3:false,4:true},
+    newClientOpen:false,newClient:{company:'',contact:'',estate:'',plan:'Standard',mrr:''},
+    ai:{provider:'openai',key:'',model:'gpt-4o',connected:false},
+    autenti:{key:'',mode:'sandbox',connected:false},
+    ksefMode:'test',
+    clientsData:[
+      {company:'Atlanti Sp. z o.o.',contact:'Jan Kowalski',phone:'601 234 567',email:'j.kowalski@atlanti.pl',nip:'527-020-45-73',address:'ul. Słoneczna 12, 02-486 Warszawa',estate:'Słoneczne Wzgórza',status:'active',mrr:'349 zł',until:'31 gru 26',plan:'Pro',notes:'Klient priorytetowy — 3 osiedla w planach na 2027.'},
+      {company:'DOM-BUD',contact:'Maria Nowak',phone:'602 345 678',email:'m.nowak@dom-bud.pl',nip:'118-045-33-21',address:'ul. Zielona 8, 61-002 Poznań',estate:'Zielone Tarasy',status:'active',mrr:'179 zł',until:'12 lip 26',plan:'Standard',notes:'Umowa do odnowienia za 5 dni.'},
+      {company:'Wspólnota Parkowa',contact:'Piotr Zając',phone:'603 456 789',email:'p.zajac@wspolnotaparkowa.pl',nip:'899-267-11-04',address:'ul. Parkowa 3, 80-172 Gdańsk',estate:'Parkowa Residence',status:'trial',mrr:'0 zł',until:'28 lip 26',plan:'Standard',notes:'Okres próbny — decyzja po demo 15.07.'},
+      {company:'KZN Osiedla',contact:'Ewa Lis',phone:'604 567 890',email:'e.lis@kznosiedla.pl',nip:'734-190-22-58',address:'ul. Rezydencka 5, 40-006 Katowice',estate:'Rezydencja Park',status:'active',mrr:'349 zł',until:'15 wrz 26',plan:'Pro',notes:''},
+      {company:'ARES Security',contact:'Tomasz Wilk',phone:'605 678 901',email:'t.wilk@aressecurity.pl',nip:'627-311-09-44',address:'ul. Nadmorska 21, 70-401 Szczecin',estate:'Nadmorska',status:'active',mrr:'179 zł',until:'5 lip 26',plan:'Standard',notes:'Firma ochroniarska — dodatkowo obsługuje 2 inne osiedla poza Mestio.'},
+      {company:'Zarząd Wspólnoty Leśna',contact:'Anna Dąb',phone:'606 789 012',email:'a.dab@wspolnotalesna.pl',nip:'552-004-87-19',address:'ul. Leśna 44, 30-002 Kraków',estate:'Osiedle Leśne',status:'churned',mrr:'0 zł',until:'zakończona',plan:'Start',notes:'Rezygnacja — zbyt mała wspólnota (12 lokali), wróciła do Excela.'},
+      {company:'MK Zarządzanie',contact:'Marek Krawczyk',phone:'607 890 123',email:'m.krawczyk@mkzarzadzanie.pl',nip:'945-112-76-30',address:'ul. Centralna 1, 00-001 Warszawa',estate:'Bloki Centrum',status:'active',mrr:'799 zł',until:'30 lis 26',plan:'Enterprise',notes:'Zarządca portfelowy — 6 osiedli, opiekun dedykowany.'},
+      {company:'Nowa Wspólnota',contact:'Karolina Biel',phone:'608 901 234',email:'k.biel@nowawspolnota.pl',nip:'—',address:'—',estate:'—',status:'lead',mrr:'0 zł',until:'—',plan:'—',notes:'Lead ze strony, jeszcze bez umowy.'},
+    ],
+    pipelineItems:[
+      {id:1,stage:'lead',company:'Nowa Wspólnota',contact:'Karolina Biel',mrr:'~179 zł',source:'Strona'},
+      {id:2,stage:'lead',company:'Green Park',contact:'Robert Maj',mrr:'~349 zł',source:'Polecenie'},
+      {id:3,stage:'contact',company:'Horizon Zarządzanie',contact:'Iga Wrona',mrr:'~179 zł',source:'Cold'},
+      {id:4,stage:'demo',company:'Wspólnota Parkowa',contact:'Piotr Zając',mrr:'179 zł',source:'Strona'},
+      {id:5,stage:'offer',company:'Prestige Estates',contact:'Damian Król',mrr:'799 zł',source:'Polecenie'},
+      {id:6,stage:'onboarding',company:'Atlanti Sp. z o.o.',contact:'Biuro Zarządu',mrr:'179 zł',source:'Strona'},
+      {id:7,stage:'active',company:'Słoneczne Wzgórza',contact:'Anna Kowalska',mrr:'179 zł',source:'Polecenie'},
+      {id:8,stage:'active',company:'Rezydencja Park',contact:'Marek Nowicki',mrr:'349 zł',source:'Strona'},
+      {id:9,stage:'risk',company:'Stara Dzielnica',contact:'Ewa Sikora',mrr:'99 zł',source:'Cold'},
+      {id:10,stage:'churned',company:'Baltic Residence',contact:'Tomasz Górski',mrr:'0 zł',source:'Polecenie'},
+      {id:11,stage:'lost',company:'Vista Development',contact:'Kamil Sroka',mrr:'0 zł',source:'Cold'},
+    ],
+    nextPipeId:6,
+    feedbackFilter:'all',
+    feedbackItems:[
+      {id:1,type:'blad',role:'Mieszkaniec',estate:'Słoneczne Wzgórza',text:'Po dodaniu zdjęcia do zgłoszenia aplikacja czasem nie zapisuje opisu.',status:'nowe',when:'2 godz. temu',source:'app'},
+      {id:2,type:'pomysl',role:'Zarząd / Administrator',estate:'Rezydencja Park',text:'Przydałby się eksport listy zgłoszeń do PDF na zebranie wspólnoty.',status:'w analizie',when:'wczoraj',source:'app'},
+      {id:3,type:'pytanie',role:'Serwisant',estate:'Zielone Tarasy',text:'Czy da się dodać zdjęcie po zamknięciu zgłoszenia, jako potwierdzenie naprawy?',status:'nowe',when:'2 dni temu',source:'app'},
+      {id:4,type:'pomysl',role:'Ochrona',estate:'Nadmorska',text:'Możliwość oznaczenia zgłoszenia jako "wymaga patrolu nocnego".',status:'zrobione',when:'5 dni temu',source:'app'},
+      {id:5,type:'pomysl',role:'Ty',estate:'—',text:'Dodać w aplikacji krótki samouczek dla nowego mieszkańca (3 ekrany onboardingu).',status:'w analizie',when:'tydzień temu',source:'owner'},
+    ],
+    nextFeedbackId:6, feedbackComposer:false, newIdea:{text:''},
+    selEmailIdx:0, mailFilter:'all', composeText:'',
+    selDocType:'umowa', clientModalIdx:null, contractPlan:'Standard', clientReps:{}, invModalIdx:null, invChecklist:{}, docPreview:null, settingsDirty:false,
+    ownerSettings:{company:'AIVOLUX',nip:'000-000-00-00',iban:'PL00 0000 0000 0000 0000 0000 0000',termin:'14 dni',stopka:'Dziękujemy za korzystanie z Mestio.'},
+    autoModalOpen:false, newAutomation:{name:'',clientIdx:0,trigger:'Nowy lead',action:'Wyślij e-mail powitalny'},
+    generatedDocs:[
+      {type:'umowa',client:'Atlanti Sp. z o.o.',when:'28 cze 2026',status:'Podpisana'},
+      {type:'dpa',client:'Atlanti Sp. z o.o.',when:'28 cze 2026',status:'Podpisana'},
+      {type:'nda',client:'Green Park',when:'2 lip 2026',status:'Wysłana, oczekuje podpisu'},
+    ],
+    threadsData:[
+      {to:'Jan Kowalski (Atlanti)',subject:'Witamy w Mestio! Twoje osiedle jest gotowe',when:'2 godz.',archived:false,draftText:'',messages:[
+        {author:'Ty',text:'Cześć Jan,\n\nTwoje osiedle „Słoneczne Wzgórza" zostało aktywowane. Kod zaproszenia dla mieszkańców: SLON-7K2P-9XQ4.\n\nZaloguj się do panelu: panel.mestio.pl\n\nPozdrawiam,\nZespół Mestio',when:'28 cze'},
+        {author:'Jan Kowalski',text:'Świetnie, dziękuję! Wysłałem kod do 40 mieszkańców przez grupę na WhatsApp. Czy mogę też dodać osobno serwisanta i ochronę?',when:'28 cze'},
+        {author:'Ty',text:'Jasne — w Ustawieniach panelu wygenerujesz osobne kody dla Serwisanta i Ochrony. Dołączenie tych ról wymaga Twojej akceptacji, więc zobaczysz je w sekcji „Prośby o dołączenie".',when:'29 cze'},
+        {author:'Jan Kowalski',text:'Zrobione, dwie osoby czekają na akceptację. Przy okazji — czy mogę dostać fakturę na dane: Atlanti Sp. z o.o., NIP 522-000-11-22?',when:'1 lip'},
+        {author:'Ty',text:'Wystawione — FV/2026/008, 349 zł, termin płatności 14 dni. Powinna dojść na Twoją skrzynkę w ciągu kilku minut.',when:'1 lip'},
+      ]},
+      {to:'Maria Nowak (DOM-BUD)',subject:'Przypomnienie: umowa wygasa za 12 dni',when:'wczoraj',archived:false,draftText:'Cześć Maria, dziękuję za pytanie — potwierdzam, że po odnowieniu dostęp nie zostanie przerwany ani na chwilę. Mogę też zaproponować przejście na plan Pro z rabatem za lojalność, jeśli jesteście zainteresowani większym osiedlem. Daj znać!',messages:[{author:'Ty',text:'Cześć Maria,\n\nTwoja subskrypcja Mestio Standard dla „Zielone Tarasy" wygasa 12 lipca. Odnów ją, aby zachować dostęp.\n\nPozdrawiam,\nZespół Mestio',when:'wczoraj'},{author:'Maria Nowak',text:'Dzięki za przypomnienie! Czy jeśli odnowię z opóźnieniem 1-2 dni, coś się stanie z dostępem mieszkańców?',when:'dziś 08:15'}]},
+      {to:'Piotr Zając (Wspólnota)',subject:'Jak przebiega okres próbny?',when:'3 dni',archived:false,draftText:'',messages:[{author:'Ty',text:'Cześć Piotr,\n\nMinęło 10 dni od rozpoczęcia okresu próbnego. Czy masz pytania dotyczące Mestio? Chętnie umówię krótkie demo.\n\nPozdrawiam,\nZespół Mestio',when:'3 dni'}]},
+      {to:'Newsletter (42 odbiorców)',subject:'Nowy artykuł: Przeglądy techniczne 2026',when:'4 dni',archived:true,draftText:'',messages:[{author:'Ty',text:'Opublikowaliśmy nowy artykuł na blogu: „Obowiązkowe przeglądy techniczne w bloku — kalendarz na 2026".\n\nCzytaj na mestio.pl/blog',when:'4 dni'}]},
+    ],
+  };
+  STAGES=['lead','contact','demo','offer','contract','won','onboarding','active','risk','churned','lost'];
+  STAGE_META={lead:{label:'Lead',color:'#3E7BD6'},contact:{label:'Kontakt',color:'#173A6A'},demo:{label:'Demo',color:'#F2A900'},offer:{label:'Oferta',color:'#C98800'},contract:{label:'Szykowanie umowy',color:'#8B5CF6'},won:{label:'Wygrana',color:'#2E9E6B'},onboarding:{label:'Onboarding',color:'#3E7BD6'},active:{label:'Aktywny',color:'#2E9E6B'},risk:{label:'Ryzyko rezygnacji',color:'#C0392B'},churned:{label:'Churned',color:'#6B7A90'},lost:{label:'Utracony',color:'#8A98AB'}};
+  tint(hex,a){const n=parseInt(hex.slice(1),16);return 'rgba('+((n>>16)&255)+','+((n>>8)&255)+','+(n&255)+','+a+')';}
+  go(p){this.setState({page:p});}
+  insertTemplate(label){const map={'Powitanie':'Cześć! Witamy w Mestio — cieszymy się, że jesteście z nami. ','Przypomnienie':'Cześć, przypominam o zbliżającym się terminie — ','Follow-up':'Cześć, wracam do naszej rozmowy — ','Oferta':'Cześć, przygotowałem dla Was propozycję — '};this.setState(s=>({composeText:(s.composeText||'')+(map[label]||'')}));}
+  setCompose(e){this.setState({composeText:e.target.value});}
+  sendCompose(){const t=(this.state.composeText||'').trim();if(!t)return;const i=this.state.selEmailIdx;this.setState(s=>({composeText:'',threadsData:s.threadsData.map((th,idx)=>idx===i?{...th,messages:[...th.messages,{author:'Ty',text:t,when:'teraz'}]}:th)}));this.notify('Wysłano wiadomość');}
+  askAiDraft(){const i=this.state.selEmailIdx;this.setState(s=>({threadsData:s.threadsData.map((th,idx)=>idx===i?{...th,draftText:'Cześć, dziękuję za wiadomość! [Szkic wygenerowany przez AI na podstawie historii wątku — edytuj przed wysłaniem.]'}:th)}));this.notify('AI przygotowało szkic — sprawdź i zatwierdź');}
+  setDraftText(e){const i=this.state.selEmailIdx;const v=e.target.value;this.setState(s=>({threadsData:s.threadsData.map((th,idx)=>idx===i?{...th,draftText:v}:th)}));}
+  approveDraft(){const i=this.state.selEmailIdx;const th=this.state.threadsData[i];if(!th||!th.draftText)return;this.setState(s=>({threadsData:s.threadsData.map((t,idx)=>idx===i?{...t,messages:[...t.messages,{author:'Ty',text:t.draftText,when:'teraz'}],draftText:''}:t)}));this.notify('Zatwierdzono i wysłano');}
+  discardDraft(){const i=this.state.selEmailIdx;this.setState(s=>({threadsData:s.threadsData.map((t,idx)=>idx===i?{...t,draftText:''}:t)}));this.notify('Odrzucono szkic');}
+  toggleArchiveThread(){const i=this.state.selEmailIdx;this.setState(s=>({threadsData:s.threadsData.map((t,idx)=>idx===i?{...t,archived:!t.archived}:t)}));}
+  setMailFilter(f){this.setState({mailFilter:f,selEmailIdx:0});}
+  generateDoc(client){const type=this.state.selDocType;this.setState(s=>({generatedDocs:[{type,client,when:'dziś',status:'Wygenerowana — czeka na wysyłkę'},...s.generatedDocs]}));this.notify('Wygenerowano dokument dla: '+client);}
+  openClient(i){const has=this.state.clientReps[i];this.setState(s=>({clientModalIdx:i,contractPlan:(s.clientsData[i]||{}).plan||'Standard',clientReps:has?s.clientReps:{...s.clientReps,[i]:[{name:(s.clientsData[i]||{}).contact||'',position:'Prezes zarządu',email:(s.clientsData[i]||{}).email||''}]}}));}
+  addRep(){const i=this.state.clientModalIdx;this.setState(s=>({clientReps:{...s.clientReps,[i]:[...(s.clientReps[i]||[]),{name:'',position:'',email:''}]}}));}
+  removeRep(idx){const i=this.state.clientModalIdx;this.setState(s=>({clientReps:{...s.clientReps,[i]:(s.clientReps[i]||[]).filter((_,k)=>k!==idx)}}));}
+  setRepField(idx,field,val){const i=this.state.clientModalIdx;this.setState(s=>({clientReps:{...s.clientReps,[i]:(s.clientReps[i]||[]).map((r,k)=>k===idx?{...r,[field]:val}:r)}}));}
+  setClientBank(e){const i=this.state.clientModalIdx;this.setState(s=>({clientsData:s.clientsData.map((c,k)=>k===i?{...c,bank:e.target.value}:c)}));}
+  openInvoice(i){this.setState(s=>({invModalIdx:i,invChecklist:s.invChecklist[i]?s.invChecklist[i]:{gen:true,sent:false,confirmed:false}}));}
+  closeInvModal(){this.setState({invModalIdx:null});}
+  toggleInvCheck(key){const i=this.state.invModalIdx;this.setState(s=>({invChecklist:{...s.invChecklist,[i]:{...(s.invChecklist[i]||{}),[key]:!(s.invChecklist[i]||{})[key]}}}));}
+  closeClient(){this.setState({clientModalIdx:null});}
+  setContractPlan(p){this.setState({contractPlan:p});}
+  PLAN_PRICE={Start:'79 zł',Standard:'179 zł',Pro:'349 zł',Enterprise:'wg wyceny'};
+  genClientContract(){const cl=this.state.clientsData[this.state.clientModalIdx];if(!cl)return;const plan=this.state.contractPlan;
+    const txt='UMOWA O ŚWIADCZENIE USŁUGI MESTIO\n\nzawarta dnia '+this.today()+' pomiędzy:\nUsługodawcą: AIVOLUX, NIP 000-000-00-00\na\nUsługobiorcą: '+cl.company+', '+(cl.address||'—')+', NIP '+(cl.nip||'—')+', reprezentowanym przez '+cl.contact+'.\n\n§1. Przedmiot umowy: dostęp do systemu Mestio w planie '+plan+' dla osiedla '+cl.estate+'.\n§2. Opłata: '+this.PLAN_PRICE[plan]+' netto / mies.\n§3. Umowa obowiązuje do odwołania, okres wypowiedzenia 30 dni.';
+    this.setState({docPreview:{kind:'umowa',client:cl.company,plan,title:'Podgląd umowy — '+cl.company,text:txt}});}
+  genClientInvoice(){const cl=this.state.clientsData[this.state.clientModalIdx];if(!cl)return;const plan=cl.plan!=='—'?cl.plan:this.state.contractPlan;
+    const txt='FAKTURA VAT\n\nSprzedawca: AIVOLUX, NIP 000-000-00-00\nNabywca: '+cl.company+', '+(cl.address||'—')+', NIP '+(cl.nip||'—')+'\n\nPozycja: Abonament Mestio — plan '+plan+'\nKwota netto: '+(cl.mrr||this.PLAN_PRICE[plan])+'\nVAT 23%\nTermin płatności: 14 dni';
+    this.setState({docPreview:{kind:'faktura',client:cl.company,plan,title:'Podgląd faktury — '+cl.company,text:txt}});}
+  today(){return new Date().toLocaleDateString('pl-PL',{day:'numeric',month:'long',year:'numeric'});}
+  closeDocPreview(){this.setState({docPreview:null});}
+  confirmSendDoc(){const d=this.state.docPreview;if(!d)return;const label=d.kind==='umowa'?('Wygenerowana (plan '+d.plan+') — wysłana do e-podpisu przez Autenti'):'Wystawiona — wysłana do KSeF';
+    this.setState(s=>({generatedDocs:[{type:d.kind,client:d.client,when:'dziś',status:label},...s.generatedDocs],docPreview:null}));
+    this.notify((d.kind==='umowa'?'Umowa':'Faktura')+' dla '+d.client+' → '+(d.kind==='umowa'?'wysłana do Autenti (e-podpis)':'wysłana do KSeF'));}
+  notify(m){clearTimeout(this._t);this.setState({toast:m});this._t=setTimeout(()=>this.setState({toast:null}),2400);}
+  setOwnerSetting(k,v){this.setState(s=>({ownerSettings:{...s.ownerSettings,[k]:v},settingsDirty:true}));}
+  saveOwnerSettings(){this.setState({settingsDirty:false});this.notify('Zapisano zmiany danych sprzedawcy');}
+  discardOwnerSettings(){this.setState({settingsDirty:false});this.notify('Cofnięto niezapisane zmiany');}
+  openAutoModal(){this.setState({autoModalOpen:true,newAutomation:{name:'',clientIdx:0,trigger:'Nowy lead',action:'Wyślij e-mail powitalny'}});}
+  closeAutoModal(){this.setState({autoModalOpen:false});}
+  setNewAuto(k,v){this.setState(s=>({newAutomation:{...s.newAutomation,[k]:v}}));}
+  submitAutomation(){const a=this.state.newAutomation;if(!a.name.trim()){this.notify('Podaj nazwę automatyzacji');return;}const cl=this.state.clientsData[a.clientIdx];this.setState(s=>({automationsCustom:[{id:Date.now(),title:a.name,desc:a.trigger+' → '+a.action+' ('+(cl?cl.company:'—')+')',iconBg:'#EAF0F7',iconColor:'#173A6A',icon:'M13 2L3 14h7l-1 8 10-12h-7z'},...(s.automationsCustom||[])],autoModalOpen:false}));this.notify('Dodano automatyzację: '+a.name);}
+  toggleAuto(id){this.setState(s=>({autoStates:{...s.autoStates,[id]:!s.autoStates[id]}}));}
+  openNewClient(){this.setState({newClientOpen:true,newClient:{company:'',contact:'',estate:'',plan:'Standard',mrr:''}});}
+  closeNewClient(){this.setState({newClientOpen:false});}
+  setNewClient(k,v){this.setState(s=>({newClient:{...s.newClient,[k]:v}}));}
+  submitNewClient(){const n=this.state.newClient;if(!n.company.trim()){this.notify('Podaj nazwę firmy');return;}const rec={company:n.company.trim(),contact:n.contact.trim()||'—',estate:n.estate.trim()||'—',status:'lead',mrr:n.mrr?n.mrr+' zł':'0 zł',until:'—',plan:n.plan};this.setState(s=>({clientsData:[rec,...s.clientsData],newClientOpen:false,pipelineItems:[{id:s.nextPipeId,stage:'lead',company:rec.company,contact:rec.contact,mrr:'~'+(n.mrr||'0')+' zł',source:'Ręcznie'},...s.pipelineItems],nextPipeId:s.nextPipeId+1}));this.notify('Dodano klienta: '+rec.company);}
+  advanceLead(id){const item=this.state.pipelineItems.find(x=>x.id===id);if(!item)return;const idx=this.STAGES.indexOf(item.stage);
+    if(item.stage==='churned'||item.stage==='lost'){this.setState(s=>({pipelineItems:s.pipelineItems.map(x=>x.id===id?{...x,stage:'lead'}:x)}));this.notify('↺ '+item.company+' — win-back, wrócił do etapu Lead');return;}
+    const nextStage=this.STAGES[idx+1];
+    this.setState(s=>({pipelineItems:s.pipelineItems.map(x=>x.id===id?{...x,stage:nextStage}:x)}));
+    if(nextStage==='won'){this.setState(s=>({clientsData:[{company:item.company,contact:item.contact,estate:'—',status:'active',mrr:item.mrr.replace('~',''),until:'—',plan:'Standard'},...s.clientsData]}));this.notify('🎉 Wygrana: '+item.company+' — utworzono klienta w zakładce Klienci');}
+    else this.notify(item.company+' → '+this.STAGE_META[nextStage].label);}
+  setFeedbackFilter(f){this.setState({feedbackFilter:f});}
+  setFeedbackStatus(id,st){this.setState(s=>({feedbackItems:s.feedbackItems.map(x=>x.id===id?{...x,status:st}:x)}));this.notify('Status zmieniony: '+st);}
+  openIdeaComposer(){this.setState({feedbackComposer:true,newIdea:{text:''}});}
+  closeIdeaComposer(){this.setState({feedbackComposer:false});}
+  setIdeaText(v){this.setState(s=>({newIdea:{...s.newIdea,text:v}}));}
+  submitIdea(){const t=(this.state.newIdea.text||'').trim();if(!t){this.notify('Napisz treść pomysłu');return;}const rec={id:this.state.nextFeedbackId,type:'pomysl',role:'Ty',estate:'—',text:t,status:'nowe',when:'przed chwilą',source:'owner'};this.setState(s=>({feedbackItems:[rec,...s.feedbackItems],nextFeedbackId:s.nextFeedbackId+1,feedbackComposer:false}));this.notify('Dodano Twój pomysł');}
+  setAutenti(k,v){this.setState(s=>({autenti:{...s.autenti,key:k==='key'?v:s.autenti.key,mode:k==='mode'?v:s.autenti.mode}}));}
+  saveAutenti(){const a=this.state.autenti;if(!a.key.trim()){this.notify('Wklej klucz API Autenti, aby połączyć');return;}this.setState(s=>({autenti:{...s.autenti,connected:true}}));this.notify('Autenti połączony — umowy będą wysyłane do e-podpisu automatycznie');}
+  setAi(k,v){this.setState(s=>({ai:{...s.ai,[k]:v}}));}
+  saveAi(){const a=this.state.ai;if(!a.key.trim()){this.notify('Wklej klucz API, aby połączyć');return;}this.setState(s=>({ai:{...s.ai,connected:true}}));this.notify('AI Asystent połączony ('+({openai:'OpenAI',anthropic:'Anthropic'}[a.provider])+')');}
+  disconnectAi(){this.setState(s=>({ai:{...s.ai,connected:false,key:''}}));this.notify('Odłączono klucz AI');}
+  setKsefMode(m){this.setState({ksefMode:m});this.notify('KSeF: tryb '+(m==='test'?'testowy':'produkcyjny'));}
+
+  renderVals(){
+    const S=this.state;
+    const navDef=[
+      {k:'pulpit',label:'Pulpit',icon:'M4 11.5 12 5l8 6.5M6 10v9h4v-5h4v5h4v-9'},
+      {k:'klienci',label:'Klienci',icon:'M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM4 20a5 5 0 0 1 10 0M15.5 5.3a3 3 0 0 1 0 5.4M16 13.6a5 5 0 0 1 4 6.4'},
+      {k:'raporty',label:'Raporty',icon:'M4 19h16M7 19V9m5 10V5m5 14v-7'},
+      {k:'pipeline',label:'Pipeline',icon:'M4 5h5v14H4zM10 5h5v9h-5zM16 5h4v6h-4z'},
+      {k:'poczta',label:'Poczta',icon:'M4 6h16v12H4zM4 6l8 7 8-7'},
+      {k:'faktury',label:'Faktury',icon:'M9 7h6M9 11h6M9 15h4M5 3h14a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z'},
+      {k:'dokumenty',label:'Dokumenty',icon:'M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z'},
+      {k:'automatyzacje',label:'Automatyzacje',icon:'M13 2L3 14h8l-1 8 10-12h-8z'},
+      {k:'ai',label:'AI Asystent',icon:'M12 3c-1.2 0-2 1-2 2v1a4 4 0 0 0-4 4v1c0 2 1 3 2 4v2a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2c1-1 2-2 2-4v-1a4 4 0 0 0-4-4V5c0-1-.8-2-2-2z'},
+      {k:'osiedla',label:'Osiedla',icon:'M4 21V9l8-5 8 5v12M9 21v-6h6v6'},
+      {k:'rankinguchwal',label:'Ranking uchwał',icon:'M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4zM7 6H4a1 1 0 0 0-1 1 4 4 0 0 0 4 4M17 6h3a1 1 0 0 1 1 1 4 4 0 0 1-4 4'},
+      {k:'opinie',label:'Opinie i pomysły',icon:'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z'},
+      {k:'blog',label:'Blog',icon:'M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z'},
+      {k:'ustawienia',label:'Ustawienia',icon:'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM19.4 13a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-2.9 1.2V21a2 2 0 1 1-4 0v-.1A1.7 1.7 0 0 0 7 19.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0-1.2-2.9H3a2 2 0 1 1 0-4h.1A1.7 1.7 0 0 0 4.7 7l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1A1.7 1.7 0 0 0 9.5 3.8V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 2.9 1.2l.1-.1a2 2 0 1 1 2.8 2.8'},
+    ];
+    const MAIN=['pulpit','klienci','pipeline','poczta','faktury'];
+    const mkNav=n=>{const active=S.page===n.k;const badge=n.k==='pipeline'?'8':'';return {label:n.label,icon:n.icon,badge,onClick:()=>this.go(n.k),style:{display:'flex',alignItems:'center',gap:10,padding:'9px 11px',borderRadius:9,cursor:'pointer',color:active?'#fff':'#9FB2CC',background:active?'rgba(62,123,214,.22)':'transparent',fontSize:13}};};
+    const advOpen=!!S.advOpen;
+    const navMain=navDef.filter(n=>MAIN.includes(n.k)).map(mkNav);
+    const navAdv=navDef.filter(n=>!MAIN.includes(n.k)).map(mkNav);
+    const nav=navDef.map(mkNav);
+
+    const kpis=[{label:'MRR',value:'2 847 zł',color:'#173A6A'},{label:'Aktywni klienci',value:'8',color:'#2E9E6B'},{label:'W próbie',value:'2',color:'#F2A900'},{label:'Faktury zaległe',value:'1',color:'#C0392B'}];
+    const expiring=[{company:'Zielone Tarasy',days:'12 dni',color:'#F2A900'},{company:'Parkowa Residence',days:'28 dni',color:'#F2A900'},{company:'Rezydencja Nadmorska',days:'5 dni',color:'#C0392B'}];
+    const activity=[
+      {text:'Zielone Tarasy — nowa rejestracja',when:'2 godz.',color:'#3E7BD6'},
+      {text:'Faktura FV/2026/008 opłacona',when:'wczoraj',color:'#2E9E6B'},
+      {text:'Parkowa Residence — demo zaplanowane',when:'2 dni',color:'#F2A900'},
+      {text:'Blog: „Przeglądy 2026" opublikowany',when:'3 dni',color:'#173A6A'},
+    ];
+
+    // CENTRUM DOWODZENIA — kolejka działań zbudowana z realnych danych (pipeline + klienci + poczta)
+    const aq=[];
+    const leads=S.pipelineItems.filter(p=>p.stage==='lead');
+    if(leads.length)aq.push({title:leads.length+' '+(leads.length===1?'nowy lead czeka':'nowych leadów czeka')+' na kontakt',subtitle:leads.map(l=>l.company).join(', '),tag:'Lead',color:'#3E7BD6',icon:'M12 6v12M6 12h12',iconWrap:{width:34,height:34,borderRadius:10,flexShrink:0,display:'flex',alignItems:'center',justifyContent:'center',background:'rgba(62,123,214,.12)',color:'#3E7BD6'},tagStyle:{fontFamily:"'IBM Plex Mono',monospace",fontSize:9.5,fontWeight:600,padding:'2px 7px',borderRadius:999,background:'rgba(62,123,214,.13)',color:'#3E7BD6'},cta:'Zadzwoń dziś',onClick:()=>this.go('pipeline')});
+    const inProgress=S.pipelineItems.filter(p=>p.stage==='contact'||p.stage==='demo'||p.stage==='offer');
+    if(inProgress.length)aq.push({title:inProgress.length+' rozmów w toku wymaga follow-upu',subtitle:inProgress.map(l=>l.company).join(', '),tag:'W toku',color:'#173A6A',icon:'M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.4-4 8-9 8a10 10 0 01-4-.8L3 20l1.1-3.3A7.9 7.9 0 013 12c0-4.4 4-8 9-8s9 3.6 9 8z',iconWrap:{width:34,height:34,borderRadius:10,flexShrink:0,display:'flex',alignItems:'center',justifyContent:'center',background:'rgba(23,58,106,.1)',color:'#173A6A'},tagStyle:{fontFamily:"'IBM Plex Mono',monospace",fontSize:9.5,fontWeight:600,padding:'2px 7px',borderRadius:999,background:'rgba(23,58,106,.1)',color:'#173A6A'},cta:'Kontynuuj',onClick:()=>this.go('pipeline')});
+    const trials=S.clientsData.filter(c=>c.status==='trial');
+    if(trials.length)aq.push({title:trials.length+' '+(trials.length===1?'próba kończy się':'próby kończą się')+' wkrótce',subtitle:trials.map(c=>c.company+' — do '+c.until).join(', '),tag:'Próba',color:'#F2A900',icon:'M12 8v4l3 2M12 3a9 9 0 100 18 9 9 0 000-18z',iconWrap:{width:34,height:34,borderRadius:10,flexShrink:0,display:'flex',alignItems:'center',justifyContent:'center',background:'rgba(242,169,0,.14)',color:'#B37D00'},tagStyle:{fontFamily:"'IBM Plex Mono',monospace",fontSize:9.5,fontWeight:600,padding:'2px 7px',borderRadius:999,background:'rgba(242,169,0,.15)',color:'#9a6b00'},cta:'Zaproponuj plan',onClick:()=>this.go('klienci')});
+    const atRisk=S.pipelineItems.filter(p=>p.stage==='risk');
+    if(atRisk.length)aq.push({title:atRisk.length+' '+(atRisk.length===1?'klient w ryzyku rezygnacji':'klientów w ryzyku rezygnacji'),subtitle:atRisk.map(l=>l.company).join(', ')+' — brak aktywności',tag:'Ryzyko',color:'#C0392B',icon:'M12 9v4M12 17h.01M10.3 3.9 2.4 18a2 2 0 001.7 3h15.8a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z',iconWrap:{width:34,height:34,borderRadius:10,flexShrink:0,display:'flex',alignItems:'center',justifyContent:'center',background:'rgba(192,57,43,.1)',color:'#C0392B'},tagStyle:{fontFamily:"'IBM Plex Mono',monospace",fontSize:9.5,fontWeight:600,padding:'2px 7px',borderRadius:999,background:'rgba(192,57,43,.1)',color:'#C0392B'},cta:'Zadzwoń, zapytaj',onClick:()=>this.go('pipeline')});
+    const unreadMail=(S.emailsData||[]).slice(0,2);
+    if(unreadMail.length)aq.push({title:unreadMail.length+' '+(unreadMail.length===1?'wiadomość czeka':'wiadomości czekają')+' na odpowiedź',subtitle:unreadMail.map(e=>e.to).join(', '),tag:'Poczta',color:'#2E9E6B',icon:'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',iconWrap:{width:34,height:34,borderRadius:10,flexShrink:0,display:'flex',alignItems:'center',justifyContent:'center',background:'rgba(46,158,107,.12)',color:'#2E9E6B'},tagStyle:{fontFamily:"'IBM Plex Mono',monospace",fontSize:9.5,fontWeight:600,padding:'2px 7px',borderRadius:999,background:'rgba(46,158,107,.13)',color:'#2E9E6B'},cta:'Odpowiedz',onClick:()=>this.go('poczta')});
+    const actionQueue=aq;
+
+    const clientCols=['Firma','Osiedle','Status','MRR','Umowa do','Plan'];
+    const clientsData=S.clientsData;
+    const stColors={active:'#2E9E6B',trial:'#F2A900',churned:'#6B7A90',lead:'#3E7BD6'};
+    const stLabels={active:'Aktywny',trial:'Próba',churned:'Churned',lead:'Lead'};
+    const avColors=['#3E7BD6','#173A6A','#F2A900','#2E9E6B','#C98800','#6B7A90','#C0392B','#3E7BD6'];
+    const clients=clientsData.map((c,i)=>({...c,initial:c.company.slice(0,2).toUpperCase(),avatarBg:avColors[i%avColors.length],onClick:()=>this.openClient(i),statusPill:{fontFamily:"'IBM Plex Mono',monospace",fontSize:10,fontWeight:600,padding:'3px 9px',borderRadius:999,background:this.tint(stColors[c.status],.13),color:stColors[c.status]},status:stLabels[c.status]}));
+
+    const srcColors={Strona:['#3E7BD6',this.tint('#3E7BD6',.12)],Polecenie:['#2E9E6B',this.tint('#2E9E6B',.12)],Cold:['#6B7A90',this.tint('#6B7A90',.12)],'Ręcznie':['#C98800',this.tint('#C98800',.12)]};
+    const SALES=['lead','contact','demo','offer','contract','won','lost','churned'];
+    const lostCount=S.pipelineItems.filter(x=>x.stage==='lost').length;
+    const pipeline=SALES.map(key=>{const meta=this.STAGE_META[key];const items=S.pipelineItems.filter(x=>x.stage===key);return {label:meta.label,color:meta.color,count:items.length,cards:items.map(c=>{const sc=srcColors[c.source]||srcColors.Cold;const isLast=key==='won';return {...c,srcColor:sc[0],srcBg:sc[1],onAdvance:()=>this.advanceLead(c.id),advanceLabel:isLast?'Zakończ → klient aktywny':'Przesuń dalej'};})};});
+
+    const threadsData=S.threadsData;
+    const filt=S.mailFilter;
+    const threadsF=threadsData.filter(t=>filt==='all'?true:(filt==='archived'?t.archived:!t.archived));
+    const threads=threadsF.map((e)=>{const i=threadsData.indexOf(e);return {...e,hasDraft:!!e.draftText,onClick:()=>this.setState({selEmailIdx:i,composeText:''}),draftBadge:{fontFamily:"'IBM Plex Mono',monospace",fontSize:8.5,fontWeight:600,padding:'1px 6px',borderRadius:999,background:'rgba(62,123,214,.13)',color:'#3E7BD6'},row:{display:'flex',alignItems:'center',gap:10,padding:'12px 16px',cursor:'pointer',borderBottom:'1px solid #F4F7FB',borderLeft:'3px solid '+(S.selEmailIdx===i?'#3E7BD6':'transparent'),background:S.selEmailIdx===i?this.tint('#3E7BD6',.04):'#fff'}};});
+    const rawSel=threadsData[S.selEmailIdx]||threadsData[0];
+    const selEmail={...rawSel,hasDraft:!!rawSel.draftText,messages:(rawSel.messages||[]).map(m=>({...m,bubbleWrap:{display:'flex',flexDirection:'column',alignItems:m.author==='Ty'?'flex-end':'flex-start'},bubble:{maxWidth:'80%',background:m.author==='Ty'?'#173A6A':'#F4F7FB',color:m.author==='Ty'?'#fff':'#1A2433',borderRadius:12,padding:'10px 13px',fontSize:13,lineHeight:1.55,whiteSpace:'pre-line'},metaStyle:{fontFamily:"'IBM Plex Mono',monospace",fontSize:9.5,color:'#9AA7B8',marginTop:3}}))};
+    const templates=[{label:'Powitanie'},{label:'Przypomnienie'},{label:'Follow-up'},{label:'Oferta'}].map(t=>({...t,onClick:()=>this.insertTemplate(t.label)}));
+    const mailChip=(active)=>({fontSize:11.5,fontWeight:600,padding:'4px 10px',borderRadius:999,cursor:'pointer',background:active?'#173A6A':'#F4F7FB',color:active?'#fff':'#5A6B80'});
+
+    const invCols=['Numer','Klient','Kwota','Status','Data','KSeF'];
+    const invoices=[
+      {number:'FV/2026/008',client:'Atlanti Sp. z o.o.',amount:'349,00 zł',status:'Opłacona',date:'1 lip',ksef:'Potwierdzona',sk:'paid',kk:'confirmed'},
+      {number:'FV/2026/007',client:'DOM-BUD',amount:'179,00 zł',status:'Opłacona',date:'1 lip',ksef:'Wysłana',sk:'paid',kk:'sent'},
+      {number:'FV/2026/006',client:'KZN Osiedla',amount:'349,00 zł',status:'Zaległa',date:'15 cze',ksef:'Oczekuje',sk:'overdue',kk:'pending'},
+      {number:'FV/2026/005',client:'MK Zarządzanie',amount:'799,00 zł',status:'Opłacona',date:'1 cze',ksef:'Potwierdzona',sk:'paid',kk:'confirmed'},
+      {number:'FV/2026/004',client:'ARES Security',amount:'179,00 zł',status:'Opłacona',date:'1 cze',ksef:'Potwierdzona',sk:'paid',kk:'confirmed'},
+    ].map((iv,i)=>{const sc={paid:'#2E9E6B',overdue:'#C0392B',issued:'#F2A900'}[iv.sk];const kc={confirmed:'#2E9E6B',sent:'#F2A900',pending:'#6B7A90',error:'#C0392B'}[iv.kk];return {...iv,onOpen:()=>this.openInvoice(i),statusPill:{fontFamily:"'IBM Plex Mono',monospace",fontSize:10,fontWeight:600,padding:'3px 9px',borderRadius:999,background:this.tint(sc,.13),color:sc},ksefPill:{fontFamily:"'IBM Plex Mono',monospace",fontSize:10,fontWeight:600,padding:'3px 9px',borderRadius:999,background:this.tint(kc,.13),color:kc}};});
+
+    const invModalOpen=S.invModalIdx!==null;
+    let invModal={};
+    if(invModalOpen){
+      const iv=invoices[S.invModalIdx];
+      const chk=S.invChecklist[S.invModalIdx]||{gen:true,sent:false,confirmed:false};
+      const items=[['gen','Faktura wygenerowana (PDF)'],['sent','Wysłana do klienta'],['confirmed','Płatność potwierdzona']];
+      const checklist=items.map(([key,label])=>({label,done:!!chk[key],onToggle:()=>this.toggleInvCheck(key),box:{width:20,height:20,borderRadius:6,flexShrink:0,display:'flex',alignItems:'center',justifyContent:'center',background:chk[key]?'#2E9E6B':'#fff',border:'2px solid '+(chk[key]?'#2E9E6B':'#D4DEEA')},labelStyle:{fontSize:12.5,fontWeight:500,color:chk[key]?'#0E1A2B':'#5A6B80'}}));
+      invModal={number:iv.number,client:iv.client,amount:iv.amount,checklist,pdfText:'FAKTURA VAT '+iv.number+'\n\nSprzedawca: AIVOLUX, NIP 000-000-00-00\nNabywca: '+iv.client+'\n\nUsługa: Abonament FixFlow — '+iv.date+'\nKwota: '+iv.amount+'\nStatus: '+iv.status+'\nKSeF: '+iv.ksef};
+    }
+
+    const automations=[
+      ...(S.automationsCustom||[]),
+      {id:1,title:'Umowa wygasa za 14 dni → mail przypomnienie',desc:'Automatycznie wysyła e-mail do klienta, gdy subskrypcja kończy się w ciągu 14 dni.',icon:'M4 6h16v12H4zM4 6l8 7 8-7',iconBg:this.tint('#3E7BD6',.12),iconColor:'#3E7BD6'},
+      {id:2,title:'Nowy lead z formularza → zadanie: oddzwoń 24h',desc:'Tworzy zadanie CRM po wpłynięciu nowego leada ze strony.',icon:'M9 11l3 3 8-8M4 12v7a1 1 0 0 0 1 1h14',iconBg:this.tint('#2E9E6B',.12),iconColor:'#2E9E6B'},
+      {id:3,title:'Faktura nieopłacona >7 dni → mail ponaglenie',desc:'Wysyła przypomnienie o zaległej fakturze.',icon:'M12 9v4M12 17h.01M10.3 3.9 2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z',iconBg:this.tint('#F2A900',.12),iconColor:'#F2A900'},
+      {id:4,title:'Klient nieaktywny >30 dni → check-in',desc:'E-mail check-in do klientów, którzy nie logowali się od miesiąca.',icon:'M12 12.5a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM5 20a7 7 0 0 1 14 0',iconBg:this.tint('#173A6A',.12),iconColor:'#173A6A'},
+    ].map(a=>{const on=S.autoStates[a.id];return {...a,onToggle:()=>this.toggleAuto(a.id),toggle:{width:44,height:24,borderRadius:999,padding:2,cursor:'pointer',background:on?'#2E9E6B':'#CBD6E4',display:'flex',alignItems:'center',justifyContent:on?'flex-end':'flex-start',flexShrink:0},knob:{width:20,height:20,borderRadius:999,background:'#fff',boxShadow:'0 1px 3px rgba(0,0,0,.2)'}};});
+
+    const aiActions={'Generuj e-mail':()=>this.notify('AI: wygenerowano szkic e-maila — sprawdź w zakładce Poczta'),'Podsumowanie klienta':()=>this.notify('AI: przygotowano podsumowanie ostatniego klienta z historii interakcji'),'Blog writer':()=>{this.go('blog');this.notify('AI: szkic artykułu gotowy w edytorze Blog');},'Analiza churnu':()=>this.notify('AI: 2 klientów w grupie ryzyka — sprawdź zakładkę Klienci')};
+    const aiTools=[
+      {title:'Generuj e-mail',desc:'Opisz kontekst, AI napisze gotowy draft do edycji i wysłania.',icon:'M4 6h16v12H4zM4 6l8 7 8-7',bg:this.tint('#3E7BD6',.12),color:'#3E7BD6'},
+      {title:'Podsumowanie klienta',desc:'AI przeczyta historię interakcji i przygotuje zwięzłe podsumowanie.',icon:'M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM4 20a5 5 0 0 1 10 0',bg:this.tint('#173A6A',.12),color:'#173A6A'},
+      {title:'Blog writer',desc:'Podaj temat i słowa kluczowe — AI wygeneruje szkic artykułu SEO.',icon:'M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z',bg:this.tint('#2E9E6B',.12),color:'#2E9E6B'},
+      {title:'Analiza churnu',desc:'AI analizuje, kiedy i dlaczego klienci odchodzą, i proponuje działania.',icon:'M12 8v4l3 2M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z',bg:this.tint('#F2A900',.12),color:'#F2A900'},
+    ].map(t=>({...t,onClick:aiActions[t.title]||(()=>this.notify(t.title+' (demo)'))}));
+
+    const estates=[
+      {name:'Słoneczne Wzgórza',company:'Atlanti Sp. z o.o.',residents:48,reports:23,plan:'Pro',status:'Aktywne',initial:'S',sk:'active'},
+      {name:'Zielone Tarasy',company:'DOM-BUD',residents:32,reports:11,plan:'Standard',status:'Aktywne',initial:'Z',sk:'active'},
+      {name:'Parkowa Residence',company:'Wspólnota Parkowa',residents:0,reports:0,plan:'Standard',status:'Próba',initial:'P',sk:'trial'},
+      {name:'Rezydencja Park',company:'KZN Osiedla',residents:67,reports:45,plan:'Pro',status:'Aktywne',initial:'R',sk:'active'},
+      {name:'Bloki Centrum',company:'MK Zarządzanie',residents:120,reports:89,plan:'Enterprise',status:'Aktywne',initial:'B',sk:'active'},
+      {name:'Osiedle Leśne',company:'Zarząd Wspólnoty Leśna',residents:15,reports:7,plan:'Start',status:'Zakończone',initial:'L',sk:'churned'},
+    ].map(e=>{const sc=stColors[e.sk]||stColors.active;return {...e,statusPill:{fontFamily:"'IBM Plex Mono',monospace",fontSize:10,fontWeight:600,padding:'3px 9px',borderRadius:999,background:this.tint(sc,.13),color:sc}};});
+
+    const covers=['linear-gradient(135deg,#3E7BD6,#173A6A)','linear-gradient(135deg,#F2A900,#C98800)','linear-gradient(135deg,#2E9E6B,#173A6A)'];
+    const blogPosts=[
+      {title:'Obowiązkowe przeglądy techniczne — kalendarz 2026',category:'Prawo',date:'30 cze',status:'Opublikowany',cover:covers[0],sk:'published'},
+      {title:'Jak skrócić czas naprawy usterek o połowę',category:'Zarządzanie',date:'szkic',status:'Szkic',cover:covers[1],sk:'draft'},
+      {title:'RODO we wspólnocie — co wolno, a czego nie',category:'Technologia',date:'zaplanowany 5 lip',status:'Zaplanowany',cover:covers[2],sk:'scheduled'},
+    ].map(b=>{const sc={published:'#2E9E6B',draft:'#6B7A90',scheduled:'#F2A900'}[b.sk];return {...b,canPublish:b.sk==='draft',statusPill:{fontFamily:"'IBM Plex Mono',monospace",fontSize:10,fontWeight:600,padding:'3px 9px',borderRadius:999,background:this.tint(sc,.13),color:sc},onEdit:()=>this.notify('Edytor: '+b.title),onPublish:()=>this.notify('Opublikowano: '+b.title)};});
+
+    const integrations=[
+      {name:'Stripe',desc:'Płatności i subskrypcje',status:'Połączony',sk:'ok'},
+      {name:'Resend',desc:'Wysyłka e-mail i newsletter',status:'Połączony',sk:'ok'},
+      {name:'KSeF',desc:'Krajowy System e-Faktur',status:S.ksefMode==='live'?'Produkcja':'Tryb testowy',sk:S.ksefMode==='live'?'ok':'warn'},
+      {name:'Autenti (e-podpis)',desc:'Podpisywanie umów online przez API — status wraca do CRM automatycznie',status:'Brak klucza API',sk:'off'},
+      {name:'OpenAI / Anthropic',desc:'AI Asystent (blog, e-maile, analizy)',status:S.ai.connected?'Połączony':'Brak klucza',sk:S.ai.connected?'ok':'off'},
+    ].map(ig=>{const c={ok:'#2E9E6B',warn:'#F2A900',off:'#C0392B'}[ig.sk];return {...ig,pill:{fontFamily:"'IBM Plex Mono',monospace",fontSize:10,fontWeight:600,padding:'3px 9px',borderRadius:999,background:this.tint(c,.13),color:c}};});
+
+    const aiProviders=['openai','anthropic'].map(p=>{const on=S.ai.provider===p;return {label:p==='openai'?'OpenAI':'Anthropic',onClick:()=>this.setAi('provider',p),style:{padding:'8px 14px',borderRadius:10,fontSize:12.5,fontWeight:600,cursor:'pointer',background:on?'#173A6A':'#F4F7FB',color:on?'#fff':'#5A6B80'}};});
+    const ksefModes=[{v:'test',label:'Testowy'},{v:'live',label:'Produkcyjny'}].map(k=>{const on=S.ksefMode===k.v;return {label:k.label,onClick:()=>this.setKsefMode(k.v),style:{padding:'8px 14px',borderRadius:10,fontSize:12.5,fontWeight:600,cursor:'pointer',background:on?'#173A6A':'#F4F7FB',color:on?'#fff':'#5A6B80'}};});
+    const aiStatusPill={fontFamily:"'IBM Plex Mono',monospace",fontSize:10,fontWeight:600,padding:'3px 9px',borderRadius:999,background:this.tint(S.ai.connected?'#2E9E6B':'#6B7A90',.13),color:S.ai.connected?'#2E9E6B':'#6B7A90'};
+    const aiStatusLabel=S.ai.connected?'Połączony':'Niepołączony';
+    const autentiModes=[{v:'sandbox',label:'Sandbox'},{v:'live',label:'Produkcja'}].map(m=>{const on=S.autenti.mode===m.v;return {label:m.label,onClick:()=>this.setAutenti('mode',m.v),style:{padding:'8px 14px',borderRadius:10,fontSize:12.5,fontWeight:600,cursor:'pointer',background:on?'#173A6A':'#F4F7FB',color:on?'#fff':'#5A6B80'}};});
+    const autentiStatusPill={fontFamily:"'IBM Plex Mono',monospace",fontSize:10,fontWeight:600,padding:'3px 9px',borderRadius:999,background:this.tint(S.autenti.connected?'#2E9E6B':'#6B7A90',.13),color:S.autenti.connected?'#1f7a4d':'#5A6B80'};
+    const autentiStatusLabel=S.autenti.connected?'Połączony':'Niepołączony';
+
+    const titles={pulpit:'Pulpit',klienci:'Klienci',pipeline:'Pipeline sprzedaży',poczta:'Poczta',faktury:'Faktury',dokumenty:'Dokumenty i wzory',automatyzacje:'Automatyzacje',ai:'AI Asystent',osiedla:'Osiedla',rankinguchwal:'Ranking uchwał',opinie:'Opinie i pomysły',blog:'Blog',ustawienia:'Ustawienia'};
+    const addLabels={klienci:'Nowy klient',pipeline:'Nowy lead',blog:'Nowy artykuł',opinie:'Dodaj pomysł'};
+
+    // DOKUMENTY — biblioteka wzorów + generowanie dla klienta
+    const docTypes=[
+      {key:'umowa',label:'Umowa o świadczenie usług',color:'#3E7BD6',desc:'Główna umowa Mestio ↔ klient (plan, cena, okres wypowiedzenia).'},
+      {key:'dpa',label:'Umowa powierzenia danych (RODO)',color:'#2E9E6B',desc:'Art. 28 RODO — zakres przetwarzania danych mieszkańców, poddostawcy, obowiązki.'},
+      {key:'polityka',label:'Polityka prywatności',color:'#173A6A',desc:'Dokument publiczny — link wysyłany klientowi i publikowany na stronie.'},
+      {key:'nda',label:'NDA — poufność',color:'#C98800',desc:'Klauzula poufności przy rozmowach handlowych, przed podpisaniem umowy głównej.'},
+    ];
+    const docVars=['{{firma}}','{{nip}}','{{data_start}}','{{plan}}','{{cena}}','{{okres_wypowiedzenia}}'];
+    const documents=docTypes.map(d=>{const active=S.selDocType===d.key;return {...d,active,onClick:()=>this.setState({selDocType:d.key}),card:{background:active?'#fff':'#fff',border:'2px solid '+(active?d.color:'transparent'),borderRadius:16,boxShadow:'0 2px 10px rgba(14,26,43,.05)',padding:'16px 17px',cursor:'pointer'},dot:{width:9,height:9,borderRadius:999,background:d.color,flexShrink:0}};});
+    const selDoc=docTypes.find(d=>d.key===S.selDocType)||docTypes[0];
+    const generatedFor=(S.generatedDocs||[]).filter(g=>g.type===selDoc.key);
+    const genClientOptions=S.clientsData.filter(c=>c.status!=='lead').map(c=>({name:c.company,onClick:()=>this.generateDoc(c.company)}));
+    const genStatusColor=st=>st.includes('Podpisana')?'#2E9E6B':(st.includes('oczekuje')?'#F2A900':'#3E7BD6');
+    const generatedForStyled=generatedFor.map(g=>({...g,statusStyle:{fontFamily:"'IBM Plex Mono',monospace",fontSize:10,fontWeight:600,padding:'3px 8px',borderRadius:999,background:this.tint(genStatusColor(g.status),.13),color:genStatusColor(g.status)}}));
+
+    const FT={blad:{label:'Błąd',color:'#C0392B'},pomysl:{label:'Pomysł',color:'#3E7BD6'},pytanie:{label:'Pytanie',color:'#C98800'}};
+    const fbFilterDef=[['all','Wszystkie'],['blad','Błędy'],['pomysl','Pomysły'],['pytanie','Pytania']];
+    const cnt=k=>k==='all'?S.feedbackItems.length:S.feedbackItems.filter(x=>x.type===k).length;
+    const feedbackFilters=fbFilterDef.map(([k,label])=>{const active=S.feedbackFilter===k;return {label,count:cnt(k),onClick:()=>this.setFeedbackFilter(k),style:{display:'inline-flex',alignItems:'center',gap:6,padding:'7px 13px',borderRadius:999,fontSize:12.5,fontWeight:500,cursor:'pointer',background:active?'#173A6A':'#fff',color:active?'#fff':'#5A6B80',border:'1px solid '+(active?'#173A6A':'#E4EBF3')},countStyle:{fontFamily:"'IBM Plex Mono',monospace",fontSize:10,fontWeight:600,opacity:.8}};});
+    const fbFiltered=S.feedbackFilter==='all'?S.feedbackItems:S.feedbackItems.filter(x=>x.type===S.feedbackFilter);
+    const statusColors={'nowe':'#3E7BD6','w analizie':'#F2A900','zrobione':'#2E9E6B','odrzucone':'#6B7A90'};
+    const feedbackList=fbFiltered.map(fb=>{const t=FT[fb.type];return {text:fb.text,role:fb.role,estate:fb.estate,when:fb.when,typeLabel:t.label,
+      typePill:{fontFamily:"'IBM Plex Mono',monospace",fontSize:10,fontWeight:600,padding:'3px 9px',borderRadius:999,background:this.tint(t.color,.13),color:t.color},
+      statusOpts:['nowe','w analizie','zrobione','odrzucone'].map(st=>{const on=fb.status===st;const c=statusColors[st];return {label:st,onClick:()=>this.setFeedbackStatus(fb.id,st),style:{padding:'5px 11px',borderRadius:999,fontSize:11,fontWeight:600,cursor:'pointer',background:on?c:'#F4F7FB',color:on?'#fff':'#5A6B80'}};})};});
+    const noFeedback=feedbackList.length===0;
+
+    return {
+      nav,pageTitle:titles[S.page],actionQueue,actionCount:actionQueue.length,noActions:actionQueue.length===0,
+      isRaporty:S.page==='raporty',...(()=>{
+        const money=v=>parseFloat(String(v).replace(/[^\d.]/g,''))||0;
+        const activeClients=S.clientsData.filter(c=>c.status==='active'||c.status==='risk');
+        const mrrTotal=activeClients.reduce((a,c)=>a+money(c.mrr),0);
+        const arr=Math.round(mrrTotal*12);
+        const wonCount=S.pipelineItems.filter(x=>['won','onboarding','active','risk','churned'].includes(x.stage)).length;
+        const lostCount=S.pipelineItems.filter(x=>x.stage==='lost').length;
+        const totalDeals=wonCount+lostCount+S.pipelineItems.filter(x=>['lead','contact','demo','offer','contract'].includes(x.stage)).length;
+        const winRate=(wonCount+lostCount)>0?Math.round(wonCount/(wonCount+lostCount)*100):0;
+        const churnedCount=S.clientsData.filter(c=>c.status==='churned').length;
+        const churnRate=activeClients.length+churnedCount>0?Math.round(churnedCount/(activeClients.length+churnedCount)*100):0;
+        const repKpis=[
+          {label:'MRR (aktywni)',value:mrrTotal.toLocaleString('pl-PL')+' zł',sub:'suma miesięcznych abonamentów',color:'#173A6A'},
+          {label:'ARR (roczny)',value:arr.toLocaleString('pl-PL')+' zł',sub:'prognoza 12 mies.',color:'#2E9E6B'},
+          {label:'Win rate',value:winRate+'%',sub:wonCount+' wygrane / '+lostCount+' utracone',color:'#3E7BD6'},
+          {label:'Churn',value:churnRate+'%',sub:churnedCount+' zakończonych umów',color:churnRate>15?'#C0392B':'#F2A900'},
+        ];
+        const funnelStages=['lead','contact','demo','offer','contract'];
+        const stageCount=k=>S.pipelineItems.filter(x=>x.stage===k).length + (k==='contract'?wonCount:0);
+        const leadTotal=Math.max(1,stageCount('lead'));
+        const funnel=funnelStages.map(k=>{const cnt=stageCount(k);const pct=Math.round(cnt/leadTotal*100);return {label:this.STAGE_META[k].label,count:cnt,pct,bar:{height:'100%',width:pct+'%',background:this.STAGE_META[k].color,borderRadius:6}};});
+        const planCounts={};S.clientsData.forEach(c=>{planCounts[c.plan]=(planCounts[c.plan]||0)+1;});
+        const planColors={'Start':'#6B7A90','Standard':'#3E7BD6','Pro':'#F2A900','Enterprise':'#173A6A'};
+        const byPlan=Object.keys(planCounts).map(p=>({label:p,count:planCounts[p],color:planColors[p]||'#6B7A90'}));
+        const srcCounts={};S.pipelineItems.forEach(x=>{srcCounts[x.source]=(srcCounts[x.source]||0)+1;});
+        const bySource=Object.keys(srcCounts).map(s=>({label:s,count:srcCounts[s]}));
+        const repExpSorted=activeClients.filter(c=>c.until&&c.until!=='—').slice().sort((a,b)=>a.until.localeCompare(b.until));
+        const repExpiring=repExpSorted.map(c=>{const urgent=c.status==='risk';return {company:c.company,mrr:c.mrr,until:c.until,dot:{width:8,height:8,borderRadius:999,background:urgent?'#C0392B':'#F2A900',flexShrink:0},pill:{fontFamily:"'IBM Plex Mono',monospace",fontSize:10.5,fontWeight:600,padding:'3px 9px',borderRadius:999,background:urgent?'rgba(192,57,43,.12)':'rgba(242,169,0,.13)',color:urgent?'#C0392B':'#9a6b00'}};});
+        return {repKpis,funnel,byPlan,bySource,repExpiring,noRepExpiring:repExpiring.length===0,exportReport:()=>this.notify('Raport CSV wygenerowany — pobieranie (demo)')};
+      })(),
+      isRankingUchwal:S.page==='rankinguchwal',
+      resolutionRanking:[
+        {rank:1,estate:'Zielone Tarasy',company:'DOM-BUD',avgHours:38,resolved:12,medal:'🥇'},
+        {rank:2,estate:'Słoneczne Wzgórza',company:'Atlanti Sp. z o.o.',avgHours:52,resolved:9,medal:'🥈'},
+        {rank:3,estate:'Rezydencja Park',company:'KZN Osiedla',avgHours:71,resolved:14,medal:'🥉'},
+        {rank:4,estate:'Bloki Centrum',company:'MK Zarządzanie',avgHours:104,resolved:6,medal:''},
+      ].map(r=>({...r,barWidth:Math.max(8,100-Math.round(r.avgHours/104*100))+'%'})),
+      isPulpit:S.page==='pulpit',isKlienci:S.page==='klienci',isPipeline:S.page==='pipeline',isPoczta:S.page==='poczta',isFaktury:S.page==='faktury',isDokumenty:S.page==='dokumenty',isAutomatyzacje:S.page==='automatyzacje',isAI:S.page==='ai',isOsiedla:S.page==='osiedla',isOpinie:S.page==='opinie',isBlog:S.page==='blog',isUstawienia:S.page==='ustawienia',
+      feedbackFilters,feedbackList,noFeedback,
+      feedbackComposer:S.feedbackComposer,openIdeaComposer:()=>this.openIdeaComposer(),closeIdeaComposer:()=>this.closeIdeaComposer(),newIdea:S.newIdea,setIdeaText:e=>this.setIdeaText(e.target.value),submitIdea:()=>this.submitIdea(),
+      showAdd:!!addLabels[S.page],addLabel:addLabels[S.page]||'',addAction:()=>{if(S.page==='klienci')this.openNewClient();else if(S.page==='opinie')this.openIdeaComposer();else this.notify((addLabels[S.page]||'Dodaj')+' (demo)');},
+      navMain,navAdv,advOpen,toggleAdv:()=>this.setState(s=>({advOpen:!s.advOpen})),advChevron:{transition:'transform .15s',transform:advOpen?'rotate(180deg)':'none'},
+      kpis,expiring,activity,clientCols,clients,pipeline,
+      addRep:()=>this.addRep(),setClientBank:e=>this.setClientBank(e),
+      clientModalOpen:S.clientModalIdx!==null,clientModal:(S.clientModalIdx!==null?(()=>{const cl=S.clientsData[S.clientModalIdx];const docs=S.generatedDocs.filter(d=>d.client===cl.company);const reps=(S.clientReps[S.clientModalIdx]||[]).map((r,idx)=>({...r,setName:e=>this.setRepField(idx,'name',e.target.value),setPosition:e=>this.setRepField(idx,'position',e.target.value),setEmail:e=>this.setRepField(idx,'email',e.target.value),onRemove:()=>this.removeRep(idx)}));return {company:cl.company,contact:cl.contact,phone:cl.phone,email:cl.email,nip:cl.nip,address:cl.address,estate:cl.estate,plan:cl.plan,mrr:cl.mrr,until:cl.until,status:stLabels[cl.status],notes:cl.notes||'',bank:cl.bank||'',docs,hasDocs:docs.length>0,noDocs:docs.length===0,reps};})():{}),
+      docPreview:S.docPreview,hasDocPreview:!!S.docPreview,closeDocPreview:()=>this.closeDocPreview(),confirmSendDoc:()=>this.confirmSendDoc(),
+      contractPlan:S.contractPlan,contractPlans:['Start','Standard','Pro','Enterprise'].map(p=>({label:p,onClick:()=>this.setContractPlan(p),style:{flex:1,textAlign:'center',padding:'9px 6px',borderRadius:9,fontSize:12,fontWeight:600,cursor:'pointer',background:S.contractPlan===p?'#173A6A':'#F4F7FB',color:S.contractPlan===p?'#fff':'#5A6B80'}})),
+      closeClient:()=>this.closeClient(),genClientContract:()=>this.genClientContract(),genClientInvoice:()=>this.genClientInvoice(),
+      threads,selEmail,templates,composeText:S.composeText,setCompose:e=>this.setCompose(e),sendCompose:()=>this.sendCompose(),askAiDraft:()=>this.askAiDraft(),setDraftText:e=>this.setDraftText(e),approveDraft:()=>this.approveDraft(),discardDraft:()=>this.discardDraft(),toggleArchiveThread:()=>this.toggleArchiveThread(),archiveBtnLabel:selEmail.archived?'Przywróć':'Archiwizuj',archiveBtnStyle:{fontSize:11.5,fontWeight:600,padding:'6px 12px',borderRadius:9,cursor:'pointer',background:'#F4F7FB',color:'#5A6B80'},mailFilterAll:mailChip(S.mailFilter==='all'),setMailFilterAll:()=>this.setMailFilter('all'),mailFilterActive:mailChip(S.mailFilter==='active'),setMailFilterActive:()=>this.setMailFilter('active'),mailFilterArchived:mailChip(S.mailFilter==='archived'),setMailFilterArchived:()=>this.setMailFilter('archived'),
+      invCols,invoices,automations,aiTools,estates:estates.map(e=>({...e,statusPill:{fontFamily:"'IBM Plex Mono',monospace",fontSize:10,fontWeight:600,padding:'3px 9px',borderRadius:999,background:this.tint(e.sk==='active'?'#2E9E6B':'#F2A900',.13),color:e.sk==='active'?'#1f7a4d':'#9a6b00'},onOpenPanel:()=>this.notify('Otwieram panel CRM klienta: '+e.name+' (przekierowanie na panel.mestio.pl)')})),blogPosts,integrations,
+      invModalOpen,invModal,closeInvModal:()=>this.closeInvModal(),
+      documents,selDoc,docVars,addCustomDoc:()=>this.notify('Dodawanie własnego wzoru (demo)'),editDocTemplate:()=>this.notify('Edytor treści wzoru (demo)'),uploadDocFile:()=>this.notify('Wgrywanie pliku .docx/.pdf (demo)'),
+      invVars:['{{nr_faktury}}','{{nabywca}}','{{nip_nabywcy}}','{{kwota_netto}}','{{vat}}','{{brutto}}','{{okres}}','{{data_sprzedazy}}'],
+      lostCount,
+      newClientOpen:S.newClientOpen,newClient:S.newClient,closeNewClient:()=>this.closeNewClient(),submitNewClient:()=>this.submitNewClient(),
+      setNcCompany:e=>this.setNewClient('company',e.target.value),setNcContact:e=>this.setNewClient('contact',e.target.value),setNcEstate:e=>this.setNewClient('estate',e.target.value),setNcPlan:e=>this.setNewClient('plan',e.target.value),setNcMrr:e=>this.setNewClient('mrr',e.target.value),
+      autenti:S.autenti,autentiModes,autentiStatusPill,autentiStatusLabel,setAutentiKey:e=>this.setAutenti('key',e.target.value),saveAutenti:()=>this.saveAutenti(),
+      ai:S.ai,aiProviders,aiStatusPill,aiStatusLabel,setAiKey:e=>this.setAi('key',e.target.value),setAiModel:e=>this.setAi('model',e.target.value),saveAi:()=>this.saveAi(),disconnectAi:()=>this.disconnectAi(),
+      ksefModes,
+      noop:e=>{e.stopPropagation();},
+      lbl:{fontFamily:"'IBM Plex Mono',monospace",fontSize:10,letterSpacing:'.5px',textTransform:'uppercase',color:'#8A98AB',marginBottom:6},
+      inp:{width:'100%',fontSize:14,background:'#F4F7FB',borderRadius:11,padding:'11px 12px',color:'#0E1A2B'},
+      ownerSettings:S.ownerSettings,settingsDirty:S.settingsDirty,saveOwnerSettings:()=>this.saveOwnerSettings(),discardOwnerSettings:()=>this.discardOwnerSettings(),
+      setOwnCompany:e=>this.setOwnerSetting('company',e.target.value),setOwnNip:e=>this.setOwnerSetting('nip',e.target.value),setOwnIban:e=>this.setOwnerSetting('iban',e.target.value),setOwnTermin:e=>this.setOwnerSetting('termin',e.target.value),setOwnStopka:e=>this.setOwnerSetting('stopka',e.target.value),
+      autoModalOpen:S.autoModalOpen,openAutoModal:()=>this.openAutoModal(),closeAutoModal:()=>this.closeAutoModal(),submitAutomation:()=>this.submitAutomation(),
+      newAutomation:S.newAutomation,setAutoName:e=>this.setNewAuto('name',e.target.value),
+      autoSegmentOptions:['Wszyscy w etapie: Demo','Wszyscy w etapie: Oferta','Plan: Start','Plan: Standard','Plan: Pro','Umowa wygasa < 30 dni','Status: Ryzyko rezygnacji','Źródło: Strona','Źródło: Polecenie'].map(seg=>({label:seg,onClick:()=>this.setNewAuto('segment',seg),style:{padding:'8px 12px',borderRadius:9,fontSize:12.5,fontWeight:600,cursor:'pointer',background:S.newAutomation.segment===seg?'#173A6A':'#F4F7FB',color:S.newAutomation.segment===seg?'#fff':'#5A6B80'}})),
+      autoTriggers:['Nowy lead','Umowa wygasa za 14 dni','Faktura nieopłacona','Klient nieaktywny 30 dni'].map(t=>({label:t,onClick:()=>this.setNewAuto('trigger',t),style:{padding:'7px 11px',borderRadius:999,fontSize:11.5,fontWeight:500,cursor:'pointer',background:S.newAutomation.trigger===t?this.tint('#3E7BD6',.13):'#F4F7FB',color:S.newAutomation.trigger===t?'#173A6A':'#5A6B80'}})),
+      autoActions:['Wyślij e-mail powitalny','Wyślij przypomnienie','Utwórz zadanie: oddzwoń','Wygeneruj fakturę'].map(t=>({label:t,onClick:()=>this.setNewAuto('action',t),style:{padding:'7px 11px',borderRadius:999,fontSize:11.5,fontWeight:500,cursor:'pointer',background:S.newAutomation.action===t?this.tint('#2E9E6B',.13):'#F4F7FB',color:S.newAutomation.action===t?'#1f7a4d':'#5A6B80'}})),
+      hasToast:!!S.toast,toast:S.toast,
+    };
+  }
+}
+</script>
+</body>
+</html>
