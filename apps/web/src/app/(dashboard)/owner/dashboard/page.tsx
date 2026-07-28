@@ -36,27 +36,41 @@ function tint(hex: string, alpha: number): string {
 }
 
 export default async function DashboardPage() {
-  const supabase = await createClient();
-  await supabase.auth.getUser();
+  let leads: CrmLead[] = [];
+  let openTasks: (CrmTask & { crm_leads: { company_name: string } | null })[] = [];
+  let overdueInvoices: { status: string; amount: number }[] = [];
 
-  // Silnik automatyzacji
-  await runAutomations(supabase).catch(() => 0);
+  try {
+    const supabase = await createClient();
+    await supabase.auth.getUser().catch(() => null);
 
-  // ── Parallel queries ──
-  const [leadsRes, tasksRes, invoicesRes] = await Promise.all([
-    supabase.from("crm_leads").select("*"),
-    supabase
-      .from("crm_tasks")
-      .select("*, crm_leads(company_name)")
-      .eq("done", false)
-      .order("due_date", { ascending: true })
-      .limit(8),
-    supabase.from("crm_invoices").select("status, amount").eq("status", "overdue"),
-  ]);
+    // Silnik automatyzacji - uruchamiamy w tle bez blokowania
+    runAutomations(supabase).catch(() => 0);
 
-  const leads = (leadsRes.data as CrmLead[]) ?? [];
-  const openTasks = (tasksRes.data as (CrmTask & { crm_leads: { company_name: string } | null })[]) ?? [];
-  const overdueInvoices = (invoicesRes.data as { status: string; amount: number }[]) ?? [];
+    // ── Safe Parallel Queries (Promise.allSettled) ──
+    const [leadsRes, tasksRes, invoicesRes] = await Promise.allSettled([
+      supabase.from("crm_leads").select("*"),
+      supabase
+        .from("crm_tasks")
+        .select("*, crm_leads(company_name)")
+        .eq("done", false)
+        .order("due_date", { ascending: true })
+        .limit(8),
+      supabase.from("crm_invoices").select("status, amount").eq("status", "overdue"),
+    ]);
+
+    if (leadsRes.status === "fulfilled" && leadsRes.value.data) {
+      leads = (leadsRes.value.data as CrmLead[]) ?? [];
+    }
+    if (tasksRes.status === "fulfilled" && tasksRes.value.data) {
+      openTasks = (tasksRes.value.data as (CrmTask & { crm_leads: { company_name: string } | null })[]) ?? [];
+    }
+    if (invoicesRes.status === "fulfilled" && invoicesRes.value.data) {
+      overdueInvoices = (invoicesRes.value.data as { status: string; amount: number }[]) ?? [];
+    }
+  } catch (err) {
+    console.error("[DashboardPage] Non-fatal DB fetch error:", err);
+  }
 
   const activeLeads = leads.filter((l) => l.stage === "active");
   const trialLeads = leads.filter((l) => ["onboarding", "won"].includes(l.stage));
