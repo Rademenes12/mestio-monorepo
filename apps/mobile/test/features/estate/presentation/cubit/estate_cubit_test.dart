@@ -128,7 +128,7 @@ void main() {
           (_) async => {
             'role': 'technician',
             'estate_id': 'estate-x',
-            'estate_name': 'FixFlow QA',
+            'estate_name': 'Mestio QA',
           },
         );
         return EstateMembershipCubit(repo);

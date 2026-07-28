@@ -218,7 +218,7 @@ class SupabaseAuthDataSource implements AuthDataSource {
     await _fcmService.clearSubscriptions();
 
     try {
-      // First, clean up FixFlow-specific data
+      // First, clean up Mestio-specific data
       try {
         final cleanupResponse = await _supabaseClient.functions.invoke('fixflow-cleanup');
         debugPrint(
