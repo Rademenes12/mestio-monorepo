@@ -174,37 +174,53 @@ export default function LoginPage() {
             boxSizing: "border-box",
           }}
         >
-          {/* Profile Selection Pills (1:1 ProTracker tabs) */}
-          <div className="grid grid-cols-2 gap-2 mb-5">
+          {/* Profile Selection Pills (All 3 roles: Mieszkaniec, Zarządca, Właściciel) */}
+          <div className="grid grid-cols-3 gap-1.5 mb-5 p-1 rounded-[16px]" style={{ background: "#F7FAFC", border: "1px solid #EDF2F7" }}>
+            <button
+              type="button"
+              onClick={() => handleTabSelect("resident")}
+              className={`py-2.5 px-2 rounded-[12px] text-[11px] font-semibold transition-all flex items-center justify-center gap-1.5 ${
+                activeTab === "resident"
+                  ? "bg-white text-[#3E7BD6] shadow-[0_2px_8px_rgba(0,0,0,0.06)]"
+                  : "text-[#718096] hover:text-[#1A202C]"
+              }`}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                <polyline points="9 22 9 12 15 12 15 22"/>
+              </svg>
+              Mieszkaniec
+            </button>
+
             <button
               type="button"
               onClick={() => handleTabSelect("client")}
-              className={`py-3 px-3 rounded-[14px] text-xs font-semibold transition-all flex items-center justify-center gap-2 border ${
+              className={`py-2.5 px-2 rounded-[12px] text-[11px] font-semibold transition-all flex items-center justify-center gap-1.5 ${
                 activeTab === "client"
-                  ? "bg-[#F4F6FF] border-[#3E7BD6] text-[#3E7BD6] shadow-[0_2px_8px_rgba(62,123,214,0.12)]"
-                  : "bg-white border-[#E2E8F0] text-[#718096] hover:bg-[#F7FAFC]"
+                  ? "bg-white text-[#3E7BD6] shadow-[0_2px_8px_rgba(0,0,0,0.06)]"
+                  : "text-[#718096] hover:text-[#1A202C]"
               }`}
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
                 <circle cx="12" cy="7" r="4"/>
               </svg>
-              Zarządca / Klient
+              Zarządca
             </button>
 
             <button
               type="button"
               onClick={() => handleTabSelect("owner")}
-              className={`py-3 px-3 rounded-[14px] text-xs font-semibold transition-all flex items-center justify-center gap-2 border ${
+              className={`py-2.5 px-2 rounded-[12px] text-[11px] font-semibold transition-all flex items-center justify-center gap-1.5 ${
                 activeTab === "owner"
-                  ? "bg-[#F4F6FF] border-[#3E7BD6] text-[#3E7BD6] shadow-[0_2px_8px_rgba(62,123,214,0.12)]"
-                  : "bg-white border-[#E2E8F0] text-[#718096] hover:bg-[#F7FAFC]"
+                  ? "bg-white text-[#3E7BD6] shadow-[0_2px_8px_rgba(0,0,0,0.06)]"
+                  : "text-[#718096] hover:text-[#1A202C]"
               }`}
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
               </svg>
-              Właściciel CRM
+              Właściciel
             </button>
           </div>
 
