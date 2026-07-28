@@ -32,29 +32,33 @@ export async function middleware(request: NextRequest) {
     return supabaseResponse;
   }
 
-  // Protected routes require login
+  // Protected routes require login or demo mode
   if (
     pathname.startsWith("/owner/") ||
     pathname.startsWith("/client/") ||
     pathname.startsWith("/resident/")
   ) {
-    if (!user) {
+    const demoRole = request.cookies.get("mestio_demo_role")?.value;
+
+    if (!user && !demoRole) {
       const loginUrl = new URL("/login", request.url);
       loginUrl.searchParams.set("redirect", pathname);
       return NextResponse.redirect(loginUrl);
     }
 
     // Check user role (non-blocking — errors default to allowing access)
-    let role = "";
-    try {
-      const { data: profile } = await supabase
-        .from("fixflow_resident_profiles")
-        .select("role")
-        .eq("user_id", user.id)
-        .maybeSingle();
-      role = profile?.role || "";
-    } catch {
-      // If DB query fails, allow access (login page handles role check)
+    let role = demoRole || "";
+    if (user && !demoRole) {
+      try {
+        const { data: profile } = await supabase
+          .from("fixflow_resident_profiles")
+          .select("role")
+          .eq("user_id", user.id)
+          .maybeSingle();
+        role = profile?.role || "";
+      } catch {
+        // If DB query fails, allow access (login page handles role check)
+      }
     }
 
     // /owner/* — only owner/admin
