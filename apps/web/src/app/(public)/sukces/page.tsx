@@ -114,7 +114,7 @@ function SukcesContent() {
       ) : error ? (
         <div className="mt-6 text-red-500">{error}</div>
       ) : codeData ? (
-        <div className="bg-white rounded-[22px] shadow-[0_10px_30px_rgba(14,26,43,.08)] p-6 mt-[26px]">
+        <div className="bg-white rounded-[12px] shadow-[0_10px_30px_rgba(14,26,43,.08)] p-6 mt-[26px]">
           <div className="font-mono text-[10px] tracking-[0.6px] uppercase text-[#8A98AB]">
             Kod zaproszenia dla mieszkańców
           </div>

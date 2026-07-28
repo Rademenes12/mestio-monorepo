@@ -70,11 +70,11 @@ export default function DashboardLayout({
   const isDashboard = pathname === "/owner/dashboard";
 
   return (
-    <div className="flex min-h-screen bg-[#F8F9FB]">
+    <div className="flex min-h-screen" style={{ background: "var(--color-page)" }}>
       <Sidebar />
 
       <div className="flex-1 ml-[240px] flex flex-col min-w-0">
-        <header className="h-[60px] shrink-0 bg-white border-b flex items-center justify-between px-6 z-10" style={{ borderColor: "rgba(0,0,0,0.06)" }}>
+        <header className="h-[60px] shrink-0 border-b flex items-center justify-between px-6 z-10 transition-colors duration-300" style={{ background: "var(--color-card)", borderColor: "var(--color-glass-border)" }}>
           <div className="flex items-center gap-3">
             {!isDashboard && (
               <button

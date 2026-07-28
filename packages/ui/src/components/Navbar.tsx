@@ -38,7 +38,7 @@ export function Navbar({
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href={logoHref} className="flex items-center gap-2.5">
-            <div className="w-[34px] h-[34px] rounded-[10px] flex items-center justify-center" style={{ background: "linear-gradient(135deg,#3E7BD6,#173A6A)" }}>
+            <div className="w-[34px] h-[34px] rounded-[8px] flex items-center justify-center" style={{ background: "#3E7BD6" }}>
               <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M14 7a4 4 0 0 1-5.3 5.3L4 17l3 3 4.7-4.7A4 4 0 0 0 17 10l-2.2 2.2-2-2L15 8z"/>
               </svg>
@@ -75,7 +75,7 @@ export function Navbar({
             <Link href="#pricing" className="text-sm font-medium transition" style={{ color: "#3A4759" }}>Cennik</Link>
             <Link href="/kontakt" className="text-sm font-medium transition" style={{ color: "#3A4759" }}>Kontakt</Link>
             <Link href="/login" className="text-sm font-semibold transition" style={{ color: "#173A6A", padding: "9px 14px" }}>Zaloguj</Link>
-            <Link href={ctaHref} className="text-sm font-semibold text-white px-[18px] py-[10px] rounded-[11px] transition" style={{ background: "linear-gradient(135deg,#3E7BD6,#173A6A)", boxShadow: "0 6px 16px rgba(23,58,106,.25)" }}>
+            <Link href={ctaHref} className="text-sm font-semibold text-white px-[18px] py-[10px] rounded-[8px] transition hover:brightness-110" style={{ background: "#3E7BD6" }}>
               {ctaLabel}
             </Link>
           </div>
@@ -95,7 +95,7 @@ export function Navbar({
             <Link href="#pricing" className="block py-2 text-sm" style={{ color: "#4A5A6E" }}>Cennik</Link>
             <Link href="/kontakt" className="block py-2 text-sm" style={{ color: "#4A5A6E" }}>Kontakt</Link>
             <Link href="/login" className="block py-2 text-sm font-semibold" style={{ color: "#173A6A" }}>Zaloguj</Link>
-            <Link href={ctaHref} className="block text-center text-sm font-semibold text-white px-[18px] py-[10px] rounded-[11px]" style={{ background: "linear-gradient(135deg,#3E7BD6,#173A6A)" }}>
+            <Link href={ctaHref} className="block text-center text-sm font-semibold text-white px-[18px] py-[10px] rounded-[8px]" style={{ background: "#3E7BD6" }}>
               {ctaLabel}
             </Link>
           </div>

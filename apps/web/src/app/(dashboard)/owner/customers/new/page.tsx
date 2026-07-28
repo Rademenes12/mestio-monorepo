@@ -86,7 +86,7 @@ export default function NewCustomerPage() {
 
       <form
         onSubmit={handleSubmit}
-        className="bg-white rounded-[var(--radius-card)] shadow-[var(--shadow-card)] p-8 space-y-5"
+        className="bg-white rounded-[var(--radius-card)] border border-[#E9EEF5] p-8 space-y-5"
       >
         <div>
           <label className="block text-sm font-medium text-ink mb-1.5">

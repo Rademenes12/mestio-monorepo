@@ -67,7 +67,7 @@ export function CreateResolutionModal({
           onClick={() => setOpen(false)}
         >
           <div
-            className="bg-white rounded-[22px] shadow-[0_8px_32px_rgba(14,26,43,.12)] p-6 w-full max-w-lg mx-4"
+            className="bg-white rounded-[12px] shadow-[0_8px_32px_rgba(14,26,43,.12)] p-6 w-full max-w-lg mx-4"
             onClick={(e) => e.stopPropagation()}
           >
             <h2 className="text-lg font-heading font-semibold text-ink mb-5">

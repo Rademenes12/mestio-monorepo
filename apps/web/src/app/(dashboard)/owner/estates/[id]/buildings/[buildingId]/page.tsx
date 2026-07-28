@@ -122,7 +122,7 @@ export default function BuildingDetailPage({
     return (
       <div className="space-y-4 animate-pulse">
         <div className="h-8 w-48 bg-white/50 rounded-lg" />
-        <div className="h-64 bg-white rounded-2xl shadow-[var(--shadow-card)]" />
+        <div className="h-64 bg-white rounded-2xl border border-[#E9EEF5]" />
       </div>
     );
   }
@@ -157,7 +157,7 @@ export default function BuildingDetailPage({
 
       {/* Add unit form */}
       {showAddUnit && (
-        <div className="bg-white rounded-2xl shadow-[var(--shadow-card)] p-5">
+        <div className="bg-white rounded-2xl border border-[#E9EEF5] p-5">
           <div className="grid grid-cols-5 gap-3 mb-3">
             <input
               value={newUnit.unit_number}
@@ -206,7 +206,7 @@ export default function BuildingDetailPage({
 
       {/* Units grid */}
       {units.length === 0 ? (
-        <div className="bg-white rounded-2xl shadow-[var(--shadow-card)] p-[30px] text-center text-[#9AA7B8] text-[13.5px]">
+        <div className="bg-white rounded-2xl border border-[#E9EEF5] p-[30px] text-center text-[#9AA7B8] text-[13.5px]">
           <div className="w-12 h-12 rounded-xl bg-[#F4F7FB] flex items-center justify-center mx-auto mb-3">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9AA7B8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
               <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
@@ -218,7 +218,7 @@ export default function BuildingDetailPage({
           <p className="text-xs mt-1">Dodaj pierwszy lokal, aby rozpocząć zarządzanie</p>
         </div>
       ) : (
-        <div className="bg-white rounded-2xl shadow-[var(--shadow-card)] divide-y divide-[#F4F7FB]">
+        <div className="bg-white rounded-2xl border border-[#E9EEF5] divide-y divide-[#F4F7FB]">
           {/* Header */}
           <div className="grid grid-cols-12 px-5 py-3 text-[11px] font-semibold uppercase tracking-[.4px] text-[#9AA7B8]">
             <span className="col-span-2">Lokal</span>

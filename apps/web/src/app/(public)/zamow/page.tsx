@@ -162,7 +162,7 @@ function ZamowContent() {
           wpłynąć w ciągu 7 dni.
         </p>
 
-        <div className="bg-white rounded-[22px] shadow-[0_2px_14px_rgba(14,26,43,.06)] p-6 mt-6 space-y-4">
+        <div className="bg-white rounded-[12px] border border-[#E9EEF5] p-6 mt-6 space-y-4">
           <div className="flex justify-between items-center pb-3 border-b border-[#E2E9F2]">
             <span className="font-mono text-[10px] tracking-[0.6px] uppercase text-[#8A98AB]">
               Plan
@@ -274,7 +274,7 @@ function ZamowContent() {
         <h1 className="font-heading font-bold text-[32px] tracking-[-0.6px] text-ink mb-6">
           Dokończ płatność
         </h1>
-        <div className="bg-white rounded-[22px] shadow-[0_2px_14px_rgba(14,26,43,.06)] p-6">
+        <div className="bg-white rounded-[12px] border border-[#E9EEF5] p-6">
           <EmbeddedCheckoutProvider
             stripe={stripePromise}
             options={{ clientSecret }}
@@ -302,7 +302,7 @@ function ZamowContent() {
         noValidate
         aria-busy={submitting}
       >
-        <div className="bg-white rounded-[22px] shadow-[0_2px_14px_rgba(14,26,43,.06)] p-6">
+        <div className="bg-white rounded-[12px] border border-[#E9EEF5] p-6">
           <div className={labelClass}>Wybierz plan</div>
 
           <div className="flex gap-2 flex-wrap" role="radiogroup" aria-label="Wybierz plan subskrypcji">
@@ -612,7 +612,7 @@ function ZamowContent() {
           )}
         </div>
 
-        <div className="bg-ink rounded-[18px] p-6 text-white">
+        <div className="bg-ink rounded-[12px] p-6 text-white">
           <div
             className={labelClass}
             style={{ color: "#8FA6C4" }}

@@ -34,7 +34,7 @@ export default async function InvoiceDetailPage({
         </Link>
       </div>
 
-      <div className="bg-white rounded-[22px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-6">
+      <div className="bg-white rounded-[12px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-6">
         <div className="flex items-center justify-between mb-4">
           <div>
             <h1 className="text-xl font-heading font-bold text-ink">

@@ -197,7 +197,7 @@ export default function AutomationsPage() {
     return (
       <div className="max-w-3xl mx-auto space-y-3 animate-pulse">
         {[0, 1, 2].map((i) => (
-          <div key={i} className="h-[86px] bg-white rounded-[18px] shadow-[var(--shadow-card)]" />
+          <div key={i} className="h-[86px] bg-white rounded-[12px] border border-[#E9EEF5]" />
         ))}
       </div>
     );
@@ -219,14 +219,14 @@ export default function AutomationsPage() {
       </div>
 
       {autos.length === 0 ? (
-        <div className="bg-white rounded-[18px] shadow-[var(--shadow-card)] p-[30px] text-center text-[#9AA7B8] text-[13.5px]">
+        <div className="bg-white rounded-[12px] border border-[#E9EEF5] p-[30px] text-center text-[#9AA7B8] text-[13.5px]">
           Brak automatyzacji. Kliknij „Nowa automatyzacja”, aby dodać pierwszą regułę.
         </div>
       ) : (
         autos.map((a) => {
           const tm = TRIGGER_META[a.trigger_type] ?? TRIGGER_META.new_lead;
           return (
-            <div key={a.id} className="bg-white rounded-[18px] shadow-[var(--shadow-card)] p-[18px] px-5 flex items-center gap-[14px]">
+            <div key={a.id} className="bg-white rounded-[12px] border border-[#E9EEF5] p-[18px] px-5 flex items-center gap-[14px]">
               <div
                 className="w-10 h-10 rounded-[12px] flex items-center justify-center shrink-0"
                 style={{ background: tint(tm.color, 0.12), color: tm.color }}

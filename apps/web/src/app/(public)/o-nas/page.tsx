@@ -70,7 +70,7 @@ export default function OnasPage() {
 
       {/* Misja i Cel */}
       <section className="mt-[50px] grid grid-cols-1 md:grid-cols-2 gap-[18px]">
-        <div className="bg-gradient-to-br from-azure to-blueprint rounded-[22px] p-[34px] text-white">
+        <div className="bg-gradient-to-br from-azure to-blueprint rounded-[12px] p-[34px] text-white">
           <div className="font-mono text-[10.5px] tracking-[0.6px] uppercase text-white/70 mb-2">
             Misja
           </div>
@@ -84,7 +84,7 @@ export default function OnasPage() {
             bezstresowe.
           </p>
         </div>
-        <div className="bg-ink rounded-[22px] p-[34px] text-white">
+        <div className="bg-ink rounded-[12px] p-[34px] text-white">
           <div className="font-mono text-[10.5px] tracking-[0.6px] uppercase text-[#7F96B5] mb-2">
             Cel
           </div>
@@ -112,7 +112,7 @@ export default function OnasPage() {
           {VALUES.map((v) => (
             <div
               key={v.title}
-              className="bg-white rounded-[22px] p-6 shadow-[0_2px_14px_rgba(14,26,43,.06)]"
+              className="bg-white rounded-[12px] p-6 border border-[#E9EEF5]"
             >
               <div className="w-11 h-11 rounded-[12px] bg-[rgba(62,123,214,.12)] flex items-center justify-center text-azure">
                 <svg
@@ -152,7 +152,7 @@ export default function OnasPage() {
           {TESTIMONIALS.map((t) => (
             <div
               key={t.author}
-              className="bg-white rounded-[22px] p-[28px] shadow-[0_2px_14px_rgba(14,26,43,.06)] border border-[#EAF0F7]"
+              className="bg-white rounded-[12px] p-[28px] border border-[#E9EEF5] border border-[#EAF0F7]"
             >
               <svg
                 width="28"

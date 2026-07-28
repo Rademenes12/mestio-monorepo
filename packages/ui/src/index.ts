@@ -22,6 +22,7 @@ export type { Shortcut } from './components/SkrotyBar'
 export { ActivityTimeline } from './components/ActivityTimeline'
 export type { TimelineEvent } from './components/ActivityTimeline'
 export { WidgetCard } from './components/WidgetCard'
+export { ThemeToggle } from './components/ThemeToggle'
 export { PrivacyToggle, usePrivacy } from './components/PrivacyToggle'
 
 // Hooks

@@ -93,7 +93,7 @@ export default function AiPage() {
             <button
               key={t.title}
               onClick={() => pickTool(t)}
-              className="bg-white rounded-[18px] shadow-[var(--shadow-card)] p-[22px] text-left transition-all hover:shadow-[var(--shadow-card-hover)]"
+              className="bg-white rounded-[12px] border border-[#E9EEF5] p-[22px] text-left transition-all hover:shadow-[var(--shadow-card-hover)]"
               style={{ border: `2px solid ${active ? t.color : "transparent"}` }}
             >
               <div
@@ -113,7 +113,7 @@ export default function AiPage() {
         })}
       </div>
 
-      <div className="bg-white rounded-[18px] shadow-[var(--shadow-card)] p-5 space-y-3">
+      <div className="bg-white rounded-[12px] border border-[#E9EEF5] p-5 space-y-3">
         <div className="font-[family-name:var(--font-mono)] text-[10px] tracking-[.4px] text-[#8A98AB] uppercase">
           {activeTool ? `Narzędzie: ${activeTool}` : "Twój prompt"}
         </div>

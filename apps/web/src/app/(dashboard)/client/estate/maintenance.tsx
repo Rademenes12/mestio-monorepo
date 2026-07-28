@@ -264,7 +264,7 @@ export function AddMaintenanceModal({ estateId }: { estateId: string }) {
                   disabled={loading}
                   className="flex-[1.5] text-center py-3 rounded-xl text-white font-semibold text-sm disabled:opacity-50 transition-opacity"
                   style={{
-                    background: "linear-gradient(135deg,#3E7BD6,#173A6A)",
+                    background: "#3E7BD6",
                   }}
                 >
                   {loading ? "Dodawanie…" : "Dodaj zadanie"}

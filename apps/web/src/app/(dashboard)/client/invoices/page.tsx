@@ -48,7 +48,7 @@ export default async function InvoicesPage() {
       </div>
 
       {pendingTransfer && (
-        <div className="bg-amber/10 border border-amber/30 rounded-[22px] p-5">
+        <div className="bg-amber/10 border border-amber/30 rounded-[12px] p-5">
           <div className="flex items-start gap-3">
             <span className="text-xl mt-0.5">⏳</span>
             <div>
@@ -65,7 +65,7 @@ export default async function InvoicesPage() {
         </div>
       )}
 
-      <div className="bg-white rounded-[22px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-6">
+      <div className="bg-white rounded-[12px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-6">
         {!invoices || invoices.length === 0 ? (
           <p className="text-sm text-ink/30">Brak faktur.</p>
         ) : (

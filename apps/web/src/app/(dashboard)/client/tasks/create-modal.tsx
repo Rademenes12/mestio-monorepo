@@ -117,7 +117,7 @@ export function CreateTaskModal({
           onClick={resetAndClose}
         >
           <div
-            className="bg-white rounded-[22px] shadow-[0_8px_32px_rgba(14,26,43,.12)] p-6 w-full max-w-lg mx-4 max-h-[88vh] overflow-y-auto"
+            className="bg-white rounded-[12px] shadow-[0_8px_32px_rgba(14,26,43,.12)] p-6 w-full max-w-lg mx-4 max-h-[88vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
             <h2 className="text-lg font-heading font-semibold text-ink mb-5">

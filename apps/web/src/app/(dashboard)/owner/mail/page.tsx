@@ -253,7 +253,7 @@ export default function MailPage() {
     <div className="max-w-6xl mx-auto h-[calc(100vh-110px)]">
       <div className="grid grid-cols-[280px_1fr] gap-[14px] h-full">
         {/* Lista wątków */}
-        <div className="bg-white rounded-[18px] shadow-[var(--shadow-card)] overflow-hidden flex flex-col">
+        <div className="bg-white rounded-[12px] border border-[#E9EEF5] overflow-hidden flex flex-col">
           <div className="py-[14px] px-4 border-b border-[#F4F7FB] flex items-center justify-between">
             <span className="font-[family-name:var(--font-mono)] text-[9.5px] tracking-[.4px] text-[#8A98AB] uppercase">
               Wątki
@@ -307,7 +307,7 @@ export default function MailPage() {
         </div>
 
         {/* Widok wątku */}
-        <div className="bg-white rounded-[18px] shadow-[var(--shadow-card)] p-5 flex flex-col min-h-0">
+        <div className="bg-white rounded-[12px] border border-[#E9EEF5] p-5 flex flex-col min-h-0">
           {!sel ? (
             <div className="flex-1 flex items-center justify-center text-[#9AA7B8] text-sm">
               Wybierz wątek z listy albo utwórz nowy.
@@ -423,7 +423,7 @@ export default function MailPage() {
           onClick={() => setNewThreadOpen(false)}
         >
           <div
-            className="bg-[#F6F8FB] rounded-[18px] shadow-[0_30px_70px_rgba(14,26,43,.4)] w-[440px] max-w-full p-6"
+            className="bg-[#F6F8FB] rounded-[12px] shadow-[0_30px_70px_rgba(14,26,43,.4)] w-[440px] max-w-full p-6"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="font-[family-name:var(--font-heading)] font-bold text-lg text-ink">Nowy wątek</div>

@@ -22,7 +22,7 @@ export default async function ReportsPage() {
         <h1 className="text-2xl font-heading font-bold text-ink">
           Tablica spraw
         </h1>
-        <div className="bg-white rounded-[22px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-12 text-center">
+        <div className="bg-white rounded-[12px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-12 text-center">
           <p className="text-ink/50">Brak przypisanych osiedli</p>
         </div>
       </div>
@@ -79,7 +79,7 @@ export default async function ReportsPage() {
                   </Link>
                 ))}
                 {items.length === 0 && (
-                  <div className="bg-white/50 rounded-[22px] border border-dashed border-ink/10 p-6 text-center">
+                  <div className="bg-white/50 rounded-[12px] border border-dashed border-ink/10 p-6 text-center">
                     <p className="text-[12.5px] text-ink/35">
                       Brak zgłoszeń w tej kolumnie
                     </p>

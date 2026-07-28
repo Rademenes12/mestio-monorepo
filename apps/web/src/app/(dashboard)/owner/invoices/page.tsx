@@ -250,16 +250,16 @@ export default function InvoicesPage() {
   return (
     <div className="max-w-7xl mx-auto space-y-4">
       <div className="grid grid-cols-3 gap-[10px]">
-        <div className="bg-white rounded-2xl shadow-[var(--shadow-card)] p-4">
+        <div className="bg-white rounded-2xl border border-[#E9EEF5] p-4">
           <div className="text-[11px] text-[#7C8AA0]">Suma</div>
           <div className="font-[family-name:var(--font-heading)] font-bold text-xl text-ink mt-1">{money(totalAmount)} PLN</div>
           <div className="text-[10px] text-[#9AA7B8] mt-[2px]">{invoices.length} faktur</div>
         </div>
-        <div className="bg-white rounded-2xl shadow-[var(--shadow-card)] p-4">
+        <div className="bg-white rounded-2xl border border-[#E9EEF5] p-4">
           <div className="text-[11px] text-[#7C8AA0]">Opłacone</div>
           <div className="font-[family-name:var(--font-heading)] font-bold text-xl text-success mt-1">{money(paidAmount)} PLN</div>
         </div>
-        <div className="bg-white rounded-2xl shadow-[var(--shadow-card)] p-4">
+        <div className="bg-white rounded-2xl border border-[#E9EEF5] p-4">
           <div className="text-[11px] text-[#7C8AA0]">Zaległe</div>
           <div className="font-[family-name:var(--font-heading)] font-bold text-xl text-danger mt-1">{money(overdueAmount)} PLN</div>
         </div>
@@ -314,7 +314,7 @@ export default function InvoicesPage() {
         )}
       </div>
 
-      <div className="bg-white rounded-[18px] shadow-[var(--shadow-card)] overflow-hidden">
+      <div className="bg-white rounded-[12px] border border-[#E9EEF5] overflow-hidden">
         {loading ? (
           <div className="p-12 text-center text-[#9AA7B8] text-sm">Ładowanie...</div>
         ) : mode === "fixflow" ? (

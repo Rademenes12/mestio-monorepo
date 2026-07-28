@@ -54,7 +54,7 @@ export default async function AnnouncementsPage() {
       </div>
 
       {alist.length === 0 ? (
-        <div className="bg-white rounded-[22px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-8 text-center">
+        <div className="bg-white rounded-[12px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-8 text-center">
           <p className="text-ink/50 text-sm">Brak ogłoszeń</p>
         </div>
       ) : (
@@ -62,7 +62,7 @@ export default async function AnnouncementsPage() {
           {(alist as DbAnnouncement[]).map((a) => (
             <div
               key={a.id}
-              className={`bg-white rounded-[22px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-6 ${
+              className={`bg-white rounded-[12px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-6 ${
                 !a.is_active ? "opacity-60" : ""
               }`}
             >

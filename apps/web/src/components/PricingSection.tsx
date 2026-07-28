@@ -120,7 +120,7 @@ export default async function PricingSection() {
                 style={{
                   background: isDark
                     ? "#fff"
-                    : "linear-gradient(135deg, #3E7BD6, #173A6A)",
+                    : "#3E7BD6",
                   color: isDark ? "#0E1A2B" : "#fff",
                 }}
               >

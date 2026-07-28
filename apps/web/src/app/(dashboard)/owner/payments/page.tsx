@@ -81,21 +81,21 @@ export default function PaymentsPage() {
   return (
     <div className="max-w-6xl mx-auto space-y-4">
       <div className="grid grid-cols-3 gap-[12px]">
-        <div className="bg-white rounded-2xl shadow-[var(--shadow-card)] px-4 py-[15px]">
+        <div className="bg-white rounded-2xl border border-[#E9EEF5] px-4 py-[15px]">
           <div className="text-[12.5px] text-[#7C8AA0] font-medium">Oczekujące</div>
           <div className="font-[family-name:var(--font-heading)] font-bold text-2xl text-ink mt-[5px]">{pendingCount}</div>
         </div>
-        <div className="bg-white rounded-2xl shadow-[var(--shadow-card)] px-4 py-[15px]">
+        <div className="bg-white rounded-2xl border border-[#E9EEF5] px-4 py-[15px]">
           <div className="text-[12.5px] text-[#7C8AA0] font-medium">Potwierdzone</div>
           <div className="font-[family-name:var(--font-heading)] font-bold text-2xl text-success mt-[5px]">{payments.filter((p) => p.status === "confirmed").length}</div>
         </div>
-        <div className="bg-white rounded-2xl shadow-[var(--shadow-card)] px-4 py-[15px]">
+        <div className="bg-white rounded-2xl border border-[#E9EEF5] px-4 py-[15px]">
           <div className="text-[12.5px] text-[#7C8AA0] font-medium">Wygasłe</div>
           <div className="font-[family-name:var(--font-heading)] font-bold text-2xl text-[#6B7A90] mt-[5px]">{payments.filter((p) => p.status === "expired").length}</div>
         </div>
       </div>
 
-      <div className="bg-white rounded-[18px] shadow-[var(--shadow-card)] overflow-hidden">
+      <div className="bg-white rounded-[12px] border border-[#E9EEF5] overflow-hidden">
         {loading ? (
           <div className="p-12 text-center text-[#9AA7B8] text-sm">Ładowanie...</div>
         ) : payments.length === 0 ? (

@@ -49,7 +49,7 @@ export default function EstatesPage() {
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[14px] animate-pulse">
         {[0, 1, 2, 3, 4, 5].map((i) => (
-          <div key={i} className="h-[168px] bg-white rounded-[18px] shadow-[var(--shadow-card)]" />
+          <div key={i} className="h-[168px] bg-white rounded-[12px] border border-[#E9EEF5]" />
         ))}
       </div>
     );
@@ -58,7 +58,7 @@ export default function EstatesPage() {
   return (
     <div className="max-w-6xl mx-auto">
       {estates.length === 0 ? (
-        <div className="bg-white rounded-2xl shadow-[var(--shadow-card)] p-[30px] text-center text-[#9AA7B8] text-[13.5px]">
+        <div className="bg-white rounded-2xl border border-[#E9EEF5] p-[30px] text-center text-[#9AA7B8] text-[13.5px]">
           Brak osiedli w systemie. Osiedla pojawią się automatycznie po rejestracji klientów przez aplikację mobilną.
         </div>
       ) : (
@@ -67,7 +67,7 @@ export default function EstatesPage() {
             <Link
               key={e.id}
               href={`/estates/${e.id}`}
-              className="bg-white rounded-[18px] shadow-[var(--shadow-card)] p-5 transition-shadow hover:shadow-[var(--shadow-card-hover)] block"
+              className="bg-white rounded-[12px] border border-[#E9EEF5] p-5 transition-shadow hover:shadow-[var(--shadow-card-hover)] block"
             >
               <div className="flex items-center gap-[11px]">
                 <div

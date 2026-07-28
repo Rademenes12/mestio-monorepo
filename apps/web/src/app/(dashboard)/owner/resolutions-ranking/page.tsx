@@ -61,7 +61,7 @@ export default function ResolutionsRankingPage() {
   return (
     <div className="max-w-4xl mx-auto">
       {/* Gradientowy nagłówek */}
-      <div className="bg-gradient-to-br from-azure to-blueprint rounded-[18px] p-5 px-[22px] text-white mb-4">
+      <div className="bg-gradient-to-br from-azure to-blueprint rounded-[12px] p-5 px-[22px] text-white mb-4">
         <div className="font-[family-name:var(--font-heading)] font-bold text-base">
           Grywalizacja: kto najszybciej uchwala uchwały
         </div>
@@ -72,7 +72,7 @@ export default function ResolutionsRankingPage() {
       </div>
 
       {unavailable ? (
-        <div className="bg-white rounded-[18px] shadow-[var(--shadow-card)] p-[30px] text-center">
+        <div className="bg-white rounded-[12px] border border-[#E9EEF5] p-[30px] text-center">
           <div className="w-12 h-12 rounded-full bg-azure/10 flex items-center justify-center mx-auto mb-3">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3E7BD6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
               <path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4z" />
@@ -89,7 +89,7 @@ export default function ResolutionsRankingPage() {
           </p>
         </div>
       ) : rows.length === 0 ? (
-        <div className="bg-white rounded-[18px] shadow-[var(--shadow-card)] p-[30px] text-center text-[#9AA7B8] text-[13.5px]">
+        <div className="bg-white rounded-[12px] border border-[#E9EEF5] p-[30px] text-center text-[#9AA7B8] text-[13.5px]">
           Brak zamkniętych uchwał. Ranking pojawi się po pierwszych zakończonych głosowaniach.
         </div>
       ) : (
@@ -99,7 +99,7 @@ export default function ResolutionsRankingPage() {
             return (
               <div
                 key={row.estate.id}
-                className="bg-white rounded-2xl shadow-[var(--shadow-card)] p-4 px-[18px] flex items-center gap-[14px]"
+                className="bg-white rounded-2xl border border-[#E9EEF5] p-4 px-[18px] flex items-center gap-[14px]"
               >
                 <div className="w-[34px] font-[family-name:var(--font-heading)] font-bold text-lg text-center shrink-0">
                   {MEDALS[i] ?? ""}

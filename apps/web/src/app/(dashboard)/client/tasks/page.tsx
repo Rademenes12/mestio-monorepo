@@ -203,7 +203,7 @@ export default async function TasksPage({
       )}
 
       {!isTableReady ? (
-        <div className="bg-white rounded-[22px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-8 text-center">
+        <div className="bg-white rounded-[12px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-8 text-center">
           <p className="text-ink/50 text-sm mb-2">
             Tabela zadań nie istnieje jeszcze w bazie
           </p>
@@ -216,14 +216,14 @@ export default async function TasksPage({
           </p>
         </div>
       ) : tasks && tasks.length === 0 ? (
-        <div className="bg-white rounded-[22px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-8 text-center">
+        <div className="bg-white rounded-[12px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-8 text-center">
           <p className="text-ink/50 text-sm">Brak zadań w tej kategorii</p>
           <p className="text-ink/35 text-[12.5px] mt-1">
             Kliknij „Nowe zadanie”, aby dodać pierwsze
           </p>
         </div>
       ) : (
-        <div className="bg-white rounded-[22px] shadow-[0_2px_12px_rgba(14,26,43,.06)] overflow-hidden">
+        <div className="bg-white rounded-[12px] shadow-[0_2px_12px_rgba(14,26,43,.06)] overflow-hidden">
           <div className="divide-y divide-ink/5">
             {(tasks as DbTask[])?.map((t) => {
               const isOverdue =
@@ -284,7 +284,7 @@ export default async function TasksPage({
           Zadania wewnętrzne cykliczne
         </h2>
         {internalTasks.length === 0 ? (
-          <div className="bg-white rounded-[22px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-8 text-center">
+          <div className="bg-white rounded-[12px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-8 text-center">
             <p className="text-ink/45 text-[12.5px]">
               Brak zadań wewnętrznych. Dodaj np. coroczną polisę OC budynku.
             </p>

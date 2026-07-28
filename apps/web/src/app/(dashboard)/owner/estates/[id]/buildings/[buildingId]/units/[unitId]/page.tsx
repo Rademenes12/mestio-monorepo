@@ -113,7 +113,7 @@ export default function UnitDetailPage({
     return (
       <div className="space-y-4 animate-pulse">
         <div className="h-8 w-48 bg-white/50 rounded-lg" />
-        <div className="h-48 bg-white rounded-2xl shadow-[var(--shadow-card)]" />
+        <div className="h-48 bg-white rounded-2xl border border-[#E9EEF5]" />
       </div>
     );
   }
@@ -140,7 +140,7 @@ export default function UnitDetailPage({
       </div>
 
       {/* Unit info card */}
-      <div className="bg-white rounded-2xl shadow-[var(--shadow-card)] p-6 space-y-5">
+      <div className="bg-white rounded-2xl border border-[#E9EEF5] p-6 space-y-5">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="font-heading font-bold text-xl text-ink">
@@ -184,7 +184,7 @@ export default function UnitDetailPage({
       </div>
 
       {/* Residents */}
-      <div className="bg-white rounded-2xl shadow-[var(--shadow-card)] p-6">
+      <div className="bg-white rounded-2xl border border-[#E9EEF5] p-6">
         <div className="flex items-center justify-between mb-4">
           <h2 className="font-heading font-semibold text-[16px] text-ink">Mieszkańcy</h2>
           <button

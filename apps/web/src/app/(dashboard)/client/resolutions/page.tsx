@@ -80,7 +80,7 @@ export default async function ResolutionsPage() {
             suggestedNumber={suggestedNumber}
           />
         </div>
-        <div className="bg-white rounded-[22px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-8 text-center">
+        <div className="bg-white rounded-[12px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-8 text-center">
           <p className="text-ink/50 text-sm mb-2">
             Nie udało się wczytać uchwał
           </p>

@@ -45,7 +45,7 @@ export default async function ReportDetailPage({
         >
           ← Wróć do tablicy
         </Link>
-        <div className="bg-white rounded-[22px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-12 text-center">
+        <div className="bg-white rounded-[12px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-12 text-center">
           <p className="text-ink/50">Zgłoszenie nie zostało znalezione</p>
         </div>
       </div>
@@ -129,7 +129,7 @@ function ReportHeader({ report }: { report: Report }) {
   const priorityConfig = PRIORITY_CONFIG[report.priority as ReportPriority];
 
   return (
-    <div className="bg-white rounded-[22px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-6">
+    <div className="bg-white rounded-[12px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-6">
       <div className="flex items-center gap-2 mb-3 flex-wrap">
         <span className="text-[12.5px] font-mono text-ink/45">
           {report.display_id ?? report.id.slice(0, 8)}
@@ -178,7 +178,7 @@ function StatusStepper({ currentStatus }: { currentStatus: ReportStatus }) {
   ];
 
   return (
-    <div className="bg-white rounded-[22px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-6">
+    <div className="bg-white rounded-[12px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-6">
       <h3 className="text-[13px] font-semibold text-ink/60 mb-5">Status zgłoszenia</h3>
       <div className="flex items-center">
         {steps.map((step, i) => {
@@ -303,7 +303,7 @@ function StatusStepper({ currentStatus }: { currentStatus: ReportStatus }) {
 
 function ReportDescription({ description }: { description: string }) {
   return (
-    <div className="bg-white rounded-[22px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-6">
+    <div className="bg-white rounded-[12px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-6">
       <h3 className="text-[13px] font-semibold text-ink/60 mb-3">Opis zgłoszenia</h3>
       <p className="text-sm text-ink/80 whitespace-pre-wrap leading-relaxed">
         {description}
@@ -314,7 +314,7 @@ function ReportDescription({ description }: { description: string }) {
 
 function ReporterInfo({ report }: { report: Report }) {
   return (
-    <div className="bg-white rounded-[22px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-6">
+    <div className="bg-white rounded-[12px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-6">
       <h3 className="text-[13px] font-semibold text-ink/60 mb-3">
         Dane zgłaszającego
       </h3>
@@ -346,7 +346,7 @@ function InfoField({
 
 function PhotoSection({ path }: { path: string }) {
   return (
-    <div className="bg-white rounded-[22px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-6">
+    <div className="bg-white rounded-[12px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-6">
       <h3 className="text-[13px] font-semibold text-ink/60 mb-3">Zdjęcie</h3>
       <img
         src={path}
@@ -369,7 +369,7 @@ function ResidentMessagesSection({
   const residentMsgs = comments.filter((c) => !c.is_internal);
 
   return (
-    <div className="bg-white rounded-[22px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-6">
+    <div className="bg-white rounded-[12px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-6">
       <div className="flex items-center gap-2 mb-4 flex-wrap">
         <h3 className="text-[13px] font-semibold text-ink/70">
           Wiadomość do mieszkańca
@@ -426,7 +426,7 @@ function SideActions({
 }) {
   return (
     <>
-      <div className="bg-white rounded-[22px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-5">
+      <div className="bg-white rounded-[12px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-5">
         <h3 className="text-[13px] font-semibold text-ink/60 mb-4">
           Zmień status
         </h3>
@@ -445,7 +445,7 @@ function SideActions({
         </div>
       </div>
 
-      <div className="bg-white rounded-[22px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-5">
+      <div className="bg-white rounded-[12px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-5">
         <h3 className="text-[13px] font-semibold text-ink/60 mb-3">
           Przypisany serwisant
         </h3>
@@ -485,7 +485,7 @@ function SideActions({
         )}
       </div>
 
-      <div className="bg-white rounded-[22px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-5">
+      <div className="bg-white rounded-[12px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-5">
         <div className="flex items-center gap-2 mb-3 flex-wrap">
           <h3 className="text-[13px] font-semibold text-ink/70">Notatki zespołu</h3>
           <span className="text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-[#EFF2F6] text-[#6B7A90]">
@@ -516,7 +516,7 @@ function SideActions({
         />
       </div>
 
-      <div className="bg-white rounded-[22px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-5">
+      <div className="bg-white rounded-[12px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-5">
         <h3 className="text-[13px] font-semibold text-ink/60 mb-3">
           Historia zdarzeń
         </h3>

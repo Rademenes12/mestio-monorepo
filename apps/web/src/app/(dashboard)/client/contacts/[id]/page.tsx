@@ -34,7 +34,7 @@ export default async function ContactDetailPage({
         <Link href="/contacts" className="text-sm text-azure hover:underline">
           ← Wróć do kontaktów
         </Link>
-        <div className="bg-white rounded-[22px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-12 text-center">
+        <div className="bg-white rounded-[12px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-12 text-center">
           <p className="text-ink/50">Mieszkaniec nie został znaleziony</p>
         </div>
       </div>
@@ -56,7 +56,7 @@ export default async function ContactDetailPage({
         <Link href="/contacts" className="text-sm text-azure hover:underline">
           ← Wróć do kontaktów
         </Link>
-        <div className="bg-white rounded-[22px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-12 text-center">
+        <div className="bg-white rounded-[12px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-12 text-center">
           <p className="text-ink/50">Mieszkaniec nie został znaleziony</p>
         </div>
       </div>
@@ -103,7 +103,7 @@ export default async function ContactDetailPage({
 
       <div className="flex gap-6 items-start">
         <div className="flex-1 space-y-6">
-          <div className="bg-white rounded-[22px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-6">
+          <div className="bg-white rounded-[12px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-6">
             <div className="flex items-center gap-4 mb-6">
               <div className="w-14 h-14 rounded-full bg-azure/10 flex items-center justify-center">
                 <span className="text-xl font-heading font-bold text-azure">
@@ -191,14 +191,14 @@ export default async function ContactDetailPage({
             />
           </div>
 
-          <div className="bg-white rounded-[22px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-6">
+          <div className="bg-white rounded-[12px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-6">
             <h3 className="text-[13px] font-semibold text-ink/60 mb-3">Zgłoszenia</h3>
             <ReportList userId={id} estateId={residentEstateId} />
           </div>
         </div>
 
         <div className="w-72 shrink-0 space-y-4 sticky top-24">
-          <div className="bg-white rounded-[22px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-5">
+          <div className="bg-white rounded-[12px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-5">
             <h3 className="text-[13px] font-semibold text-ink/60 mb-3">
               Informacje
             </h3>

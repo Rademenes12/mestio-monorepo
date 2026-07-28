@@ -53,7 +53,7 @@ export default async function ContactsPage() {
         </div>
       </div>
 
-      <div className="bg-white rounded-[22px] shadow-[0_2px_12px_rgba(14,26,43,.06)] overflow-hidden">
+      <div className="bg-white rounded-[12px] shadow-[0_2px_12px_rgba(14,26,43,.06)] overflow-hidden">
         {rlist.length === 0 ? (
           <div className="p-12 text-center">
             <p className="text-ink/50 text-sm">Brak mieszkańców w bazie</p>

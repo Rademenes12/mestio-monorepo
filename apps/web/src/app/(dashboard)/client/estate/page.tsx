@@ -65,7 +65,7 @@ export default async function EstatePage() {
                 </h2>
 
                 {estateBuildings.length === 0 ? (
-                  <div className="bg-white rounded-[22px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-8 text-center">
+                  <div className="bg-white rounded-[12px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-8 text-center">
                     <p className="text-sm text-ink/30">
                       Brak budynków — dodaj pierwszy w SQL Editor lub przez
                       aplikację
@@ -82,7 +82,7 @@ export default async function EstatePage() {
                       return (
                         <div
                           key={building.id}
-                          className="bg-white rounded-[22px] shadow-[0_2px_12px_rgba(14,26,43,.06)] overflow-hidden"
+                          className="bg-white rounded-[12px] shadow-[0_2px_12px_rgba(14,26,43,.06)] overflow-hidden"
                         >
                           <div className="px-6 py-4 bg-ink/3 flex items-center gap-3">
                             <span className="text-lg">
@@ -186,7 +186,7 @@ export default async function EstatePage() {
           })}
         </div>
       ) : (
-        <div className="bg-white rounded-[22px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-12 text-center">
+        <div className="bg-white rounded-[12px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-12 text-center">
           <p className="text-ink/50 text-sm">
             Brak osiedli — skontaktuj się z administratorem systemu
           </p>

@@ -70,7 +70,7 @@ export default function HeroSection() {
               Zgłoszenia usterek na osiedlu
               <br />
               <span
-                className="bg-gradient-to-r from-[#8864f0] to-[#4da3ff] bg-clip-text text-transparent"
+                className="bg-gradient-to-r from-[#3E7BD6] to-[#173A6A] bg-clip-text text-transparent"
               >
                 wreszcie pod kontrolą
               </span>
@@ -92,7 +92,7 @@ export default function HeroSection() {
                 href="/zamow"
                 className="inline-flex items-center gap-2 text-sm font-semibold text-white px-5 py-3 rounded-xl transition-all duration-200 hover:brightness-110"
                 style={{
-                  background: `linear-gradient(135deg, #8864f0, ${colors.accent})`,
+                  background: `linear-gradient(135deg, #3E7BD6, ${colors.darkBlue})`,
                   boxShadow: `0 8px 24px ${colors.accent}35`,
                 }}
               >

@@ -9,7 +9,7 @@ export default function AppError({
 }) {
   return (
     <div className="flex items-center justify-center min-h-[60vh]">
-      <div className="bg-white rounded-[22px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-8 max-w-md text-center">
+      <div className="bg-white rounded-[12px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-8 max-w-md text-center">
         <span className="text-4xl block mb-4">⚠️</span>
         <h2 className="text-lg font-heading font-bold text-ink mb-2">
           Wystąpił błąd

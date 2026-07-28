@@ -49,7 +49,7 @@ export default function NewsletterSignup() {
   };
 
   return (
-    <div className="mt-[26px] bg-gradient-to-br from-blueprint to-ink rounded-[22px] p-[26px_28px]">
+    <div className="mt-[26px] bg-gradient-to-br from-blueprint to-ink rounded-[12px] p-[26px_28px]">
       <div className="flex items-center justify-between gap-5 flex-wrap">
         <div className="max-w-[520px]">
           <h2 className="font-heading font-bold text-[19px] text-white">

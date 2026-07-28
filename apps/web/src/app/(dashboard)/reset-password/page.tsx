@@ -50,7 +50,7 @@ export default function ResetPasswordPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-ink">
       <div className="w-full max-w-md px-6">
-        <div className="bg-white rounded-[var(--radius-card)] shadow-[var(--shadow-card)] p-10">
+        <div className="bg-white rounded-[var(--radius-card)] border border-[#E9EEF5] p-10">
           <div className="text-center mb-8">
             <h1 className="text-2xl font-bold text-ink mb-1">Nowe hasło</h1>
             <p className="text-sm text-ink/50">Ustaw hasło do panelu właściciela</p>

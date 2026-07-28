@@ -168,7 +168,7 @@ function OnboardingContent() {
         ))}
       </div>
 
-      <div className="bg-white rounded-[22px] shadow-[0_2px_14px_rgba(14,26,43,.06)] p-8">
+      <div className="bg-white rounded-[12px] border border-[#E9EEF5] p-8">
         <div className="font-mono text-[10px] tracking-[0.6px] uppercase text-[#8A98AB] mb-2">
           Krok {step} z {total}
         </div>

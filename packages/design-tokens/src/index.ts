@@ -83,18 +83,16 @@ export const spacing = {
 
 export const radius = {
   sm: '4px',
-  md: '11px',
-  lg: '13px',
-  xl: '22px',
+  md: '8px',
+  lg: '12px',
+  xl: '12px',
   full: '9999px',
 } as const;
 
 export const shadows = {
-  card: '0 2px 14px rgba(14, 26, 43, 0.06)',
   elevated: '0 30px 60px rgba(14, 26, 43, 0.12)',
-  glow: '0 10px 24px rgba(23, 58, 106, 0.28)',
-  cardHover: '0 4px 16px rgba(14, 26, 43, 0.10)',
-  sidebar: '0 2px 12px rgba(14, 26, 43, 0.06)',
+  modal: '0 20px 60px rgba(14, 26, 43, 0.15)',
+  tooltip: '0 4px 12px rgba(14, 26, 43, 0.10)',
   darkGlow: '0 24px 50px rgba(23, 58, 106, 0.28)',
 } as const;
 

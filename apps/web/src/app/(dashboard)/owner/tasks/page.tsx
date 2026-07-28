@@ -88,7 +88,7 @@ export default function TasksPage() {
       {/* ── Add task form ── */}
       <form
         onSubmit={handleAdd}
-        className="bg-white rounded-2xl shadow-[var(--shadow-card)] p-5 flex gap-3 items-end"
+        className="bg-white rounded-2xl border border-[#E9EEF5] p-5 flex gap-3 items-end"
       >
         <div className="flex-1">
           <label className="text-[10px] font-semibold uppercase tracking-[.5px] text-[#8A98AB] mb-1.5 block">
@@ -155,11 +155,11 @@ export default function TasksPage() {
       {loading ? (
         <div className="space-y-2 animate-pulse">
           {[0, 1, 2, 3].map((i) => (
-            <div key={i} className="h-16 bg-white rounded-2xl shadow-[var(--shadow-card)]" />
+            <div key={i} className="h-16 bg-white rounded-2xl border border-[#E9EEF5]" />
           ))}
         </div>
       ) : tasks.length === 0 ? (
-        <div className="bg-white rounded-2xl shadow-[var(--shadow-card)] p-10 text-center">
+        <div className="bg-white rounded-2xl border border-[#E9EEF5] p-10 text-center">
           <p className="text-[#9AA7B8] text-[14px]">Brak zadań</p>
           <p className="text-[#CBD5E1] text-[12px] mt-1">
             {filter === "pending"
@@ -175,7 +175,7 @@ export default function TasksPage() {
             return (
               <div
                 key={t.id}
-                className={`bg-white rounded-2xl shadow-[var(--shadow-card)] px-4 py-3 flex items-center gap-3 transition-all ${
+                className={`bg-white rounded-2xl border border-[#E9EEF5] px-4 py-3 flex items-center gap-3 transition-all ${
                   t.status === "done" ? "opacity-55" : ""
                 }`}
               >

@@ -5,8 +5,9 @@ import { colors } from '@mestio/design-tokens';
 import type { ReactNode } from 'react';
 
 /**
- * KpiCard — Erste "Szybki podgląd" inspired KPI tile.
+ * KpiCard — Border-only KPI tile inspired by Linear.
  * Shows metric, label, optional trend, and optional extra info.
+ * No shadow, no lift on hover — just subtle border highlight via CSS.
  */
 export interface KpiCardProps {
   label: string;
@@ -49,6 +50,7 @@ export function KpiCard({
           ? colors.textMuted
           : undefined;
 
+  const interactive = !!(onClick || href);
   const Component = href ? 'a' : onClick ? 'button' : 'div';
   const extraProps =
     href
@@ -60,28 +62,13 @@ export function KpiCard({
   return (
     <Component
       {...extraProps}
-      className="group relative overflow-hidden rounded-2xl border p-5 text-left transition-all duration-200 w-full"
+      className={`group relative overflow-hidden rounded-[8px] border p-5 text-left transition-all duration-200 w-full ${interactive ? 'card-hover-interactive' : ''}`}
       style={{
+        '--card-accent': accentColor,
         background: colors.card,
         borderColor: colors.cardBorder,
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.borderColor = `${accentColor}40`;
-        e.currentTarget.style.transform = 'translateY(-1px)';
-        e.currentTarget.style.boxShadow = `0 4px 20px rgba(0,0,0,0.3)`;
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.borderColor = colors.cardBorder;
-        e.currentTarget.style.transform = '';
-        e.currentTarget.style.boxShadow = '';
-      }}
+      } as React.CSSProperties}
     >
-      {/* Accent line at top */}
-      <div
-        className="absolute top-0 left-4 right-4 h-0.5 rounded-full opacity-60"
-        style={{ background: accentColor }}
-      />
-
       {/* Header row */}
       <div className="flex items-center justify-between mb-3">
         <span

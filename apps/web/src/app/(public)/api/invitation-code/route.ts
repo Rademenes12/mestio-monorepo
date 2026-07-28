@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getStripe } from "@/lib/stripe";
 import { supabaseAdmin } from "@/lib/supabase-admin";
+import { createClient } from "@/lib/supabase/server";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -11,6 +12,19 @@ export async function GET(request: NextRequest) {
   }
 
   try {
+    // Auth check: user must be logged in
+    const supabase = await createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      return NextResponse.json(
+        { error: "Nie jesteś zalogowany" },
+        { status: 401 }
+      );
+    }
+
     const session = await getStripe().checkout.sessions.retrieve(sessionId);
 
     if (session.payment_status !== "paid") {
@@ -20,9 +34,17 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const userId = session.client_reference_id;
-    if (!userId) {
+    const stripeUserId = session.client_reference_id;
+    if (!stripeUserId) {
       return NextResponse.json({ error: "Brak user_id" }, { status: 400 });
+    }
+
+    // Verify the authenticated user matches the Stripe session owner
+    if (user.id !== stripeUserId) {
+      return NextResponse.json(
+        { error: "Brak dostępu do tego kodu" },
+        { status: 403 }
+      );
     }
 
     const adminClient = supabaseAdmin();
@@ -30,7 +52,7 @@ export async function GET(request: NextRequest) {
     const { data: userEstate } = await adminClient
       .from("fixflow_user_estates")
       .select("estate_id")
-      .eq("user_id", userId)
+      .eq("user_id", user.id)
       .eq("role", "admin")
       .single();
 

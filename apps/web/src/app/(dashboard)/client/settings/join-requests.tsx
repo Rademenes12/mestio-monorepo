@@ -10,7 +10,7 @@ export function JoinRequests({
   estateIds: string[];
 }) {
   return (
-    <div className="bg-white rounded-[22px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-6">
+    <div className="bg-white rounded-[12px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-6">
       <h2 className="font-heading font-semibold text-ink mb-4">
         Prośby o dołączenie
       </h2>

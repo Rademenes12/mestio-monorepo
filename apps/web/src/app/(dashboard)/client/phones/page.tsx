@@ -42,7 +42,7 @@ export default async function PhonesPage() {
       </div>
 
       {clist.length === 0 ? (
-        <div className="bg-white rounded-[22px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-12 text-center">
+        <div className="bg-white rounded-[12px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-12 text-center">
           <p className="text-ink/50 text-sm">Brak kontaktów</p>
         </div>
       ) : (
@@ -62,7 +62,7 @@ export default async function PhonesPage() {
                   {catContacts.map((c) => (
                     <div
                       key={c.id}
-                      className="bg-white rounded-[22px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-5 flex items-center gap-4"
+                      className="bg-white rounded-[12px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-5 flex items-center gap-4"
                     >
                       <div className="w-10 h-10 rounded-full bg-azure/10 flex items-center justify-center shrink-0">
                         <span className="text-sm font-medium text-azure">

@@ -33,7 +33,11 @@ export async function middleware(request: NextRequest) {
   }
 
   // Protected routes require login
-  if (pathname.startsWith("/owner/") || pathname.startsWith("/client/")) {
+  if (
+    pathname.startsWith("/owner/") ||
+    pathname.startsWith("/client/") ||
+    pathname.startsWith("/resident/")
+  ) {
     if (!user) {
       const loginUrl = new URL("/login", request.url);
       loginUrl.searchParams.set("redirect", pathname);
@@ -59,7 +63,26 @@ export async function middleware(request: NextRequest) {
         if (role === "manager" || role === "serwis" || role === "ochrona") {
           return NextResponse.redirect(new URL("/client/", request.url));
         }
-        // No role or unknown role — still allow (redirect handled by login)
+        if (role === "resident") {
+          return NextResponse.redirect(new URL("/resident/", request.url));
+        }
+      }
+    }
+
+    // /client/* — redirect residents to /resident/
+    if (pathname.startsWith("/client/")) {
+      if (role === "resident") {
+        return NextResponse.redirect(new URL("/resident/", request.url));
+      }
+    }
+
+    // /resident/* — redirect non-residents away
+    if (pathname.startsWith("/resident/")) {
+      if (role === "owner" || role === "admin") {
+        return NextResponse.redirect(new URL("/owner/dashboard", request.url));
+      }
+      if (role === "manager" || role === "serwis" || role === "ochrona") {
+        return NextResponse.redirect(new URL("/client/", request.url));
       }
     }
 

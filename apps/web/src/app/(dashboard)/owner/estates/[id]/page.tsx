@@ -83,7 +83,7 @@ export default function EstateDetailPage({
         <div className="h-8 w-48 bg-white/50 rounded-lg" />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {[0, 1, 2].map((i) => (
-            <div key={i} className="h-40 bg-white rounded-2xl shadow-[var(--shadow-card)]" />
+            <div key={i} className="h-40 bg-white rounded-2xl border border-[#E9EEF5]" />
           ))}
         </div>
       </div>
@@ -119,7 +119,7 @@ export default function EstateDetailPage({
 
       {/* Add building form */}
       {showAddBuilding && (
-        <div className="bg-white rounded-2xl shadow-[var(--shadow-card)] p-5">
+        <div className="bg-white rounded-2xl border border-[#E9EEF5] p-5">
           <div className="flex items-center gap-3">
             <input
               value={newBuildingName}
@@ -147,7 +147,7 @@ export default function EstateDetailPage({
 
       {/* Buildings grid */}
       {buildings.length === 0 ? (
-        <div className="bg-white rounded-2xl shadow-[var(--shadow-card)] p-[30px] text-center text-[#9AA7B8] text-[13.5px]">
+        <div className="bg-white rounded-2xl border border-[#E9EEF5] p-[30px] text-center text-[#9AA7B8] text-[13.5px]">
           <div className="w-12 h-12 rounded-xl bg-[#F4F7FB] flex items-center justify-center mx-auto mb-3">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9AA7B8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
               <path d="M3 21h18M3 10l9-7 9 7M5 10v11h4V14h6v7h4V10" />
@@ -165,7 +165,7 @@ export default function EstateDetailPage({
               <Link
                 key={building.id}
                 href={`/estates/${id}/buildings/${building.id}`}
-                className="bg-white rounded-2xl shadow-[var(--shadow-card)] p-5 hover:shadow-lg transition-shadow group"
+                className="bg-white rounded-2xl border border-[#E9EEF5] p-5 hover:shadow-lg transition-shadow group"
               >
                 <div className="flex items-start justify-between mb-3">
                   <div>

@@ -6,7 +6,7 @@ export function Footer() {
       <div style={{ maxWidth: "1160px", margin: "0 auto", padding: "44px 24px 30px", display: "grid", gridTemplateColumns: "1.4fr 1fr 1fr 1fr", gap: "30px" }}>
         <div>
           <div style={{ display: "flex", alignItems: "center", gap: "9px", marginBottom: "12px" }}>
-            <div style={{ width: "30px", height: "30px", borderRadius: "9px", background: "linear-gradient(135deg,#3E7BD6,#173A6A)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <div style={{ width: "30px", height: "30px", borderRadius: "9px", background: "#3E7BD6", display: "flex", alignItems: "center", justifyContent: "center" }}>
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M14 7a4 4 0 0 1-5.3 5.3L4 17l3 3 4.7-4.7A4 4 0 0 0 17 10l-2.2 2.2-2-2L15 8z"/>
               </svg>

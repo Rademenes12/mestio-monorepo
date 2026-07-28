@@ -143,7 +143,7 @@ export default function ReportsPage() {
   return (
     <div className="max-w-6xl mx-auto space-y-[14px]">
       {/* Pasek filtrów (wzorzec HubSpot) */}
-      <div className="bg-white rounded-[18px] shadow-[var(--shadow-card)] p-4 flex flex-wrap items-end gap-3">
+      <div className="bg-white rounded-[12px] border border-[#E9EEF5] p-4 flex flex-wrap items-end gap-3">
         <div>
           <div className="font-[family-name:var(--font-mono)] text-[9px] text-[#8A98AB] uppercase mb-1">Utworzono od</div>
           <input type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} className={filterSel} />
@@ -196,7 +196,7 @@ export default function ReportsPage() {
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-[14px]">
         {kpis.map((k) => (
-          <div key={k.label} className="bg-white rounded-[18px] shadow-[var(--shadow-card)] p-[18px]">
+          <div key={k.label} className="bg-white rounded-[12px] border border-[#E9EEF5] p-[18px]">
             <div className="font-[family-name:var(--font-mono)] text-[10px] text-[#8A98AB] uppercase tracking-[.4px]">
               {k.label}
             </div>
@@ -209,7 +209,7 @@ export default function ReportsPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-[1.3fr_1fr] gap-[14px]">
-        <div className="bg-white rounded-[18px] shadow-[var(--shadow-card)] p-5">
+        <div className="bg-white rounded-[12px] border border-[#E9EEF5] p-5">
           <div className="font-[family-name:var(--font-heading)] font-semibold text-[15px] text-ink">
             Lejek sprzedażowy — konwersja między etapami
           </div>
@@ -238,7 +238,7 @@ export default function ReportsPage() {
           </div>
         </div>
 
-        <div className="bg-white rounded-[18px] shadow-[var(--shadow-card)] p-5">
+        <div className="bg-white rounded-[12px] border border-[#E9EEF5] p-5">
           <div className="font-[family-name:var(--font-heading)] font-semibold text-[15px] text-ink">
             Klienci wg planu
           </div>
@@ -271,7 +271,7 @@ export default function ReportsPage() {
         </div>
       </div>
 
-      <div className="bg-white rounded-[18px] shadow-[var(--shadow-card)] p-5">
+      <div className="bg-white rounded-[12px] border border-[#E9EEF5] p-5">
         <div className="flex items-center justify-between">
           <div className="font-[family-name:var(--font-heading)] font-semibold text-[15px] text-ink">
             Umowy kończące się wkrótce (ryzyko odnowienia)

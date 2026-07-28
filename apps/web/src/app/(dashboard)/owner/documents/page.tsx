@@ -235,7 +235,7 @@ export default function DocumentsPage() {
               <button
                 key={d.key}
                 onClick={() => setSelKey(d.key)}
-                className="bg-white rounded-2xl shadow-[var(--shadow-card)] p-4 px-[17px] text-left transition-colors"
+                className="bg-white rounded-2xl border border-[#E9EEF5] p-4 px-[17px] text-left transition-colors"
                 style={{ border: `2px solid ${active ? d.color : "transparent"}` }}
               >
                 <div className="flex items-center gap-2">
@@ -264,7 +264,7 @@ export default function DocumentsPage() {
 
         {/* Prawa kolumna: szczegóły wzoru */}
         <div className="flex flex-col gap-[14px]">
-          <div className="bg-white rounded-[18px] shadow-[var(--shadow-card)] p-5">
+          <div className="bg-white rounded-[12px] border border-[#E9EEF5] p-5">
             <div className="flex items-center justify-between">
               <div className="font-[family-name:var(--font-heading)] font-semibold text-[15px] text-ink">
                 {selDoc.label}
@@ -322,7 +322,7 @@ export default function DocumentsPage() {
           </div>
 
           {/* Wygenerowane dokumenty tego typu */}
-          <div className="bg-white rounded-[18px] shadow-[var(--shadow-card)] p-5">
+          <div className="bg-white rounded-[12px] border border-[#E9EEF5] p-5">
             <div className="font-[family-name:var(--font-mono)] text-[10px] tracking-[.4px] text-[#8A98AB] uppercase mb-3">
               Wygenerowane — {selDoc.label}
             </div>

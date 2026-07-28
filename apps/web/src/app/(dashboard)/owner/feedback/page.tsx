@@ -104,7 +104,7 @@ export default function FeedbackPage() {
   return (
     <div className="max-w-4xl mx-auto space-y-4">
       {showForm && (
-        <div className="bg-white rounded-[18px] shadow-[var(--shadow-card)] p-6 space-y-4">
+        <div className="bg-white rounded-[12px] border border-[#E9EEF5] p-6 space-y-4">
           <div>
             <label className="font-[family-name:var(--font-mono)] text-[10px] tracking-[.5px] uppercase text-[#8A98AB] mb-[6px] block">Tytuł</label>
             <input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className="w-full text-sm bg-[#F4F7FB] rounded-[11px] px-3 py-[11px] text-ink outline-none" />

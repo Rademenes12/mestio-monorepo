@@ -305,7 +305,7 @@ export default function CustomerDetailPage({
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-white rounded-[var(--radius-card)] shadow-[var(--shadow-card)] p-6">
+          <div className="bg-white rounded-[var(--radius-card)] border border-[#E9EEF5] p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold text-ink">Dane firmy</h2>
               <button
@@ -417,7 +417,7 @@ export default function CustomerDetailPage({
             )}
           </div>
 
-          <div className="bg-white rounded-[var(--radius-card)] shadow-[var(--shadow-card)] p-6">
+          <div className="bg-white rounded-[var(--radius-card)] border border-[#E9EEF5] p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold text-ink">Timeline</h2>
               <span className="text-[10.5px] text-ink/40">notatki · e-maile · faktury · dokumenty · etapy</span>
@@ -473,7 +473,7 @@ export default function CustomerDetailPage({
         </div>
 
         <div className="space-y-6">
-          <div className="bg-white rounded-[var(--radius-card)] shadow-[var(--shadow-card)] p-6">
+          <div className="bg-white rounded-[var(--radius-card)] border border-[#E9EEF5] p-6">
             <h2 className="text-sm font-semibold text-ink mb-3">Zmień etap</h2>
             <select
               value={lead.stage}
@@ -488,7 +488,7 @@ export default function CustomerDetailPage({
             </select>
           </div>
 
-          <div className="bg-white rounded-[var(--radius-card)] shadow-[var(--shadow-card)] p-6">
+          <div className="bg-white rounded-[var(--radius-card)] border border-[#E9EEF5] p-6">
             <h2 className="text-sm font-semibold text-ink mb-3">Zadania</h2>
             <div className="flex gap-2 mb-3">
               <input
@@ -534,7 +534,7 @@ export default function CustomerDetailPage({
             )}
           </div>
 
-          <div className="bg-white rounded-[var(--radius-card)] shadow-[var(--shadow-card)] p-6">
+          <div className="bg-white rounded-[var(--radius-card)] border border-[#E9EEF5] p-6">
             <h2 className="text-sm font-semibold text-ink mb-3">Faktury</h2>
             {invoices.length === 0 ? (
               <p className="text-xs text-ink/40 text-center py-4">Brak faktur.</p>
@@ -576,7 +576,7 @@ export default function CustomerDetailPage({
             )}
           </div>
 
-          <div className="bg-white rounded-[var(--radius-card)] shadow-[var(--shadow-card)] p-6">
+          <div className="bg-white rounded-[var(--radius-card)] border border-[#E9EEF5] p-6">
             <h2 className="text-sm font-semibold text-ink mb-2">RODO</h2>
             <p className="text-xs text-ink/40 mb-3 leading-relaxed">
               Realizuje prawo do bycia zapomnianym (art. 17 RODO). Usuwa dane osobowe osoby kontaktowej,

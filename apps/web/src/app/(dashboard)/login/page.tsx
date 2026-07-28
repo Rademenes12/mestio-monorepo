@@ -12,10 +12,10 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [resetSent, setResetSent] = useState(false);
 
-  // Get redirect URL from query params
-  const redirectTo = typeof window !== "undefined"
-    ? new URLSearchParams(window.location.search).get("redirect") || "/"
-    : "/";
+  const redirectTo =
+    typeof window !== "undefined"
+      ? new URLSearchParams(window.location.search).get("redirect") || "/"
+      : "/";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,7 +34,6 @@ export default function LoginPage() {
       return;
     }
 
-    // After login, determine redirect based on user role
     const {
       data: { user },
     } = await supabase.auth.getUser();
@@ -48,14 +47,21 @@ export default function LoginPage() {
 
       const role = profile?.role || "";
 
-      if (role === "owner" || role === "admin") {
+      if (role === "owner") {
         router.push("/owner/dashboard");
-      } else if (role === "manager" || role === "serwis" || role === "ochrona") {
+      } else if (
+        role === "admin" ||
+        role === "manager" ||
+        role === "serwis" ||
+        role === "ochrona"
+      ) {
         router.push("/client/");
+      } else if (role === "resident") {
+        router.push("/resident/");
       } else if (redirectTo !== "/") {
         router.push(redirectTo);
       } else {
-        router.push("/client/");
+        router.push("/resident/");
       }
     } else {
       router.push(redirectTo);
@@ -87,40 +93,70 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-paper p-4">
-      <div className="w-full max-w-md">
-        <div className="text-center mb-10">
-          <h1 className="text-3xl font-heading font-bold text-text">Mestio</h1>
-          <p className="mt-2 text-text-secondary">
-            Panel Zarządu / Administratora
+    <div
+      className="min-h-screen flex items-center justify-center p-4"
+      style={{ background: "#F6F8FB" }}
+    >
+      <div className="w-full max-w-sm">
+        {/* Logo + nagłówek */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-[8px] mb-4"
+            style={{ background: "#3E7BD6" }}>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff"
+              strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M14 7a4 4 0 0 1-5.3 5.3L4 17l3 3 4.7-4.7A4 4 0 0 0 17 10l-2.2 2.2-2-2L15 8z"/>
+            </svg>
+          </div>
+          <h1 className="text-2xl font-heading font-bold" style={{ color: "#0E1A2B" }}>
+            Zaloguj się do Mestio
+          </h1>
+          <p className="text-sm mt-1.5" style={{ color: "#7C8AA0" }}>
+            Panel zarządu, administracji i mieszkańców
           </p>
         </div>
 
-        <div className="bg-card border border-card-border rounded-[22px] shadow-card p-8">
-          <h2 className="text-xl font-heading font-semibold text-text mb-6">
-            Zaloguj się
-          </h2>
-
+        {/* Formularz */}
+        <div
+          className="bg-white rounded-[8px] p-6"
+          style={{
+            border: "1px solid #E9EEF5",
+          }}
+        >
           {resetSent ? (
-            <div className="space-y-4 text-center">
-              <p className="text-text font-medium">Sprawdź skrzynkę e-mail</p>
-              <p className="text-sm text-text-secondary">
+            <div className="space-y-4 text-center py-4">
+              <div
+                className="w-12 h-12 rounded-full flex items-center justify-center mx-auto"
+                style={{ background: "rgba(46,158,107,.12)" }}
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="#2E9E6B" strokeWidth="2.2" strokeLinecap="round"
+                  strokeLinejoin="round">
+                  <path d="M22 12a10 10 0 1 1-10-10" />
+                  <path d="M22 4 12 14.01 9 11" />
+                </svg>
+              </div>
+              <p className="font-medium" style={{ color: "#0E1A2B" }}>
+                Sprawdź skrzynkę e-mail
+              </p>
+              <p className="text-sm" style={{ color: "#7C8AA0" }}>
                 Wysłaliśmy link do resetu hasła na <strong>{email}</strong>
               </p>
               <button
                 type="button"
                 onClick={() => setResetSent(false)}
-                className="text-sm text-accent hover:text-accent-hover underline"
+                className="text-sm underline"
+                style={{ color: "#3E7BD6" }}
               >
                 Wróć do logowania
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium text-text-secondary mb-1.5"
+                  className="block text-sm font-medium mb-1.5"
+                  style={{ color: "#4A5A6E" }}
                 >
                   E-mail
                 </label>
@@ -131,15 +167,29 @@ export default function LoginPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   autoComplete="email"
-                  placeholder="admin@osiedle.pl"
-                  className="w-full px-4 py-2.5 rounded-xl border border-card-border bg-surface text-text placeholder:text-text-muted focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all"
+                  placeholder="twoj@email.pl"
+                  className="w-full px-4 py-2.5 rounded-[8px] text-sm transition-all"
+                  style={{
+                    background: "#F8F9FB",
+                    border: "1px solid #E9EEF5",
+                    color: "#0E1A2B",
+                  }}
+                  onFocus={(e) => {
+                    e.target.style.borderColor = "#3E7BD6";
+                    e.target.style.boxShadow = "0 0 0 3px rgba(62,123,214,.15)";
+                  }}
+                  onBlur={(e) => {
+                    e.target.style.borderColor = "#E9EEF5";
+                    e.target.style.boxShadow = "none";
+                  }}
                 />
               </div>
 
               <div>
                 <label
                   htmlFor="password"
-                  className="block text-sm font-medium text-text-secondary mb-1.5"
+                  className="block text-sm font-medium mb-1.5"
+                  style={{ color: "#4A5A6E" }}
                 >
                   Hasło
                 </label>
@@ -151,12 +201,32 @@ export default function LoginPage() {
                   required
                   autoComplete="current-password"
                   placeholder="••••••••"
-                  className="w-full px-4 py-2.5 rounded-xl border border-card-border bg-surface text-text placeholder:text-text-muted focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all"
+                  className="w-full px-4 py-2.5 rounded-[8px] text-sm transition-all"
+                  style={{
+                    background: "#F8F9FB",
+                    border: "1px solid #E9EEF5",
+                    color: "#0E1A2B",
+                  }}
+                  onFocus={(e) => {
+                    e.target.style.borderColor = "#3E7BD6";
+                    e.target.style.boxShadow = "0 0 0 3px rgba(62,123,214,.15)";
+                  }}
+                  onBlur={(e) => {
+                    e.target.style.borderColor = "#E9EEF5";
+                    e.target.style.boxShadow = "none";
+                  }}
                 />
               </div>
 
               {error && (
-                <div className="p-3 rounded-xl bg-error/10 text-error text-sm border border-error/20">
+                <div
+                  className="p-3 rounded-[8px] text-sm"
+                  style={{
+                    background: "rgba(239,68,68,.1)",
+                    color: "#EF4444",
+                    border: "1px solid rgba(239,68,68,.2)",
+                  }}
+                >
                   {error}
                 </div>
               )}
@@ -164,7 +234,10 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-2.5 rounded-xl bg-accent text-white font-medium hover:bg-accent-hover disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                className="w-full py-2.5 rounded-[8px] text-sm font-semibold text-white transition-all disabled:opacity-50 hover:brightness-110"
+                style={{
+                  background: "#3E7BD6",
+                }}
               >
                 {loading ? "Logowanie..." : "Zaloguj się"}
               </button>
@@ -173,7 +246,10 @@ export default function LoginPage() {
                 type="button"
                 onClick={handleForgotPassword}
                 disabled={loading}
-                className="w-full text-sm text-text-muted hover:text-accent transition-colors disabled:opacity-50"
+                className="w-full text-sm transition-colors disabled:opacity-50"
+                style={{ color: "#7C8AA0" }}
+                onMouseEnter={(e) => { e.currentTarget.style.color = "#3E7BD6" }}
+                onMouseLeave={(e) => { e.currentTarget.style.color = "#7C8AA0" }}
               >
                 Nie pamiętasz hasła?
               </button>
@@ -181,8 +257,9 @@ export default function LoginPage() {
           )}
         </div>
 
-        <p className="text-center text-sm text-text-muted mt-6">
-          Mestio Home — dostęp tylko dla zarządu i administratorów
+        {/* Stopka */}
+        <p className="text-center text-xs mt-6" style={{ color: "#9AA7B8" }}>
+          Mestio — system dla osiedli, zarządców i mieszkańców
         </p>
       </div>
     </div>

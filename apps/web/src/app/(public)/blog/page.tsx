@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 };
 
 const COVERS = [
-  "linear-gradient(135deg, #3E7BD6, #173A6A)",
+  "#3E7BD6",
   "linear-gradient(135deg, #F2A900, #C98800)",
   "linear-gradient(135deg, #2E9E6B, #173A6A)",
   "linear-gradient(135deg, #6B7A90, #173A6A)",
@@ -102,7 +102,7 @@ export default async function BlogPage() {
             <Link
               key={post.id}
               href={`/blog/${post.slug}`}
-              className="bg-white rounded-[22px] shadow-[0_2px_14px_rgba(14,26,43,.06)] overflow-hidden hover:shadow-[0_6px_20px_rgba(14,26,43,.10)] transition-shadow"
+              className="bg-white rounded-[12px] border border-[#E9EEF5] overflow-hidden hover:shadow-[0_6px_20px_rgba(14,26,43,.10)] transition-shadow"
             >
               <div
                 className="h-[140px]"

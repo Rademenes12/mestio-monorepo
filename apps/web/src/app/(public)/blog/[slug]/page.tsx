@@ -74,7 +74,7 @@ export async function generateMetadata({
 }
 
 const COVERS = [
-  "linear-gradient(135deg, #3E7BD6, #173A6A)",
+  "#3E7BD6",
   "linear-gradient(135deg, #F2A900, #C98800)",
   "linear-gradient(135deg, #2E9E6B, #173A6A)",
 ];
@@ -94,7 +94,7 @@ export default async function BlogPostPage({
   return (
     <div className="max-w-[820px] mx-auto px-6 py-[50px] pb-[70px]">
       <div
-        className="h-[200px] rounded-[22px] mb-6"
+        className="h-[200px] rounded-[12px] mb-6"
         style={{
           background: post.cover_color || COVERS[coverIdx],
         }}

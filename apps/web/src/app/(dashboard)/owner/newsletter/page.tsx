@@ -361,7 +361,7 @@ export default function NewsletterPage() {
   return (
     <div className="max-w-7xl mx-auto space-y-4">
       {/* Header */}
-      <div className="bg-gradient-to-br from-azure to-blueprint rounded-[18px] p-5 px-[22px] text-white">
+      <div className="bg-gradient-to-br from-azure to-blueprint rounded-[12px] p-5 px-[22px] text-white">
         <div className="font-[family-name:var(--font-heading)] font-bold text-base">Newsletter Manager</div>
         <div className="text-[12.5px] text-white/85 mt-[5px]">
           Profesjonalny system zarządzania newsletterami z zatwierdzeniami i podglądami
@@ -369,7 +369,7 @@ export default function NewsletterPage() {
       </div>
 
        {/* Quick Start Guide */}
-       <div className="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-[18px] border border-emerald-200/50 p-4">
+       <div className="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-[12px] border border-emerald-200/50 p-4">
          <div className="flex items-start gap-3">
            <div className="text-2xl shrink-0">💡</div>
            <div className="flex-1">
@@ -386,15 +386,15 @@ export default function NewsletterPage() {
 
        {/* Stats */}
        <div className="grid grid-cols-3 gap-3">
-         <div className="bg-white rounded-[18px] shadow-[var(--shadow-card)] p-4 text-center">
+         <div className="bg-white rounded-[12px] border border-[#E9EEF5] p-4 text-center">
            <div className="font-[family-name:var(--font-heading)] font-bold text-2xl text-ink">{subscribers.length}</div>
            <div className="text-[11px] text-[#8A98AB] mt-1">Łącznie subskrybentów</div>
          </div>
-         <div className="bg-white rounded-[18px] shadow-[var(--shadow-card)] p-4 text-center">
+         <div className="bg-white rounded-[12px] border border-[#E9EEF5] p-4 text-center">
            <div className="font-[family-name:var(--font-heading)] font-bold text-2xl text-success">{activeCount}</div>
            <div className="text-[11px] text-[#8A98AB] mt-1">Aktywni</div>
          </div>
-         <div className="bg-white rounded-[18px] shadow-[var(--shadow-card)] p-4 text-center">
+         <div className="bg-white rounded-[12px] border border-[#E9EEF5] p-4 text-center">
            <div className="font-[family-name:var(--font-heading)] font-bold text-2xl text-danger">{unsubscribedCount}</div>
            <div className="text-[11px] text-[#8A98AB] mt-1">Wypisani</div>
          </div>
@@ -404,7 +404,7 @@ export default function NewsletterPage() {
         {/* Left Column: Content Generation */}
         <div className="col-span-2 space-y-4">
           {/* AI Generator */}
-          <div className="bg-white rounded-[18px] shadow-[var(--shadow-card)] p-4 space-y-3">
+          <div className="bg-white rounded-[12px] border border-[#E9EEF5] p-4 space-y-3">
             <div className="font-[family-name:var(--font-mono)] text-[10px] tracking-[.5px] uppercase text-[#8A98AB]">
               🤖 Generuj z AI
             </div>
@@ -415,12 +415,12 @@ export default function NewsletterPage() {
                 onChange={(e) => setAiTopic(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleGenerateNewsletter()}
                 placeholder="Temat newslettera..."
-                className="flex-1 text-[13.5px] bg-[#F4F7FB] rounded-[11px] px-[14px] py-[12px] text-ink outline-none focus:ring-2 focus:ring-purple-400/30"
+                className="flex-1 text-[13.5px] bg-[#F4F7FB] rounded-[11px] px-[14px] py-[12px] text-ink outline-none focus:ring-2 focus:ring-[#3E7BD6]/30"
               />
               <button
                 onClick={handleGenerateNewsletter}
                 disabled={aiGenerating || !aiTopic.trim()}
-                className="px-5 py-[12px] rounded-[11px] bg-gradient-to-br from-purple-600 to-indigo-600 text-white font-semibold text-[13px] hover:brightness-105 disabled:opacity-50"
+                className="px-5 py-[12px] rounded-[11px] bg-[#3E7BD6] text-white font-semibold text-[13px] hover:brightness-105 disabled:opacity-50"
               >
                 {aiGenerating ? "..." : "Generuj"}
               </button>
@@ -430,7 +430,7 @@ export default function NewsletterPage() {
                 <div className="flex gap-2">
                   <button
                     onClick={() => { setSendHtml(aiResult); setSendSubject(aiResult.split('\n')[0].replace('Subject: ', '').trim()); notify("✅ HTML wklejony!"); }}
-                    className="flex-1 px-3 py-[8px] rounded-[9px] bg-purple-50 text-purple-600 text-[11px] font-semibold hover:bg-purple-100"
+                    className="flex-1 px-3 py-[8px] rounded-[9px] bg-[#EAF0F7] text-[#3E7BD6] text-[11px] font-semibold hover:bg-[#DCE4F0]"
                   >
                     👉 Użyj tego HTML-a
                   </button>
@@ -449,7 +449,7 @@ export default function NewsletterPage() {
           </div>
 
           {/* URL Content Extraction */}
-          <div className="bg-white rounded-[18px] shadow-[var(--shadow-card)] p-4 space-y-3">
+          <div className="bg-white rounded-[12px] border border-[#E9EEF5] p-4 space-y-3">
             <div className="font-[family-name:var(--font-mono)] text-[10px] tracking-[.5px] uppercase text-[#8A98AB]">
               🔗 Importuj z URL
             </div>
@@ -472,7 +472,7 @@ export default function NewsletterPage() {
           </div>
 
           {/* Editor */}
-          <div className="bg-white rounded-[18px] shadow-[var(--shadow-card)] p-4 space-y-3">
+          <div className="bg-white rounded-[12px] border border-[#E9EEF5] p-4 space-y-3">
             <div className="font-[family-name:var(--font-mono)] text-[10px] tracking-[.5px] uppercase text-[#8A98AB]">
               ✏️ Edytor
             </div>
@@ -513,7 +513,7 @@ export default function NewsletterPage() {
         <div className="space-y-4">
           {/* Approval Panel */}
           {selectedDraft && (
-            <div className="bg-white rounded-[18px] shadow-[var(--shadow-card)] p-4 space-y-3">
+            <div className="bg-white rounded-[12px] border border-[#E9EEF5] p-4 space-y-3">
               <div className="font-[family-name:var(--font-mono)] text-[10px] tracking-[.5px] uppercase text-[#8A98AB]">
                 ✅ Zatwierdzenie
               </div>
@@ -574,7 +574,7 @@ export default function NewsletterPage() {
                 onChange={(e) => setReviewNotes(e.target.value)}
                 placeholder="Notatki do przeglądu..."
                 rows={3}
-                className="w-full text-[11px] bg-[#F8FAFC] rounded-[9px] px-3 py-2 outline-none focus:ring-2 focus:ring-purple-200"
+                className="w-full text-[11px] bg-[#F8FAFC] rounded-[9px] px-3 py-2 outline-none focus:ring-2 focus:ring-[#3E7BD6]/30"
               />
 
               <div className="space-y-2">
@@ -620,7 +620,7 @@ export default function NewsletterPage() {
           )}
 
           {/* Send Panel */}
-          <div className="bg-white rounded-[18px] shadow-[var(--shadow-card)] p-4 space-y-3">
+          <div className="bg-white rounded-[12px] border border-[#E9EEF5] p-4 space-y-3">
             <div className="font-[family-name:var(--font-mono)] text-[10px] tracking-[.5px] uppercase text-[#8A98AB]">
               📤 Wysyłka
             </div>
@@ -663,7 +663,7 @@ export default function NewsletterPage() {
 
           {/* Preview Panel */}
           {showPreview && previewHtml && (
-            <div className="bg-white rounded-[18px] shadow-[var(--shadow-card)] p-4 space-y-3 max-h-[500px] overflow-y-auto">
+            <div className="bg-white rounded-[12px] border border-[#E9EEF5] p-4 space-y-3 max-h-[500px] overflow-y-auto">
               <div className="flex items-center justify-between">
                 <div className="font-[family-name:var(--font-mono)] text-[10px] tracking-[.5px] uppercase text-[#8A98AB]">
                   👁️ Podgląd
@@ -675,7 +675,7 @@ export default function NewsletterPage() {
                       onClick={() => setPreviewType(type)}
                       className={`px-2 py-1 text-[10px] rounded-[6px] ${
                         previewType === type
-                          ? "bg-purple-600 text-white"
+                          ? "bg-[#3E7BD6] text-white"
                           : "bg-[#F0F0F0] text-[#8A98AB]"
                       }`}
                     >
@@ -697,7 +697,7 @@ export default function NewsletterPage() {
 
       {/* Drafts */}
       {drafts.length > 0 && (
-        <div className="bg-white rounded-[18px] shadow-[var(--shadow-card)] p-4 space-y-3">
+        <div className="bg-white rounded-[12px] border border-[#E9EEF5] p-4 space-y-3">
           <div className="font-[family-name:var(--font-mono)] text-[10px] tracking-[.5px] uppercase text-[#8A98AB] mb-2">
             📋 Drafty ({drafts.length})
           </div>
@@ -745,7 +745,7 @@ export default function NewsletterPage() {
       {/* Subscribers Management */}
       <div className="grid grid-cols-2 gap-4">
         {/* Add Subscriber */}
-        <div className="bg-white rounded-[18px] shadow-[var(--shadow-card)] p-4 space-y-3">
+        <div className="bg-white rounded-[12px] border border-[#E9EEF5] p-4 space-y-3">
           <div className="font-[family-name:var(--font-mono)] text-[10px] tracking-[.5px] uppercase text-[#8A98AB]">
             ➕ Dodaj subskrybenta
           </div>
@@ -769,7 +769,7 @@ export default function NewsletterPage() {
         </div>
 
         {/* Export */}
-        <div className="bg-white rounded-[18px] shadow-[var(--shadow-card)] p-4 flex items-center justify-between">
+        <div className="bg-white rounded-[12px] border border-[#E9EEF5] p-4 flex items-center justify-between">
           <div>
             <div className="font-[family-name:var(--font-mono)] text-[10px] tracking-[.5px] uppercase text-[#8A98AB]">
               📊 Export
@@ -787,7 +787,7 @@ export default function NewsletterPage() {
       </div>
 
       {/* Subscribers List */}
-      <div className="bg-white rounded-[18px] shadow-[var(--shadow-card)] overflow-hidden">
+      <div className="bg-white rounded-[12px] border border-[#E9EEF5] overflow-hidden">
         <div className="flex items-center justify-between p-4 border-b border-[#EDF1F7]">
           <div className="font-[family-name:var(--font-mono)] text-[10px] tracking-[.5px] uppercase text-[#8A98AB]">
             Subskrybenci ({subscribers.length})

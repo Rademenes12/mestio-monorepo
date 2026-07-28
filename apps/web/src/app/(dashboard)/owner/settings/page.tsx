@@ -245,7 +245,7 @@ export default function SettingsPage() {
       {/* ---- DANE ---- */}
       {tab === "Dane" && (
         <div className="space-y-4">
-          <div className="bg-white rounded-[18px] shadow-[var(--shadow-card)] p-5">
+          <div className="bg-white rounded-[12px] border border-[#E9EEF5] p-5">
             <h2 className="font-[family-name:var(--font-heading)] font-semibold text-[15px] text-ink mb-4">Twoje dane</h2>
             <div className="grid grid-cols-2 gap-3">
               <div><div className={lbl}>Firma</div><input value={owner.company} onChange={(e) => setOwnerField("company", e.target.value)} className={inp} /></div>
@@ -256,7 +256,7 @@ export default function SettingsPage() {
             </div>
           </div>
 
-          <div className="bg-white rounded-[18px] shadow-[var(--shadow-card)] p-5">
+          <div className="bg-white rounded-[12px] border border-[#E9EEF5] p-5">
             <h2 className="font-[family-name:var(--font-heading)] font-semibold text-[15px] text-ink">Dane sprzedawcy i wzór faktury</h2>
             <p className="text-[12.5px] text-[#7C8AA0] leading-normal mt-1">
               Ustawiasz raz — te dane trafiają automatycznie na każdą fakturę i umowę generowaną z karty klienta oraz z modułu Faktury.
@@ -308,7 +308,7 @@ export default function SettingsPage() {
             const hasKey = !!integrationKeyInputs[ig.name]?.trim() || !!integrations.keys[ig.name];
             const statusColor = hasKey ? "#2E9E6B" : "#6B7A90";
             return (
-              <div key={ig.name} className="bg-white rounded-[18px] shadow-[var(--shadow-card)] p-5">
+              <div key={ig.name} className="bg-white rounded-[12px] border border-[#E9EEF5] p-5">
                 <div className="flex items-center justify-between">
                   <div>
                     <h3 className="font-[family-name:var(--font-heading)] font-semibold text-[15px] text-ink">{ig.name}</h3>
@@ -389,7 +389,7 @@ export default function SettingsPage() {
       {/* ---- DOKUMENTY ---- */}
       {tab === "Dokumenty" && (
         <div className="space-y-4">
-          <div className="bg-white rounded-[18px] shadow-[var(--shadow-card)] p-5">
+          <div className="bg-white rounded-[12px] border border-[#E9EEF5] p-5">
             <h2 className="font-[family-name:var(--font-heading)] font-semibold text-[15px] text-ink mb-4">Biblioteka wzorów</h2>
             <div className="space-y-3">
               {DOC_TEMPLATES.map((dt) => (
@@ -407,7 +407,7 @@ export default function SettingsPage() {
           {/* Realny stan silnika automatyzacji (Faza B), nie fikcyjna lista -
               wcześniej ta zakładka miała OSOBNY, niezapisywany zestaw 4 przełączników
               niepowiązany z prawdziwym silnikiem crm_automations (audyt 09.07.2026). */}
-          <div className="bg-white rounded-[18px] shadow-[var(--shadow-card)] p-5">
+          <div className="bg-white rounded-[12px] border border-[#E9EEF5] p-5">
             <div className="flex items-center justify-between">
               <h2 className="font-[family-name:var(--font-heading)] font-semibold text-[15px] text-ink">Automatyzacje</h2>
               {automationsCount && (
@@ -438,7 +438,7 @@ export default function SettingsPage() {
           {AI_PROVIDERS.map((prov) => {
             const connected = aiConnected(prov.key);
             return (
-              <div key={prov.key} className="bg-white rounded-[18px] shadow-[var(--shadow-card)] p-5">
+              <div key={prov.key} className="bg-white rounded-[12px] border border-[#E9EEF5] p-5">
                 <div className="flex items-center justify-between mb-3">
                   <div>
                     <h2 className="font-[family-name:var(--font-heading)] font-semibold text-[15px] text-ink">{prov.label}</h2>

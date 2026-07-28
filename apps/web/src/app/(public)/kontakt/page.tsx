@@ -72,7 +72,7 @@ export default function KontaktPage() {
       </p>
 
       <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-[22px] mt-7 items-start">
-        <div className="bg-white rounded-[22px] shadow-[0_2px_14px_rgba(14,26,43,.06)] p-6">
+        <div className="bg-white rounded-[12px] border border-[#E9EEF5] p-6">
           {sent ? (
             <div className="text-center py-8">
               <div className="w-[56px] h-[56px] rounded-full bg-[rgba(46,158,107,.13)] flex items-center justify-center mx-auto">
@@ -175,7 +175,7 @@ export default function KontaktPage() {
           )}
         </div>
 
-        <div className="bg-white rounded-[22px] shadow-[0_2px_14px_rgba(14,26,43,.06)] p-6">
+        <div className="bg-white rounded-[12px] border border-[#E9EEF5] p-6">
           <div className="flex flex-col gap-4">
             {CONTACT_INFO.map((item) => (
               <div key={item.k}>

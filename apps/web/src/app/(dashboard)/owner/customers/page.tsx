@@ -319,7 +319,7 @@ Termin płatności: ${seller.termin}`;
         </Link>
       </div>
 
-      <div className="bg-white rounded-[18px] shadow-[var(--shadow-card)] overflow-hidden">
+      <div className="bg-white rounded-[12px] border border-[#E9EEF5] overflow-hidden">
         {loading ? (
           <div className="p-12 text-center text-[#9AA7B8] text-sm">Ładowanie...</div>
         ) : leads.length === 0 ? (
@@ -389,7 +389,7 @@ Termin płatności: ${seller.termin}`;
           onClick={() => setModalLead(null)}
         >
           <div
-            className="bg-[#F6F8FB] rounded-[22px] shadow-[0_20px_60px_rgba(14,26,43,.3)] w-[740px] max-w-full max-h-[88vh] overflow-y-auto"
+            className="bg-[#F6F8FB] rounded-[12px] shadow-[0_20px_60px_rgba(14,26,43,.3)] w-[740px] max-w-full max-h-[88vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Nagłówek */}

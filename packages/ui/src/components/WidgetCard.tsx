@@ -1,16 +1,16 @@
 'use client';
 
-import { colors, radius } from '@mestio/design-tokens';
+import { colors } from '@mestio/design-tokens';
 import type { ReactNode } from 'react';
 
 /**
- * WidgetCard — Erste "Pulpit widget" inspired container.
- * A card with optional header, accent color, and loading/empty states.
+ * WidgetCard — Border-only widget container.
+ * Clean card with optional header and accent color.
  */
 interface WidgetCardProps {
   title?: string;
   subtitle?: string;
-  action?: ReactNode; // e.g. "Zobacz wszystkie →"
+  action?: ReactNode;
   accentColor?: string;
   children: ReactNode;
   className?: string;
@@ -28,7 +28,7 @@ export function WidgetCard({
 }: WidgetCardProps) {
   return (
     <div
-      className={`relative overflow-hidden rounded-2xl border ${className}`}
+      className={`relative overflow-hidden rounded-[8px] border ${className}`}
       style={{
         background: colors.card,
         borderColor: colors.cardBorder,
@@ -38,7 +38,7 @@ export function WidgetCard({
       {accentColor && (
         <div
           className="absolute top-0 left-0 right-0 h-0.5"
-          style={{ background: `linear-gradient(90deg, ${accentColor}, transparent)` }}
+          style={{ background: accentColor }}
         />
       )}
 

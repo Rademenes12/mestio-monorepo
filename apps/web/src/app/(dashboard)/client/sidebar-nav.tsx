@@ -40,19 +40,9 @@ export function SidebarNav({ items }: { items: NavItem[] }) {
           <Link
             key={item.href}
             href={item.href}
-            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors"
-            style={{
-              background: active ? "rgba(62,123,214,.15)" : "transparent",
-              color: active ? "#fff" : "#C7D2E0",
-            }}
-            onMouseEnter={(e) => {
-              if (!active) { e.currentTarget.style.background = "rgba(255,255,255,.06)"; e.currentTarget.style.color = "#fff"; }
-            }}
-            onMouseLeave={(e) => {
-              if (!active) { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#C7D2E0"; }
-            }}
+            className={`sidebar-link ${active ? "active" : ""}`}
           >
-            <Icon className="w-4.5 h-4.5 shrink-0" />
+            <Icon className="w-[18px] h-[18px] shrink-0" />
             <span className="truncate">{item.label}</span>
             {!!item.badge && item.badge > 0 && (
               <span className="ml-auto text-[11px] font-semibold px-2 py-0.5 rounded-full" style={{ background: "rgba(242,169,0,.16)", color: "#F2A900" }}>

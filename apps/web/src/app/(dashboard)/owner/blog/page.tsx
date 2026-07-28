@@ -283,7 +283,7 @@ export default function BlogPage() {
   return (
     <div className="max-w-5xl mx-auto space-y-4">
       {showEditor && (
-        <div className="bg-white rounded-[18px] shadow-[var(--shadow-card)] p-6 space-y-4">
+        <div className="bg-white rounded-[12px] border border-[#E9EEF5] p-6 space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="font-[family-name:var(--font-mono)] text-[10px] tracking-[.5px] uppercase text-[#8A98AB] mb-[6px] block">Tytuł</label>
@@ -357,11 +357,11 @@ export default function BlogPage() {
         {loading ? (
           <div className="flex flex-col gap-3 animate-pulse">
             {[0, 1, 2].map((i) => (
-              <div key={i} className="h-[86px] bg-white rounded-[18px] shadow-[var(--shadow-card)]" />
+              <div key={i} className="h-[86px] bg-white rounded-[12px] border border-[#E9EEF5]" />
             ))}
           </div>
         ) : posts.length === 0 ? (
-          <div className="bg-white rounded-[18px] shadow-[var(--shadow-card)] p-[30px] text-center text-[#9AA7B8] text-[13.5px]">
+          <div className="bg-white rounded-[12px] border border-[#E9EEF5] p-[30px] text-center text-[#9AA7B8] text-[13.5px]">
             Brak artykułów.{" "}
             <button onClick={startNew} className="text-azure font-semibold hover:underline">
               Napisz pierwszy artykuł →
@@ -371,7 +371,7 @@ export default function BlogPage() {
           posts.map((b, i) => {
             const meta = STATUS_META[b.status] ?? STATUS_META.draft;
             return (
-              <div key={b.id} className="bg-white rounded-[18px] shadow-[var(--shadow-card)] p-[18px] px-5 flex items-center gap-4">
+              <div key={b.id} className="bg-white rounded-[12px] border border-[#E9EEF5] p-[18px] px-5 flex items-center gap-4">
                 <div className={`w-20 h-14 rounded-[10px] bg-gradient-to-br ${COVERS[i % COVERS.length]} shrink-0`} />
                 <div className="flex-1 min-w-0">
                   <div className="font-[family-name:var(--font-heading)] font-semibold text-[15px] text-ink">{b.title}</div>
