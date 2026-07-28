@@ -122,7 +122,6 @@
   "secureGuestAccountBody": "To zachowa Twoje obecne dane i połączy to konto gościa z adresem e-mail oraz hasłem.",
   "registerButtonLabel": "Zarejestruj",
   "profileSavedSnackbar": "Profil zapisany",
-  "proEnabledSnackbar": "Pro aktywowane",
   "profileTitle": "Profil",
   "profileLanguageSectionTitle": "Język aplikacji",
   "profileLanguageSectionDescription": "Wybierz, czy aplikacja ma używać języka urządzenia, polskiego, ukraińskiego czy angielskiego.",
@@ -135,27 +134,22 @@
   "saveFirstNameButtonLabel": "Zapisz imię",
   "accountSecuredSnackbar": "Konto zabezpieczone",
   "logoutButtonLabel": "Wyloguj się",
-  "buyProButtonLabel": "Kup Pro",
-  "proPlaceholderTitle": "Zakupy Pro nie są jeszcze podłączone",
-  "proPlaceholderBodyProfile": "Template ma już przygotowany flow upgrade do Pro w UI, ale prawdziwy paywall RevenueCat trzeba jeszcze podłączyć w etapie konfiguracji RevenueCat.",
   "deleteAccountButtonLabel": "Usuń konto",
   "discardChangesTitle": "Odrzucić zmiany?",
   "discardChangesBody": "Masz niezapisane zmiany. Jeśli wyjdziesz teraz, zostaną utracone.",
   "stayButtonLabel": "Zostań",
   "discardButtonLabel": "Odrzuć",
   "closeButtonLabel": "Zamknij",
-  "protectProBannerTitle": "Zabezpiecz dostęp do Pro",
-  "protectProBannerBody": "To konto gościa ma już Pro. Zarejestruj to konto, aby nie stracić dostępu w przyszłości.",
   "developerDiagnosticsTitle": "Diagnostyka tylko dla debug",
   "developerDiagnosticsBody": "Użyj tego ekranu, aby sprawdzić lokalną konfigurację aplikacji i status integracji.",
-  "revenueCatDisconnectedTitle": "RevenueCat nie jest podłączony",
-  "revenueCatDisconnectedBody": "Dodaj klucze RevenueCat do config/api-keys.json, gdy będziesz gotowy testować subskrypcje.",
-  "revenueCatDebugMissingTestStoreTitle": "Brakuje klucza Test Store",
-  "revenueCatDebugMissingTestStoreBody": "Buildy debug używają klucza RevenueCat Test Store. Dodaj REVENUECAT_TEST_STORE_API_KEY do config/api-keys.json i uruchom aplikację ponownie.",
   "sessionSectionTitle": "Sesja",
   "loggedInLabel": "Zalogowany",
   "loggedInAsNamedLabel": "Zalogowany: {name}",
-  "@loggedInAsNamedLabel": { "placeholders": { "name": {} } },
+  "@loggedInAsNamedLabel": {
+    "placeholders": {
+      "name": {}
+    }
+  },
   "managerDashboardTitle": "Pulpit Zarządu",
   "adminDashboardTitle": "Pulpit Administratora",
   "anonymousLabel": "Anonimowy",
@@ -167,23 +161,7 @@
   "supabaseSectionTitle": "Supabase",
   "keysConfiguredLabel": "Klucze skonfigurowane",
   "supabaseUrlLabel": "Supabase URL",
-  "revenueCatSectionTitle": "RevenueCat",
-  "supportedPlatformLabel": "Wspierana platforma",
-  "platformKeyConfiguredLabel": "Klucz platformy skonfigurowany",
-  "testStoreKeyConfiguredLabel": "Klucz Test Store skonfigurowany",
-  "sdkActiveLabel": "SDK aktywne",
-  "activeKeyTypeLabel": "Typ aktywnego klucza",
-  "activeSdkKeyLabel": "Aktywny klucz SDK",
-  "activeKeyTypeMissing": "Brak",
-  "activeKeyTypeTestStore": "Test Store",
-  "activeKeyTypeAppStore": "App Store",
-  "activeKeyTypeGooglePlay": "Google Play",
-  "proSourceLabel": "Źródło Pro",
-  "proSourceRevenueCat": "RevenueCat",
-  "proSourceDeveloperOverride": "Developer override",
   "missingValueLabel": "brak",
-  "debugForceProTitle": "Debug: wymuś status Pro",
-  "debugForceProSubtitle": "Działa tylko bez aktywnego RevenueCat i tylko w debugowym narzędziu.",
   "storeScreenshotsSectionTitle": "Store screenshots",
   "storeScreenshot1ButtonLabel": "Screenshot 1",
   "storeScreenshot2ButtonLabel": "Screenshot 2",
@@ -264,18 +242,15 @@
   "supportSectionDescription": "Masz pytanie, sugestię lub coś nie działa? Napisz do nas.",
   "supportContactButton": "Napisz do nas",
   "supportEmailSubject": "Mestio – zgłoszenie / sugestia",
-
   "legalSectionTitle": "Dokumenty prawne",
   "legalSectionDescription": "Zapoznaj się z naszą polityką prywatności i regulaminem korzystania z aplikacji.",
   "privacyPolicyButton": "Polityka prywatności",
   "termsOfServiceButton": "Regulamin",
-
   "securityPatrolTitle": "Obchód: Ochrona",
   "securityReportToBoardButton": "⚠️ ZGŁOŚ DLA ZARZĄDU",
   "securityEmergencyAlarmButton": "🚨 ALARM DLA WSZYSTKICH",
   "securityPatrolHistoryTitle": "OSTATNIE RAPORTY Z OBCHODÓW",
   "securityPatrolHistoryEmpty": "Brak dzisiejszych wpisów.",
-
   "navHome": "Home",
   "navReports": "Zgłoszenia",
   "navAddReport": "Zgłoś",
@@ -286,12 +261,10 @@
   "navEstate": "Osiedle",
   "navResidents": "Mieszkańcy",
   "navResolutions": "Uchwały",
-
   "residentsVisibleToBoardBadge": "Widoczne dla zarządu",
   "residentsHideFromBoardTooltip": "Ukryj przed zarządem",
   "residentsShareWithBoardTooltip": "Udostępnij zarządowi",
   "residentsEmptyState": "Brak zarejestrowanych mieszkańców",
-
   "resolutionsTitle": "Uchwały",
   "resolutionsSubtitleBoard": "Twórz i zliczaj głosy mieszkańców",
   "resolutionsSubtitleResident": "Głosuj nad uchwałami wspólnoty",
@@ -300,20 +273,44 @@
   "resolutionStatePassed": "Przegłosowana",
   "resolutionStateRejected": "Odrzucona",
   "resolutionDeadline": "do {date}",
-  "@resolutionDeadline": { "placeholders": { "date": {} } },
+  "@resolutionDeadline": {
+    "placeholders": {
+      "date": {}
+    }
+  },
   "resolutionVoteFor": "Za",
   "resolutionVoteAgainst": "Przeciw",
   "resolutionYourVote": "Twój głos: {vote}",
-  "@resolutionYourVote": { "placeholders": { "vote": {} } },
+  "@resolutionYourVote": {
+    "placeholders": {
+      "vote": {}
+    }
+  },
   "resolutionResultsHidden": "Wyniki będą widoczne po oddaniu głosu.",
   "resolutionForPercent": "Za {pct}%",
-  "@resolutionForPercent": { "placeholders": { "pct": {} } },
+  "@resolutionForPercent": {
+    "placeholders": {
+      "pct": {}
+    }
+  },
   "resolutionAgainstPercent": "Przeciw {pct}%",
-  "@resolutionAgainstPercent": { "placeholders": { "pct": {} } },
+  "@resolutionAgainstPercent": {
+    "placeholders": {
+      "pct": {}
+    }
+  },
   "resolutionVotesCount": "Głosy: {count}",
-  "@resolutionVotesCount": { "placeholders": { "count": {} } },
+  "@resolutionVotesCount": {
+    "placeholders": {
+      "count": {}
+    }
+  },
   "resolutionVoteSuccess": "Twój głos: {vote}",
-  "@resolutionVoteSuccess": { "placeholders": { "vote": {} } },
+  "@resolutionVoteSuccess": {
+    "placeholders": {
+      "vote": {}
+    }
+  },
   "newResolutionTitle": "Nowa uchwała",
   "resolutionTitleLabel": "Tytuł",
   "resolutionDescriptionLabel": "Opis",
@@ -327,7 +324,6 @@
   "errorResolutionVote": "Nie udało się oddać głosu.",
   "errorResolutionCreate": "Nie udało się opublikować uchwały.",
   "errorResolutionClose": "Nie udało się zakończyć uchwały.",
-
   "reportCloseRequiresMessageHint": "Aby zamknąć lub odrzucić zgłoszenie, napisz najpierw wiadomość do mieszkańca w notatkach poniżej.",
   "reportCloseRequiresMessageWarning": "Najpierw napisz wiadomość do mieszkańca w notatkach poniżej ↓",
   "attachmentsLabel": "Załączniki",
@@ -339,13 +335,29 @@
   "notificationsPanelTitle": "Powiadomienia",
   "notificationsEmpty": "Brak powiadomień.",
   "notificationYourReport": "Twoje zgłoszenie {id}",
-  "@notificationYourReport": { "placeholders": { "id": {} } },
+  "@notificationYourReport": {
+    "placeholders": {
+      "id": {}
+    }
+  },
   "notificationCurrentStatus": "Aktualny status: {status}",
-  "@notificationCurrentStatus": { "placeholders": { "status": {} } },
+  "@notificationCurrentStatus": {
+    "placeholders": {
+      "status": {}
+    }
+  },
   "notificationUrgentPrefix": "Pilne: {title}",
-  "@notificationUrgentPrefix": { "placeholders": { "title": {} } },
+  "@notificationUrgentPrefix": {
+    "placeholders": {
+      "title": {}
+    }
+  },
   "notificationReportPrefix": "Zgłoszenie {id}",
-  "@notificationReportPrefix": { "placeholders": { "id": {} } },
+  "@notificationReportPrefix": {
+    "placeholders": {
+      "id": {}
+    }
+  },
   "feedbackSheetTitle": "Zgłoś uwagę do twórcy",
   "feedbackSheetSubtitle": "Coś nie działa, brakuje funkcji albo masz pomysł? Napisz — pomaga rozwijać aplikację.",
   "feedbackTypeBug": "Błąd",
@@ -359,14 +371,23 @@
   "maintenanceAddTooltip": "Dodaj harmonogram",
   "maintenanceEmpty": "Brak zaplanowanej konserwacji.",
   "maintenanceNextDue": "{freq} · następny: {date}",
-  "@maintenanceNextDue": { "placeholders": { "freq": {}, "date": {} } },
+  "@maintenanceNextDue": {
+    "placeholders": {
+      "freq": {},
+      "date": {}
+    }
+  },
   "maintenanceMarkDoneButton": "Wykonano",
   "maintenanceFrequencyMonthly": "co miesiąc",
   "maintenanceFrequencyQuarterly": "co kwartał",
   "maintenanceFrequencySemiAnnual": "co pół roku",
   "maintenanceFrequencyAnnual": "co rok",
   "maintenanceFrequencyDays": "co {days} dni",
-  "@maintenanceFrequencyDays": { "placeholders": { "days": {} } },
+  "@maintenanceFrequencyDays": {
+    "placeholders": {
+      "days": {}
+    }
+  },
   "maintenanceNewTitle": "Nowy harmonogram konserwacji",
   "maintenanceNameLabel": "Nazwa",
   "maintenanceFrequencyLabel": "Częstotliwość",
@@ -384,9 +405,17 @@
   "teamNotesEmpty": "Brak notatek. Dodaj pierwszą.",
   "teamNotesInputHint": "Dodaj notatkę zespołu…",
   "photosSelectedCount": "Zdjęcia: {count} — dodaj kolejne",
-  "@photosSelectedCount": { "placeholders": { "count": {} } },
+  "@photosSelectedCount": {
+    "placeholders": {
+      "count": {}
+    }
+  },
   "galleryLabel": "Zdjęcia ({count})",
-  "@galleryLabel": { "placeholders": { "count": {} } },
+  "@galleryLabel": {
+    "placeholders": {
+      "count": {}
+    }
+  },
   "sendAnnouncementFormTitle": "WYŚLIJ KOMUNIKAT DO MIESZKAŃCÓW",
   "announcementTitleLabel": "Tytuł ogłoszenia",
   "announcementTitleHint": "np. Konserwacja windy",
@@ -399,20 +428,40 @@
   "sendAnnouncementButton": "WYŚLIJ KOMUNIKAT",
   "sentAnnouncementsTitle": "WYSŁANE OGŁOSZENIA",
   "announcementExpiresOnLabel": "Wygasa: {date}",
-  "@announcementExpiresOnLabel": { "placeholders": { "date": {} } },
+  "@announcementExpiresOnLabel": {
+    "placeholders": {
+      "date": {}
+    }
+  },
   "announcementExpiredSuffix": "{date} (wygasł)",
-  "@announcementExpiredSuffix": { "placeholders": { "date": {} } },
+  "@announcementExpiredSuffix": {
+    "placeholders": {
+      "date": {}
+    }
+  },
   "deleteAnnouncementTooltip": "Usuń komunikat",
   "announcementSentSnackbar": "Komunikat został wysłany!",
   "announcementPushNotificationPrefix": "KOMUNIKAT: {title}",
-  "@announcementPushNotificationPrefix": { "placeholders": { "title": {} } },
+  "@announcementPushNotificationPrefix": {
+    "placeholders": {
+      "title": {}
+    }
+  },
   "announcementScopeLabel": "Zakres — wybierz odbiorców",
   "announcementScopeEstate": "Wszyscy mieszkańcy",
   "announcementScopeBuilding": "Budynek {name}",
-  "@announcementScopeBuilding": { "placeholders": { "name": {} } },
+  "@announcementScopeBuilding": {
+    "placeholders": {
+      "name": {}
+    }
+  },
   "announcementScopeStairwell": "Klatka {stairwell} ({building})",
-  "@announcementScopeStairwell": { "placeholders": { "stairwell": {}, "building": {} } },
-
+  "@announcementScopeStairwell": {
+    "placeholders": {
+      "stairwell": {},
+      "building": {}
+    }
+  },
   "residentGreetingMorning": "Dzień dobry,",
   "residentGreetingFallback": "Mieszkańcu",
   "residentSystemsOK": "Wszystkie systemy OK",
@@ -421,29 +470,33 @@
   "activeReportsHeader": "Aktywne zgłoszenia",
   "noActiveReports": "Nie masz żadnych aktywnych zgłoszeń.",
   "seeAllReports": "Zobacz wszystkie zgłoszenia",
-
   "residentReportsTitle": "Twoje Zgłoszenia",
   "residentReportsListHeader": "TWOJE ZGŁOSZENIA",
   "noReportsYet": "Brak zgłoszonych awarii.",
   "syncOfflineButton": "Synchronizuj Offline Cache",
-
   "profileUserTitle": "Profil Użytkownika",
   "addressLabel": "Adres zamieszkania:",
   "roleLabel": "Rola: {role}",
-  "@roleLabel": { "placeholders": { "role": {} } },
+  "@roleLabel": {
+    "placeholders": {
+      "role": {}
+    }
+  },
   "estateJoinIntro": "Nie należysz jeszcze do żadnego osiedla. Wpisz kod zaproszenia otrzymany od administratora.",
   "estateJoinedInfo": "Jesteś członkiem osiedla. Twoje zgłoszenia i komunikaty są powiązane z tym osiedlem.",
   "estateJoinedNamedSnackbar": "Dołączono do osiedla „{name}\".",
-  "@estateJoinedNamedSnackbar": { "placeholders": { "name": {} } },
+  "@estateJoinedNamedSnackbar": {
+    "placeholders": {
+      "name": {}
+    }
+  },
   "estateInvalidCode": "Kod jest nieprawidłowy lub nieaktywny.",
   "joinEstateButton": "Dołącz do osiedla",
   "joiningEstate": "Łączenie…",
   "supportContactTitle": "Kontakt / Wsparcie",
-
   "reportAddedSnackbar": "Zgłoszenie dodane pomyślnie!",
   "submitReportButton": "Wyślij Zgłoszenie",
   "reportTitleRequiredSnackbar": "Podaj tytuł zgłoszenia!",
-
   "lockScreenTitle": "Rejestracja Lokatora",
   "lockScreenResidentSubtitle": "Wskaż swoją klatkę i numer mieszkania. Dzięki temu będziesz otrzymywać dedykowane powiadomienia o awariach w Twojej okolicy.",
   "lockScreenStaffSubtitle": "Wprowadź swoje dane i kod zaproszenia otrzymany od administratora.",
@@ -462,30 +515,65 @@
   "floorFieldLabel": "Piętro",
   "apartmentFieldLabel": "Mieszkanie",
   "requiredFieldShort": "Wymagane",
-
   "technicianLoggedInNamed": "Serwis: {name}",
-  "@technicianLoggedInNamed": { "placeholders": { "name": {} } },
+  "@technicianLoggedInNamed": {
+    "placeholders": {
+      "name": {}
+    }
+  },
   "technicianLoggedInFallback": "Zalogowany Serwis",
   "showClosedToggleLabel": "Pokaż zamknięte",
   "reporterInfoLabel": "Zgłaszający: {name} ({email})",
-  "@reporterInfoLabel": { "placeholders": { "name": {}, "email": {} } },
+  "@reporterInfoLabel": {
+    "placeholders": {
+      "name": {},
+      "email": {}
+    }
+  },
   "reportLocationInfoLabel": "Lokalizacja: {location}",
-  "@reportLocationInfoLabel": { "placeholders": { "location": {} } },
+  "@reportLocationInfoLabel": {
+    "placeholders": {
+      "location": {}
+    }
+  },
   "reportDescriptionInfoLabel": "Opis: {description}",
-  "@reportDescriptionInfoLabel": { "placeholders": { "description": {} } },
+  "@reportDescriptionInfoLabel": {
+    "placeholders": {
+      "description": {}
+    }
+  },
   "reportTileSubtitle": "#{displayId}, Klatka {footbridge}\nBudynek {building}, Piętro {floor}",
-  "@reportTileSubtitle": { "placeholders": { "displayId": {}, "footbridge": {}, "building": {}, "floor": {} } },
+  "@reportTileSubtitle": {
+    "placeholders": {
+      "displayId": {},
+      "footbridge": {},
+      "building": {},
+      "floor": {}
+    }
+  },
   "syncedToServerLabel": "Zsynchronizowano z bazą",
   "savedOfflineLabel": "Zapisano lokalnie (offline)",
   "technicianNoteTitle": "🛠️ Notatka Serwisowa:",
   "stairwellAbbreviationLabel": "kl. {name}",
-  "@stairwellAbbreviationLabel": { "placeholders": { "name": {} } },
+  "@stairwellAbbreviationLabel": {
+    "placeholders": {
+      "name": {}
+    }
+  },
   "apartmentAbbreviationLabel": "m. {number}",
-  "@apartmentAbbreviationLabel": { "placeholders": { "number": {} } },
+  "@apartmentAbbreviationLabel": {
+    "placeholders": {
+      "number": {}
+    }
+  },
   "detailsButtonLabel": "Szczegóły",
   "technicianDeleteAccountWarning": "Ta operacja jest nieodwracalna — wszystkie Twoje dane zostaną trwale usunięte.",
   "technicianPhoneLabel": "Tel: {phone}",
-  "@technicianPhoneLabel": { "placeholders": { "phone": {} } },
+  "@technicianPhoneLabel": {
+    "placeholders": {
+      "phone": {}
+    }
+  },
   "deleteAccountSectionTitle": "Usuwanie konta",
   "codeFieldLabelRequired": "Kod zaproszenia",
   "codeRequired": "Wprowadź kod zaproszenia",
@@ -509,7 +597,10 @@
   "pendingApprovalTitle": "Oczekuje na akceptację",
   "pendingApprovalBody": "Twoja prośba o dołączenie do osiedla „{estateName}” jako {role} została wysłana. Administrator zaakceptuje ją wkrótce.",
   "@pendingApprovalBody": {
-    "placeholders": { "estateName": {}, "role": {} }
+    "placeholders": {
+      "estateName": {},
+      "role": {}
+    }
   },
   "pendingApprovalRefreshButton": "Sprawdź status",
   "addContactDialogTitle": "Dodaj kontakt",
@@ -522,7 +613,6 @@
   "addContactCategoryLabel": "Kategoria",
   "addContactCancelButton": "Anuluj",
   "addContactAddButton": "Dodaj",
-
   "buildingAddRlsError": "Brak uprawnień do dodania budynku. Upewnij się, że Twoja rola to Administrator lub Zarząd w tym osiedlu.",
   "buildingAddNetworkError": "Brak połączenia z serwerem. Sprawdź internet i spróbuj ponownie.",
   "buildingAddError": "Nie udało się dodać budynku. Spróbuj ponownie.",
@@ -541,19 +631,16 @@
   "reportCategoryZarzadAdministrator": "Zarząd / Administrator",
   "reportRecipientBoardAdminService": "Zarząd / Admin + Serwis",
   "reportRecipientBoardAdminSecurity": "Zarząd / Admin + Ochrona",
-
   "qrScanTitle": "Skanuj kod QR",
   "fabReportIssue": "Zgłoś usterkę",
   "fabScanQr": "Skanuj kod QR",
   "fabMessageToBoard": "Wiadomość do zarządu",
   "fabClose": "Zamknij",
-
   "buildingLabel": "Budynek",
   "stairwellLabel": "Klatka",
   "floorLabel": "Piętro",
   "apartmentLabel": "Lokal",
   "qrLocationPrefix": "Lokalizacja zeskanowana z kodu QR:",
-
   "residentSpacesTitle": "Moje pomieszczenia",
   "residentSpacesAddButton": "Dodaj pomieszczenie",
   "residentSpacesEmpty": "Nie masz jeszcze dodanych pomieszczeń.\nDodaj komórkę, piwnicę lub miejsce postojowe.",
@@ -569,7 +656,6 @@
   "residentSpacesDeleteConfirmMessage": "Czy na pewno usunąć to pomieszczenie?",
   "residentSpacesDelete": "Usuń",
   "residentSpacesSave": "Zapisz",
-
   "emptyReportsTitle": "Brak zgłoszeń",
   "emptyReportsBody": "Wszystko działa jak należy? Nie masz jeszcze żadnych zgłoszeń awarii.",
   "emptyReportsAction": "Zgłoś pierwszą usterkę",
@@ -584,7 +670,11 @@
   "callButtonTooltip": "Zadzwoń",
   "deleteContactDialogTitle": "Usuń kontakt",
   "deleteContactConfirmMessage": "Czy na pewno chcesz usunąć kontakt \"{name}\"?",
-  "@deleteContactConfirmMessage": { "placeholders": { "name": {} } },
+  "@deleteContactConfirmMessage": {
+    "placeholders": {
+      "name": {}
+    }
+  },
   "emptyAnnouncementsTitle": "Brak ogłoszeń",
   "emptyAnnouncementsBody": "Zarząd osiedla nie opublikował jeszcze żadnych ogłoszeń.",
   "emptyBuildingsTitle": "Brak budynków",
@@ -592,7 +682,6 @@
   "emptyBuildingsAction": "Dodaj pierwszy budynek",
   "emptyTechReportsTitle": "Brak zgłoszeń",
   "emptyTechReportsBody": "Kolejka serwisowa jest pusta — nie masz przypisanych ani oczekujących zgłoszeń.",
-
   "residentNewLabel": "nowe",
   "residentInProgressLabel": "w realizacji",
   "residentCriticalLabel": "pilnych",
@@ -600,7 +689,6 @@
   "residentAnnouncementsCardTitle": "Ogłoszenia",
   "residentCommunityTitle": "Wspólnota",
   "residentCommunitySubtitle": "Kalendarz zebrań, głosowania uchwał i komunikacja sąsiedzka.",
-
   "estateHealthTitle": "Zdrowie osiedla",
   "estateHealthOpenReports": "Otwarte",
   "estateHealthOverdue": "Po terminie",
@@ -613,7 +701,6 @@
   "stairwellAddError": "Nie udało się dodać klatki. Spróbuj ponownie.",
   "stairwellUpdateError": "Nie udało się zaktualizować klatki. Spróbuj ponownie.",
   "stairwellDeleteError": "Nie udało się usunąć klatki. Spróbuj ponownie.",
-
   "estateStructureTitle": "Struktura Osiedla",
   "addBuildingTooltip": "Dodaj budynek",
   "addGarageMenuLabel": "Dodaj garaż",
@@ -636,25 +723,45 @@
   "deleteButton": "Usuń",
   "deleteBuildingDialogTitle": "Usuń budynek",
   "deleteBuildingDialogContent": "Czy na pewno chcesz usunąć \"{name}\"?\n\nWszystkie klatki w tym budynku również zostaną usunięte.",
-  "@deleteBuildingDialogContent": { "placeholders": { "name": {} } },
+  "@deleteBuildingDialogContent": {
+    "placeholders": {
+      "name": {}
+    }
+  },
   "addStairwellDialogTitle": "Dodaj klatkę",
   "editStairwellDialogTitle": "Edytuj klatkę",
   "stairwellNameLabel": "Klatka",
   "stairwellNameValue": "Klatka {name}",
-  "@stairwellNameValue": { "placeholders": { "name": {} } },
+  "@stairwellNameValue": {
+    "placeholders": {
+      "name": {}
+    }
+  },
   "floorMinLabel": "Najniższe piętro",
   "floorMaxLabel": "Najwyższe piętro",
   "garageEntranceLabel": "Wejście do garażu",
   "garageEntranceValue": "Wejście {label}",
-  "@garageEntranceValue": { "placeholders": { "label": {} } },
+  "@garageEntranceValue": {
+    "placeholders": {
+      "label": {}
+    }
+  },
   "notApplicableLabel": "—",
   "validationFloorRangeInvalid": "Najwyższe piętro musi być większe lub równe najniższemu.",
   "deleteStairwellDialogTitle": "Usuń klatkę",
   "deleteStairwellDialogContent": "Czy na pewno chcesz usunąć \"{name}\"?",
-  "@deleteStairwellDialogContent": { "placeholders": { "name": {} } },
+  "@deleteStairwellDialogContent": {
+    "placeholders": {
+      "name": {}
+    }
+  },
   "stairwellFloorRange": "Piętra {min}–{max}",
-  "@stairwellFloorRange": { "placeholders": { "min": {}, "max": {} } },
-
+  "@stairwellFloorRange": {
+    "placeholders": {
+      "min": {},
+      "max": {}
+    }
+  },
   "createAccountTitle": "Stwórz nowe konto",
   "createAccountBody": "Krok 1 z 2: podaj e-mail i hasło. Po zapisaniu w kroku 2 uzupełnisz imię, telefon, adres mieszkania i ewentualny kod zaproszenia.",
   "passwordConfirmFieldLabel": "Potwierdź hasło",
@@ -664,12 +771,10 @@
   "errorTermsNotAccepted": "Musisz zaakceptować Regulamin i Politykę Prywatności, aby kontynuować.",
   "blockUserButton": "Zablokuj użytkownika",
   "userBlockedSnackbar": "Użytkownik został zablokowany.",
-
   "dangerZoneSectionTitle": "Strefa niebezpieczna",
   "deleteAccountRequiresPassword": "Potwierdź hasło",
   "deleteAccountPasswordLabel": "Hasło",
   "deleteAccountPasswordHint": "Wprowadź hasło, aby potwierdzić usunięcie konta",
-
   "statusNowe": "Nowe",
   "statusWRealizacji": "W realizacji",
   "statusZamkniete": "Zamknięte",
@@ -679,14 +784,23 @@
   "assignTo": "Przypisz do",
   "unassigned": "Brak przypisania",
   "assignedToLabel": "Przypisane do: {name} ({role})",
-  "@assignedToLabel": { "placeholders": { "name": {}, "role": {} } },
+  "@assignedToLabel": {
+    "placeholders": {
+      "name": {},
+      "role": {}
+    }
+  },
   "logoutFeedbackTitle": "Co sądzisz o aplikacji?",
   "logoutFeedbackDescription": "Twoja opinia pomoże nam ją ulepszać.",
   "logoutFeedbackRateButton": "Zostaw opinię",
   "logoutFeedbackLogoutButton": "Wyloguj",
   "reportDetailScreenTitle": "Szczegóły zgłoszenia",
   "reportDetailIdLabel": "FX-{id}",
-  "@reportDetailIdLabel": { "placeholders": { "id": {} } },
+  "@reportDetailIdLabel": {
+    "placeholders": {
+      "id": {}
+    }
+  },
   "priorityLow": "Niski",
   "priorityNormal": "Normalny",
   "priorityHigh": "Wysoki",
@@ -699,13 +813,32 @@
   "csatSubmittedSnackbar": "Dziękujemy za ocenę!",
   "auditTrailTitle": "Ślad audytowy",
   "auditTrailActionStatusChange": "{user} zmienił status na: {status}",
-  "@auditTrailActionStatusChange": { "placeholders": { "user": {}, "status": {} } },
+  "@auditTrailActionStatusChange": {
+    "placeholders": {
+      "user": {},
+      "status": {}
+    }
+  },
   "auditTrailActionPriorityChange": "{user} zmienił priorytet na: {priority}",
-  "@auditTrailActionPriorityChange": { "placeholders": { "user": {}, "priority": {} } },
+  "@auditTrailActionPriorityChange": {
+    "placeholders": {
+      "user": {},
+      "priority": {}
+    }
+  },
   "auditTrailActionAssign": "{user} przypisał zgłoszenie do: {assignee}",
-  "@auditTrailActionAssign": { "placeholders": { "user": {}, "assignee": {} } },
+  "@auditTrailActionAssign": {
+    "placeholders": {
+      "user": {},
+      "assignee": {}
+    }
+  },
   "auditTrailActionCreate": "{user} utworzył zgłoszenie",
-  "@auditTrailActionCreate": { "placeholders": { "user": {} } },
+  "@auditTrailActionCreate": {
+    "placeholders": {
+      "user": {}
+    }
+  },
   "serviceNotesLabel": "Notatka serwisowa",
   "teamNotesLabel": "Notatki zespołu",
   "noTeamNotes": "Brak notatek zespołu.",
@@ -743,7 +876,11 @@
   "estateNoInvitationCode": "Brak aktywnego kodu",
   "estateContractValidUntilLabel": "Umowa aktywna do",
   "estateContractDaysLeft": "Pozostało {days} dni",
-  "@estateContractDaysLeft": { "placeholders": { "days": {} } },
+  "@estateContractDaysLeft": {
+    "placeholders": {
+      "days": {}
+    }
+  },
   "estateContractExpired": "Umowa wygasła",
   "estateContractNone": "Brak aktywnej umowy",
   "dataExportButtonLabel": "Eksportuj moje dane",
@@ -767,13 +904,29 @@
   "garageFloorInfo": "Piwnice/poziomy garażu zostaną dodane jako klatki z zakresem od -4 do 0.",
   "gpsDevicePositionLabel": "Pozycja GPS (Urządzenie):",
   "gpsLatitudeLabel": "Szerokość (Lat): {lat}",
-  "@gpsLatitudeLabel": { "placeholders": { "lat": {} } },
+  "@gpsLatitudeLabel": {
+    "placeholders": {
+      "lat": {}
+    }
+  },
   "gpsLongitudeLabel": "Długość (Lng): {lng}",
-  "@gpsLongitudeLabel": { "placeholders": { "lng": {} } },
+  "@gpsLongitudeLabel": {
+    "placeholders": {
+      "lng": {}
+    }
+  },
   "gpsSourceLabel": "Źródło: {source}",
-  "@gpsSourceLabel": { "placeholders": { "source": {} } },
+  "@gpsSourceLabel": {
+    "placeholders": {
+      "source": {}
+    }
+  },
   "gpsLabelLabel": "Etykieta: {label}",
-  "@gpsLabelLabel": { "placeholders": { "label": {} } },
+  "@gpsLabelLabel": {
+    "placeholders": {
+      "label": {}
+    }
+  },
   "contactBookCardTitle": "Książka kontaktów",
   "contactBookCardSubtitle": "Zarządzanie kontaktami alarmowymi i serwisowymi osiedla",
   "contactBookTitle": "Książka kontaktów",
@@ -781,7 +934,11 @@
   "actionsSectionTitle": "Akcje",
   "unknownUserFallback": "Nieznany",
   "reporterLabel": "Zgłasza: {name}",
-  "@reporterLabel": { "placeholders": { "name": {} } },
+  "@reporterLabel": {
+    "placeholders": {
+      "name": {}
+    }
+  },
   "collapseButton": "Zwiń",
   "expandButton": "Rozwiń",
   "sortNewest": "Najnowsze",

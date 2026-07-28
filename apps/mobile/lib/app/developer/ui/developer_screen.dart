@@ -4,11 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/services.dart';
 
 import '../../../core/config/app_config.dart';
-import '../../../core/config/revenuecat_config.dart';
 import '../../../core/di/injection.dart';
 import '../../../features/connectivity/presentation/cubit/connectivity_cubit.dart';
 import '../../../l10n/l10n.dart';
-import '../../profile/presentation/cubit/account_actions_cubit.dart';
 import '../../session/presentation/cubit/session_cubit.dart';
 import '../../session/presentation/session_localizations.dart';
 import 'screenshots/screenshot_1_screen.dart';
@@ -25,9 +23,6 @@ class DeveloperScreen extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<SessionCubit>.value(value: getIt<SessionCubit>()),
-        BlocProvider<AccountActionsCubit>(
-          create: (_) => getIt<AccountActionsCubit>(),
-        ),
       ],
       child: const _DeveloperView(),
     );
@@ -41,10 +36,6 @@ class _DeveloperView extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = context.l10n;
-    final isDebugMissingTestStoreKey =
-        kDebugMode &&
-        RevenueCatConfig.hasPlatformKey &&
-        !RevenueCatConfig.hasTestStoreKey;
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.developerToolsTitle)),
@@ -70,20 +61,6 @@ class _DeveloperView extends StatelessWidget {
                         style: theme.textTheme.bodyLarge,
                       ),
                       const SizedBox(height: 24),
-                      if (!RevenueCatConfig.isEnabled) ...[
-                        _WarningCard(
-                          title: l10n.revenueCatDisconnectedTitle,
-                          body: l10n.revenueCatDisconnectedBody,
-                        ),
-                        const SizedBox(height: 24),
-                      ],
-                      if (isDebugMissingTestStoreKey) ...[
-                        _WarningCard(
-                          title: l10n.revenueCatDebugMissingTestStoreTitle,
-                          body: l10n.revenueCatDebugMissingTestStoreBody,
-                        ),
-                        const SizedBox(height: 24),
-                      ],
                       _SectionCard(
                         title: l10n.sessionSectionTitle,
                         children: [
@@ -163,86 +140,6 @@ class _DeveloperView extends StatelessWidget {
                       ),
                       const SizedBox(height: 20),
                       _SectionCard(
-                        title: l10n.revenueCatSectionTitle,
-                        children: [
-                          _InfoRow(
-                            label: l10n.supportedPlatformLabel,
-                            value: context.booleanLabel(
-                              RevenueCatConfig.isSupportedPlatform,
-                            ),
-                          ),
-                          _InfoRow(
-                            label: l10n.platformKeyConfiguredLabel,
-                            value: context.booleanLabel(
-                              RevenueCatConfig.hasPlatformKey,
-                            ),
-                          ),
-                          _InfoRow(
-                            label: l10n.testStoreKeyConfiguredLabel,
-                            value: context.booleanLabel(
-                              RevenueCatConfig.hasTestStoreKey,
-                            ),
-                          ),
-                          _InfoRow(
-                            label: l10n.sdkActiveLabel,
-                            value: context.booleanLabel(
-                              RevenueCatConfig.isEnabled,
-                            ),
-                          ),
-                          _InfoRow(
-                            label: l10n.activeKeyTypeLabel,
-                            value: _activeKeyTypeLabel(
-                              l10n,
-                              RevenueCatConfig.activeKeyType,
-                            ),
-                          ),
-                          _SelectableInfoRow(
-                            label: l10n.activeSdkKeyLabel,
-                            value: RevenueCatConfig.activeApiKey.isNotEmpty
-                                ? RevenueCatConfig.maskedActiveApiKey
-                                : l10n.missingValueLabel,
-                          ),
-                          _InfoRow(
-                            label: l10n.proSourceLabel,
-                            value: RevenueCatConfig.isEnabled
-                                ? l10n.proSourceRevenueCat
-                                : l10n.proSourceDeveloperOverride,
-                          ),
-                          if (!RevenueCatConfig.isEnabled &&
-                              session.isAuthenticated &&
-                              userId != null) ...[
-                            const SizedBox(height: 8),
-                            BlocBuilder<
-                              AccountActionsCubit,
-                              AccountActionsState
-                            >(
-                              builder: (context, accountState) {
-                                final isLoading =
-                                    accountState.activeAction ==
-                                    AccountAction.developerProOverride;
-
-                                return SwitchListTile(
-                                  value: session.isProUser,
-                                  onChanged: isLoading
-                                      ? null
-                                      : (value) {
-                                          context
-                                              .read<AccountActionsCubit>()
-                                              .setDeveloperProOverride(
-                                                userId: userId,
-                                                isPro: value,
-                                              );
-                                        },
-                                  title: Text(l10n.debugForceProTitle),
-                                  subtitle: Text(l10n.debugForceProSubtitle),
-                                );
-                              },
-                            ),
-                          ],
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                      _SectionCard(
                         title: l10n.storeScreenshotsSectionTitle,
                         children: [
                           _NavigationRow(
@@ -279,18 +176,6 @@ class _DeveloperView extends StatelessWidget {
   }
 }
 
-String _activeKeyTypeLabel(
-  AppLocalizations l10n,
-  RevenueCatActiveKeyType keyType,
-) {
-  return switch (keyType) {
-    RevenueCatActiveKeyType.none => l10n.activeKeyTypeMissing,
-    RevenueCatActiveKeyType.testStore => l10n.activeKeyTypeTestStore,
-    RevenueCatActiveKeyType.appStore => l10n.activeKeyTypeAppStore,
-    RevenueCatActiveKeyType.googlePlay => l10n.activeKeyTypeGooglePlay,
-  };
-}
-
 class _SectionCard extends StatelessWidget {
   const _SectionCard({required this.title, required this.children});
 
@@ -319,19 +204,17 @@ class _SectionCard extends StatelessWidget {
   }
 }
 
-class _WarningCard extends StatelessWidget {
-  const _WarningCard({required this.title, required this.body});
+class _SectionCard extends StatelessWidget {
+  const _SectionCard({required this.title, required this.children});
 
   final String title;
-  final String body;
+  final List<Widget> children;
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: theme.colorScheme.errorContainer,
+        color: Theme.of(context).colorScheme.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(24),
       ),
       child: Padding(
@@ -339,20 +222,9 @@ class _WarningCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              title,
-              style: theme.textTheme.titleLarge?.copyWith(
-                color: theme.colorScheme.onErrorContainer,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            const SizedBox(height: 12),
-            Text(
-              body,
-              style: theme.textTheme.bodyLarge?.copyWith(
-                color: theme.colorScheme.onErrorContainer,
-              ),
-            ),
+            Text(title, style: Theme.of(context).textTheme.titleLarge),
+            const SizedBox(height: 16),
+            ...children,
           ],
         ),
       ),

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../core/theme/app_colors.dart';
-import '../../../../../core/di/injection.dart';
-import '../../../../../app/paywall/presentation/paywall_presenter.dart';
 import '../../../../../l10n/l10n.dart';
 
 /// Shown instead of a Pro-only tab (Finance/Communicator/Phone) when the
 /// estate does not have an active subscription.
+///
+/// Note: Since RevenueCat has been removed and all users get unlimited Pro
+/// access, this placeholder should rarely (if ever) be shown.
 class LockedTabPlaceholder extends StatelessWidget {
   const LockedTabPlaceholder({super.key, required this.featureType});
 
@@ -68,50 +69,6 @@ class LockedTabPlaceholder extends StatelessWidget {
                   fontSize: 13,
                   color: AppColors.lightTextSecondary,
                   height: 1.4,
-                ),
-              ),
-              const SizedBox(height: 32),
-              Container(
-                height: 52,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [Color(0xFF00C6FF), Color(0xFF0072FF)],
-                  ),
-                  borderRadius: BorderRadius.circular(12),
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color(0xFF0072FF).withValues(alpha: 0.3),
-                      blurRadius: 10,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: ElevatedButton.icon(
-                  onPressed: () async {
-                    await getIt<PaywallPresenter>().presentIfNeeded(
-                      context: context,
-                    );
-                  },
-                  icon: const Icon(
-                    Icons.workspace_premium,
-                    color: Colors.white,
-                  ),
-                  label: Text(
-                    l10n.proLockUnlockButton,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15,
-                    ),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.transparent,
-                    shadowColor: Colors.transparent,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
                 ),
               ),
             ],

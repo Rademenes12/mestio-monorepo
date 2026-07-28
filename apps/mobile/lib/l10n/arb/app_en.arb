@@ -122,7 +122,6 @@
   "secureGuestAccountBody": "This will keep your current data and connect this guest account to an email address and password.",
   "registerButtonLabel": "Sign up",
   "profileSavedSnackbar": "Profile saved",
-  "proEnabledSnackbar": "Pro enabled",
   "profileTitle": "Profile",
   "profileLanguageSectionTitle": "App language",
   "profileLanguageSectionDescription": "Choose whether the app should use the device language, Polish, Ukrainian, or English.",
@@ -135,27 +134,22 @@
   "saveFirstNameButtonLabel": "Save first name",
   "accountSecuredSnackbar": "Account secured",
   "logoutButtonLabel": "Log out",
-  "buyProButtonLabel": "Buy Pro",
-  "proPlaceholderTitle": "Pro purchases are not connected yet",
-  "proPlaceholderBodyProfile": "This template already supports the Pro upgrade flow in the UI, but the real RevenueCat paywall still needs to be connected in the RevenueCat setup step.",
   "deleteAccountButtonLabel": "Delete account",
   "discardChangesTitle": "Discard changes?",
   "discardChangesBody": "You have unsaved changes. If you leave now, they will be lost.",
   "stayButtonLabel": "Stay",
   "discardButtonLabel": "Discard",
   "closeButtonLabel": "Close",
-  "protectProBannerTitle": "Protect access to Pro",
-  "protectProBannerBody": "This guest account already has Pro. Register this account so you do not lose access in the future.",
   "developerDiagnosticsTitle": "Debug-only diagnostics",
   "developerDiagnosticsBody": "Use this screen to inspect the local app configuration and integration status.",
-  "revenueCatDisconnectedTitle": "RevenueCat is not connected",
-  "revenueCatDisconnectedBody": "Add RevenueCat keys to config/api-keys.json when you're ready to test subscriptions.",
-  "revenueCatDebugMissingTestStoreTitle": "Test Store key is missing",
-  "revenueCatDebugMissingTestStoreBody": "Debug builds use the RevenueCat Test Store key. Add REVENUECAT_TEST_STORE_API_KEY to config/api-keys.json and restart the app.",
   "sessionSectionTitle": "Session",
   "loggedInLabel": "Signed in",
   "loggedInAsNamedLabel": "Signed in: {name}",
-  "@loggedInAsNamedLabel": { "placeholders": { "name": {} } },
+  "@loggedInAsNamedLabel": {
+    "placeholders": {
+      "name": {}
+    }
+  },
   "managerDashboardTitle": "Board Dashboard",
   "adminDashboardTitle": "Administrator Dashboard",
   "anonymousLabel": "Anonymous",
@@ -167,23 +161,7 @@
   "supabaseSectionTitle": "Supabase",
   "keysConfiguredLabel": "Keys configured",
   "supabaseUrlLabel": "Supabase URL",
-  "revenueCatSectionTitle": "RevenueCat",
-  "supportedPlatformLabel": "Supported platform",
-  "platformKeyConfiguredLabel": "Platform key configured",
-  "testStoreKeyConfiguredLabel": "Test Store key configured",
-  "sdkActiveLabel": "SDK active",
-  "activeKeyTypeLabel": "Active key type",
-  "activeSdkKeyLabel": "Active SDK key",
-  "activeKeyTypeMissing": "Missing",
-  "activeKeyTypeTestStore": "Test Store",
-  "activeKeyTypeAppStore": "App Store",
-  "activeKeyTypeGooglePlay": "Google Play",
-  "proSourceLabel": "Pro source",
-  "proSourceRevenueCat": "RevenueCat",
-  "proSourceDeveloperOverride": "Developer override",
   "missingValueLabel": "missing",
-  "debugForceProTitle": "Debug: force Pro status",
-  "debugForceProSubtitle": "Works only without active RevenueCat and only in the debug tool.",
   "storeScreenshotsSectionTitle": "Store screenshots",
   "storeScreenshot1ButtonLabel": "Screenshot 1",
   "storeScreenshot2ButtonLabel": "Screenshot 2",
@@ -264,18 +242,15 @@
   "supportSectionDescription": "Have a question, suggestion, or something not working? Write to us.",
   "supportContactButton": "Contact us",
   "supportEmailSubject": "Mestio – feedback / issue",
-
   "legalSectionTitle": "Legal documents",
   "legalSectionDescription": "Review our privacy policy and terms of service.",
   "privacyPolicyButton": "Privacy Policy",
   "termsOfServiceButton": "Terms of Service",
-
   "securityPatrolTitle": "Patrol: Security",
   "securityReportToBoardButton": "⚠️ REPORT TO BOARD",
   "securityEmergencyAlarmButton": "🚨 ALARM FOR EVERYONE",
   "securityPatrolHistoryTitle": "RECENT PATROL REPORTS",
   "securityPatrolHistoryEmpty": "No entries today.",
-
   "navHome": "Home",
   "navReports": "Reports",
   "navAddReport": "Report",
@@ -286,12 +261,10 @@
   "navEstate": "Estate",
   "navResidents": "Residents",
   "navResolutions": "Resolutions",
-
   "residentsVisibleToBoardBadge": "Visible to board",
   "residentsHideFromBoardTooltip": "Hide from board",
   "residentsShareWithBoardTooltip": "Share with board",
   "residentsEmptyState": "No registered residents",
-
   "resolutionsTitle": "Resolutions",
   "resolutionsSubtitleBoard": "Create resolutions and count residents' votes",
   "resolutionsSubtitleResident": "Vote on community resolutions",
@@ -321,7 +294,6 @@
   "errorResolutionVote": "Failed to cast your vote.",
   "errorResolutionCreate": "Failed to publish the resolution.",
   "errorResolutionClose": "Failed to close the resolution.",
-
   "reportCloseRequiresMessageHint": "Write a message to the resident in the notes below before closing or rejecting this report.",
   "reportCloseRequiresMessageWarning": "Write a message to the resident in the notes below first ↓",
   "attachmentsLabel": "Attachments",
@@ -385,18 +357,29 @@
   "sendAnnouncementButton": "SEND ANNOUNCEMENT",
   "sentAnnouncementsTitle": "SENT ANNOUNCEMENTS",
   "announcementExpiresOnLabel": "Expires: {date}",
-  "@announcementExpiresOnLabel": { "placeholders": { "date": {} } },
+  "@announcementExpiresOnLabel": {
+    "placeholders": {
+      "date": {}
+    }
+  },
   "announcementExpiredSuffix": "{date} (expired)",
-  "@announcementExpiredSuffix": { "placeholders": { "date": {} } },
+  "@announcementExpiredSuffix": {
+    "placeholders": {
+      "date": {}
+    }
+  },
   "deleteAnnouncementTooltip": "Delete announcement",
   "announcementSentSnackbar": "Announcement sent!",
   "announcementPushNotificationPrefix": "ANNOUNCEMENT: {title}",
-  "@announcementPushNotificationPrefix": { "placeholders": { "title": {} } },
+  "@announcementPushNotificationPrefix": {
+    "placeholders": {
+      "title": {}
+    }
+  },
   "announcementScopeLabel": "Scope — pick the audience",
   "announcementScopeEstate": "All residents",
   "announcementScopeBuilding": "Building {name}",
   "announcementScopeStairwell": "Stairwell {stairwell} ({building})",
-
   "residentGreetingMorning": "Good morning,",
   "residentGreetingFallback": "Resident",
   "residentSystemsOK": "All systems OK",
@@ -405,29 +388,33 @@
   "activeReportsHeader": "Active reports",
   "noActiveReports": "You have no active reports.",
   "seeAllReports": "See all reports",
-
   "residentReportsTitle": "Your reports",
   "residentReportsListHeader": "YOUR REPORTS",
   "noReportsYet": "No reports submitted yet.",
   "syncOfflineButton": "Sync offline cache",
-
   "profileUserTitle": "User profile",
   "addressLabel": "Address:",
   "roleLabel": "Role: {role}",
-  "@roleLabel": { "placeholders": { "role": {} } },
+  "@roleLabel": {
+    "placeholders": {
+      "role": {}
+    }
+  },
   "estateJoinIntro": "You don't belong to any estate yet. Enter the invitation code provided by your administrator.",
   "estateJoinedInfo": "You are a member of this estate. Your reports and announcements are linked to it.",
   "estateJoinedNamedSnackbar": "You joined the estate \"{name}\".",
-  "@estateJoinedNamedSnackbar": { "placeholders": { "name": {} } },
+  "@estateJoinedNamedSnackbar": {
+    "placeholders": {
+      "name": {}
+    }
+  },
   "estateInvalidCode": "The code is invalid or no longer active.",
   "joinEstateButton": "Join estate",
   "joiningEstate": "Joining…",
   "supportContactTitle": "Contact / Support",
-
   "reportAddedSnackbar": "Report submitted successfully!",
   "submitReportButton": "Submit report",
   "reportTitleRequiredSnackbar": "Please provide a title for the report.",
-
   "lockScreenTitle": "Resident registration",
   "lockScreenResidentSubtitle": "Tell us your stairwell and apartment number so we can send you targeted notifications about incidents in your area.",
   "lockScreenStaffSubtitle": "Enter your details and the invitation code provided by the administrator.",
@@ -446,30 +433,65 @@
   "floorFieldLabel": "Floor",
   "apartmentFieldLabel": "Apartment",
   "requiredFieldShort": "Required",
-
   "technicianLoggedInNamed": "Service: {name}",
-  "@technicianLoggedInNamed": { "placeholders": { "name": {} } },
+  "@technicianLoggedInNamed": {
+    "placeholders": {
+      "name": {}
+    }
+  },
   "technicianLoggedInFallback": "Signed in as Service",
   "showClosedToggleLabel": "Show closed",
   "reporterInfoLabel": "Reported by: {name} ({email})",
-  "@reporterInfoLabel": { "placeholders": { "name": {}, "email": {} } },
+  "@reporterInfoLabel": {
+    "placeholders": {
+      "name": {},
+      "email": {}
+    }
+  },
   "reportLocationInfoLabel": "Location: {location}",
-  "@reportLocationInfoLabel": { "placeholders": { "location": {} } },
+  "@reportLocationInfoLabel": {
+    "placeholders": {
+      "location": {}
+    }
+  },
   "reportDescriptionInfoLabel": "Description: {description}",
-  "@reportDescriptionInfoLabel": { "placeholders": { "description": {} } },
+  "@reportDescriptionInfoLabel": {
+    "placeholders": {
+      "description": {}
+    }
+  },
   "reportTileSubtitle": "#{displayId}, Stairwell {footbridge}\nBuilding {building}, Floor {floor}",
-  "@reportTileSubtitle": { "placeholders": { "displayId": {}, "footbridge": {}, "building": {}, "floor": {} } },
+  "@reportTileSubtitle": {
+    "placeholders": {
+      "displayId": {},
+      "footbridge": {},
+      "building": {},
+      "floor": {}
+    }
+  },
   "syncedToServerLabel": "Synced with server",
   "savedOfflineLabel": "Saved locally (offline)",
   "technicianNoteTitle": "🛠️ Service Note:",
   "stairwellAbbreviationLabel": "stw. {name}",
-  "@stairwellAbbreviationLabel": { "placeholders": { "name": {} } },
+  "@stairwellAbbreviationLabel": {
+    "placeholders": {
+      "name": {}
+    }
+  },
   "apartmentAbbreviationLabel": "apt. {number}",
-  "@apartmentAbbreviationLabel": { "placeholders": { "number": {} } },
+  "@apartmentAbbreviationLabel": {
+    "placeholders": {
+      "number": {}
+    }
+  },
   "detailsButtonLabel": "Details",
   "technicianDeleteAccountWarning": "This action is irreversible — all your data will be permanently deleted.",
   "technicianPhoneLabel": "Phone: {phone}",
-  "@technicianPhoneLabel": { "placeholders": { "phone": {} } },
+  "@technicianPhoneLabel": {
+    "placeholders": {
+      "phone": {}
+    }
+  },
   "deleteAccountSectionTitle": "Delete account",
   "codeFieldLabelRequired": "Invitation code",
   "codeRequired": "Enter the invitation code",
@@ -493,7 +515,10 @@
   "pendingApprovalTitle": "Awaiting approval",
   "pendingApprovalBody": "Your request to join \"{estateName}\" as {role} has been sent. The administrator will approve it soon.",
   "@pendingApprovalBody": {
-    "placeholders": { "estateName": {}, "role": {} }
+    "placeholders": {
+      "estateName": {},
+      "role": {}
+    }
   },
   "pendingApprovalRefreshButton": "Check status",
   "addContactDialogTitle": "Add contact",
@@ -506,7 +531,6 @@
   "addContactCategoryLabel": "Category",
   "addContactCancelButton": "Cancel",
   "addContactAddButton": "Add",
-
   "buildingAddRlsError": "You don't have permission to add a building. Make sure your role is Administrator or Board in this estate.",
   "buildingAddNetworkError": "Cannot reach the server. Check your internet connection and try again.",
   "buildingAddError": "Failed to add the building. Please try again.",
@@ -525,19 +549,16 @@
   "reportCategoryZarzadAdministrator": "Management / Administrator",
   "reportRecipientBoardAdminService": "Board / Admin + Service",
   "reportRecipientBoardAdminSecurity": "Board / Admin + Security",
-
   "qrScanTitle": "Scan QR code",
   "fabReportIssue": "Report issue",
   "fabScanQr": "Scan QR code",
   "fabMessageToBoard": "Message to board",
   "fabClose": "Close",
-
   "buildingLabel": "Building",
   "stairwellLabel": "Stairwell",
   "floorLabel": "Floor",
   "apartmentLabel": "Apartment",
   "qrLocationPrefix": "Location scanned from QR code:",
-
   "residentSpacesTitle": "My spaces",
   "residentSpacesAddButton": "Add space",
   "residentSpacesEmpty": "You haven't added any spaces yet.\nAdd a storage unit, basement or parking spot.",
@@ -553,7 +574,6 @@
   "residentSpacesDeleteConfirmMessage": "Are you sure you want to remove this space?",
   "residentSpacesDelete": "Delete",
   "residentSpacesSave": "Save",
-
   "emptyReportsTitle": "No reports",
   "emptyReportsBody": "Everything running smoothly? You haven't submitted any issue reports yet.",
   "emptyReportsAction": "Report first issue",
@@ -568,7 +588,11 @@
   "callButtonTooltip": "Call",
   "deleteContactDialogTitle": "Delete contact",
   "deleteContactConfirmMessage": "Are you sure you want to delete the contact \"{name}\"?",
-  "@deleteContactConfirmMessage": { "placeholders": { "name": {} } },
+  "@deleteContactConfirmMessage": {
+    "placeholders": {
+      "name": {}
+    }
+  },
   "emptyAnnouncementsTitle": "No announcements",
   "emptyAnnouncementsBody": "The estate board hasn't published any announcements yet.",
   "emptyBuildingsTitle": "No buildings",
@@ -576,7 +600,6 @@
   "emptyBuildingsAction": "Add first building",
   "emptyTechReportsTitle": "No reports",
   "emptyTechReportsBody": "Your service queue is empty — you have no assigned or pending reports.",
-
   "residentNewLabel": "new",
   "residentInProgressLabel": "in progress",
   "residentCriticalLabel": "urgent",
@@ -584,7 +607,6 @@
   "residentAnnouncementsCardTitle": "Announcements",
   "residentCommunityTitle": "Community",
   "residentCommunitySubtitle": "Meeting calendar, voting on resolutions and neighbour communication.",
-
   "estateHealthTitle": "Estate health",
   "estateHealthOpenReports": "Open",
   "estateHealthOverdue": "Overdue",
@@ -597,7 +619,6 @@
   "stairwellAddError": "Failed to add the stairwell. Please try again.",
   "stairwellUpdateError": "Failed to update the stairwell. Please try again.",
   "stairwellDeleteError": "Failed to delete the stairwell. Please try again.",
-
   "estateStructureTitle": "Estate Structure",
   "addBuildingTooltip": "Add building",
   "addGarageMenuLabel": "Add garage",
@@ -620,25 +641,45 @@
   "deleteButton": "Delete",
   "deleteBuildingDialogTitle": "Delete building",
   "deleteBuildingDialogContent": "Are you sure you want to delete \"{name}\"?\n\nAll stairwells in this building will also be deleted.",
-  "@deleteBuildingDialogContent": { "placeholders": { "name": {} } },
+  "@deleteBuildingDialogContent": {
+    "placeholders": {
+      "name": {}
+    }
+  },
   "addStairwellDialogTitle": "Add stairwell",
   "editStairwellDialogTitle": "Edit stairwell",
   "stairwellNameLabel": "Stairwell",
   "stairwellNameValue": "Stairwell {name}",
-  "@stairwellNameValue": { "placeholders": { "name": {} } },
+  "@stairwellNameValue": {
+    "placeholders": {
+      "name": {}
+    }
+  },
   "floorMinLabel": "Lowest floor",
   "floorMaxLabel": "Highest floor",
   "garageEntranceLabel": "Garage entrance",
   "garageEntranceValue": "Entrance {label}",
-  "@garageEntranceValue": { "placeholders": { "label": {} } },
+  "@garageEntranceValue": {
+    "placeholders": {
+      "label": {}
+    }
+  },
   "notApplicableLabel": "—",
   "validationFloorRangeInvalid": "Highest floor must be greater than or equal to lowest floor.",
   "deleteStairwellDialogTitle": "Delete stairwell",
   "deleteStairwellDialogContent": "Are you sure you want to delete \"{name}\"?",
-  "@deleteStairwellDialogContent": { "placeholders": { "name": {} } },
+  "@deleteStairwellDialogContent": {
+    "placeholders": {
+      "name": {}
+    }
+  },
   "stairwellFloorRange": "Floors {min}–{max}",
-  "@stairwellFloorRange": { "placeholders": { "min": {}, "max": {} } },
-
+  "@stairwellFloorRange": {
+    "placeholders": {
+      "min": {},
+      "max": {}
+    }
+  },
   "createAccountTitle": "Create your account",
   "createAccountBody": "Step 1 of 2: enter your e-mail and password. After saving, step 2 will ask for your name, phone, apartment address and optional invitation code.",
   "passwordConfirmFieldLabel": "Confirm password",
@@ -648,12 +689,10 @@
   "errorTermsNotAccepted": "You must accept the Terms of Service and Privacy Policy to continue.",
   "blockUserButton": "Block user",
   "userBlockedSnackbar": "User has been blocked.",
-
   "dangerZoneSectionTitle": "Danger zone",
   "deleteAccountRequiresPassword": "Confirm your password",
   "deleteAccountPasswordLabel": "Password",
   "deleteAccountPasswordHint": "Enter your password to confirm account deletion",
-
   "statusNowe": "New",
   "statusWRealizacji": "In progress",
   "statusZamkniete": "Closed",
@@ -663,14 +702,23 @@
   "assignTo": "Assign to",
   "unassigned": "Unassigned",
   "assignedToLabel": "Assigned to: {name} ({role})",
-  "@assignedToLabel": { "placeholders": { "name": {}, "role": {} } },
+  "@assignedToLabel": {
+    "placeholders": {
+      "name": {},
+      "role": {}
+    }
+  },
   "logoutFeedbackTitle": "What do you think of the app?",
   "logoutFeedbackDescription": "Your feedback helps us make it better.",
   "logoutFeedbackRateButton": "Leave a review",
   "logoutFeedbackLogoutButton": "Log out",
   "reportDetailScreenTitle": "Report details",
   "reportDetailIdLabel": "FX-{id}",
-  "@reportDetailIdLabel": { "placeholders": { "id": {} } },
+  "@reportDetailIdLabel": {
+    "placeholders": {
+      "id": {}
+    }
+  },
   "priorityLow": "Low",
   "priorityNormal": "Normal",
   "priorityHigh": "High",
@@ -683,13 +731,32 @@
   "csatSubmittedSnackbar": "Thank you for your rating!",
   "auditTrailTitle": "Audit trail",
   "auditTrailActionStatusChange": "{user} changed status to: {status}",
-  "@auditTrailActionStatusChange": { "placeholders": { "user": {}, "status": {} } },
+  "@auditTrailActionStatusChange": {
+    "placeholders": {
+      "user": {},
+      "status": {}
+    }
+  },
   "auditTrailActionPriorityChange": "{user} changed priority to: {priority}",
-  "@auditTrailActionPriorityChange": { "placeholders": { "user": {}, "priority": {} } },
+  "@auditTrailActionPriorityChange": {
+    "placeholders": {
+      "user": {},
+      "priority": {}
+    }
+  },
   "auditTrailActionAssign": "{user} assigned to: {assignee}",
-  "@auditTrailActionAssign": { "placeholders": { "user": {}, "assignee": {} } },
+  "@auditTrailActionAssign": {
+    "placeholders": {
+      "user": {},
+      "assignee": {}
+    }
+  },
   "auditTrailActionCreate": "{user} created the report",
-  "@auditTrailActionCreate": { "placeholders": { "user": {} } },
+  "@auditTrailActionCreate": {
+    "placeholders": {
+      "user": {}
+    }
+  },
   "serviceNotesLabel": "Service notes",
   "teamNotesLabel": "Team notes",
   "noTeamNotes": "No team notes.",
@@ -727,7 +794,11 @@
   "estateNoInvitationCode": "No active code",
   "estateContractValidUntilLabel": "Contract valid until",
   "estateContractDaysLeft": "{days} days left",
-  "@estateContractDaysLeft": { "placeholders": { "days": {} } },
+  "@estateContractDaysLeft": {
+    "placeholders": {
+      "days": {}
+    }
+  },
   "estateContractExpired": "Contract expired",
   "estateContractNone": "No active contract",
   "dataExportButtonLabel": "Export my data",
@@ -751,13 +822,29 @@
   "garageFloorInfo": "Basements/garage levels will be added as stairwells ranging from -4 to 0.",
   "gpsDevicePositionLabel": "GPS Position (Device):",
   "gpsLatitudeLabel": "Latitude: {lat}",
-  "@gpsLatitudeLabel": { "placeholders": { "lat": {} } },
+  "@gpsLatitudeLabel": {
+    "placeholders": {
+      "lat": {}
+    }
+  },
   "gpsLongitudeLabel": "Longitude: {lng}",
-  "@gpsLongitudeLabel": { "placeholders": { "lng": {} } },
+  "@gpsLongitudeLabel": {
+    "placeholders": {
+      "lng": {}
+    }
+  },
   "gpsSourceLabel": "Source: {source}",
-  "@gpsSourceLabel": { "placeholders": { "source": {} } },
+  "@gpsSourceLabel": {
+    "placeholders": {
+      "source": {}
+    }
+  },
   "gpsLabelLabel": "Label: {label}",
-  "@gpsLabelLabel": { "placeholders": { "label": {} } },
+  "@gpsLabelLabel": {
+    "placeholders": {
+      "label": {}
+    }
+  },
   "contactBookCardTitle": "Contact book",
   "contactBookCardSubtitle": "Manage emergency and service contacts for the estate",
   "contactBookTitle": "Contact book",
@@ -765,7 +852,11 @@
   "actionsSectionTitle": "Actions",
   "unknownUserFallback": "Unknown",
   "reporterLabel": "Reported by: {name}",
-  "@reporterLabel": { "placeholders": { "name": {} } },
+  "@reporterLabel": {
+    "placeholders": {
+      "name": {}
+    }
+  },
   "collapseButton": "Collapse",
   "expandButton": "Expand",
   "sortNewest": "Newest",

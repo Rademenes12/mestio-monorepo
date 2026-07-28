@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../../app/paywall/presentation/paywall_presenter.dart';
 import '../../../../app/developer/ui/developer_screen.dart';
 import '../../../../app/locale/models/app_locale_option_model.dart';
 import '../../../../app/locale/presentation/cubit/app_locale_cubit.dart';
@@ -13,7 +12,6 @@ import '../../../../app/profile/presentation/cubit/data_export_cubit.dart';
 import '../../../../app/profile/presentation/ui/delete_account_confirmation_screen.dart';
 import '../../../../app/session/presentation/cubit/session_cubit.dart';
 import '../../../../app/session/presentation/session_localizations.dart';
-import '../../../../core/config/revenuecat_config.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/di/injection.dart';
 import '../../../../features/auth/presentation/ui/login_screen.dart';
@@ -131,30 +129,6 @@ class _ProfileViewState extends State<_ProfileView> {
               ).showSnackBar(SnackBar(content: Text(l10n.proEnabledSnackbar)));
               context.read<AccountActionsCubit>().clearFeedback();
             }
-
-            final effect = state.effect;
-            if (effect case AccountActionsEffectOpenPaywall()) {
-              final result = await getIt<PaywallPresenter>().presentIfNeeded(
-                context: context,
-              );
-              if (!context.mounted) return;
-              switch (result) {
-                case PaywallPresentationResult.purchased:
-                case PaywallPresentationResult.restored:
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(l10n.proEnabledSnackbar)),
-                  );
-                case PaywallPresentationResult.error:
-                  context.read<AccountActionsCubit>().setPaywallError(
-                    'purchase_error',
-                  );
-                case PaywallPresentationResult.notPresented:
-                case PaywallPresentationResult.cancelled:
-                case PaywallPresentationResult.placeholderShown:
-                  break;
-              }
-              context.read<AccountActionsCubit>().clearEffect();
-            }
           },
         ),
       ],
@@ -208,21 +182,12 @@ class _ProfileViewState extends State<_ProfileView> {
                                 accountState.activeAction;
                             final isInteractionLocked =
                                 isSavingName || activeAccountAction != null || exportState.isLoading;
-                            final canBuyPro =
-                                RevenueCatConfig.isEnabled &&
-                                !session.isProUser &&
-                                session.userIdOrNull != null;
                             final isSavePrimaryAction =
-                                !session.isAnonymousUser && !canBuyPro;
+                                !session.isAnonymousUser;
 
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
-                                if (session.shouldShowProtectProBanner) ...[
-                                  const _ProtectProBanner(),
-                                  const SizedBox(height: 20),
-                                ],
-
                                 // Name field card
                                 _SectionCard(
                                   child: Column(
@@ -426,31 +391,9 @@ class _ProfileViewState extends State<_ProfileView> {
                                         ),
                                   ),
                                   const SizedBox(height: 12),
-                                  if (canBuyPro) ...[
-                                    _ProButton(
-                                      label: l10n.buyProButtonLabel,
-                                      isLocked: isInteractionLocked,
-                                      onPressed: () =>
-                                          context
-                                              .read<AccountActionsCubit>()
-                                              .requestProPurchase(),
-                                    ),
-                                    const SizedBox(height: 12),
-                                  ],
                                 ],
 
                                 if (!session.isAnonymousUser) ...[
-                                  if (canBuyPro) ...[
-                                    _ProButton(
-                                      label: l10n.buyProButtonLabel,
-                                      isLocked: isInteractionLocked,
-                                      onPressed: () =>
-                                          context
-                                              .read<AccountActionsCubit>()
-                                              .requestProPurchase(),
-                                    ),
-                                    const SizedBox(height: 12),
-                                  ],
                                   _OutlineActionButton(
                                     label:
                                         activeAccountAction ==
@@ -1115,64 +1058,6 @@ class _ContractCountdownRow extends StatelessWidget {
 }
 
 /// Premium PRO upgrade button with a golden/indigo glow icon.
-class _ProButton extends StatelessWidget {
-  const _ProButton({
-    required this.label,
-    required this.isLocked,
-    required this.onPressed,
-  });
-
-  final String label;
-  final bool isLocked;
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 52,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          gradient: isLocked
-              ? null
-              : const LinearGradient(
-                  colors: [Color(0xFFFF9F0A), _kIndigo],
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                ),
-          color: isLocked ? Colors.grey.shade300 : null,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: isLocked ? null : onPressed,
-            borderRadius: BorderRadius.circular(12),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.workspace_premium_outlined,
-                  color: isLocked ? Colors.grey.shade600 : Colors.white,
-                  size: 20,
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  label,
-                  style: TextStyle(
-                    color: isLocked ? Colors.grey.shade600 : Colors.white,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 16,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 /// Save button that shows either a filled or outlined style depending on context.
 class _SaveButton extends StatelessWidget {
   const _SaveButton({
@@ -1376,60 +1261,6 @@ class _ProfileSummary extends StatelessWidget {
             const SizedBox(height: 8),
             SelectableText(
               l10n.sessionPro(context.booleanLabel(session.isProUser)),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-// ---------------------------------------------------------------------------
-// PRO protection banner (shown when user has Pro but is anonymous)
-// ---------------------------------------------------------------------------
-
-class _ProtectProBanner extends StatelessWidget {
-  const _ProtectProBanner();
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.l10n;
-
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: _kCoral.withValues(alpha: 0.08),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: _kCoral.withValues(alpha: 0.3)),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Icon(Icons.warning_amber_rounded, color: _kCoral, size: 22),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    l10n.protectProBannerTitle,
-                    style: const TextStyle(
-                      color: _kCoral,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 14,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    l10n.protectProBannerBody,
-                    style: TextStyle(
-                      color: _kCoral.withValues(alpha: 0.85),
-                      fontSize: 13,
-                    ),
-                  ),
-                ],
-              ),
             ),
           ],
         ),

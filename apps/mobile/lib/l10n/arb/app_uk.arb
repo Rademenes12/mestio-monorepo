@@ -122,7 +122,6 @@
   "secureGuestAccountBody": "Це збереже ваші поточні дані і прив'яже цей гостьовий акаунт до адреси email та паролю.",
   "registerButtonLabel": "Зареєструватися",
   "profileSavedSnackbar": "Профіль збережено",
-  "proEnabledSnackbar": "Pro активовано",
   "profileTitle": "Профіль",
   "profileLanguageSectionTitle": "Мова додатку",
   "profileLanguageSectionDescription": "Виберіть, чи додаток має використовувати мову пристрою, польську, українську або англійську.",
@@ -135,27 +134,22 @@
   "saveFirstNameButtonLabel": "Зберегти ім'я",
   "accountSecuredSnackbar": "Акаунт захищено",
   "logoutButtonLabel": "Вийти",
-  "buyProButtonLabel": "Купити Pro",
-  "proPlaceholderTitle": "Покупки Pro ще не підключені",
-  "proPlaceholderBodyProfile": "Шаблон вже має підготовлений flow оновлення до Pro в UI, але справжній paywall RevenueCat ще потрібно підключити на етапі налаштування RevenueCat.",
   "deleteAccountButtonLabel": "Видалити акаунт",
   "discardChangesTitle": "Відхилити зміни?",
   "discardChangesBody": "У вас є незбережені зміни. Якщо ви вийдете зараз, вони будуть втрачені.",
   "stayButtonLabel": "Залишитися",
   "discardButtonLabel": "Відхилити",
   "closeButtonLabel": "Закрити",
-  "protectProBannerTitle": "Захистіть доступ до Pro",
-  "protectProBannerBody": "Цей гостьовий акаунт вже має Pro. Зареєструйте цей акаунт, щоб не втратити доступ у майбутньому.",
   "developerDiagnosticsTitle": "Діагностика лише для debug",
   "developerDiagnosticsBody": "Використовуйте цей екран для перевірки локальної конфігурації додатку та статусу інтеграції.",
-  "revenueCatDisconnectedTitle": "RevenueCat не підключено",
-  "revenueCatDisconnectedBody": "Додайте ключі RevenueCat до config/api-keys.json, коли будете готові тестувати підписки.",
-  "revenueCatDebugMissingTestStoreTitle": "Відсутній ключ Test Store",
-  "revenueCatDebugMissingTestStoreBody": "Debug збірки використовують ключ RevenueCat Test Store. Додайте REVENUECAT_TEST_STORE_API_KEY до config/api-keys.json і перезапустіть додаток.",
   "sessionSectionTitle": "Сесія",
   "loggedInLabel": "Авторизований",
   "loggedInAsNamedLabel": "Авторизований: {name}",
-  "@loggedInAsNamedLabel": { "placeholders": { "name": {} } },
+  "@loggedInAsNamedLabel": {
+    "placeholders": {
+      "name": {}
+    }
+  },
   "managerDashboardTitle": "Панель правління",
   "adminDashboardTitle": "Панель адміністратора",
   "anonymousLabel": "Анонімний",
@@ -167,23 +161,7 @@
   "supabaseSectionTitle": "Supabase",
   "keysConfiguredLabel": "Ключі налаштовано",
   "supabaseUrlLabel": "Supabase URL",
-  "revenueCatSectionTitle": "RevenueCat",
-  "supportedPlatformLabel": "Підтримувана платформа",
-  "platformKeyConfiguredLabel": "Ключ платформи налаштовано",
-  "testStoreKeyConfiguredLabel": "Ключ Test Store налаштовано",
-  "sdkActiveLabel": "SDK активний",
-  "activeKeyTypeLabel": "Тип активного ключа",
-  "activeSdkKeyLabel": "Активний ключ SDK",
-  "activeKeyTypeMissing": "Відсутній",
-  "activeKeyTypeTestStore": "Test Store",
-  "activeKeyTypeAppStore": "App Store",
-  "activeKeyTypeGooglePlay": "Google Play",
-  "proSourceLabel": "Джерело Pro",
-  "proSourceRevenueCat": "RevenueCat",
-  "proSourceDeveloperOverride": "Developer override",
   "missingValueLabel": "відсутній",
-  "debugForceProTitle": "Debug: примусовий статус Pro",
-  "debugForceProSubtitle": "Працює лише без активного RevenueCat і лише в debug-інструменті.",
   "storeScreenshotsSectionTitle": "Store screenshots",
   "storeScreenshot1ButtonLabel": "Screenshot 1",
   "storeScreenshot2ButtonLabel": "Screenshot 2",
@@ -264,18 +242,15 @@
   "supportSectionDescription": "Маєте питання, пропозицію або щось не працює? Напишіть нам.",
   "supportContactButton": "Написати нам",
   "supportEmailSubject": "Mestio – відгук / проблема",
-
   "legalSectionTitle": "Правові документи",
   "legalSectionDescription": "Ознайомтеся з нашою політикою конфіденційності та умовами використання.",
   "privacyPolicyButton": "Політика конфіденційності",
   "termsOfServiceButton": "Умови використання",
-
   "securityPatrolTitle": "Обхід: Охорона",
   "securityReportToBoardButton": "⚠️ ПОВІДОМИТИ ПРАВЛІННЯ",
   "securityEmergencyAlarmButton": "🚨 ТРИВОГА ДЛЯ ВСІХ",
   "securityPatrolHistoryTitle": "ОСТАННІ ЗВІТИ ОБХОДІВ",
   "securityPatrolHistoryEmpty": "Сьогодні ще немає записів.",
-
   "navHome": "Головна",
   "navReports": "Заявки",
   "navAddReport": "Подати",
@@ -283,12 +258,10 @@
   "navContacts": "Контакти",
   "navProfile": "Профіль",
   "navResolutions": "Ухвали",
-
   "residentsVisibleToBoardBadge": "Видимо для правління",
   "residentsHideFromBoardTooltip": "Приховати від правління",
   "residentsShareWithBoardTooltip": "Показати правлінню",
   "residentsEmptyState": "Немає зареєстрованих мешканців",
-
   "resolutionsTitle": "Ухвали",
   "resolutionsSubtitleBoard": "Створюйте ухвали та рахуйте голоси мешканців",
   "resolutionsSubtitleResident": "Голосуйте за ухвали спільноти",
@@ -374,13 +347,25 @@
   "sendAnnouncementButton": "НАДІСЛАТИ ОГОЛОШЕННЯ",
   "sentAnnouncementsTitle": "НАДІСЛАНІ ОГОЛОШЕННЯ",
   "announcementExpiresOnLabel": "Термін дії: {date}",
-  "@announcementExpiresOnLabel": { "placeholders": { "date": {} } },
+  "@announcementExpiresOnLabel": {
+    "placeholders": {
+      "date": {}
+    }
+  },
   "announcementExpiredSuffix": "{date} (закінчився)",
-  "@announcementExpiredSuffix": { "placeholders": { "date": {} } },
+  "@announcementExpiredSuffix": {
+    "placeholders": {
+      "date": {}
+    }
+  },
   "deleteAnnouncementTooltip": "Видалити оголошення",
   "announcementSentSnackbar": "Оголошення надіслано!",
   "announcementPushNotificationPrefix": "ОГОЛОШЕННЯ: {title}",
-  "@announcementPushNotificationPrefix": { "placeholders": { "title": {} } },
+  "@announcementPushNotificationPrefix": {
+    "placeholders": {
+      "title": {}
+    }
+  },
   "announcementScopeLabel": "Область — оберіть аудиторію",
   "announcementScopeEstate": "Усі мешканці",
   "announcementScopeBuilding": "Будинок {name}",
@@ -390,13 +375,11 @@
   "errorResolutionVote": "Не вдалося проголосувати.",
   "errorResolutionCreate": "Не вдалося опублікувати ухвалу.",
   "errorResolutionClose": "Не вдалося завершити ухвалу.",
-
   "reportCloseRequiresMessageHint": "Перш ніж закрити або відхилити заявку, напишіть повідомлення мешканцю в нотатках нижче.",
   "reportCloseRequiresMessageWarning": "Спершу напишіть повідомлення мешканцю в нотатках нижче ↓",
   "navAnnouncements": "Оголошення",
   "navEstate": "Комплекс",
   "navResidents": "Мешканці",
-
   "residentGreetingMorning": "Доброго ранку,",
   "residentGreetingFallback": "Мешканцю",
   "residentSystemsOK": "Усі системи в нормі",
@@ -405,29 +388,33 @@
   "activeReportsHeader": "Активні заявки",
   "noActiveReports": "У вас немає активних заявок.",
   "seeAllReports": "Переглянути всі заявки",
-
   "residentReportsTitle": "Ваші заявки",
   "residentReportsListHeader": "ВАШІ ЗАЯВКИ",
   "noReportsYet": "Заявок ще немає.",
   "syncOfflineButton": "Синхронізувати офлайн-кеш",
-
   "profileUserTitle": "Профіль користувача",
   "addressLabel": "Адреса проживання:",
   "roleLabel": "Роль: {role}",
-  "@roleLabel": { "placeholders": { "role": {} } },
+  "@roleLabel": {
+    "placeholders": {
+      "role": {}
+    }
+  },
   "estateJoinIntro": "Ви ще не належите до жодного комплексу. Введіть код запрошення від адміністратора.",
   "estateJoinedInfo": "Ви учасник комплексу. Ваші заявки й оголошення прив'язані до нього.",
   "estateJoinedNamedSnackbar": "Ви приєдналися до комплексу «{name}».",
-  "@estateJoinedNamedSnackbar": { "placeholders": { "name": {} } },
+  "@estateJoinedNamedSnackbar": {
+    "placeholders": {
+      "name": {}
+    }
+  },
   "estateInvalidCode": "Код недійсний або вже неактивний.",
   "joinEstateButton": "Приєднатися",
   "joiningEstate": "Підключення…",
   "supportContactTitle": "Контакт / Підтримка",
-
   "reportAddedSnackbar": "Заявку успішно надіслано!",
   "submitReportButton": "Надіслати заявку",
   "reportTitleRequiredSnackbar": "Вкажіть назву заявки.",
-
   "lockScreenTitle": "Реєстрація мешканця",
   "lockScreenResidentSubtitle": "Вкажіть свій під'їзд та номер квартири, щоб отримувати релевантні сповіщення про події у вашій зоні.",
   "lockScreenStaffSubtitle": "Введіть свої дані та код запрошення від адміністратора.",
@@ -446,30 +433,65 @@
   "floorFieldLabel": "Поверх",
   "apartmentFieldLabel": "Квартира",
   "requiredFieldShort": "Обов'язково",
-
   "technicianLoggedInNamed": "Сервіс: {name}",
-  "@technicianLoggedInNamed": { "placeholders": { "name": {} } },
+  "@technicianLoggedInNamed": {
+    "placeholders": {
+      "name": {}
+    }
+  },
   "technicianLoggedInFallback": "Авторизовано як Сервіс",
   "showClosedToggleLabel": "Показати закриті",
   "reporterInfoLabel": "Заявник: {name} ({email})",
-  "@reporterInfoLabel": { "placeholders": { "name": {}, "email": {} } },
+  "@reporterInfoLabel": {
+    "placeholders": {
+      "name": {},
+      "email": {}
+    }
+  },
   "reportLocationInfoLabel": "Розташування: {location}",
-  "@reportLocationInfoLabel": { "placeholders": { "location": {} } },
+  "@reportLocationInfoLabel": {
+    "placeholders": {
+      "location": {}
+    }
+  },
   "reportDescriptionInfoLabel": "Опис: {description}",
-  "@reportDescriptionInfoLabel": { "placeholders": { "description": {} } },
+  "@reportDescriptionInfoLabel": {
+    "placeholders": {
+      "description": {}
+    }
+  },
   "reportTileSubtitle": "#{displayId}, Під'їзд {footbridge}\nБудинок {building}, Поверх {floor}",
-  "@reportTileSubtitle": { "placeholders": { "displayId": {}, "footbridge": {}, "building": {}, "floor": {} } },
+  "@reportTileSubtitle": {
+    "placeholders": {
+      "displayId": {},
+      "footbridge": {},
+      "building": {},
+      "floor": {}
+    }
+  },
   "syncedToServerLabel": "Синхронізовано з сервером",
   "savedOfflineLabel": "Збережено локально (офлайн)",
   "technicianNoteTitle": "🛠️ Сервісна примітка:",
   "stairwellAbbreviationLabel": "під. {name}",
-  "@stairwellAbbreviationLabel": { "placeholders": { "name": {} } },
+  "@stairwellAbbreviationLabel": {
+    "placeholders": {
+      "name": {}
+    }
+  },
   "apartmentAbbreviationLabel": "кв. {number}",
-  "@apartmentAbbreviationLabel": { "placeholders": { "number": {} } },
+  "@apartmentAbbreviationLabel": {
+    "placeholders": {
+      "number": {}
+    }
+  },
   "detailsButtonLabel": "Деталі",
   "technicianDeleteAccountWarning": "Ця дія незворотна — всі ваші дані будуть остаточно видалені.",
   "technicianPhoneLabel": "Тел: {phone}",
-  "@technicianPhoneLabel": { "placeholders": { "phone": {} } },
+  "@technicianPhoneLabel": {
+    "placeholders": {
+      "phone": {}
+    }
+  },
   "deleteAccountSectionTitle": "Видалення облікового запису",
   "codeFieldLabelRequired": "Код запрошення",
   "codeRequired": "Введіть код запрошення",
@@ -488,10 +510,12 @@
   "pendingApprovalTitle": "Очікує на схвалення",
   "pendingApprovalBody": "Ваш запит на приєднання до \"{estateName}\" як {role} надіслано. Адміністратор незабаром його схвалить.",
   "@pendingApprovalBody": {
-    "placeholders": { "estateName": {}, "role": {} }
+    "placeholders": {
+      "estateName": {},
+      "role": {}
+    }
   },
   "pendingApprovalRefreshButton": "Перевірити статус",
-
   "createAccountTitle": "Створіть акаунт",
   "createAccountBody": "Крок 1 з 2: введіть e-mail і пароль. У кроці 2 ви додасте ім'я, телефон, адресу квартири та опціональний код запрошення.",
   "passwordConfirmFieldLabel": "Підтвердіть пароль",
@@ -501,12 +525,10 @@
   "errorTermsNotAccepted": "Ви повинні прийняти Умови використання та Політику конфіденційності, щоб продовжити.",
   "blockUserButton": "Заблокувати користувача",
   "userBlockedSnackbar": "Користувача заблоковано.",
-
   "dangerZoneSectionTitle": "Небезпечна зона",
   "deleteAccountRequiresPassword": "Підтвердьте пароль",
   "deleteAccountPasswordLabel": "Пароль",
   "deleteAccountPasswordHint": "Введіть пароль, щоб підтвердити видалення акаунту",
-
   "buildingAddRlsError": "У вас немає дозволу додавати будинок. Переконайтеся, що ваша роль — Адміністратор або Правління в цьому комплексі.",
   "buildingAddNetworkError": "Не вдається підключитися до сервера. Перевірте підключення до інтернету та спробуйте ще раз.",
   "buildingAddError": "Не вдалося додати будинок. Спробуйте ще раз.",
@@ -516,7 +538,6 @@
   "stairwellAddError": "Не вдалося додати під'їзд. Спробуйте ще раз.",
   "stairwellUpdateError": "Не вдалося оновити під'їзд. Спробуйте ще раз.",
   "stairwellDeleteError": "Не вдалося видалити під'їзд. Спробуйте ще раз.",
-
   "estateStructureTitle": "Структура комплексу",
   "addBuildingTooltip": "Додати будинок",
   "addGarageMenuLabel": "Додати гараж",
@@ -539,25 +560,45 @@
   "deleteButton": "Видалити",
   "deleteBuildingDialogTitle": "Видалити будинок",
   "deleteBuildingDialogContent": "Ви впевнені, що хочете видалити \"{name}\"?\n\nУсі під'їзди цього будинку також будуть видалені.",
-  "@deleteBuildingDialogContent": { "placeholders": { "name": {} } },
+  "@deleteBuildingDialogContent": {
+    "placeholders": {
+      "name": {}
+    }
+  },
   "addStairwellDialogTitle": "Додати під'їзд",
   "editStairwellDialogTitle": "Редагувати під'їзд",
   "stairwellNameLabel": "Під'їзд",
   "stairwellNameValue": "Під'їзд {name}",
-  "@stairwellNameValue": { "placeholders": { "name": {} } },
+  "@stairwellNameValue": {
+    "placeholders": {
+      "name": {}
+    }
+  },
   "floorMinLabel": "Найнижчий поверх",
   "floorMaxLabel": "Найвищий поверх",
   "garageEntranceLabel": "Вхід до гаража",
   "garageEntranceValue": "Вхід {label}",
-  "@garageEntranceValue": { "placeholders": { "label": {} } },
+  "@garageEntranceValue": {
+    "placeholders": {
+      "label": {}
+    }
+  },
   "notApplicableLabel": "—",
   "validationFloorRangeInvalid": "Найвищий поверх має бути більшим або рівним найнижчому.",
   "deleteStairwellDialogTitle": "Видалити під'їзд",
   "deleteStairwellDialogContent": "Ви впевнені, що хочете видалити \"{name}\"?",
-  "@deleteStairwellDialogContent": { "placeholders": { "name": {} } },
+  "@deleteStairwellDialogContent": {
+    "placeholders": {
+      "name": {}
+    }
+  },
   "stairwellFloorRange": "Поверхи {min}–{max}",
-  "@stairwellFloorRange": { "placeholders": { "min": {}, "max": {} } },
-
+  "@stairwellFloorRange": {
+    "placeholders": {
+      "min": {},
+      "max": {}
+    }
+  },
   "statusNowe": "Нове",
   "statusWRealizacji": "В реалізації",
   "statusZamkniete": "Закриті",
@@ -568,7 +609,11 @@
   "logoutFeedbackLogoutButton": "Вийти",
   "reportDetailScreenTitle": "Деталі заявки",
   "reportDetailIdLabel": "FX-{id}",
-  "@reportDetailIdLabel": { "placeholders": { "id": {} } },
+  "@reportDetailIdLabel": {
+    "placeholders": {
+      "id": {}
+    }
+  },
   "priorityLow": "Низький",
   "priorityNormal": "Нормальний",
   "priorityHigh": "Високий",
@@ -581,18 +626,36 @@
   "csatSubmittedSnackbar": "Дякуємо за оцінку!",
   "auditTrailTitle": "Історія змін",
   "auditTrailActionStatusChange": "{user} змінив статус на: {status}",
-  "@auditTrailActionStatusChange": { "placeholders": { "user": {}, "status": {} } },
+  "@auditTrailActionStatusChange": {
+    "placeholders": {
+      "user": {},
+      "status": {}
+    }
+  },
   "auditTrailActionPriorityChange": "{user} змінив пріоритет на: {priority}",
-  "@auditTrailActionPriorityChange": { "placeholders": { "user": {}, "priority": {} } },
+  "@auditTrailActionPriorityChange": {
+    "placeholders": {
+      "user": {},
+      "priority": {}
+    }
+  },
   "auditTrailActionAssign": "{user} призначив на: {assignee}",
-  "@auditTrailActionAssign": { "placeholders": { "user": {}, "assignee": {} } },
+  "@auditTrailActionAssign": {
+    "placeholders": {
+      "user": {},
+      "assignee": {}
+    }
+  },
   "auditTrailActionCreate": "{user} створив заявку",
-  "@auditTrailActionCreate": { "placeholders": { "user": {} } },
+  "@auditTrailActionCreate": {
+    "placeholders": {
+      "user": {}
+    }
+  },
   "serviceNotesLabel": "Сервісна записка",
   "teamNotesLabel": "Нотатки команди",
   "noTeamNotes": "Немає нотаток команди.",
   "photoGalleryLabel": "Фотографії",
-
   "addContactAddButton": "Додати",
   "addContactCancelButton": "Скасувати",
   "addContactCategoryLabel": "Категорія",
@@ -606,7 +669,12 @@
   "allFilterLabel": "Усі",
   "noReportsMatchingFilter": "Немає звернень, що відповідають вибраним фільтрам.",
   "assignedToLabel": "Призначено: {name} ({role})",
-  "@assignedToLabel": { "placeholders": { "name": {}, "role": {} } },
+  "@assignedToLabel": {
+    "placeholders": {
+      "name": {},
+      "role": {}
+    }
+  },
   "assignTo": "Призначити",
   "backButtonLabel": "Назад",
   "estateCompanySectionTitle": "Керуюча компанія",
@@ -616,7 +684,11 @@
   "estateNoInvitationCode": "Немає активного коду",
   "estateContractValidUntilLabel": "Договір дійсний до",
   "estateContractDaysLeft": "Залишилось {days} днів",
-  "@estateContractDaysLeft": { "placeholders": { "days": {} } },
+  "@estateContractDaysLeft": {
+    "placeholders": {
+      "days": {}
+    }
+  },
   "estateContractExpired": "Договір закінчився",
   "estateContractNone": "Немає активного договору",
   "confirmAndOpenButton": "Підтвердити та відкрити додаток",
@@ -645,19 +717,16 @@
   "reportCategoryZarzadAdministrator": "Правління / Адміністратор",
   "reportRecipientBoardAdminService": "Правління / Admin + Сервіс",
   "reportRecipientBoardAdminSecurity": "Правління / Admin + Охорона",
-
   "qrScanTitle": "Сканувати QR-код",
   "fabReportIssue": "Повідомити проблему",
   "fabScanQr": "Сканувати QR-код",
   "fabMessageToBoard": "Повідомлення до правління",
   "fabClose": "Закрити",
-
   "buildingLabel": "Будинок",
   "stairwellLabel": "Під'їзд",
   "floorLabel": "Поверх",
   "apartmentLabel": "Квартира",
   "qrLocationPrefix": "Місце, відскановане з QR-коду:",
-
   "residentSpacesTitle": "Мої приміщення",
   "residentSpacesAddButton": "Додати приміщення",
   "residentSpacesEmpty": "Ви ще не додали жодного приміщення.\nДодайте комірку, підвал або місце для паркування.",
@@ -673,7 +742,6 @@
   "residentSpacesDeleteConfirmMessage": "Ви впевнені, що хочете видалити це приміщення?",
   "residentSpacesDelete": "Видалити",
   "residentSpacesSave": "Зберегти",
-
   "emptyReportsTitle": "Немає заявок",
   "emptyReportsBody": "Все працює справно? Ви ще не подали жодної заявки про несправність.",
   "emptyReportsAction": "Повідомити про першу проблему",
@@ -688,7 +756,11 @@
   "callButtonTooltip": "Подзвонити",
   "deleteContactDialogTitle": "Видалити контакт",
   "deleteContactConfirmMessage": "Ви впевнені, що хочете видалити контакт \"{name}\"?",
-  "@deleteContactConfirmMessage": { "placeholders": { "name": {} } },
+  "@deleteContactConfirmMessage": {
+    "placeholders": {
+      "name": {}
+    }
+  },
   "emptyAnnouncementsTitle": "Немає оголошень",
   "emptyAnnouncementsBody": "Правління будинку ще не опублікувало жодних оголошень.",
   "emptyBuildingsTitle": "Немає будівель",
@@ -696,7 +768,6 @@
   "emptyBuildingsAction": "Додати першу будівлю",
   "emptyTechReportsTitle": "Немає заявок",
   "emptyTechReportsBody": "Черга сервісного обслуговування порожня — у вас немає призначених або очікуваних заявок.",
-
   "residentNewLabel": "нові",
   "residentInProgressLabel": "в роботі",
   "residentCriticalLabel": "термінових",
@@ -704,7 +775,6 @@
   "residentAnnouncementsCardTitle": "Оголошення",
   "residentCommunityTitle": "Спільнота",
   "residentCommunitySubtitle": "Календар зборів, голосування по ухвалах та сусідська комунікація.",
-
   "estateHealthTitle": "Здоров'я маєтку",
   "estateHealthOpenReports": "Відкриті",
   "estateHealthOverdue": "Прострочені",
@@ -752,13 +822,29 @@
   "garageFloorInfo": "Підвали/рівні гаража будуть додані як під'їзди з діапазоном від -4 до 0.",
   "gpsDevicePositionLabel": "Позиція GPS (Пристрій):",
   "gpsLatitudeLabel": "Широта: {lat}",
-  "@gpsLatitudeLabel": { "placeholders": { "lat": {} } },
+  "@gpsLatitudeLabel": {
+    "placeholders": {
+      "lat": {}
+    }
+  },
   "gpsLongitudeLabel": "Довгота: {lng}",
-  "@gpsLongitudeLabel": { "placeholders": { "lng": {} } },
+  "@gpsLongitudeLabel": {
+    "placeholders": {
+      "lng": {}
+    }
+  },
   "gpsSourceLabel": "Джерело: {source}",
-  "@gpsSourceLabel": { "placeholders": { "source": {} } },
+  "@gpsSourceLabel": {
+    "placeholders": {
+      "source": {}
+    }
+  },
   "gpsLabelLabel": "Мітка: {label}",
-  "@gpsLabelLabel": { "placeholders": { "label": {} } },
+  "@gpsLabelLabel": {
+    "placeholders": {
+      "label": {}
+    }
+  },
   "contactBookCardTitle": "Книга контактів",
   "contactBookCardSubtitle": "Керування аварійними та сервісними контактами комплексу",
   "contactBookTitle": "Книга контактів",
@@ -766,7 +852,11 @@
   "actionsSectionTitle": "Дії",
   "unknownUserFallback": "Невідомий",
   "reporterLabel": "Повідомив: {name}",
-  "@reporterLabel": { "placeholders": { "name": {} } },
+  "@reporterLabel": {
+    "placeholders": {
+      "name": {}
+    }
+  },
   "collapseButton": "Згорнути",
   "expandButton": "Розгорнути",
   "sortNewest": "Найновіші",

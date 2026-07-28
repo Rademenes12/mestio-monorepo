@@ -2,10 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:rxdart/rxdart.dart';
 
-import '../../../../core/config/revenuecat_config.dart';
 import '../../../../features/auth/data/repositories/auth_repository.dart';
 import '../../../../features/auth/models/auth_principal_model.dart';
 import '../../../../features/profiles/data/repositories/shared_user_repository.dart';
@@ -112,17 +110,8 @@ class SessionRepositoryImpl implements SessionRepository {
         );
       }
 
-      // Sync RevenueCat identity before subscribing to entitlement streams.
-      // Uses Stream.fromFuture + switchMap so the async logIn completes first,
-      // then the combined streams start emitting.
-      return Stream.fromFuture(
-        _syncRevenueCatIdentity(principal.userId),
-      ).switchMap((_) {
-        debugPrint(
-          'ℹ️ [SessionRepository] starting combined session streams '
-          'userId=${principal.userId}',
-        );
-        return Rx.combineLatest2<SharedUserModel?, bool, SessionStatusModel>(
+      // Start the combined subscription + shared user streams.
+      return Rx.combineLatest2<SharedUserModel?, bool, SessionStatusModel>(
           _sharedUserRepository.watchSharedUser(principal.userId),
           _subscriptionRepository.watchIsPro(principal.userId),
           (sharedUser, isPro) {
@@ -139,24 +128,6 @@ class SessionRepositoryImpl implements SessionRepository {
         );
       });
     });
-  }
-
-  /// Calls [Purchases.logIn] to sync RevenueCat identity with Supabase user.id.
-  /// Always uses the Supabase user.id — never RevenueCat anonymous IDs.
-  /// Errors are logged but do not block the session stream.
-  Future<void> _syncRevenueCatIdentity(String userId) async {
-    if (!RevenueCatConfig.isEnabled) return;
-
-    try {
-      final result = await Purchases.logIn(userId);
-      debugPrint(
-        'ℹ️ [SessionRepository] RC logIn userId=$userId '
-        'created=${result.created}',
-      );
-    } catch (error) {
-      // Non-blocking — RC identity sync failure must not prevent session.
-      debugPrint('❌ [SessionRepository] RC logIn error: $error');
-    }
   }
 
   bool _samePrincipal(AuthPrincipalModel? previous, AuthPrincipalModel? next) {

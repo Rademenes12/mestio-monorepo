@@ -6,15 +6,14 @@ abstract class SubscriptionDataSource {
 
   Future<bool> getIsPro(String userId);
 
-  // Developer-only override for toggling Pro when RevenueCat is not active.
   Future<void> setDeveloperProOverride({
     required String userId,
     required bool isPro,
   });
 }
 
-/// In-memory fake used when RevenueCat API keys are not configured.
-/// DI binding is handled conditionally in [AppModule].
+/// Always returns Pro=true — RevenueCat has been removed and all users
+/// get unlimited free access.
 class FakeSubscriptionDataSource implements SubscriptionDataSource {
   final _controllers = <String, BehaviorSubject<bool>>{};
 
@@ -58,9 +57,8 @@ class FakeSubscriptionDataSource implements SubscriptionDataSource {
         }
       }
       debugPrint(
-        'ℹ️ [SubscriptionDataSource] Creating controller userId=$userId initialIsPro=true (TEST MODE)',
+        'ℹ️ [SubscriptionDataSource] Creating controller userId=$userId initialIsPro=true (FREE MODE)',
       );
-      // TODO: Set to false for production
       return BehaviorSubject<bool>.seeded(true);
     });
   }

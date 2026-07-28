@@ -13,8 +13,7 @@ enum AccountAction { signOut, deleteAccount, developerProOverride }
 
 @freezed
 sealed class AccountActionsEffect with _$AccountActionsEffect {
-  const factory AccountActionsEffect.openPaywall() =
-      AccountActionsEffectOpenPaywall;
+  const factory AccountActionsEffect() = _AccountActionsEffect;
 }
 
 @freezed
@@ -48,8 +47,6 @@ class AccountActionsCubit extends Cubit<AccountActionsState> {
 
     try {
       await _authRepository.signOut();
-      // Signing out changes the global session and may remove this route via
-      // SessionNavigationObserver before the await completes.
       if (isClosed) return;
 
       emit(state.copyWith(activeAction: null, successKey: 'signed_out'));
@@ -61,17 +58,6 @@ class AccountActionsCubit extends Cubit<AccountActionsState> {
     }
   }
 
-  /// Deletes the current account. For non-anonymous accounts, [email] and
-  /// [password] must be provided so the password can be re-verified first -
-  /// an unlocked/unattended phone with a live session must not be enough to
-  /// permanently destroy an account. Anonymous guests have no password to
-  /// check, so this step is skipped for them (caller passes null/null).
-  ///
-  /// This re-verifies via a normal signInWithPassword call (same as
-  /// AuthRepository.loginWithEmail), NOT Supabase's reauthenticate()/OTP
-  /// flow - that flow is deliberately avoided elsewhere in this cubit
-  /// because it fails for some valid emails (see delete-account comment
-  /// below); a plain password sign-in has no such issue.
   Future<void> deleteAccount({String? email, String? password}) async {
     if (state.activeAction != null) return;
 
@@ -105,10 +91,6 @@ class AccountActionsCubit extends Cubit<AccountActionsState> {
         }
       }
 
-      // Identity is verified by the `delete-account` Edge Function via the
-      // JWT token in the Authorization header. Supabase OTP-based reauth is
-      // not used here — it breaks for emails that pass Supabase sign-in but
-      // fail their reauthenticate validator (e.g. short-domain addresses).
       await _authRepository.deleteAccount();
       await _authRepository.signOut();
       if (isClosed) return;
@@ -120,20 +102,6 @@ class AccountActionsCubit extends Cubit<AccountActionsState> {
 
       emit(state.copyWith(activeAction: null, errorKey: mapErrorToKey(error)));
     }
-  }
-
-  void requestProPurchase() {
-    emit(
-      state.copyWith(
-        errorKey: null,
-        successKey: null,
-        effect: const AccountActionsEffect.openPaywall(),
-      ),
-    );
-  }
-
-  void setPaywallError(String errorKey) {
-    emit(state.copyWith(errorKey: errorKey, effect: null));
   }
 
   Future<void> setDeveloperProOverride({
