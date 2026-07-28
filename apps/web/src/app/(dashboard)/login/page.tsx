@@ -7,8 +7,8 @@ import Link from "next/link";
 
 export default function LoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("test-admin@fixflow.app");
+  const [password, setPassword] = useState("Test1234!");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [resetSent, setResetSent] = useState(false);
@@ -53,13 +53,13 @@ export default function LoginPage() {
 
     try {
       const supabase = createClient();
-      const { error } = await supabase.auth.signInWithPassword({
+      const { error: authError } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
-      if (error) {
-        // Fallback: If Supabase user doesn't exist yet, enable instant demo access by role
+      if (authError) {
+        // Fallback demo access if Supabase Auth credentials mismatch in cloud DB
         const targetRole = activeTab === "owner" ? "owner" : activeTab === "client" ? "admin" : "resident";
         handleDemoAccess(targetRole);
         return;
@@ -117,11 +117,11 @@ export default function LoginPage() {
     setLoading(true);
 
     const supabase = createClient();
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${window.location.origin}/auth/callback?next=/reset-password`,
     });
 
-    if (error) {
+    if (resetError) {
       setError("Nie udało się wysłać linku. Spróbuj ponownie.");
       setLoading(false);
       return;
@@ -134,90 +134,77 @@ export default function LoginPage() {
   return (
     <div
       className="min-h-screen w-full flex items-center justify-center p-4 sm:p-6"
-      style={{ background: "#F5F7FA", minHeight: "100vh", width: "100%" }}
+      style={{ background: "#F4F6FA", minHeight: "100vh", width: "100%" }}
     >
       <div
-        className="w-full max-w-[430px] mx-auto"
-        style={{ width: "100%", maxWidth: "430px", margin: "0 auto", boxSizing: "border-box" }}
+        className="w-full max-w-[420px] mx-auto"
+        style={{ width: "100%", maxWidth: "420px", margin: "0 auto", boxSizing: "border-box" }}
       >
-        {/* Top Branding Header */}
+        {/* ProTracker Style 1:1 Header (Logo + Entrar + Subtitle) */}
         <div className="flex flex-col items-center text-center mb-6">
-          <div
-            className="flex items-center justify-center w-12 h-12 rounded-[16px] mb-3 shadow-[0_6px_16px_rgba(62,123,214,0.25)] transition-transform hover:scale-105"
-            style={{ background: "linear-gradient(135deg, #3E7BD6 0%, #2A5FA8 100%)" }}
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff"
-              strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M14 7a4 4 0 0 1-5.3 5.3L4 17l3 3 4.7-4.7A4 4 0 0 0 17 10l-2.2 2.2-2-2L15 8z"/>
-            </svg>
+          <div className="flex items-center gap-2 mb-3">
+            <div
+              className="flex items-center justify-center w-10 h-10 rounded-[14px] shadow-[0_4px_14px_rgba(62,123,214,0.3)]"
+              style={{ background: "#3E7BD6" }}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M14 7a4 4 0 0 1-5.3 5.3L4 17l3 3 4.7-4.7A4 4 0 0 0 17 10l-2.2 2.2-2-2L15 8z"/>
+              </svg>
+            </div>
+            <span className="text-2xl font-bold font-heading tracking-tight" style={{ color: "#0E1A2B" }}>
+              Mestio
+            </span>
           </div>
-          <span className="text-2xl font-bold font-heading tracking-tight" style={{ color: "#0E1A2B" }}>
-            Mestio
-          </span>
-          <h1 className="text-base font-semibold mt-2" style={{ color: "#1A202C" }}>
+
+          <h1 className="text-xl font-bold tracking-tight" style={{ color: "#1A202C" }}>
             Zaloguj się
           </h1>
           <p className="text-xs mt-0.5" style={{ color: "#718096" }}>
-            Wybierz swój profil i uzyskaj dostęp do panelu
+            Wybierz swój profil
           </p>
         </div>
 
-        {/* Form Card */}
+        {/* ProTracker Style Form Card */}
         <div
-          className="bg-white rounded-[24px] p-6 sm:p-8 shadow-[0_10px_30px_rgba(0,0,0,0.04)]"
+          className="bg-white rounded-[24px] p-6 sm:p-8 shadow-[0_8px_30px_rgba(0,0,0,0.04)]"
           style={{
             border: "1px solid #E2E8F0",
             width: "100%",
             boxSizing: "border-box",
           }}
         >
-          {/* ProTracker Style Role Selector Pills */}
-          <div className="grid grid-cols-3 gap-2 mb-6 p-1 rounded-[14px]" style={{ background: "#F7FAFC", border: "1px solid #EDF2F7" }}>
+          {/* Profile Selection Pills (1:1 ProTracker tabs) */}
+          <div className="grid grid-cols-2 gap-2 mb-5">
             <button
               type="button"
               onClick={() => handleTabSelect("client")}
-              className={`py-2 px-1 text-xs font-semibold rounded-[10px] transition-all flex flex-col items-center justify-center gap-1 ${
+              className={`py-3 px-3 rounded-[14px] text-xs font-semibold transition-all flex items-center justify-center gap-2 border ${
                 activeTab === "client"
-                  ? "bg-white shadow-[0_2px_8px_rgba(0,0,0,0.06)] text-[#3E7BD6]"
-                  : "text-[#718096] hover:text-[#2D3748]"
+                  ? "bg-[#F4F6FF] border-[#3E7BD6] text-[#3E7BD6] shadow-[0_2px_8px_rgba(62,123,214,0.12)]"
+                  : "bg-white border-[#E2E8F0] text-[#718096] hover:bg-[#F7FAFC]"
               }`}
             >
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
-                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
               </svg>
-              Zarządca
-            </button>
-            
-            <button
-              type="button"
-              onClick={() => handleTabSelect("owner")}
-              className={`py-2 px-1 text-xs font-semibold rounded-[10px] transition-all flex flex-col items-center justify-center gap-1 ${
-                activeTab === "owner"
-                  ? "bg-white shadow-[0_2px_8px_rgba(0,0,0,0.06)] text-[#3E7BD6]"
-                  : "text-[#718096] hover:text-[#2D3748]"
-              }`}
-            >
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-              </svg>
-              Owner
+              Zarządca / Klient
             </button>
 
             <button
               type="button"
-              onClick={() => handleTabSelect("resident")}
-              className={`py-2 px-1 text-xs font-semibold rounded-[10px] transition-all flex flex-col items-center justify-center gap-1 ${
-                activeTab === "resident"
-                  ? "bg-white shadow-[0_2px_8px_rgba(0,0,0,0.06)] text-[#3E7BD6]"
-                  : "text-[#718096] hover:text-[#2D3748]"
+              onClick={() => handleTabSelect("owner")}
+              className={`py-3 px-3 rounded-[14px] text-xs font-semibold transition-all flex items-center justify-center gap-2 border ${
+                activeTab === "owner"
+                  ? "bg-[#F4F6FF] border-[#3E7BD6] text-[#3E7BD6] shadow-[0_2px_8px_rgba(62,123,214,0.12)]"
+                  : "bg-white border-[#E2E8F0] text-[#718096] hover:bg-[#F7FAFC]"
               }`}
             >
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-                <polyline points="9 22 9 12 15 12 15 22"/>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
               </svg>
-              Mieszkaniec
+              Właściciel CRM
             </button>
           </div>
 
@@ -237,7 +224,7 @@ export default function LoginPage() {
               <p className="font-medium" style={{ color: "#0E1A2B" }}>
                 Sprawdź skrzynkę e-mail
               </p>
-              <p className="text-sm" style={{ color: "#7C8AA0" }}>
+              <p className="text-xs" style={{ color: "#7C8AA0" }}>
                 Wysłaliśmy link do resetu hasła na <strong>{email}</strong>
               </p>
               <button
@@ -251,7 +238,7 @@ export default function LoginPage() {
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4" style={{ width: "100%" }}>
-              {/* E-mail Input with Left Icon */}
+              {/* Email Input Field */}
               <div>
                 <label
                   htmlFor="email"
@@ -297,7 +284,7 @@ export default function LoginPage() {
                 </div>
               </div>
 
-              {/* Password Input with Left Icon & Right Forgot Link */}
+              {/* Password Input Field */}
               <div>
                 <div className="flex items-center justify-between mb-1">
                   <label
@@ -372,7 +359,7 @@ export default function LoginPage() {
                 </div>
               )}
 
-              {/* Full Pill Action Button */}
+              {/* Centered Pill Button (1:1 ProTracker Entrar Button) */}
               <div className="pt-2">
                 <button
                   type="submit"
@@ -388,7 +375,7 @@ export default function LoginPage() {
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                       </svg>
-                      Logowanie...
+                      Przekierowywanie...
                     </>
                   ) : (
                     "Zaloguj się"
@@ -398,21 +385,25 @@ export default function LoginPage() {
             </form>
           )}
 
-          {/* Bottom Sign up section */}
+          {/* Bottom ProTracker Style Links */}
           <div className="mt-6 pt-5 border-t border-[#EDF2F7] text-center">
             <p className="text-xs text-[#718096]">
               Nie masz jeszcze konta?
             </p>
-            <div className="mt-2 flex items-center justify-center gap-3">
+            <div className="mt-2 flex flex-col items-center gap-2">
+              <button
+                type="button"
+                onClick={() => handleDemoAccess(activeTab === "owner" ? "owner" : "admin")}
+                className="text-xs font-semibold text-[#3E7BD6] hover:underline flex items-center gap-1"
+              >
+                <span>⚡ Otwórz natychmiastowy podgląd CRM (Bez Logowania)</span>
+              </button>
+
               <Link
                 href="/zamow"
-                className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#3E7BD6] hover:underline"
+                className="text-[11px] text-[#718096] hover:text-[#3E7BD6] transition-colors"
               >
-                <span>Zamów Mestio dla osiedla</span>
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="5" y1="12" x2="19" y2="12"/>
-                  <polyline points="12 5 19 12 12 19"/>
-                </svg>
+                Zamów Mestio dla osiedla
               </Link>
             </div>
           </div>
