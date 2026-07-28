@@ -1,6 +1,0 @@
-{
-  "framework": "nextjs",
-  "buildCommand": "npx turbo run build --filter=web",
-  "installCommand": "npm install",
-  "ignoreCommand": "npx turbo-ignore"
-}
