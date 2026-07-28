@@ -95,9 +95,12 @@ export default function LoginPage() {
   return (
     <div
       className="min-h-screen w-full flex items-center justify-center p-4"
-      style={{ background: "#F6F8FB" }}
+      style={{ background: "#F6F8FB", minHeight: "100vh", width: "100%" }}
     >
-      <div className="w-full max-w-[420px] mx-auto">
+      <div
+        className="w-full max-w-[420px] mx-auto"
+        style={{ width: "100%", maxWidth: "420px", margin: "0 auto", boxSizing: "border-box" }}
+      >
         {/* Logo + nagłówek */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-12 h-12 rounded-[14px] mb-4 shadow-[0_4px_12px_rgba(62,123,214,0.3)]"
@@ -120,6 +123,8 @@ export default function LoginPage() {
           className="bg-white rounded-[20px] p-8 shadow-[0_4px_24px_rgba(14,26,43,0.06)]"
           style={{
             border: "1px solid #E9EEF5",
+            width: "100%",
+            boxSizing: "border-box",
           }}
         >
           {resetSent ? (
@@ -151,7 +156,7 @@ export default function LoginPage() {
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4" style={{ width: "100%" }}>
               <div>
                 <label
                   htmlFor="email"
@@ -170,6 +175,8 @@ export default function LoginPage() {
                   placeholder="twoj@email.pl"
                   className="w-full px-4 py-2.5 rounded-[8px] text-sm transition-all"
                   style={{
+                    width: "100%",
+                    boxSizing: "border-box",
                     background: "#F8F9FB",
                     border: "1px solid #E9EEF5",
                     color: "#0E1A2B",
@@ -203,6 +210,8 @@ export default function LoginPage() {
                   placeholder="••••••••"
                   className="w-full px-4 py-2.5 rounded-[8px] text-sm transition-all"
                   style={{
+                    width: "100%",
+                    boxSizing: "border-box",
                     background: "#F8F9FB",
                     border: "1px solid #E9EEF5",
                     color: "#0E1A2B",
