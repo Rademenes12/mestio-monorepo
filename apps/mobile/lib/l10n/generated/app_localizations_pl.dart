@@ -282,9 +282,6 @@ class AppLocalizationsPl extends AppLocalizations {
   String get profileSavedSnackbar => 'Profil zapisany';
 
   @override
-  String get proEnabledSnackbar => 'Pro aktywowane';
-
-  @override
   String get profileTitle => 'Profil';
 
   @override
@@ -323,16 +320,6 @@ class AppLocalizationsPl extends AppLocalizations {
   String get logoutButtonLabel => 'Wyloguj się';
 
   @override
-  String get buyProButtonLabel => 'Kup Pro';
-
-  @override
-  String get proPlaceholderTitle => 'Zakupy Pro nie są jeszcze podłączone';
-
-  @override
-  String get proPlaceholderBodyProfile =>
-      'Template ma już przygotowany flow upgrade do Pro w UI, ale prawdziwy paywall RevenueCat trzeba jeszcze podłączyć w etapie konfiguracji RevenueCat.';
-
-  @override
   String get deleteAccountButtonLabel => 'Usuń konto';
 
   @override
@@ -352,33 +339,11 @@ class AppLocalizationsPl extends AppLocalizations {
   String get closeButtonLabel => 'Zamknij';
 
   @override
-  String get protectProBannerTitle => 'Zabezpiecz dostęp do Pro';
-
-  @override
-  String get protectProBannerBody =>
-      'To konto gościa ma już Pro. Zarejestruj to konto, aby nie stracić dostępu w przyszłości.';
-
-  @override
   String get developerDiagnosticsTitle => 'Diagnostyka tylko dla debug';
 
   @override
   String get developerDiagnosticsBody =>
       'Użyj tego ekranu, aby sprawdzić lokalną konfigurację aplikacji i status integracji.';
-
-  @override
-  String get revenueCatDisconnectedTitle => 'RevenueCat nie jest podłączony';
-
-  @override
-  String get revenueCatDisconnectedBody =>
-      'Dodaj klucze RevenueCat do config/api-keys.json, gdy będziesz gotowy testować subskrypcje.';
-
-  @override
-  String get revenueCatDebugMissingTestStoreTitle =>
-      'Brakuje klucza Test Store';
-
-  @override
-  String get revenueCatDebugMissingTestStoreBody =>
-      'Buildy debug używają klucza RevenueCat Test Store. Dodaj REVENUECAT_TEST_STORE_API_KEY do config/api-keys.json i uruchom aplikację ponownie.';
 
   @override
   String get sessionSectionTitle => 'Sesja';
@@ -425,56 +390,7 @@ class AppLocalizationsPl extends AppLocalizations {
   String get supabaseUrlLabel => 'Supabase URL';
 
   @override
-  String get revenueCatSectionTitle => 'RevenueCat';
-
-  @override
-  String get supportedPlatformLabel => 'Wspierana platforma';
-
-  @override
-  String get platformKeyConfiguredLabel => 'Klucz platformy skonfigurowany';
-
-  @override
-  String get testStoreKeyConfiguredLabel => 'Klucz Test Store skonfigurowany';
-
-  @override
-  String get sdkActiveLabel => 'SDK aktywne';
-
-  @override
-  String get activeKeyTypeLabel => 'Typ aktywnego klucza';
-
-  @override
-  String get activeSdkKeyLabel => 'Aktywny klucz SDK';
-
-  @override
-  String get activeKeyTypeMissing => 'Brak';
-
-  @override
-  String get activeKeyTypeTestStore => 'Test Store';
-
-  @override
-  String get activeKeyTypeAppStore => 'App Store';
-
-  @override
-  String get activeKeyTypeGooglePlay => 'Google Play';
-
-  @override
-  String get proSourceLabel => 'Źródło Pro';
-
-  @override
-  String get proSourceRevenueCat => 'RevenueCat';
-
-  @override
-  String get proSourceDeveloperOverride => 'Developer override';
-
-  @override
   String get missingValueLabel => 'brak';
-
-  @override
-  String get debugForceProTitle => 'Debug: wymuś status Pro';
-
-  @override
-  String get debugForceProSubtitle =>
-      'Działa tylko bez aktywnego RevenueCat i tylko w debugowym narzędziu.';
 
   @override
   String get storeScreenshotsSectionTitle => 'Store screenshots';

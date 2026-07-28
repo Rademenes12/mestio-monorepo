@@ -60,6 +60,12 @@ export const colors = {
   glassBorder: '#E2E9F2',
   glassBlur: '10px',
 
+  // Stratify Light Premium tokens
+  purple: '#8864F0',
+  purpleHover: '#734CD9',
+  purpleMuted: 'rgba(136, 100, 240, 0.10)',
+  stratifyCardShadow: '0 2px 14px rgba(14, 26, 43, 0.05)',
+
   // Legacy aliases
   navy: '#173A6A',
   navyLight: '#3E7BD6',

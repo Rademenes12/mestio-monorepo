@@ -280,9 +280,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profileSavedSnackbar => 'Profile saved';
 
   @override
-  String get proEnabledSnackbar => 'Pro enabled';
-
-  @override
   String get profileTitle => 'Profile';
 
   @override
@@ -321,16 +318,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get logoutButtonLabel => 'Log out';
 
   @override
-  String get buyProButtonLabel => 'Buy Pro';
-
-  @override
-  String get proPlaceholderTitle => 'Pro purchases are not connected yet';
-
-  @override
-  String get proPlaceholderBodyProfile =>
-      'This template already supports the Pro upgrade flow in the UI, but the real RevenueCat paywall still needs to be connected in the RevenueCat setup step.';
-
-  @override
   String get deleteAccountButtonLabel => 'Delete account';
 
   @override
@@ -350,33 +337,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get closeButtonLabel => 'Close';
 
   @override
-  String get protectProBannerTitle => 'Protect access to Pro';
-
-  @override
-  String get protectProBannerBody =>
-      'This guest account already has Pro. Register this account so you do not lose access in the future.';
-
-  @override
   String get developerDiagnosticsTitle => 'Debug-only diagnostics';
 
   @override
   String get developerDiagnosticsBody =>
       'Use this screen to inspect the local app configuration and integration status.';
-
-  @override
-  String get revenueCatDisconnectedTitle => 'RevenueCat is not connected';
-
-  @override
-  String get revenueCatDisconnectedBody =>
-      'Add RevenueCat keys to config/api-keys.json when you\'re ready to test subscriptions.';
-
-  @override
-  String get revenueCatDebugMissingTestStoreTitle =>
-      'Test Store key is missing';
-
-  @override
-  String get revenueCatDebugMissingTestStoreBody =>
-      'Debug builds use the RevenueCat Test Store key. Add REVENUECAT_TEST_STORE_API_KEY to config/api-keys.json and restart the app.';
 
   @override
   String get sessionSectionTitle => 'Session';
@@ -423,56 +388,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get supabaseUrlLabel => 'Supabase URL';
 
   @override
-  String get revenueCatSectionTitle => 'RevenueCat';
-
-  @override
-  String get supportedPlatformLabel => 'Supported platform';
-
-  @override
-  String get platformKeyConfiguredLabel => 'Platform key configured';
-
-  @override
-  String get testStoreKeyConfiguredLabel => 'Test Store key configured';
-
-  @override
-  String get sdkActiveLabel => 'SDK active';
-
-  @override
-  String get activeKeyTypeLabel => 'Active key type';
-
-  @override
-  String get activeSdkKeyLabel => 'Active SDK key';
-
-  @override
-  String get activeKeyTypeMissing => 'Missing';
-
-  @override
-  String get activeKeyTypeTestStore => 'Test Store';
-
-  @override
-  String get activeKeyTypeAppStore => 'App Store';
-
-  @override
-  String get activeKeyTypeGooglePlay => 'Google Play';
-
-  @override
-  String get proSourceLabel => 'Pro source';
-
-  @override
-  String get proSourceRevenueCat => 'RevenueCat';
-
-  @override
-  String get proSourceDeveloperOverride => 'Developer override';
-
-  @override
   String get missingValueLabel => 'missing';
-
-  @override
-  String get debugForceProTitle => 'Debug: force Pro status';
-
-  @override
-  String get debugForceProSubtitle =>
-      'Works only without active RevenueCat and only in the debug tool.';
 
   @override
   String get storeScreenshotsSectionTitle => 'Store screenshots';

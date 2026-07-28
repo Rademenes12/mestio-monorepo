@@ -24,6 +24,10 @@ export type { TimelineEvent } from './components/ActivityTimeline'
 export { WidgetCard } from './components/WidgetCard'
 export { ThemeToggle } from './components/ThemeToggle'
 export { PrivacyToggle, usePrivacy } from './components/PrivacyToggle'
+export { StratifyKpiCard } from './components/StratifyKpiCard'
+export type { StratifyKpiCardProps } from './components/StratifyKpiCard'
+export { StratifyActivityStream } from './components/StratifyActivityStream'
+export type { ActivityEvent, StratifyActivityStreamProps } from './components/StratifyActivityStream'
 
 // Hooks
 export { useWebGLBackground } from './hooks/useWebGLBackground'

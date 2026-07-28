@@ -568,12 +568,6 @@ abstract class AppLocalizations {
   /// **'Profil zapisany'**
   String get profileSavedSnackbar;
 
-  /// No description provided for @proEnabledSnackbar.
-  ///
-  /// In pl, this message translates to:
-  /// **'Pro aktywowane'**
-  String get proEnabledSnackbar;
-
   /// No description provided for @profileTitle.
   ///
   /// In pl, this message translates to:
@@ -646,24 +640,6 @@ abstract class AppLocalizations {
   /// **'Wyloguj się'**
   String get logoutButtonLabel;
 
-  /// No description provided for @buyProButtonLabel.
-  ///
-  /// In pl, this message translates to:
-  /// **'Kup Pro'**
-  String get buyProButtonLabel;
-
-  /// No description provided for @proPlaceholderTitle.
-  ///
-  /// In pl, this message translates to:
-  /// **'Zakupy Pro nie są jeszcze podłączone'**
-  String get proPlaceholderTitle;
-
-  /// No description provided for @proPlaceholderBodyProfile.
-  ///
-  /// In pl, this message translates to:
-  /// **'Template ma już przygotowany flow upgrade do Pro w UI, ale prawdziwy paywall RevenueCat trzeba jeszcze podłączyć w etapie konfiguracji RevenueCat.'**
-  String get proPlaceholderBodyProfile;
-
   /// No description provided for @deleteAccountButtonLabel.
   ///
   /// In pl, this message translates to:
@@ -700,18 +676,6 @@ abstract class AppLocalizations {
   /// **'Zamknij'**
   String get closeButtonLabel;
 
-  /// No description provided for @protectProBannerTitle.
-  ///
-  /// In pl, this message translates to:
-  /// **'Zabezpiecz dostęp do Pro'**
-  String get protectProBannerTitle;
-
-  /// No description provided for @protectProBannerBody.
-  ///
-  /// In pl, this message translates to:
-  /// **'To konto gościa ma już Pro. Zarejestruj to konto, aby nie stracić dostępu w przyszłości.'**
-  String get protectProBannerBody;
-
   /// No description provided for @developerDiagnosticsTitle.
   ///
   /// In pl, this message translates to:
@@ -723,30 +687,6 @@ abstract class AppLocalizations {
   /// In pl, this message translates to:
   /// **'Użyj tego ekranu, aby sprawdzić lokalną konfigurację aplikacji i status integracji.'**
   String get developerDiagnosticsBody;
-
-  /// No description provided for @revenueCatDisconnectedTitle.
-  ///
-  /// In pl, this message translates to:
-  /// **'RevenueCat nie jest podłączony'**
-  String get revenueCatDisconnectedTitle;
-
-  /// No description provided for @revenueCatDisconnectedBody.
-  ///
-  /// In pl, this message translates to:
-  /// **'Dodaj klucze RevenueCat do config/api-keys.json, gdy będziesz gotowy testować subskrypcje.'**
-  String get revenueCatDisconnectedBody;
-
-  /// No description provided for @revenueCatDebugMissingTestStoreTitle.
-  ///
-  /// In pl, this message translates to:
-  /// **'Brakuje klucza Test Store'**
-  String get revenueCatDebugMissingTestStoreTitle;
-
-  /// No description provided for @revenueCatDebugMissingTestStoreBody.
-  ///
-  /// In pl, this message translates to:
-  /// **'Buildy debug używają klucza RevenueCat Test Store. Dodaj REVENUECAT_TEST_STORE_API_KEY do config/api-keys.json i uruchom aplikację ponownie.'**
-  String get revenueCatDebugMissingTestStoreBody;
 
   /// No description provided for @sessionSectionTitle.
   ///
@@ -832,107 +772,11 @@ abstract class AppLocalizations {
   /// **'Supabase URL'**
   String get supabaseUrlLabel;
 
-  /// No description provided for @revenueCatSectionTitle.
-  ///
-  /// In pl, this message translates to:
-  /// **'RevenueCat'**
-  String get revenueCatSectionTitle;
-
-  /// No description provided for @supportedPlatformLabel.
-  ///
-  /// In pl, this message translates to:
-  /// **'Wspierana platforma'**
-  String get supportedPlatformLabel;
-
-  /// No description provided for @platformKeyConfiguredLabel.
-  ///
-  /// In pl, this message translates to:
-  /// **'Klucz platformy skonfigurowany'**
-  String get platformKeyConfiguredLabel;
-
-  /// No description provided for @testStoreKeyConfiguredLabel.
-  ///
-  /// In pl, this message translates to:
-  /// **'Klucz Test Store skonfigurowany'**
-  String get testStoreKeyConfiguredLabel;
-
-  /// No description provided for @sdkActiveLabel.
-  ///
-  /// In pl, this message translates to:
-  /// **'SDK aktywne'**
-  String get sdkActiveLabel;
-
-  /// No description provided for @activeKeyTypeLabel.
-  ///
-  /// In pl, this message translates to:
-  /// **'Typ aktywnego klucza'**
-  String get activeKeyTypeLabel;
-
-  /// No description provided for @activeSdkKeyLabel.
-  ///
-  /// In pl, this message translates to:
-  /// **'Aktywny klucz SDK'**
-  String get activeSdkKeyLabel;
-
-  /// No description provided for @activeKeyTypeMissing.
-  ///
-  /// In pl, this message translates to:
-  /// **'Brak'**
-  String get activeKeyTypeMissing;
-
-  /// No description provided for @activeKeyTypeTestStore.
-  ///
-  /// In pl, this message translates to:
-  /// **'Test Store'**
-  String get activeKeyTypeTestStore;
-
-  /// No description provided for @activeKeyTypeAppStore.
-  ///
-  /// In pl, this message translates to:
-  /// **'App Store'**
-  String get activeKeyTypeAppStore;
-
-  /// No description provided for @activeKeyTypeGooglePlay.
-  ///
-  /// In pl, this message translates to:
-  /// **'Google Play'**
-  String get activeKeyTypeGooglePlay;
-
-  /// No description provided for @proSourceLabel.
-  ///
-  /// In pl, this message translates to:
-  /// **'Źródło Pro'**
-  String get proSourceLabel;
-
-  /// No description provided for @proSourceRevenueCat.
-  ///
-  /// In pl, this message translates to:
-  /// **'RevenueCat'**
-  String get proSourceRevenueCat;
-
-  /// No description provided for @proSourceDeveloperOverride.
-  ///
-  /// In pl, this message translates to:
-  /// **'Developer override'**
-  String get proSourceDeveloperOverride;
-
   /// No description provided for @missingValueLabel.
   ///
   /// In pl, this message translates to:
   /// **'brak'**
   String get missingValueLabel;
-
-  /// No description provided for @debugForceProTitle.
-  ///
-  /// In pl, this message translates to:
-  /// **'Debug: wymuś status Pro'**
-  String get debugForceProTitle;
-
-  /// No description provided for @debugForceProSubtitle.
-  ///
-  /// In pl, this message translates to:
-  /// **'Działa tylko bez aktywnego RevenueCat i tylko w debugowym narzędziu.'**
-  String get debugForceProSubtitle;
 
   /// No description provided for @storeScreenshotsSectionTitle.
   ///

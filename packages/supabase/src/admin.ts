@@ -14,8 +14,13 @@ if (!supabaseUrl || !serviceRoleKey) {
   );
 }
 
-export function supabaseAdmin(): SupabaseClient<Database> {
-  return createClient<Database>(supabaseUrl, serviceRoleKey, {
+export function supabaseAdmin() {
+  if (!supabaseUrl || !serviceRoleKey) {
+    throw new Error(
+      'Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY environment variables'
+    );
+  }
+  return createClient<Database>(supabaseUrl!, serviceRoleKey!, {
     auth: {
       autoRefreshToken: false,
       persistSession: false,

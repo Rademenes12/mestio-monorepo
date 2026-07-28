@@ -19,8 +19,14 @@ import {
   AlertTriangle,
   Eye,
 } from "lucide-react";
-import { KpiCard, SkrotyBar, ActivityTimeline } from "@mestio/ui";
-import type { Shortcut, TimelineEvent } from "@mestio/ui";
+import {
+  KpiCard,
+  SkrotyBar,
+  ActivityTimeline,
+  StratifyKpiCard,
+  StratifyActivityStream,
+} from "@mestio/ui";
+import type { Shortcut, TimelineEvent, ActivityEvent } from "@mestio/ui";
 
 export default async function DashboardPage() {
   const ctx = await getActiveEstate();
@@ -128,71 +134,75 @@ export default async function DashboardPage() {
       {/* ── Shortcuts bar (Erste-inspired "Twoje skróty") ── */}
       <SkrotyBar shortcuts={shortcuts} />
 
-      {/* ── KPI Cards row (Erste-inspired "Szybki podgląd") ── */}
-      <div className="grid grid-cols-4 gap-4">
-        <KpiCard
-          label="Nowe zgłoszenia"
-          value={newReports ?? 0}
-          accentColor={colors.info}
-          trend={(newReports ?? 0) > 5 ? "up" : "flat"}
-          trendLabel={(newReports ?? 0) > 5 ? "ponad 5" : undefined}
-          href="/reports?status=Nowe"
-        />
-        <KpiCard
-          label="W realizacji"
-          value={inProgressReports ?? 0}
-          accentColor={colors.warning}
-          href="/reports?status=W+realizacji"
-        >
-          <div className="flex items-center gap-3 text-xs" style={{ color: colors.textMuted }}>
-            <span className="flex items-center gap-1">
-              <Clock className="w-3 h-3" />
-              {overdueSla ?? 0} po SLA
-            </span>
-          </div>
-        </KpiCard>
-        <KpiCard
-          label="Wymagają uwagi"
-          value={urgentReports ?? 0}
-          accentColor={colors.error}
-          trend={(urgentReports ?? 0) > 0 ? "down" : undefined}
-          trendLabel={(urgentReports ?? 0) > 0 ? "do działania" : undefined}
-          href="/reports?priority=high,critical"
-        />
-        <div
-          className="relative overflow-hidden rounded-2xl border p-5"
-          style={{
-            background: colors.card,
-            borderColor: colors.cardBorder,
-          }}
-        >
-          <div
-            className="absolute top-0 left-0 right-0 h-0.5"
-            style={{ background: `linear-gradient(90deg, ${healthMeta.color}, transparent)` }}
+      {/* ── KPI Cards row (Stratify Light Premium) ── */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <Link href="/reports?status=Nowe" className="block">
+          <StratifyKpiCard
+            title="Nowe Zgłoszenia"
+            value={newReports ?? 0}
+            change={(newReports ?? 0) > 0 ? `${newReports} oczekujących` : "Brak zgłoszeń"}
+            changeType={(newReports ?? 0) > 5 ? "warning" : "positive"}
+            timeframe="Zgłoszone przez mieszkańców"
+            icon={AlertCircle}
+            iconBgColor="bg-blue-50"
+            iconColor="text-[#3E7BD6]"
           />
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-medium uppercase tracking-wider" style={{ color: colors.textSecondary }}>
-              Zdrowie osiedla
+        </Link>
+        <Link href="/reports?status=W+realizacji" className="block">
+          <StratifyKpiCard
+            title="W Realizacji"
+            value={inProgressReports ?? 0}
+            change={overdueSla && overdueSla > 0 ? `${overdueSla} po SLA` : "SLA w normie"}
+            changeType={overdueSla && overdueSla > 0 ? "negative" : "positive"}
+            timeframe="Zlecenia u wykonawców"
+            icon={Clock}
+            iconBgColor="bg-amber-50"
+            iconColor="text-amber-600"
+          />
+        </Link>
+        <Link href="/reports?priority=high,critical" className="block">
+          <StratifyKpiCard
+            title="Wymagają Uwagi"
+            value={urgentReports ?? 0}
+            change={(urgentReports ?? 0) > 0 ? "Priorytet pilny" : "Wszystko w normie"}
+            changeType={(urgentReports ?? 0) > 0 ? "negative" : "positive"}
+            timeframe="Zgłoszenia o wysokim priorytecie"
+            icon={AlertTriangle}
+            iconBgColor={(urgentReports ?? 0) > 0 ? "bg-rose-50" : "bg-emerald-50"}
+            iconColor={(urgentReports ?? 0) > 0 ? "text-rose-600" : "text-emerald-600"}
+          />
+        </Link>
+        <div className="bg-white border border-[#E9EEF5] rounded-[20px] p-5 shadow-[0_2px_14px_rgba(14,26,43,0.04)] hover:shadow-[0_6px_20px_rgba(14,26,43,0.08)] transition-all duration-200">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-xs font-semibold uppercase tracking-wider text-[#7C8AA0]">
+              Zdrowie Osiedla
             </span>
-            <healthMeta.icon className="w-4 h-4" style={{ color: healthMeta.color }} />
-          </div>
-          <div className="flex items-baseline gap-2">
-            <span className="text-2xl font-bold tracking-tight" style={{ color: colors.text }}>
-              {healthScore}
-            </span>
-            <span className="text-xs font-medium" style={{ color: healthMeta.color }}>
-              {healthMeta.label}
-            </span>
-          </div>
-          <div className="mt-3 pt-3 space-y-1.5" style={{ borderTop: `1px solid ${colors.cardBorder}` }}>
-            <div className="flex justify-between text-xs" style={{ color: colors.textMuted }}>
-              <span>SLA</span>
-              <span className="font-mono font-medium" style={{ color: colors.text }}>{slaPct}%</span>
+            <div className="p-2.5 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center">
+              <CheckCircle className="w-5 h-5" />
             </div>
-            <div className="flex justify-between text-xs" style={{ color: colors.textMuted }}>
-              <span>Zadania</span>
-              <span className="font-mono font-medium" style={{ color: colors.text }}>{taskPct}%</span>
+          </div>
+
+          <div className="flex items-baseline justify-between gap-2">
+            <div className="text-2xl font-bold text-[#0E1A2B] tracking-tight">
+              {healthScore} / 100
             </div>
+            <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/50">
+              <span>{healthMeta.label}</span>
+            </div>
+          </div>
+
+          <div className="mt-3">
+            <div className="w-full bg-[#F0F3F8] h-2 rounded-full overflow-hidden">
+              <div
+                className="bg-[#10B981] h-full rounded-full transition-all duration-500"
+                style={{ width: `${Math.min(100, Math.max(0, healthScore))}%` }}
+              />
+            </div>
+          </div>
+
+          <div className="mt-2.5 text-xs text-[#7C8AA0] flex items-center justify-between">
+            <span>SLA: {slaPct}%</span>
+            <span>Zadania: {taskPct}%</span>
           </div>
         </div>
       </div>

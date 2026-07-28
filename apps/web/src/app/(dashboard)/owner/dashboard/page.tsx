@@ -20,8 +20,15 @@ import {
   CheckCircle,
   Clock,
 } from "lucide-react";
-import { KpiCard, SkrotyBar, WidgetCard, ActivityTimeline } from "@mestio/ui";
-import type { Shortcut, TimelineEvent } from "@mestio/ui";
+import {
+  KpiCard,
+  SkrotyBar,
+  WidgetCard,
+  ActivityTimeline,
+  StratifyKpiCard,
+  StratifyActivityStream,
+} from "@mestio/ui";
+import type { Shortcut, TimelineEvent, ActivityEvent } from "@mestio/ui";
 
 function tint(hex: string, alpha: number): string {
   const n = parseInt(hex.slice(1), 16);
@@ -136,55 +143,56 @@ export default async function DashboardPage() {
       {/* ── Twoje skróty ── */}
       <SkrotyBar shortcuts={shortcuts} />
 
-      {/* ── KPI Cards row ── */}
-      <div className="grid grid-cols-4 gap-4">
-        <KpiCard
-          label="Aktywni klienci"
-          value={activeLeads.length}
-          accentColor={colors.accent}
-          trend={activeLeads.length > 0 ? "up" : "flat"}
-          trendLabel={`MRR ${mrr.toLocaleString("pl-PL")} zł`}
-          href="/customers"
-          icon={<Users className="w-4 h-4" />}
-        />
-        <KpiCard
-          label="Leady w pipeline"
-          value={leadsPending.length + leadsInProgress.length}
-          accentColor={colors.info}
-          href="/pipeline"
-          icon={<TrendingUp className="w-4 h-4" />}
-        >
-          <div className="flex items-center gap-2 text-xs" style={{ color: colors.textMuted }}>
-            <span className="flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full" style={{ background: colors.info }} />
-              {leadsPending.length} leadów
-            </span>
-            <span className="flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full" style={{ background: colors.warning }} />
-              {leadsInProgress.length} w toku
-            </span>
-          </div>
-        </KpiCard>
-        <KpiCard
-          label="Zaległe faktury"
-          value={overdueCount}
-          accentColor={colors.error}
-          trend={overdueCount > 0 ? "down" : undefined}
-          trendLabel={overdueCount > 0 ? `${overdueTotal.toLocaleString("pl-PL")} zł` : undefined}
-          href="/invoices"
-          icon={<DollarSign className="w-4 h-4" />}
-        />
-        <KpiCard
-          label="Otwarte zadania"
-          value={openTasks.length}
-          accentColor={colors.warning}
-          href="/tasks"
-          icon={<FileText className="w-4 h-4" />}
-        >
-          <div className="text-xs" style={{ color: colors.textMuted }}>
-            {openTasks.filter((t) => t.due_date && new Date(t.due_date) < new Date()).length} po terminie
-          </div>
-        </KpiCard>
+      {/* ── KPI Cards row (Stratify Light Design) ── */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <Link href="/customers" className="block">
+          <StratifyKpiCard
+            title="Aktywni Klienci"
+            value={activeLeads.length}
+            change="+14%"
+            changeType="positive"
+            timeframe={`MRR ${mrr.toLocaleString("pl-PL")} zł`}
+            icon={Users}
+            iconBgColor="bg-blue-50"
+            iconColor="text-[#3E7BD6]"
+          />
+        </Link>
+        <Link href="/pipeline" className="block">
+          <StratifyKpiCard
+            title="Leady w Pipeline"
+            value={leadsPending.length + leadsInProgress.length}
+            change={`${leadsPending.length} nowych`}
+            changeType="positive"
+            timeframe={`${leadsInProgress.length} w toku negocjacji`}
+            icon={TrendingUp}
+            iconBgColor="bg-purple-50"
+            iconColor="text-[#8864F0]"
+          />
+        </Link>
+        <Link href="/invoices" className="block">
+          <StratifyKpiCard
+            title="Zaległe Faktury"
+            value={overdueCount}
+            change={overdueCount > 0 ? `${overdueTotal.toLocaleString("pl-PL")} zł` : "0 zł"}
+            changeType={overdueCount > 0 ? "negative" : "neutral"}
+            timeframe={overdueCount > 0 ? "Wymaga ponaglenia" : "Brak opóźnień"}
+            icon={DollarSign}
+            iconBgColor={overdueCount > 0 ? "bg-rose-50" : "bg-emerald-50"}
+            iconColor={overdueCount > 0 ? "text-rose-600" : "text-emerald-600"}
+          />
+        </Link>
+        <Link href="/tasks" className="block">
+          <StratifyKpiCard
+            title="Otwarte Zadania"
+            value={openTasks.length}
+            change={`${openTasks.filter((t) => t.due_date && new Date(t.due_date) < new Date()).length} po terminie`}
+            changeType={openTasks.filter((t) => t.due_date && new Date(t.due_date) < new Date()).length > 0 ? "negative" : "positive"}
+            timeframe="Do zrealizowania"
+            icon={FileText}
+            iconBgColor="bg-amber-50"
+            iconColor="text-amber-600"
+          />
+        </Link>
       </div>
 
       {/* ── Middle row: Pipeline + Action queue ── */}

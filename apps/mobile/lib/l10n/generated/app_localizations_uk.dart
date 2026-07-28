@@ -278,9 +278,6 @@ class AppLocalizationsUk extends AppLocalizations {
   String get profileSavedSnackbar => 'Профіль збережено';
 
   @override
-  String get proEnabledSnackbar => 'Pro активовано';
-
-  @override
   String get profileTitle => 'Профіль';
 
   @override
@@ -319,16 +316,6 @@ class AppLocalizationsUk extends AppLocalizations {
   String get logoutButtonLabel => 'Вийти';
 
   @override
-  String get buyProButtonLabel => 'Купити Pro';
-
-  @override
-  String get proPlaceholderTitle => 'Покупки Pro ще не підключені';
-
-  @override
-  String get proPlaceholderBodyProfile =>
-      'Шаблон вже має підготовлений flow оновлення до Pro в UI, але справжній paywall RevenueCat ще потрібно підключити на етапі налаштування RevenueCat.';
-
-  @override
   String get deleteAccountButtonLabel => 'Видалити акаунт';
 
   @override
@@ -348,33 +335,11 @@ class AppLocalizationsUk extends AppLocalizations {
   String get closeButtonLabel => 'Закрити';
 
   @override
-  String get protectProBannerTitle => 'Захистіть доступ до Pro';
-
-  @override
-  String get protectProBannerBody =>
-      'Цей гостьовий акаунт вже має Pro. Зареєструйте цей акаунт, щоб не втратити доступ у майбутньому.';
-
-  @override
   String get developerDiagnosticsTitle => 'Діагностика лише для debug';
 
   @override
   String get developerDiagnosticsBody =>
       'Використовуйте цей екран для перевірки локальної конфігурації додатку та статусу інтеграції.';
-
-  @override
-  String get revenueCatDisconnectedTitle => 'RevenueCat не підключено';
-
-  @override
-  String get revenueCatDisconnectedBody =>
-      'Додайте ключі RevenueCat до config/api-keys.json, коли будете готові тестувати підписки.';
-
-  @override
-  String get revenueCatDebugMissingTestStoreTitle =>
-      'Відсутній ключ Test Store';
-
-  @override
-  String get revenueCatDebugMissingTestStoreBody =>
-      'Debug збірки використовують ключ RevenueCat Test Store. Додайте REVENUECAT_TEST_STORE_API_KEY до config/api-keys.json і перезапустіть додаток.';
 
   @override
   String get sessionSectionTitle => 'Сесія';
@@ -421,56 +386,7 @@ class AppLocalizationsUk extends AppLocalizations {
   String get supabaseUrlLabel => 'Supabase URL';
 
   @override
-  String get revenueCatSectionTitle => 'RevenueCat';
-
-  @override
-  String get supportedPlatformLabel => 'Підтримувана платформа';
-
-  @override
-  String get platformKeyConfiguredLabel => 'Ключ платформи налаштовано';
-
-  @override
-  String get testStoreKeyConfiguredLabel => 'Ключ Test Store налаштовано';
-
-  @override
-  String get sdkActiveLabel => 'SDK активний';
-
-  @override
-  String get activeKeyTypeLabel => 'Тип активного ключа';
-
-  @override
-  String get activeSdkKeyLabel => 'Активний ключ SDK';
-
-  @override
-  String get activeKeyTypeMissing => 'Відсутній';
-
-  @override
-  String get activeKeyTypeTestStore => 'Test Store';
-
-  @override
-  String get activeKeyTypeAppStore => 'App Store';
-
-  @override
-  String get activeKeyTypeGooglePlay => 'Google Play';
-
-  @override
-  String get proSourceLabel => 'Джерело Pro';
-
-  @override
-  String get proSourceRevenueCat => 'RevenueCat';
-
-  @override
-  String get proSourceDeveloperOverride => 'Developer override';
-
-  @override
   String get missingValueLabel => 'відсутній';
-
-  @override
-  String get debugForceProTitle => 'Debug: примусовий статус Pro';
-
-  @override
-  String get debugForceProSubtitle =>
-      'Працює лише без активного RevenueCat і лише в debug-інструменті.';
 
   @override
   String get storeScreenshotsSectionTitle => 'Store screenshots';

@@ -22,7 +22,8 @@
     "@mestio/design-tokens": "1.0.0",
     "@mestio/types": "1.0.0",
     "@types/react": "^19",
-    "@types/react-dom": "^19"
+    "@types/react-dom": "^19",
+    "next": "^16.2.10"
   },
   "scripts": {
     "typecheck": "tsc --noEmit"
