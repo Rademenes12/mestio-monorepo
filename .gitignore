@@ -1,53 +1,15 @@
-# Dependencies
 node_modules/
-.pnp
-.pnp.js
-
-# Build outputs
 .next/
+.turbo/
 dist/
-out/
-
-# Testing
-coverage/
-
-# IDE
-.vscode/*
-!.vscode/settings.json
-!.vscode/extensions.json
-.idea/
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Env files
 .env
 .env.local
 .env.*.local
-
-# Turbo
-.turbo/
-
-# Flutter (if we add it later)
-build/
-*.apk
-*.aab
-*.ipa
-
-# Logs
 *.log
-npm-debug.log*
+.DS_Store
+coverage/
 supabase/.temp/
-
-# Supabase temp
 **/supabase/.temp/
 **/supabase/.branches/
-**/supabase/.env
-
-# Backups
-**/migrations.bak/
-
-# Build artifacts
+tsconfig.tsbuildinfo
 *.tsbuildinfo
-**/tests/?.spec.ts

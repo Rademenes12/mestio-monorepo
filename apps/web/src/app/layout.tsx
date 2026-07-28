@@ -146,9 +146,7 @@ export default function RootLayout({
             />
           </noscript>
         )}
-        <Navbar ctaLabel='Wypróbuj za darmo' ctaHref='/register' />
-        <main id="main-content" className="flex-1">{children}</main>
-        <Footer />
+        {children}
         <CookieConsentWrapper />
       </body>
     </html>

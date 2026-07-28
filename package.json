@@ -5,20 +5,12 @@
   "scripts": {
     "dev": "turbo run dev",
     "dev:web": "turbo run dev --filter=web",
-    "dev:crm-owner": "turbo run dev --filter=crm-owner",
-    "dev:crm-client": "turbo run dev --filter=crm-client",
     "build": "turbo run build",
     "build:web": "turbo run build --filter=web",
-    "build:crm-owner": "turbo run build --filter=crm-owner",
-    "build:crm-client": "turbo run build --filter=crm-client",
     "lint": "turbo run lint",
     "test": "turbo run test",
-    "test:e2e": "playwright test",
-    "test:e2e:ui": "playwright test --ui",
-    "test:e2e:roles": "playwright test tests/roles.spec.ts",
-    "test:e2e:ticket-flow": "playwright test tests/ticket-flow.spec.ts",
     "typecheck": "turbo run typecheck",
-    "clean": "turbo run clean && rm -rf node_modules apps/*/node_modules apps/*/.next apps/*/.turbo packages/*/.turbo .turbo test-results"
+    "clean": "turbo run clean && rm -rf node_modules apps/*/node_modules apps/*/.next apps/*/.turbo packages/*/.turbo .turbo"
   },
   "devDependencies": {
     "@playwright/test": "^1.54.0",
