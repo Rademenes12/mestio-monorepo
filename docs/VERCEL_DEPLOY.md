@@ -1,65 +1,58 @@
 # Deploy Mestio na Vercel
 
-## Jak to wygląda
+## Jak to wygląda — po scaleniu
 
 ```
 ┌──────────────────────────────────────────────────┐
 │                 GitHub                            │
 │     ┌──────────────────────────────┐              │
 │     │  mestio-monorepo             │              │
-│     │  ├── apps/web/    ← strona   │              │
-│     │  ├── apps/crm-owner/         │              │
-│     │  ├── apps/crm-client/        │              │
-│     │  └── apps/mobile/  (Flutter) │              │
+│     │  └── apps/web/               │              │
+│     │      ├── /         (strona)  │              │
+│     │      ├── /owner/*  (CRM)     │              │
+│     │      ├── /client/* (panel)   │              │
+│     │      └── /login    (auth)    │              │
 │     └────────┬─────────────────────┘              │
 │              │ git push                           │
 └──────────────┼────────────────────────────────────┘
                │
     ┌──────────┴──────────┐
     │      VERCEL          │
+    │  jeden projekt       │
+    │  apps/web            │
+    │  → mestio.pl         │
     │                      │
-    │  ┌──────────────┐   │
-    │  │  Projekt #1   │   │  →  mestio.pl
-    │  │  apps/web     │   │
-    │  └──────────────┘   │
-    │                     │
-    │  ┌──────────────┐   │
-    │  │  Projekt #2   │   │  →  crm.mestio.pl
-    │  │  apps/crm-    │   │
-    │  │  owner        │   │
-    │  └──────────────┘   │
-    │                     │
-    │  ┌──────────────┐   │
-    │  │  Projekt #3   │   │  →  panel.mestio.pl
-    │  │  apps/crm-    │   │
-    │  │  client       │   │
-    │  └──────────────┘   │
+    │  /owner → crm        │
+    │  /client → panel     │
+    │  /login → logowanie  │
     └─────────────────────┘
 ```
 
-## 3 projekty, 1 repo, 3 domeny
+## Deployment (1 projekt)
 
-W Vercel tworzysz **3 osobne projekty**, ale wszystkie podpięte pod **to samo repozytorium GitHub**.
+1. **Vercel → Add New Project** → wybierz `mestio-monorepo`
+2. **Root Directory:** `apps/web`
+3. **Branch:** `fix/production-builds`
+4. **Framework:** Next.js (auto wykryje)
 
-### Krok po kroku:
+## Zmienne środowiskowe
 
-1. **Pushnij monorepo na GitHub**
-2. **Vercel → Add New Project** → wybierz `mestio-monorepo`
-3. **Vercel zapyta "która appka?"** → wybierz `apps/web` → ustaw domenę `mestio.pl`
-4. **Zrób to samo jeszcze 2 razy**:
-   - Drugi projekt → `apps/crm-owner` → domena `crm.mestio.pl`
-   - Trzeci projekt → `apps/crm-client` → domena `panel.mestio.pl`
-
-### Zmienne środowiskowe (Vercel → Settings → Environment Variables):
-
-W każdym projekcie musisz dodać:
+Dodaj w Vercel → Settings → Environment Variables:
 
 | Zmienna | Wartość |
 |---------|---------|
 | `NEXT_PUBLIC_SUPABASE_URL` | `https://legeebmbpzjlbgjsnwpd.supabase.co` |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | twój anon key |
-| `SUPABASE_SERVICE_ROLE_KEY` | twój service role key |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxlZ2VlYm1icHpqbGJnanNud3BkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUxODc0NDcsImV4cCI6MjEwMDc2MzQ0N30.d5FMTEMry8c04xB7HPDNs0tdy4KT-zuAzDun8xMeuEY` |
+| `SUPABASE_SERVICE_ROLE_KEY` | `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxlZ2VlYm1icHpqbGJnanNud3BkIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4NTE4NzQ0NywiZXhwIjoyMTAwNzYzNDQ3fQ.yLXTc8ejZC-P4STZbtJgHuLKfuMoomhLK4wV2edORTc` |
 
-### Co dalej?
+## Po deployu
 
-Jak już zrobisz deploy, wrzucę Ci do każdej appki poprawne domeny (CORS, callbacki OAuth itp.)
+- `mestio.pl` → strona WWW
+- `mestio.pl/owner/dashboard` → CRM Owner
+- `mestio.pl/client/reports` → CRM Client
+- `mestio.pl/login` → logowanie dla wszystkich
+
+## Uwagi
+
+- Stary projekt CRM Client na Vercel można usunąć (teraz wszystko w jednym)
+- Mobile (Flutter) osobno — nie Vercel
