@@ -14,8 +14,6 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.54.0",
-    "@tailwindcss/oxide-win32-x64-msvc": "^4.3.3",
-    "lightningcss-win32-x64-msvc": "^1.33.0",
     "turbo": "^2.5.4",
     "typescript": "^5.8.3"
   },
