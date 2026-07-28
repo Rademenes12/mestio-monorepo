@@ -38,3 +38,16 @@ build/
 # Logs
 *.log
 npm-debug.log*
+supabase/.temp/
+
+# Supabase temp
+**/supabase/.temp/
+**/supabase/.branches/
+**/supabase/.env
+
+# Backups
+**/migrations.bak/
+
+# Build artifacts
+*.tsbuildinfo
+**/tests/?.spec.ts

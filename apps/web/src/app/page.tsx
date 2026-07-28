@@ -3,6 +3,7 @@ import HeroSection from "@/components/HeroSection";
 import ProblemSolutionSection from "@/components/ProblemSolutionSection";
 import FeaturesSection from "@/components/FeaturesSection";
 import HowItWorksSection from "@/components/HowItWorksSection";
+import TestimonialsSection from "@/components/TestimonialsSection";
 import PricingSection from "@/components/PricingSection";
 import ReferralSection from "@/components/ReferralSection";
 import BlogTeaserSection from "@/components/BlogTeaserSection";
@@ -64,6 +65,7 @@ export default function Home() {
       <ProblemSolutionSection />
       <FeaturesSection />
       <HowItWorksSection />
+      <TestimonialsSection />
       <PricingSection />
       <ReferralSection />
       <BlogTeaserSection />

@@ -1,8 +1,12 @@
 'use client';
 
 import { colors } from '@mestio/design-tokens';
-import type { TicketStatus, TicketPriority, PaymentStatus, LeadStatus } from '@mestio/types';
 import { CheckCircle, Clock, XCircle, AlertCircle, AlertTriangle } from 'lucide-react';
+
+type TicketStatus = 'new' | 'in_progress' | 'resolved' | 'rejected' | 'closed';
+type TicketPriority = 'low' | 'medium' | 'high' | 'critical';
+type PaymentStatus = 'pending' | 'paid' | 'overdue' | 'cancelled';
+type LeadStatus = 'contacted' | 'qualified' | 'proposal' | 'won' | 'lost';
 
 const statusConfig: Record<string, { color: string; icon: React.ElementType; label: string }> = {
   // Ticket statuses

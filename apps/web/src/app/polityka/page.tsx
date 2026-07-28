@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 const SECTIONS = [
   {
     h: "1. Administrator danych",
-    b: "Administratorem danych osobowych jest xxxx, NIP xxxx, e-mail: kontakt@mestio.pl.",
+    b: "Administratorem danych osobowych jest Mestio, NIP xxx, e-mail: kontakt@mestio.pl.",
   },
   {
     h: "2. Jakie dane zbieramy",
@@ -43,7 +43,7 @@ export default function PolitykaPage() {
         Polityka prywatności
       </h1>
       <p className="font-mono text-[11px] text-[#9AA7B8] mt-2">
-        Ostatnia aktualizacja: xxxx
+        Ostatnia aktualizacja: 27 lipca 2026
       </p>
 
       <div className="flex flex-col gap-[22px] mt-[26px]">

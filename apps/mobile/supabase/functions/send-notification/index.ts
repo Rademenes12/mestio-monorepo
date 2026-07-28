@@ -41,10 +41,7 @@ serve(async (req) => {
 
     // Trusted internal callers (the fixflow_report_change DB trigger, which
     // has no end-user session to attach) authenticate with the service_role
-    // key instead of a user JWT. Constant-time-ish compare isn't critical
-    // here since this key is never attacker-controlled input in a timing
-    // side-channel sense (it's an equality check against a secret env var,
-    // same trust boundary as verifying any other server-side credential).
+    // key instead of a user JWT.
     const isTrustedServiceCall =
       supabaseServiceRoleKey.length > 0 && token === supabaseServiceRoleKey;
 
@@ -106,7 +103,7 @@ serve(async (req) => {
     }
 
     // Get FCM access token using service account
-    const accessToken = await getFcmAccessToken(
+    const fcmAccessToken = await getFcmAccessToken(
       firebaseClientEmail,
       firebasePrivateKey
     );
@@ -126,7 +123,7 @@ serve(async (req) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
+          "Authorization": "Bearer " + fcmAccessToken,
         },
         body: JSON.stringify(fcmMessage),
       }
@@ -211,9 +208,6 @@ function parsePrivateKey(key: string): ArrayBuffer {
   const keyContent = key
     .replace(/-----BEGIN PRIVATE KEY-----/g, "")
     .replace(/-----END PRIVATE KEY-----/g, "")
-    // Secrets set via CLI/dashboard from a single-line source often end up
-    // with literal backslash-n (two chars) instead of real newlines - strip
-    // those too, not just actual whitespace.
     .replace(/\\n/g, "")
     .replace(/\s/g, "");
   return base64Decode(keyContent);

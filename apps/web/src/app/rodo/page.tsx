@@ -12,7 +12,7 @@ const SECTIONS = [
   },
   {
     h: "Administrator i kontakt",
-    b: 'Administrator: xxxx, NIP xxxx. Kontakt w sprawie danych: rodo@mestio.pl. Inspektor Ochrony Danych: xxxx.',
+    b: 'Administrator: Mestio, NIP xxx. Kontakt w sprawie danych: rodo@mestio.pl. Inspektor Ochrony Danych: xxx.',
   },
   {
     h: "Zakres i cel",
@@ -39,7 +39,7 @@ export default function RodoPage() {
         Informacja RODO
       </h1>
       <p className="font-mono text-[11px] text-[#9AA7B8] mt-2">
-        Ostatnia aktualizacja: xxxx
+        Ostatnia aktualizacja: 27 lipca 2026
       </p>
 
       <div className="flex flex-col gap-[22px] mt-[26px]">

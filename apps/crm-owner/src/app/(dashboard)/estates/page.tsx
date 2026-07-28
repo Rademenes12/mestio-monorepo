@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 
 interface Estate {
@@ -63,9 +64,10 @@ export default function EstatesPage() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[14px]">
           {estates.map((e, i) => (
-            <div
+            <Link
               key={e.id}
-              className="bg-white rounded-[18px] shadow-[var(--shadow-card)] p-5 transition-shadow hover:shadow-[var(--shadow-card-hover)]"
+              href={`/estates/${e.id}`}
+              className="bg-white rounded-[18px] shadow-[var(--shadow-card)] p-5 transition-shadow hover:shadow-[var(--shadow-card-hover)] block"
             >
               <div className="flex items-center gap-[11px]">
                 <div
@@ -108,8 +110,8 @@ export default function EstatesPage() {
                   </svg>
                 </a>
               </div>
-            </div>
-          ))}
+            </Link>
+            ))}
         </div>
       )}
     </div>

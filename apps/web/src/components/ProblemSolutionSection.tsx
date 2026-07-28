@@ -1,3 +1,6 @@
+import { colors } from "@mestio/design-tokens";
+import { X, Check, Sparkles } from "lucide-react";
+
 const PAIN_POINTS = [
   "Zgłoszenia giną w SMS-ach, telefonach i grupach na Facebooku",
   "Mieszkaniec nie wie, czy ktoś się zajął sprawą",
@@ -14,33 +17,34 @@ const GAIN_POINTS = [
 
 export default function ProblemSolutionSection() {
   return (
-    <section className="max-w-[1160px] mx-auto px-6 py-10">
-      <div className="bg-ink rounded-[24px] p-11 grid grid-cols-1 md:grid-cols-2 gap-10"
+    <section className="max-w-7xl mx-auto px-6 py-[40px]">
+      <div
+        className="rounded-[24px] p-11 grid grid-cols-1 md:grid-cols-2 gap-10 relative overflow-hidden"
         style={{
-          backgroundImage:
-            "radial-gradient(600px 300px at 90% 0%, rgba(62,123,214,.25), transparent 60%)",
+          background: `radial-gradient(600px 400px at 90% 0%, ${colors.accent}20, transparent 60%), ${colors.bgSecondary}`,
+          border: `1px solid ${colors.cardBorder}`,
         }}
       >
+        {/* ── Before (pain) ── */}
         <div>
-          <div className="font-mono text-[11px] tracking-[0.6px] uppercase text-[#8FA6C4]">
+          <div
+            className="flex items-center gap-2 font-mono text-[11px] tracking-[0.6px] uppercase"
+            style={{ color: colors.textMuted }}
+          >
+            <X className="w-3.5 h-3.5" />
             Bez Mestio
           </div>
           <div className="flex flex-col gap-[14px] mt-4">
             {PAIN_POINTS.map((point) => (
               <div key={point} className="flex gap-[10px] items-start">
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#6B7A90"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  className="shrink-0 mt-[1px]"
+                <X
+                  className="w-4 h-4 shrink-0 mt-[1px]"
+                  style={{ color: colors.textMuted }}
+                />
+                <span
+                  className="text-[14.5px] leading-relaxed"
+                  style={{ color: colors.textSecondary }}
                 >
-                  <path d="M6 6l12 12M18 6L6 18" />
-                </svg>
-                <span className="text-[14.5px] text-[#C7D2E0] leading-relaxed">
                   {point}
                 </span>
               </div>
@@ -48,27 +52,26 @@ export default function ProblemSolutionSection() {
           </div>
         </div>
 
+        {/* ── After (gain) ── */}
         <div>
-          <div className="font-mono text-[11px] tracking-[0.6px] uppercase text-[#7FE0AE]">
+          <div
+            className="flex items-center gap-2 font-mono text-[11px] tracking-[0.6px] uppercase"
+            style={{ color: colors.success }}
+          >
+            <Check className="w-3.5 h-3.5" />
             Z Mestio
           </div>
           <div className="flex flex-col gap-[14px] mt-4">
             {GAIN_POINTS.map((point) => (
               <div key={point} className="flex gap-[10px] items-start">
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#2E9E6B"
-                  strokeWidth="2.4"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="shrink-0 mt-[1px]"
+                <Check
+                  className="w-4 h-4 shrink-0 mt-[1px]"
+                  style={{ color: colors.success, strokeWidth: 2.4 }}
+                />
+                <span
+                  className="text-[14.5px] leading-relaxed"
+                  style={{ color: colors.text }}
                 >
-                  <path d="M5 12l5 5 9-11" />
-                </svg>
-                <span className="text-[14.5px] text-white leading-relaxed">
                   {point}
                 </span>
               </div>

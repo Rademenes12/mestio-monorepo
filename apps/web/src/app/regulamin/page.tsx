@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 const SECTIONS = [
   {
     h: "1. Postanowienia ogólne",
-    b: "Regulamin określa zasady korzystania z aplikacji i serwisu Mestio świadczonego przez xxxx.",
+    b: "Regulamin określa zasady korzystania z aplikacji i serwisu Mestio świadczonego przez Mestio.",
   },
   {
     h: "2. Rodzaje kont",
@@ -35,7 +35,7 @@ export default function RegulaminPage() {
         Regulamin
       </h1>
       <p className="font-mono text-[11px] text-[#9AA7B8] mt-2">
-        Ostatnia aktualizacja: xxxx
+        Ostatnia aktualizacja: 27 lipca 2026
       </p>
 
       <div className="flex flex-col gap-[22px] mt-[26px]">
