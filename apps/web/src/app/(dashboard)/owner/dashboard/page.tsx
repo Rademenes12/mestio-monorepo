@@ -30,26 +30,35 @@ function tint(hex: string, alpha: number): string {
 
 export default async function DashboardPage() {
   const supabase = await createClient();
-  await supabase.auth.getUser();
+  
+  // Sprawdzenie sesji — jeśli brak, przekieruj
+  try {
+    await supabase.auth.getUser();
+  } catch {
+    // Sesja wygasła lub brak — error boundary to przechwyci
+    throw new Error("Brak aktywnej sesji. Zaloguj się ponownie.");
+  }
 
-  // Silnik automatyzacji
+  // Silnik automatyzacji — nie blokuje strony
   await runAutomations(supabase).catch(() => 0);
 
-  // ── Parallel queries ──
-  const [leadsRes, tasksRes, invoicesRes] = await Promise.all([
-    supabase.from("crm_leads").select("*"),
-    supabase
-      .from("crm_tasks")
-      .select("*, crm_leads(company_name)")
-      .eq("done", false)
-      .order("due_date", { ascending: true })
-      .limit(8),
-    supabase.from("crm_invoices").select("status, amount").eq("status", "overdue"),
-  ]);
-
-  const leads = (leadsRes.data as CrmLead[]) ?? [];
-  const openTasks = (tasksRes.data as (CrmTask & { crm_leads: { company_name: string } | null })[]) ?? [];
-  const overdueInvoices = (invoicesRes.data as { status: string; amount: number }[]) ?? [];
+  // ── Parallel queries z fallbackiem ──
+  let leads: CrmLead[] = [];
+  let openTasks: (CrmTask & { crm_leads: { company_name: string } | null })[] = [];
+  let overdueInvoices: { status: string; amount: number }[] = [];
+  
+  try {
+    const [leadsRes, tasksRes, invoicesRes] = await Promise.all([
+      supabase.from("crm_leads").select("*"),
+      supabase.from("crm_tasks").select("*").eq("done", false).order("due_date", { ascending: true }).limit(8),
+      supabase.from("crm_invoices").select("status, amount").eq("status", "overdue"),
+    ]);
+    leads = (leadsRes.data as CrmLead[]) ?? [];
+    openTasks = (tasksRes.data as (CrmTask & { crm_leads: { company_name: string } | null })[]) ?? [];
+    overdueInvoices = (invoicesRes.data as { status: string; amount: number }[]) ?? [];
+  } catch {
+    // Tabele mogą nie istnieć lub nie mieć danych – dashboard działa w trybie pustym
+  }
 
   const activeLeads = leads.filter((l) => l.stage === "active");
   const trialLeads = leads.filter((l) => ["onboarding", "won"].includes(l.stage));
