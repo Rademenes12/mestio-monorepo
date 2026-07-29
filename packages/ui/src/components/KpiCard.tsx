@@ -62,11 +62,12 @@ export function KpiCard({
   return (
     <Component
       {...extraProps}
-      className={`group relative overflow-hidden rounded-[8px] border p-5 text-left transition-all duration-200 w-full ${interactive ? 'card-hover-interactive' : ''}`}
+      className={`group relative overflow-hidden rounded-[12px] border p-5 text-left transition-all duration-200 w-full ${interactive ? 'card-hover-interactive' : ''}`}
       style={{
         '--card-accent': accentColor,
         background: colors.card,
         borderColor: colors.cardBorder,
+        boxShadow: '0 1px 2px rgba(14, 26, 43, 0.03)',
       } as React.CSSProperties}
     >
       {/* Header row */}

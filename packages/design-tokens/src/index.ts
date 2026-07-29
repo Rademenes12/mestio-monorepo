@@ -1,6 +1,6 @@
 /**
  * Design tokens for Mestio ecosystem.
- * Light theme — #F6F8FB bg, #3E7BD6 blue accent, #0E1A2B dark sections.
+ * Daylight-inspired — bright, clean, blue accent. 
  * Shared across all Next.js apps and exported for Flutter.
  */
 
@@ -8,30 +8,30 @@ export const colors = {
   // Blue primary
   primary: '#3E7BD6',
   primaryHover: '#2A5FA8',
-  primaryMuted: 'rgba(62, 123, 214, 0.10)',
-  primaryLight: '#EAF0F7',
+  primaryMuted: 'rgba(62, 123, 214, 0.08)',
+  primaryLight: '#EBF2FA',
 
   // Dark blue gradient
   darkBlue: '#173A6A',
-  darkBlueMuted: 'rgba(23, 58, 106, 0.06)',
-  darkBlueShadow: 'rgba(23, 58, 106, 0.25)',
-  darkBlueGlow: 'rgba(23, 58, 106, 0.28)',
+  darkBlueMuted: 'rgba(23, 58, 106, 0.05)',
+  darkBlueShadow: 'rgba(23, 58, 106, 0.18)',
+  darkBlueGlow: 'rgba(23, 58, 106, 0.20)',
 
   // Background
-  bg: '#F6F8FB',
-  bgSecondary: '#F0F3F8',
-  bgTertiary: '#EAF0F7',
+  bg: '#F9FAFB',
+  bgSecondary: '#F1F4F8',
+  bgTertiary: '#EBF2FA',
 
   // Cards & Surfaces
   card: '#FFFFFF',
-  cardHover: '#F8F9FB',
-  cardBorder: '#E9EEF5',
-  surface: '#F8F9FB',
+  cardHover: '#FAFBFC',
+  cardBorder: '#EBEFF4',
+  surface: '#FAFBFC',
 
   // Accent
   accent: '#3E7BD6',
   accentHover: '#2A5FA8',
-  accentMuted: 'rgba(62, 123, 214, 0.08)',
+  accentMuted: 'rgba(62, 123, 214, 0.07)',
 
   // Text
   text: '#0E1A2B',
@@ -40,10 +40,10 @@ export const colors = {
   textLight: '#9AA7B8',
 
   // Status
-  success: '#2E9E6B',
-  successMuted: 'rgba(46, 158, 107, 0.12)',
+  success: '#22C55E',
+  successMuted: 'rgba(34, 197, 94, 0.10)',
   warning: '#F2A900',
-  warningMuted: 'rgba(242, 169, 0, 0.13)',
+  warningMuted: 'rgba(242, 169, 0, 0.11)',
   error: '#EF4444',
   info: '#3E7BD6',
 
@@ -52,13 +52,13 @@ export const colors = {
   darkText: '#D5DEEC',
   darkTextMuted: '#9FB2CC',
   darkTextDim: '#8FA6C4',
-  darkBorder: 'rgba(255, 255, 255, 0.12)',
-  darkRadial: 'rgba(62, 123, 214, 0.25)',
+  darkBorder: 'rgba(255, 255, 255, 0.10)',
+  darkRadial: 'rgba(62, 123, 214, 0.20)',
 
   // Glassmorphism
-  glassBg: 'rgba(246, 248, 251, 0.85)',
+  glassBg: 'rgba(249, 250, 251, 0.85)',
   glassBorder: '#E2E9F2',
-  glassBlur: '10px',
+  glassBlur: '12px',
 
   // Stratify Light Premium tokens
   purple: '#8864F0',
@@ -69,7 +69,7 @@ export const colors = {
   // Legacy aliases
   navy: '#173A6A',
   navyLight: '#3E7BD6',
-  navyIce: '#EAF0F7',
+  navyIce: '#EBF2FA',
   ink: '#0E1A2B',
   blueprint: '#3E7BD6',
   azure: '#3E7BD6',
