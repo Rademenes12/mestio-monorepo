@@ -28,10 +28,11 @@ export function WidgetCard({
 }: WidgetCardProps) {
   return (
     <div
-      className={`relative overflow-hidden rounded-[8px] border ${className}`}
+      className={`relative overflow-hidden rounded-[12px] border ${className}`}
       style={{
         background: colors.card,
         borderColor: colors.cardBorder,
+        boxShadow: '0 1px 2px rgba(14, 26, 43, 0.03)',
       }}
     >
       {/* Accent line */}
