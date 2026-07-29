@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 import Link from "next/link";
 import { ThemeToggle } from "@mestio/ui";
 import {
@@ -25,19 +26,26 @@ export default async function ResidentLayout({
   children: React.ReactNode;
 }) {
   const supabase = await createClient();
+  const cookieStore = await cookies();
+  const demoRole = cookieStore.get("mestio_demo_role")?.value;
+
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) redirect("/login?redirect=/resident/");
+  if (!user && !demoRole) redirect("/login?redirect=/resident/");
 
-  const { data: profile } = await supabase
-    .from("fixflow_resident_profiles")
-    .select("role, name")
-    .eq("user_id", user.id)
-    .maybeSingle();
+  let profileName: string | null = null;
+  if (user) {
+    const { data: profile } = await supabase
+      .from("fixflow_resident_profiles")
+      .select("role, name")
+      .eq("user_id", user.id)
+      .maybeSingle();
+    profileName = profile?.name ?? null;
+  }
 
-  const userInitials = profile?.name?.slice(0, 2).toUpperCase() ?? user.email?.slice(0, 2).toUpperCase() ?? "M";
+  const userInitials = profileName?.slice(0, 2).toUpperCase() ?? user?.email?.slice(0, 2).toUpperCase() ?? "MK";
 
   return (
     <div className="flex min-h-screen" style={{ background: "var(--color-page)" }}>
@@ -82,7 +90,7 @@ export default async function ResidentLayout({
               <span className="font-heading font-bold text-[10px] text-white">{userInitials}</span>
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-[12px] font-semibold truncate" style={{ color: "var(--color-dark-text)" }}>{profile?.name ?? "Mieszkaniec"}</div>
+              <div className="text-[12px] font-semibold truncate" style={{ color: "var(--color-dark-text)" }}>{profileName ?? "Mieszkaniec"}</div>
             </div>
           </div>
         </div>
