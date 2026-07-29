@@ -3,10 +3,7 @@
 import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { colors } from "@mestio/design-tokens";
-import {
-  ClipboardList, Users, Bell, History, Megaphone, Building2,
-  Camera, ShieldCheck, TrendingUp, ArrowRight,
-} from "lucide-react";
+import { ClipboardList, Users, Bell, Factory as History, Megaphone, Building2, Camera, ShieldCheck, TrendingUp, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 const FEATURES = [
@@ -80,7 +77,7 @@ export default function FeaturesSection() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <section ref={ref} id="funkcje" className="relative py-28" style={{ background: colors.bg }}>
+    <section ref={ref} id="funkcje" className="relative py-28" style={{ background: "#FFFFFF" }}>
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
         <motion.div

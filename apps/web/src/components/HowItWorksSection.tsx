@@ -47,7 +47,7 @@ export default function HowItWorksSection() {
   });
 
   return (
-    <section ref={ref} id="jak-to-dziala" className="relative py-28 overflow-hidden" style={{ background: "#FFF" }}>
+    <section ref={ref} id="jak-to-dziala" className="relative py-28 overflow-hidden" style={{ background: colors.bgSecondary }}>
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
         <motion.div {...fadeUp(0)} className="mb-20">

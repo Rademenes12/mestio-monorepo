@@ -24,7 +24,7 @@ export default function PricingSectionClient({ plans }: { plans: PlanConfig[] })
   const [annual, setAnnual] = useState(false);
 
   return (
-    <section ref={ref} id="cennik" className="relative py-28" style={{ background: colors.bg }}>
+    <section ref={ref} id="cennik" className="relative py-28" style={{ background: "#FFFFFF" }}>
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
         <motion.div

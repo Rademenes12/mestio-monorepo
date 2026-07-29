@@ -9,17 +9,27 @@ import { z } from "zod";
 
 type ContactFormData = z.infer<typeof contactSchema>;
 
-const labelClass =
-  "font-mono text-[10px] tracking-[0.5px] uppercase text-[#8A98AB] mb-[6px]";
-const inputClass =
-  "w-full text-sm bg-[#F4F7FB] rounded-[11px] px-[13px] py-3 text-ink placeholder:text-[#B6C2D2] border border-transparent focus:border-azure/30 focus:bg-white transition-colors";
-const errorClass = "text-xs text-red-500 mt-1 font-medium";
-
 const CONTACT_INFO = [
-  { k: "E-mail", v: "kontakt@mestio.pl" },
-  { k: "Telefon", v: "xxxx" },
-  { k: "Adres", v: "xxxx" },
-  { k: "NIP", v: "xxxx" },
+  {
+    icon: "M22 6l-10 7L2 6M2 6v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6M2 6l2-2h16l2 2",
+    k: "E-mail",
+    v: "kontakt@mestio.pl",
+  },
+  {
+    icon: "M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z",
+    k: "Telefon",
+    v: "+48 600 000 000",
+  },
+  {
+    icon: "M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z M12 7a3 3 0 1 1 0 6 3 3 0 0 1 0-6z",
+    k: "Adres",
+    v: "ul. Przykładowa 1, 00-001 Warszawa",
+  },
+  {
+    icon: "M3 3v18h18M7 17V9M12 17V5M17 17v-6",
+    k: "NIP",
+    v: "000-000-00-00",
+  },
 ];
 
 export default function KontaktPage() {
@@ -62,130 +72,450 @@ export default function KontaktPage() {
   };
 
   return (
-    <div className="max-w-[960px] mx-auto px-6 py-[50px] pb-[70px]">
-      <h1 className="font-heading font-bold text-[32px] tracking-[-0.6px] text-ink">
-        Kontakt
-      </h1>
-      <p className="text-[15px] text-[#4A5A6E] mt-2">
-        Masz pytanie o wdrożenie Mestio? Napisz — odpowiadamy w 1 dzień
-        roboczy.
-      </p>
+    <div className="flex min-h-screen">
+      {/* Left panel: Branding */}
+      <div
+        className="hidden lg:flex w-[480px] lg:w-[42%] flex-col justify-between p-10 lg:p-14 relative overflow-hidden"
+        style={{
+          background: "linear-gradient(160deg, #173A6A 0%, #0E1A2B 100%)",
+        }}
+      >
+        {/* Subtle radial glow */}
+        <div
+          className="absolute top-[-20%] right-[-10%] w-[400px] h-[400px] rounded-full opacity-20"
+          style={{
+            background: "radial-gradient(circle, rgba(62,123,214,0.5) 0%, transparent 70%)",
+          }}
+        />
 
-      <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-[22px] mt-7 items-start">
-        <div className="bg-white rounded-[12px] border border-[#E9EEF5] p-6">
-          {sent ? (
-            <div className="text-center py-8">
-              <div className="w-[56px] h-[56px] rounded-full bg-[rgba(46,158,107,.13)] flex items-center justify-center mx-auto">
-                <svg
-                  width="28"
-                  height="28"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#2E9E6B"
-                  strokeWidth="2.4"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M5 12l5 5 9-11" />
-                </svg>
-              </div>
-              <p className="font-heading font-semibold text-lg mt-4 text-ink">
-                Dziękujemy!
-              </p>
-              <p className="text-sm text-[#5A6B80] mt-2">
-                Odezwiemy się w ciągu 1 dnia roboczego.
-              </p>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit(onSubmit)} noValidate>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-[14px]">
-                <div>
-                  <label htmlFor="kontakt-name" className={labelClass}>Imię i nazwisko</label>
-                  <input
-                    {...register("name")}
-                    id="kontakt-name"
-                    placeholder="Imię i nazwisko"
-                    className={`${inputClass} ${errors.name ? "border-red-400 focus:border-red-400 bg-red-50/30" : ""}`}
-                    aria-invalid={!!errors.name}
-                    aria-describedby={errors.name ? "err-name" : undefined}
-                  />
-                  {errors.name && (
-                    <p id="err-name" className={errorClass} role="alert">{errors.name.message}</p>
-                  )}
-                </div>
-                <div>
-                  <label htmlFor="kontakt-email" className={labelClass}>E-mail</label>
-                  <input
-                    {...register("email")}
-                    id="kontakt-email"
-                    type="email"
-                    placeholder="twój@email.pl"
-                    className={`${inputClass} ${errors.email ? "border-red-400 focus:border-red-400 bg-red-50/30" : ""}`}
-                    aria-invalid={!!errors.email}
-                    aria-describedby={errors.email ? "err-email" : undefined}
-                  />
-                  {errors.email && (
-                    <p id="err-email" className={errorClass} role="alert">{errors.email.message}</p>
-                  )}
-                </div>
-              </div>
-              <div className="mt-[14px]">
-                <label htmlFor="kontakt-message" className={labelClass}>Wiadomość</label>
-                <textarea
-                  {...register("message")}
-                  id="kontakt-message"
-                  className={`w-full min-h-[120px] resize-none text-sm bg-[#F4F7FB] rounded-[11px] px-[14px] py-[13px] text-ink border border-transparent focus:border-azure/30 focus:bg-white transition-colors ${errors.message ? "border-red-400 focus:border-red-400 bg-red-50/30" : ""}`}
-                  placeholder="Opisz swoje pytanie..."
-                  aria-invalid={!!errors.message}
-                  aria-describedby={errors.message ? "err-message" : undefined}
-                />
-                {errors.message && (
-                  <p id="err-message" className={errorClass} role="alert">{errors.message.message}</p>
-                )}
-              </div>
-
-              <div className="mt-4 space-y-3">
-                <label className="flex items-start gap-2 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    {...register("acceptRodo")}
-                    className="mt-[3px] shrink-0 accent-azure"
-                  />
-                  <span className="text-[12px] text-[#5A6B80] leading-relaxed">
-                    Wyrażam zgodę na przetwarzanie danych osobowych zgodnie z{" "}
-                    <Link href="/polityka" target="_blank" className="text-azure underline">polityką prywatności</Link>
-                  </span>
-                </label>
-                {errors.acceptRodo && (
-                  <p id="err-acceptRodo" className={errorClass} role="alert">{errors.acceptRodo.message}</p>
-                )}
-              </div>
-
-              {serverError && (
-                <p className="mt-3 text-sm text-red-500 font-medium" role="alert">{serverError}</p>
-              )}
-              <button
-                type="submit"
-                disabled={sending}
-                className="mt-4 inline-block bg-gradient-to-br from-azure to-blueprint text-white font-semibold text-[15px] px-[26px] py-[14px] rounded-[13px] cursor-pointer hover:brightness-110 transition-all disabled:opacity-50"
+        <div className="relative z-10">
+          {/* Logo */}
+          <div className="flex items-center gap-3 mb-12">
+            <div
+              className="w-10 h-10 rounded-[10px] flex items-center justify-center shrink-0"
+              style={{ background: "#3E7BD6" }}
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#fff"
+                strokeWidth="2.1"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               >
-                {sending ? "Wysyłanie..." : "Wyślij wiadomość"}
-              </button>
-            </form>
-          )}
+                <path d="M14 7a4 4 0 0 1-5.3 5.3L4 17l3 3 4.7-4.7A4 4 0 0 0 17 10l-2.2 2.2-2-2L15 8z" />
+              </svg>
+            </div>
+            <span className="text-white font-heading font-bold text-xl tracking-tight">
+              Mestio
+            </span>
+          </div>
+
+          {/* Value prop */}
+          <h2 className="text-white font-heading font-bold text-3xl lg:text-4xl leading-tight mb-5">
+            Porozmawiajmy o
+            <br />
+            Twoim osiedlu
+          </h2>
+          <p
+            className="text-base leading-relaxed"
+            style={{ color: "rgba(255,255,255,0.65)" }}
+          >
+            Masz pytanie o wdrożenie, demo lub wycenę? Napisz do nas —
+            odpowiadamy w 1 dzień roboczy.
+          </p>
+
+          {/* Contact info list */}
+          <div className="mt-10 space-y-5">
+            {CONTACT_INFO.map((item, i) => (
+              <div key={i} className="flex items-start gap-3">
+                <div
+                  className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
+                  style={{ background: "rgba(255,255,255,0.08)" }}
+                >
+                  <svg
+                    width="17"
+                    height="17"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="rgba(255,255,255,0.7)"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d={item.icon} />
+                  </svg>
+                </div>
+                <div className="pt-1">
+                  <div
+                    className="text-[11px] font-mono uppercase tracking-[0.5px] mb-0.5"
+                    style={{ color: "rgba(255,255,255,0.4)" }}
+                  >
+                    {item.k}
+                  </div>
+                  <div
+                    className="text-sm font-medium"
+                    style={{ color: "rgba(255,255,255,0.85)" }}
+                  >
+                    {item.v}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
-        <div className="bg-white rounded-[12px] border border-[#E9EEF5] p-6">
-          <div className="flex flex-col gap-4">
-            {CONTACT_INFO.map((item) => (
-              <div key={item.k}>
-                <div className={labelClass}>{item.k}</div>
-                <div className="text-[14.5px] font-medium text-ink mt-1">
+        {/* Footer */}
+        <p
+          className="relative z-10 text-xs"
+          style={{ color: "rgba(255,255,255,0.3)" }}
+        >
+          © {new Date().getFullYear()} Mestio. System dla osiedli i wspólnot.
+        </p>
+      </div>
+
+      {/* Right panel: Contact form */}
+      <div
+        className="flex-1 flex items-center justify-center p-6 lg:p-14"
+        style={{ background: "#F9FAFB" }}
+      >
+        <div className="w-full" style={{ maxWidth: "480px" }}>
+          {/* Mobile logo */}
+          <div className="lg:hidden text-center mb-8">
+            <div
+              className="inline-flex items-center justify-center w-12 h-12 rounded-[10px] mb-4"
+              style={{ background: "#3E7BD6" }}
+            >
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#fff"
+                strokeWidth="2.1"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M14 7a4 4 0 0 1-5.3 5.3L4 17l3 3 4.7-4.7A4 4 0 0 0 17 10l-2.2 2.2-2-2L15 8z" />
+              </svg>
+            </div>
+            <h1 className="text-2xl font-heading font-bold" style={{ color: "#0E1A2B" }}>
+              Mestio
+            </h1>
+          </div>
+
+          {/* Mobile contact info */}
+          <div className="lg:hidden mb-8 grid grid-cols-2 gap-3">
+            {CONTACT_INFO.map((item, i) => (
+              <div
+                key={i}
+                className="rounded-xl p-3.5"
+                style={{
+                  background: "#fff",
+                  border: "1px solid #EBEFF4",
+                }}
+              >
+                <div
+                  className="text-[10px] font-mono uppercase tracking-[0.4px] mb-1"
+                  style={{ color: "#9AA7B8" }}
+                >
+                  {item.k}
+                </div>
+                <div className="text-[13px] font-medium" style={{ color: "#0E1A2B" }}>
                   {item.v}
                 </div>
               </div>
             ))}
           </div>
+
+          {/* Form header */}
+          <div className="mb-8">
+            <h1
+              className="text-[28px] font-heading font-bold tracking-tight mb-2"
+              style={{ color: "#0E1A2B" }}
+            >
+              Napisz do nas
+            </h1>
+            <p className="text-[15px] leading-relaxed" style={{ color: "#7C8AA0" }}>
+              Odpowiadamy w ciągu 1 dnia roboczego.
+            </p>
+          </div>
+
+          {sent ? (
+            <div
+              className="rounded-[16px] p-8 text-center"
+              style={{
+                background: "#fff",
+                border: "1px solid #EBEFF4",
+                boxShadow: "0 1px 3px rgba(14,26,43,.04)",
+              }}
+            >
+              <div
+                className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-5"
+                style={{ background: "rgba(34,197,94,.12)" }}
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#22C55E"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M22 12a10 10 0 1 1-10-10" />
+                  <path d="M22 4 12 14.01 9 11" />
+                </svg>
+              </div>
+              <p className="text-lg font-semibold mb-1.5" style={{ color: "#0E1A2B" }}>
+                Dziękujemy!
+              </p>
+              <p className="text-sm mb-6" style={{ color: "#7C8AA0" }}>
+                Odezwiemy się w ciągu 1 dnia roboczego.
+              </p>
+              <button
+                type="button"
+                onClick={() => setSent(false)}
+                className="text-sm font-medium transition-colors"
+                style={{ color: "#3E7BD6" }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = "#2A5FA8";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = "#3E7BD6";
+                }}
+              >
+                ← Wyślij kolejną wiadomość
+              </button>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit(onSubmit)} noValidate>
+              <div
+                className="rounded-[16px] p-8"
+                style={{
+                  background: "#fff",
+                  border: "1px solid #EBEFF4",
+                  boxShadow: "0 1px 3px rgba(14,26,43,.04)",
+                }}
+              >
+                <div className="space-y-5">
+                  {/* Name + Email */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div>
+                      <label
+                        htmlFor="kontakt-name"
+                        className="block text-[13px] font-semibold mb-2"
+                        style={{ color: "#4A5A6E" }}
+                      >
+                        Imię i nazwisko
+                      </label>
+                      <input
+                        {...register("name")}
+                        id="kontakt-name"
+                        placeholder="Imię i nazwisko"
+                        className="w-full px-4 py-3 rounded-[12px] text-[15px] transition-all outline-none"
+                        style={{
+                          background: "#F9FAFB",
+                          border: errors.name
+                            ? "1px solid #EF4444"
+                            : "1px solid #EBEFF4",
+                          color: "#0E1A2B",
+                        }}
+                        onFocus={(e) => {
+                          e.currentTarget.style.borderColor = "#3E7BD6";
+                          e.currentTarget.style.boxShadow =
+                            "0 0 0 3px rgba(62,123,214,.12)";
+                          e.currentTarget.style.background = "#fff";
+                        }}
+                        onBlur={(e) => {
+                          e.currentTarget.style.borderColor = errors.name
+                            ? "#EF4444"
+                            : "#EBEFF4";
+                          e.currentTarget.style.boxShadow = "none";
+                          e.currentTarget.style.background = "#F9FAFB";
+                        }}
+                        aria-invalid={!!errors.name}
+                      />
+                      {errors.name && (
+                        <p className="text-xs text-red-500 mt-1.5 font-medium" role="alert">
+                          {errors.name.message}
+                        </p>
+                      )}
+                    </div>
+                    <div>
+                      <label
+                        htmlFor="kontakt-email"
+                        className="block text-[13px] font-semibold mb-2"
+                        style={{ color: "#4A5A6E" }}
+                      >
+                        Adres e-mail
+                      </label>
+                      <input
+                        {...register("email")}
+                        id="kontakt-email"
+                        type="email"
+                        placeholder="twój@email.pl"
+                        className="w-full px-4 py-3 rounded-[12px] text-[15px] transition-all outline-none"
+                        style={{
+                          background: "#F9FAFB",
+                          border: errors.email
+                            ? "1px solid #EF4444"
+                            : "1px solid #EBEFF4",
+                          color: "#0E1A2B",
+                        }}
+                        onFocus={(e) => {
+                          e.currentTarget.style.borderColor = "#3E7BD6";
+                          e.currentTarget.style.boxShadow =
+                            "0 0 0 3px rgba(62,123,214,.12)";
+                          e.currentTarget.style.background = "#fff";
+                        }}
+                        onBlur={(e) => {
+                          e.currentTarget.style.borderColor = errors.email
+                            ? "#EF4444"
+                            : "#EBEFF4";
+                          e.currentTarget.style.boxShadow = "none";
+                          e.currentTarget.style.background = "#F9FAFB";
+                        }}
+                        aria-invalid={!!errors.email}
+                      />
+                      {errors.email && (
+                        <p className="text-xs text-red-500 mt-1.5 font-medium" role="alert">
+                          {errors.email.message}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Message */}
+                  <div>
+                    <label
+                      htmlFor="kontakt-message"
+                      className="block text-[13px] font-semibold mb-2"
+                      style={{ color: "#4A5A6E" }}
+                    >
+                      Wiadomość
+                    </label>
+                    <textarea
+                      {...register("message")}
+                      id="kontakt-message"
+                      rows={5}
+                      placeholder="Opisz swoje pytanie..."
+                      className="w-full px-4 py-3 rounded-[12px] text-[15px] transition-all outline-none resize-none"
+                      style={{
+                        background: "#F9FAFB",
+                        border: errors.message
+                          ? "1px solid #EF4444"
+                          : "1px solid #EBEFF4",
+                        color: "#0E1A2B",
+                      }}
+                      onFocus={(e) => {
+                        e.currentTarget.style.borderColor = "#3E7BD6";
+                        e.currentTarget.style.boxShadow =
+                          "0 0 0 3px rgba(62,123,214,.12)";
+                        e.currentTarget.style.background = "#fff";
+                      }}
+                      onBlur={(e) => {
+                        e.currentTarget.style.borderColor = errors.message
+                          ? "#EF4444"
+                          : "#EBEFF4";
+                        e.currentTarget.style.boxShadow = "none";
+                        e.currentTarget.style.background = "#F9FAFB";
+                      }}
+                      aria-invalid={!!errors.message}
+                    />
+                    {errors.message && (
+                      <p className="text-xs text-red-500 mt-1.5 font-medium" role="alert">
+                        {errors.message.message}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* RODO */}
+                  <div>
+                    <label className="flex items-start gap-2.5 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        {...register("acceptRodo")}
+                        className="mt-[3px] shrink-0 w-4 h-4 rounded accent-[#3E7BD6]"
+                      />
+                      <span
+                        className="text-[12px] leading-relaxed"
+                        style={{ color: "#5A6B80" }}
+                      >
+                        Wyrażam zgodę na przetwarzanie danych osobowych zgodnie z{" "}
+                        <Link
+                          href="/polityka"
+                          target="_blank"
+                          className="underline"
+                          style={{ color: "#3E7BD6" }}
+                        >
+                          polityką prywatności
+                        </Link>
+                      </span>
+                    </label>
+                    {errors.acceptRodo && (
+                      <p className="text-xs text-red-500 mt-1.5 font-medium" role="alert">
+                        {errors.acceptRodo.message}
+                      </p>
+                    )}
+                  </div>
+
+                  {serverError && (
+                    <div
+                      className="p-3.5 rounded-[12px] text-[13px] font-medium"
+                      style={{
+                        background: "rgba(239,68,68,.08)",
+                        color: "#EF4444",
+                        border: "1px solid rgba(239,68,68,.15)",
+                      }}
+                    >
+                      {serverError}
+                    </div>
+                  )}
+
+                  {/* Submit */}
+                  <button
+                    type="submit"
+                    disabled={sending}
+                    className="w-full py-3 rounded-[12px] text-[15px] font-semibold text-white transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                    style={{
+                      background: "linear-gradient(135deg, #3E7BD6, #2A5FA8)",
+                      boxShadow: "0 2px 8px rgba(62,123,214,.25)",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = "translateY(-1px)";
+                      e.currentTarget.style.boxShadow =
+                        "0 4px 14px rgba(62,123,214,.35)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = "translateY(0)";
+                      e.currentTarget.style.boxShadow =
+                        "0 2px 8px rgba(62,123,214,.25)";
+                    }}
+                  >
+                    {sending ? "Wysyłanie..." : "Wyślij wiadomość"}
+                    {!sending && (
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                      </svg>
+                    )}
+                  </button>
+                </div>
+              </div>
+            </form>
+          )}
         </div>
       </div>
     </div>

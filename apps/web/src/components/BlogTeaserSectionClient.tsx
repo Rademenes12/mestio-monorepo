@@ -40,7 +40,7 @@ export default function BlogTeaserSection({ posts }: { posts?: Array<Record<stri
   const items = hasPosts ? posts : FALLBACK_POSTS;
 
   return (
-    <section ref={ref} id="blog" className="relative py-28" style={{ background: "#F9FAFB" }}>
+    <section ref={ref} id="blog" className="relative py-28" style={{ background: "#F1F4F8" }}>
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
         <motion.div
