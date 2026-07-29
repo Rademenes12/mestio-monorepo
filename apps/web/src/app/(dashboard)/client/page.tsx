@@ -111,10 +111,11 @@ export default function ClientDashboardPage() {
   // ── Activity stream ──
   const streamEvents: ActivityEvent[] = (recentEvents || []).map((e: any) => ({
     id: e.id,
-    type: "status_changed",
+    type: "info",
     title: e.event_type || "Aktywność",
     description: e.description || "Zaktualizowano zgłoszenie",
     time: e.created_at || new Date().toISOString(),
+    timestamp: e.created_at || new Date().toISOString(),
     user: e.user_name || "System",
   }));
 
@@ -221,7 +222,6 @@ export default function ClientDashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <WidgetCard
           title="Wymagają Uwagi"
-          badge={urgentReports > 0 ? `${urgentReports} pilne` : undefined}
           accentColor={colors.warning}
           className="lg:col-span-2"
         >
