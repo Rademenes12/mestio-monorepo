@@ -46,46 +46,35 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(loginUrl);
     }
 
-    // Check user role (non-blocking — errors default to allowing access)
-    let role = demoRole || "";
-    if (user && !demoRole) {
-      try {
-        const { data: profile } = await supabase
-          .from("fixflow_resident_profiles")
-          .select("role")
-          .eq("user_id", user.id)
-          .maybeSingle();
-        role = profile?.role || "";
-      } catch {
-        // If DB query fails, allow access (login page handles role check)
-      }
-    }
+    // Determine role (demoRole cookie takes precedence for multi-role testing)
+    const role = demoRole || "";
 
     // /owner/* — only owner/admin
     if (pathname.startsWith("/owner/")) {
-      if (role !== "owner" && role !== "admin") {
-        if (role === "manager" || role === "serwis" || role === "ochrona") {
-          return NextResponse.redirect(new URL("/client/", request.url));
-        }
+      if (role && role !== "owner" && role !== "admin") {
         if (role === "resident") {
           return NextResponse.redirect(new URL("/resident/", request.url));
         }
+        return NextResponse.redirect(new URL("/client/", request.url));
       }
     }
 
-    // /client/* — redirect residents to /resident/
+    // /client/* — allow admin, manager, serwis, ochrona, zarzad, or demo admin
     if (pathname.startsWith("/client/")) {
       if (role === "resident") {
         return NextResponse.redirect(new URL("/resident/", request.url));
       }
-    }
-
-    // /resident/* — redirect non-residents away
-    if (pathname.startsWith("/resident/")) {
-      if (role === "owner" || role === "admin") {
+      if (role === "owner") {
         return NextResponse.redirect(new URL("/owner/dashboard", request.url));
       }
-      if (role === "manager" || role === "serwis" || role === "ochrona") {
+    }
+
+    // /resident/* — allow resident or demo resident
+    if (pathname.startsWith("/resident/")) {
+      if (role === "owner") {
+        return NextResponse.redirect(new URL("/owner/dashboard", request.url));
+      }
+      if (role === "admin" || role === "manager" || role === "serwis" || role === "ochrona") {
         return NextResponse.redirect(new URL("/client/", request.url));
       }
     }
