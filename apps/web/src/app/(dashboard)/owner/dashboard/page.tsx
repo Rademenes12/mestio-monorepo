@@ -30,14 +30,6 @@ function tint(hex: string, alpha: number): string {
 
 export default async function DashboardPage() {
   const supabase = await createClient();
-  
-  // Sprawdzenie sesji — jeśli brak, przekieruj
-  try {
-    await supabase.auth.getUser();
-  } catch {
-    // Sesja wygasła lub brak — error boundary to przechwyci
-    throw new Error("Brak aktywnej sesji. Zaloguj się ponownie.");
-  }
 
   // Silnik automatyzacji — nie blokuje strony
   await runAutomations(supabase).catch(() => 0);
