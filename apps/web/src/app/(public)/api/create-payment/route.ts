@@ -4,6 +4,8 @@ import { supabaseAdmin } from "@/lib/supabase-admin";
 import { registrationSchema } from "@/lib/validations";
 import { rateLimitByIp } from "@/lib/rate-limit";
 import { sendWelcomeEmail } from "@/lib/email";
+import { createLeadFromOrder } from "@/lib/create-lead-from-order";
+import { PLAN_AMOUNTS_MAP } from "@/lib/pricing";
 
 export async function POST(request: NextRequest) {
   if (!rateLimitByIp(request, 5)) {
@@ -76,6 +78,19 @@ export async function POST(request: NextRequest) {
     }
 
     const userId = userData.user.id;
+
+    // ── Utwórz leada w CRM Owner ──
+    await createLeadFromOrder({
+      companyName,
+      contactName,
+      email,
+      phone,
+      nip,
+      plan,
+      amountGrosze: PLAN_AMOUNTS_MAP[plan] ?? 0,
+      paymentMethod: "blik",
+      estateName,
+    });
 
     sendWelcomeEmail({
       email,

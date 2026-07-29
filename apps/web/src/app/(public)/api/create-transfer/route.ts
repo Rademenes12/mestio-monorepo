@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import { registrationSchema } from "@/lib/validations";
 import { rateLimitByIp } from "@/lib/rate-limit";
+import { createLeadFromOrder } from "@/lib/create-lead-from-order";
 import crypto from "crypto";
 
 import { PLAN_AMOUNTS_MAP } from "@/lib/pricing";
@@ -118,6 +119,20 @@ export async function POST(request: NextRequest) {
         { status: 500 }
       );
     }
+
+    // ── Utwórz leada w CRM Owner ──
+    await createLeadFromOrder({
+      companyName,
+      contactName,
+      email,
+      phone,
+      nip,
+      plan,
+      amountGrosze: amount,
+      paymentMethod: "transfer",
+      transferTitle,
+      estateName,
+    });
 
     return NextResponse.json({
       paymentId: payment.id,
