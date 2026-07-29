@@ -5,30 +5,17 @@ import { EstateSwitcher } from "./estate-switcher";
 import { SidebarNav, type NavItem } from "./sidebar-nav";
 import { ThemeToggle } from "@mestio/ui";
 
-import {
-  LayoutDashboard,
-  ClipboardList,
-  Users,
-  Phone,
-  CheckSquare,
-  Megaphone,
-  Scale,
-  Building2,
-  FileText,
-  Settings,
-} from "lucide-react";
-
 const NAV_ITEMS: Omit<NavItem, "badge">[] = [
-  { href: "/client/", label: "Pulpit", icon: LayoutDashboard },
-  { href: "/client/reports", label: "Tablica spraw", icon: ClipboardList },
-  { href: "/client/contacts", label: "Kontakty", icon: Users },
-  { href: "/client/phones", label: "Telefony", icon: Phone },
-  { href: "/client/tasks", label: "Zadania", icon: CheckSquare },
-  { href: "/client/announcements", label: "Komunikaty", icon: Megaphone },
-  { href: "/client/resolutions", label: "Uchwały", icon: Scale },
-  { href: "/client/estate", label: "Osiedle", icon: Building2 },
-  { href: "/client/invoices", label: "Faktury", icon: FileText },
-  { href: "/client/settings", label: "Ustawienia", icon: Settings },
+  { href: "/client/", label: "Pulpit", iconName: "dashboard" },
+  { href: "/client/reports", label: "Tablica spraw", iconName: "reports" },
+  { href: "/client/contacts", label: "Kontakty", iconName: "contacts" },
+  { href: "/client/phones", label: "Telefony", iconName: "phones" },
+  { href: "/client/tasks", label: "Zadania", iconName: "tasks" },
+  { href: "/client/announcements", label: "Komunikaty", iconName: "announcements" },
+  { href: "/client/resolutions", label: "Uchwały", iconName: "resolutions" },
+  { href: "/client/estate", label: "Osiedle", iconName: "estate" },
+  { href: "/client/invoices", label: "Faktury", iconName: "invoices" },
+  { href: "/client/settings", label: "Ustawienia", iconName: "settings" },
 ];
 
 export default async function AppLayout({
