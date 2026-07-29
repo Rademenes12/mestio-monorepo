@@ -113,6 +113,7 @@ export default function Sidebar() {
 
         {/* Advanced toggle */}
         <button
+          type="button"
           onClick={() => setAdvancedOpen((v) => !v)}
           className="sidebar-link-muted w-full mt-1"
         >

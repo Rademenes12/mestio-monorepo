@@ -335,7 +335,7 @@ Termin płatności: ${seller.termin}`;
           ))}
         </div>
         <Link
-          href="/customers/new"
+          href="/owner/customers/new"
           className="px-[14px] py-[7px] rounded-full bg-azure text-white text-[12.5px] font-medium hover:bg-azure-dark transition-colors shrink-0 flex items-center gap-[5px]"
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">

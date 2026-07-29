@@ -52,7 +52,7 @@ export default async function AppLayout({
     .eq("user_id", user.id);
 
   const adminMemberships = (memberships ?? []).filter(
-    (m) => m.role === "admin" || m.role === "board"
+    (m) => m.role === "admin" || m.role === "board" || m.role === "manager"
   );
 
   if (adminMemberships.length === 0) {

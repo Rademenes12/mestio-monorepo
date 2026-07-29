@@ -10,7 +10,7 @@ const BREADCRUMB_LABELS: Record<string, string> = {
   "/kpi": "KPI",
   "/team": "Zespół",
   "/customers": "Klienci",
-  "/customers/new": "Nowy klient",
+  "/owner/customers/new": "Nowy klient",
   "/mail": "Poczta",
   "/invoices": "Faktury",
   "/payments": "Płatności",
