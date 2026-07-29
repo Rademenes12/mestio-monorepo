@@ -362,29 +362,75 @@ export default function CustomerDetailPage({
   }
 
   return (
-    <div className="max-w-5xl mx-auto space-y-6">
+    <div className="max-w-6xl mx-auto space-y-6">
+      {/* ── Top Bar & Quick Actions (HubSpot 360° Header) ── */}
       <div>
         <Link
           href="/customers"
-          className="text-sm text-ink/50 hover:text-azure transition-colors inline-flex items-center gap-1.5 mb-3"
+          className="text-xs font-semibold text-ink/50 hover:text-azure transition-colors inline-flex items-center gap-1.5 mb-3"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
-          Wróć do listy
+          Wróć do listy klientów
         </Link>
-        <div className="flex items-start justify-between">
-          <div>
-            <h1 className="text-2xl font-bold text-ink">{lead.company_name}</h1>
-            <p className="text-sm text-ink/50 mt-1">
-              {lead.contact_name} {lead.contact_email && `· ${lead.contact_email}`}
-            </p>
+        <div className="bg-white rounded-[var(--radius-card)] border border-[#E9EEF5] p-6 shadow-sm">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <div className="flex items-center gap-3">
+                <h1 className="text-2xl font-bold text-ink">{lead.company_name}</h1>
+                <span
+                  className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${STAGE_COLORS[lead.stage]}`}
+                >
+                  {STAGE_LABELS[lead.stage]}
+                </span>
+              </div>
+              <p className="text-sm text-ink/60 mt-1 flex items-center gap-3 flex-wrap">
+                {lead.contact_name && (
+                  <span className="font-medium text-ink/80">👤 {lead.contact_name}</span>
+                )}
+                {lead.contact_email && (
+                  <a href={`mailto:${lead.contact_email}`} className="text-azure hover:underline">
+                    ✉️ {lead.contact_email}
+                  </a>
+                )}
+                {lead.contact_phone && (
+                  <a href={`tel:${lead.contact_phone}`} className="text-ink/60 hover:text-azure">
+                    📞 {lead.contact_phone}
+                  </a>
+                )}
+              </p>
+            </div>
+
+            {/* Quick Action Toolbar (HubSpot Buttons) */}
+            <div className="flex items-center gap-2 flex-wrap">
+              {lead.contact_email && (
+                <a
+                  href={`mailto:${lead.contact_email}?subject=Mestio%20-%20Informacje%20dla%20${encodeURIComponent(lead.company_name)}`}
+                  className="px-3.5 py-2 rounded-lg bg-mist/60 text-ink text-xs font-semibold hover:bg-mist transition-colors flex items-center gap-1.5"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg>
+                  Wyślij email
+                </a>
+              )}
+              <Link
+                href={`/owner/invoices?lead_id=${lead.id}`}
+                className="px-3.5 py-2 rounded-lg bg-mist/60 text-ink text-xs font-semibold hover:bg-mist transition-colors flex items-center gap-1.5"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+                Wystaw fakturę
+              </Link>
+              {lead.estate_id && (
+                <a
+                  href={`/owner/estates/${lead.estate_id}`}
+                  className="px-3.5 py-2 rounded-lg bg-azure/10 text-azure text-xs font-semibold hover:bg-azure/20 transition-colors flex items-center gap-1.5"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                  Zarządzaj osiedlem
+                </a>
+              )}
+            </div>
           </div>
-          <span
-            className={`inline-block px-3 py-1.5 rounded-full text-sm font-medium ${STAGE_COLORS[lead.stage]}`}
-          >
-            {STAGE_LABELS[lead.stage]}
-          </span>
         </div>
       </div>
 
