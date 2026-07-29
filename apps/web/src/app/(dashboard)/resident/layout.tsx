@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { ThemeToggle } from "@mestio/ui";
+import { LogoutButton } from "@/components/LogoutButton";
 import {
   LayoutDashboard,
   ClipboardList,
@@ -81,11 +82,11 @@ export default async function ResidentLayout({
           ))}
         </nav>
 
-        {/* Theme toggle + user */}
-        <div className="px-3 py-3 shrink-0" style={{ borderTop: "1px solid var(--color-dark-border)" }}>
+        {/* Theme toggle + logout + user */}
+        <div className="px-3 py-3 shrink-0 space-y-2" style={{ borderTop: "1px solid var(--color-dark-border)" }}>
           <ThemeToggle />
-          <div className="my-2" style={{ borderTop: "1px solid rgba(255,255,255,.06)" }} />
-          <div className="flex items-center gap-2.5">
+          <LogoutButton />
+          <div className="flex items-center gap-2.5 pt-2" style={{ borderTop: "1px solid rgba(255,255,255,.06)" }}>
             <div className="w-7 h-7 rounded-full shrink-0 flex items-center justify-center" style={{ background: "#3E7BD6" }}>
               <span className="font-heading font-bold text-[10px] text-white">{userInitials}</span>
             </div>

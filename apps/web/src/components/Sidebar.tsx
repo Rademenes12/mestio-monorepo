@@ -72,9 +72,12 @@ export default function Sidebar() {
   }, [advancedActive]);
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
-    router.push("/");
-    router.refresh();
+    document.cookie = "mestio_demo_role=; path=/; max-age=0;";
+    document.cookie = "active_estate_id=; path=/; max-age=0;";
+    try {
+      await supabase.auth.signOut();
+    } catch {}
+    window.location.href = "/login";
   };
 
   const isActive = (href: string) =>

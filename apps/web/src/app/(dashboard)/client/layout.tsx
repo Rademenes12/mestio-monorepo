@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { EstateSwitcher } from "./estate-switcher";
 import { SidebarNav, type NavItem } from "./sidebar-nav";
 import { ThemeToggle } from "@mestio/ui";
+import { LogoutButton } from "@/components/LogoutButton";
 
 const NAV_ITEMS: Omit<NavItem, "badge">[] = [
   { href: "/client/", label: "Pulpit", iconName: "dashboard" },
@@ -131,11 +132,11 @@ export default async function AppLayout({
         {/* Navigation */}
         <SidebarNav items={navItems} />
 
-        {/* Theme toggle + user footer */}
-        <div className="px-3 py-3 shrink-0" style={{ borderTop: "1px solid var(--color-dark-border)" }}>
+        {/* Theme toggle + logout + user footer */}
+        <div className="px-3 py-3 shrink-0 space-y-2" style={{ borderTop: "1px solid var(--color-dark-border)" }}>
           <ThemeToggle />
-          <div className="my-2" style={{ borderTop: "1px solid rgba(255,255,255,.06)" }} />
-          <div className="flex items-center gap-2.5">
+          <LogoutButton />
+          <div className="flex items-center gap-2.5 pt-2" style={{ borderTop: "1px solid rgba(255,255,255,.06)" }}>
             <div className="w-7 h-7 rounded-full shrink-0 flex items-center justify-center" style={{ background: "#3E7BD6" }}>
               <span className="font-heading font-bold text-[10px] text-white">{userInitials}</span>
             </div>
