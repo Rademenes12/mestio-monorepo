@@ -82,6 +82,9 @@ export interface CrmLead {
   estate_id: string | null;
   contract_end: string | null;
   notes: string | null;
+  payment_received: boolean;
+  contract_signed: boolean;
+  onboarding_complete: boolean;
   created_at: string;
   updated_at: string;
 }

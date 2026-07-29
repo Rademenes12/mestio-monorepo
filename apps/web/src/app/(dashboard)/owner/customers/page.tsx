@@ -62,9 +62,14 @@ interface ClientDoc {
 
 const DOC_STATUS_LABELS: Record<string, string> = {
   generated: "Wygenerowana",
-  sent: "Wysłana",
+  sent: "Wysłana do podpisu",
   signed: "Podpisana",
   draft: "Szkic",
+  pending: "Oczekuje na podpis",
+  completed: "Zakończona",
+  declined: "Odrzucona",
+  expired: "Wygasła",
+  cancelled: "Anulowana",
 };
 
 export default function CustomersPage() {
@@ -261,21 +266,42 @@ Termin płatności: ${seller.termin}`;
       }
       notify(`Faktura ${number} zapisana w CRM (KSeF nieaktywny — skonfiguruj w Ustawieniach)`);
     } else {
-      const { error } = await supabase.from("client_documents").insert({
+      const { data: doc, error } = await supabase.from("client_documents").insert({
         lead_id: modalLead.id,
         type: docPreview.kind,
         title: "Umowa główna Mestio",
         body: docPreview.text,
         status: "generated",
-      });
-      setSendingDoc(false);
+      })
+        .select("id")
+        .single();
       if (error) {
+        setSendingDoc(false);
         notify("Błąd: " + error.message);
         return;
       }
-      notify(
-        `Umowa dla ${modalLead.company_name} zapisana w CRM (e-podpis Autenti nieaktywny — skonfiguruj w Ustawieniach)`
-      );
+
+      try {
+        const autentiRes = await fetch("/api/crm/send-to-autenti", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ documentId: doc.id }),
+        });
+        const autentiJson = await autentiRes.json();
+        if (autentiJson.fallback) {
+          notify(
+            `Umowa zapisana. ${autentiJson.message}`
+          );
+        } else if (autentiJson.signingLink) {
+          notify(
+            `Umowa wysłana do Autenti! Link do podpisu: ${autentiJson.signingLink}`
+          );
+        } else {
+          notify(`Umowa wysłana do Autenti (dokument ID: ${autentiJson.autentiDocumentId})`);
+        }
+      } catch {
+        notify("Umowa zapisana (wysyłka do Autenti nie powiodła się)");
+      }
     }
 
     setDocPreview(null);

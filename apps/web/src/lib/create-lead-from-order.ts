@@ -60,6 +60,9 @@ export async function createLeadFromOrder(input: OrderLeadInput): Promise<string
       plan: input.plan || null,
       mrr: mrrPln,
       notes,
+      payment_received: input.paymentMethod !== "transfer",
+      contract_signed: false,
+      onboarding_complete: false,
     })
     .select("id")
     .single();
