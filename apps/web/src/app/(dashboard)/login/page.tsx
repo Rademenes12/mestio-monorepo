@@ -95,9 +95,9 @@ export default function LoginPage() {
   return (
     <div
       className="min-h-screen flex items-center justify-center p-4"
-      style={{ background: "#F6F8FB" }}
+      style={{ background: "var(--color-page, #F9FAFB)" }}
     >
-      <div className="w-full max-w-sm">
+      <div className="w-full max-w-md">
         {/* Logo + nagłówek */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-12 h-12 rounded-[8px] mb-4"
@@ -117,9 +117,10 @@ export default function LoginPage() {
 
         {/* Formularz */}
         <div
-          className="bg-white rounded-[8px] p-6"
+          className="bg-white rounded-[12px] p-6"
           style={{
-            border: "1px solid #E9EEF5",
+            border: "1px solid var(--color-glass-border, #EBEFF4)",
+            boxShadow: "0 1px 2px rgba(14,26,43,.03)",
           }}
         >
           {resetSent ? (
@@ -170,8 +171,8 @@ export default function LoginPage() {
                   placeholder="twoj@email.pl"
                   className="w-full px-4 py-2.5 rounded-[8px] text-sm transition-all"
                   style={{
-                    background: "#F8F9FB",
-                    border: "1px solid #E9EEF5",
+                    background: "var(--color-surface, #FAFBFC)",
+                    border: "1px solid var(--color-glass-border, #EBEFF4)",
                     color: "#0E1A2B",
                   }}
                   onFocus={(e) => {
@@ -179,7 +180,7 @@ export default function LoginPage() {
                     e.target.style.boxShadow = "0 0 0 3px rgba(62,123,214,.15)";
                   }}
                   onBlur={(e) => {
-                    e.target.style.borderColor = "#E9EEF5";
+                    e.target.style.borderColor = "var(--color-glass-border, #EBEFF4)";
                     e.target.style.boxShadow = "none";
                   }}
                 />
@@ -203,8 +204,8 @@ export default function LoginPage() {
                   placeholder="••••••••"
                   className="w-full px-4 py-2.5 rounded-[8px] text-sm transition-all"
                   style={{
-                    background: "#F8F9FB",
-                    border: "1px solid #E9EEF5",
+                    background: "var(--color-surface, #FAFBFC)",
+                    border: "1px solid var(--color-glass-border, #EBEFF4)",
                     color: "#0E1A2B",
                   }}
                   onFocus={(e) => {
@@ -212,7 +213,7 @@ export default function LoginPage() {
                     e.target.style.boxShadow = "0 0 0 3px rgba(62,123,214,.15)";
                   }}
                   onBlur={(e) => {
-                    e.target.style.borderColor = "#E9EEF5";
+                    e.target.style.borderColor = "var(--color-glass-border, #EBEFF4)";
                     e.target.style.boxShadow = "none";
                   }}
                 />
