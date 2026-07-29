@@ -55,6 +55,82 @@ export default function CustomerDetailPage({
   const [savingEdit, setSavingEdit] = useState(false);
   const [newTask, setNewTask] = useState("");
   const [anonymizing, setAnonymizing] = useState(false);
+  const [togglingChecklist, setTogglingChecklist] = useState(false);
+
+  const toggleChecklist = async (field: "payment_received" | "contract_signed" | "onboarding_complete") => {
+    if (!lead) return;
+    const current = lead[field];
+    const next = !current;
+    setLead({ ...lead, [field]: next });
+    setTogglingChecklist(true);
+    const { error } = await supabase
+      .from("crm_leads")
+      .update({ [field]: next, updated_at: new Date().toISOString() })
+      .eq("id", lead.id);
+    if (error) {
+      setLead({ ...lead, [field]: current });
+      setTogglingChecklist(false);
+      return;
+    }
+    await supabase.from("crm_interactions").insert({
+      lead_id: lead.id,
+      type: "note",
+      summary: `${next ? "☑" : "☐"} ${field === "payment_received" ? "Płatność otrzymana" : field === "contract_signed" ? "Umowa podpisana" : "Onboarding zakończony"}`,
+    });
+    const updated = { ...lead, [field]: next };
+    if (updated.payment_received && updated.contract_signed && updated.onboarding_complete) {
+      await autoProgressOnChecklistComplete(updated);
+    }
+    setTogglingChecklist(false);
+    fetchAll();
+  };
+
+  const autoProgressOnChecklistComplete = async (l: CrmLead) => {
+    const targetStage: LeadStage = "active";
+    if (l.stage === "active") return;
+
+    let estateId = l.estate_id;
+    if (!estateId) {
+      estateId = await provisionEstateForLead(l);
+    }
+
+    const { error } = await supabase
+      .from("crm_leads")
+      .update({ stage: targetStage, estate_id: estateId, updated_at: new Date().toISOString() })
+      .eq("id", l.id);
+    if (!error) {
+      await supabase.from("crm_interactions").insert({
+        lead_id: l.id,
+        type: "stage_change",
+        summary: `Automatyczna progresja: ${STAGE_LABELS[l.stage]} → ${STAGE_LABELS[targetStage]} (check-lista kompletna)`,
+      });
+    }
+  };
+
+  const provisionEstateForLead = async (l: CrmLead): Promise<string | null> => {
+    const { data, error } = await supabase.rpc("fixflow_provision_subscription", {
+      p_stripe_subscription_id: `manual_${l.id}`,
+      p_stripe_customer_id: "manual",
+      p_stripe_price_id: "manual",
+      p_user_id: null,
+      p_estate_name: l.company_name,
+      p_status: "active",
+    });
+    if (error || !data?.estate_id) {
+      await supabase.from("crm_interactions").insert({
+        lead_id: l.id,
+        type: "note",
+        summary: `Nie udało się utworzyć osiedla automatycznie: ${error?.message ?? "brak estate_id w odpowiedzi RPC"}`,
+      });
+      return null;
+    }
+    await supabase.from("crm_interactions").insert({
+      lead_id: l.id,
+      type: "auto",
+      summary: `Osiedle "${l.company_name}" utworzone automatycznie (check-lista kompletna)`,
+    });
+    return data.estate_id as string;
+  };
 
   const fetchAll = async () => {
     setLoading(true);
@@ -96,6 +172,15 @@ export default function CustomerDetailPage({
     const invs = (invoicesRes.data as CrmInvoice[]) ?? [];
     setInvoices(invs);
     setTasks((tasksRes.data as CrmTask[]) ?? []);
+
+    // Check-lista kompletna z innego źródła (np. webhook Autenti ustawił contract_signed)
+    if (leadData.payment_received && leadData.contract_signed && leadData.onboarding_complete && leadData.stage !== "active") {
+      await autoProgressOnChecklistComplete(leadData);
+      const { data: refreshed } = await supabase.from("crm_leads").select("*").eq("id", id).single();
+      if (refreshed) {
+        setLead(refreshed as CrmLead);
+      }
+    }
 
     // Timeline (wzorzec HubSpot Record): jedna oś czasu z wszystkich modułów
     const events: TimelineEvent[] = [];
@@ -486,6 +571,44 @@ export default function CustomerDetailPage({
                 </option>
               ))}
             </select>
+          </div>
+
+          <div className="bg-white rounded-[var(--radius-card)] border border-[#E9EEF5] p-6">
+            <h2 className="text-sm font-semibold text-ink mb-3">Check-lista wdrożenia</h2>
+            <p className="text-xs text-ink/50 mb-3">Zaznacz wszystkie — system automatycznie utworzy osiedle i przejdzie do etapu Aktywny.</p>
+            <div className="space-y-2.5">
+              {([
+                { key: "payment_received" as const, label: "Płatność otrzymana", desc: "Przelew zaksięgowany lub Stripe potwierdzony" },
+                { key: "contract_signed" as const, label: "Umowa podpisana", desc: "Umowa wysłana i podpisana przez klienta" },
+                { key: "onboarding_complete" as const, label: "Onboarding zakończony", desc: "Osiedle skonfigurowane, kody wysłane" },
+              ]).map((item) => (
+                <label
+                  key={item.key}
+                  className={`flex items-start gap-3 p-2.5 -mx-2 rounded-lg cursor-pointer transition-colors ${
+                    lead[item.key] ? "bg-success/5" : "hover:bg-[#F4F7FB]"
+                  }`}
+                >
+                  <input
+                    type="checkbox"
+                    checked={lead[item.key]}
+                    onChange={() => toggleChecklist(item.key)}
+                    disabled={togglingChecklist}
+                    className="mt-0.5 w-4 h-4 rounded border-mist text-success focus:ring-success/30 cursor-pointer"
+                  />
+                  <div className="flex-1 min-w-0">
+                    <div className={`text-sm font-medium ${lead[item.key] ? "text-success line-through" : "text-ink"}`}>
+                      {item.label}
+                    </div>
+                    <div className="text-xs text-ink/40 mt-0.5">{item.desc}</div>
+                  </div>
+                </label>
+              ))}
+            </div>
+            {lead.payment_received && lead.contract_signed && lead.onboarding_complete && (
+              <div className="mt-3 p-2.5 rounded-lg bg-success/10 text-success text-xs font-medium text-center">
+                Check-lista kompletna — klient automatycznie przechodzi do etapu Aktywny
+              </div>
+            )}
           </div>
 
           <div className="bg-white rounded-[var(--radius-card)] border border-[#E9EEF5] p-6">

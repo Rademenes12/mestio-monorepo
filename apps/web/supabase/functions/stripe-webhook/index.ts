@@ -469,6 +469,9 @@ export default {
               plan: plan,
               mrr: mrrPln,
               estate_id: crmEstate?.id || null,
+              payment_received: true,
+              contract_signed: false,
+              onboarding_complete: false,
             })
             .select("id")
             .single();
