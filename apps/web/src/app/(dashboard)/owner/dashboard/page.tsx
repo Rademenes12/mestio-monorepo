@@ -1,5 +1,3 @@
-"use client";
-
 /**
  * CRM-Owner Dashboard — Daylight-inspired, full version
  * Inline styles to avoid broken monorepo package imports on Vercel.

@@ -3,66 +3,35 @@
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import Link from "next/link";
 
 export default function LoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState("test-admin@fixflow.app");
-  const [password, setPassword] = useState("Test1234!");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [resetSent, setResetSent] = useState(false);
-  const [activeTab, setActiveTab] = useState<"client" | "owner" | "resident">("client");
 
   const redirectTo =
     typeof window !== "undefined"
       ? new URLSearchParams(window.location.search).get("redirect") || "/"
       : "/";
 
-  const handleTabSelect = (tab: "client" | "owner" | "resident") => {
-    setActiveTab(tab);
-    setError(null);
-    if (tab === "owner") {
-      setEmail("twoj@mestio.pl");
-      setPassword("Test1234!");
-    } else if (tab === "client") {
-      setEmail("test-admin@fixflow.app");
-      setPassword("Test1234!");
-    } else {
-      setEmail("test-mieszkaniec@fixflow.app");
-      setPassword("Test1234!");
-    }
-  };
-
-  const handleDemoAccess = (role: "owner" | "admin" | "resident") => {
-    document.cookie = `mestio_demo_role=${role}; path=/; max-age=86400`;
-    if (role === "owner") {
-      window.location.href = "/owner/dashboard";
-    } else if (role === "admin") {
-      window.location.href = "/client/";
-    } else {
-      window.location.href = "/resident/";
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setLoading(true);
 
-    const targetRole = activeTab === "owner" ? "owner" : activeTab === "client" ? "admin" : "resident";
-    document.cookie = `mestio_demo_role=${targetRole}; path=/; max-age=86400`;
+    const supabase = createClient();
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
-    try {
-      const supabase = createClient();
-      await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-      handleDemoAccess(targetRole);
-    } catch {
-      handleDemoAccess(targetRole);
+    if (error) {
+      setError("Nieprawidłowy e-mail lub hasło.");
+      setLoading(false);
+      return;
     }
 
     const {
@@ -110,11 +79,11 @@ export default function LoginPage() {
     setLoading(true);
 
     const supabase = createClient();
-    const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${window.location.origin}/auth/callback?next=/reset-password`,
     });
 
-    if (resetError) {
+    if (error) {
       setError("Nie udało się wysłać linku. Spróbuj ponownie.");
       setLoading(false);
       return;
@@ -518,29 +487,6 @@ export default function LoginPage() {
               </div>
             </form>
           )}
-
-          {/* Bottom ProTracker Style Links */}
-          <div className="mt-6 pt-5 border-t border-[#EDF2F7] text-center">
-            <p className="text-xs text-[#718096]">
-              Nie masz jeszcze konta?
-            </p>
-            <div className="mt-2 flex flex-col items-center gap-2">
-              <button
-                type="button"
-                onClick={() => handleDemoAccess(activeTab === "owner" ? "owner" : "admin")}
-                className="text-xs font-semibold text-[#3E7BD6] hover:underline flex items-center gap-1"
-              >
-                <span>⚡ Otwórz natychmiastowy podgląd CRM (Bez Logowania)</span>
-              </button>
-
-              <Link
-                href="/zamow"
-                className="text-[11px] text-[#718096] hover:text-[#3E7BD6] transition-colors"
-              >
-                Zamów Mestio dla osiedla
-              </Link>
-            </div>
-          </div>
         </div>
       </div>
     </div>

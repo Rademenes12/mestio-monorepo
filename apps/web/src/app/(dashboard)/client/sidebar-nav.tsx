@@ -19,21 +19,8 @@ import {
 export type NavItem = {
   href: string;
   label: string;
-  iconName: string;
+  icon: LucideIcon;
   badge?: number;
-};
-
-const ICON_MAP: Record<string, LucideIcon> = {
-  dashboard: LayoutDashboard,
-  reports: ClipboardList,
-  contacts: Users,
-  phones: Phone,
-  tasks: CheckSquare,
-  announcements: Megaphone,
-  resolutions: Scale,
-  estate: Building2,
-  invoices: FileText,
-  settings: Settings,
 };
 
 export function SidebarNav({ items }: { items: NavItem[] }) {
@@ -47,7 +34,7 @@ export function SidebarNav({ items }: { items: NavItem[] }) {
             ? pathname === "/client/" || pathname === "/client"
             : pathname === item.href || pathname.startsWith(item.href + "/");
 
-        const Icon = ICON_MAP[item.iconName] || LayoutDashboard;
+        const Icon = item.icon;
 
         return (
           <Link
@@ -68,3 +55,17 @@ export function SidebarNav({ items }: { items: NavItem[] }) {
     </nav>
   );
 }
+
+// Icon map for external use
+export const NAV_ICONS: Record<string, LucideIcon> = {
+  "/": LayoutDashboard,
+  "/reports": ClipboardList,
+  "/contacts": Users,
+  "/phones": Phone,
+  "/tasks": CheckSquare,
+  "/announcements": Megaphone,
+  "/resolutions": Scale,
+  "/estate": Building2,
+  "/invoices": FileText,
+  "/settings": Settings,
+};

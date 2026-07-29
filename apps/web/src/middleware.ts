@@ -32,49 +32,56 @@ export async function middleware(request: NextRequest) {
     return supabaseResponse;
   }
 
-  // Protected routes require login or demo mode
+  // Protected routes require login
   if (
     pathname.startsWith("/owner/") ||
     pathname.startsWith("/client/") ||
     pathname.startsWith("/resident/")
   ) {
-    const demoRole = request.cookies.get("mestio_demo_role")?.value;
-
-    if (!user && !demoRole) {
+    if (!user) {
       const loginUrl = new URL("/login", request.url);
       loginUrl.searchParams.set("redirect", pathname);
       return NextResponse.redirect(loginUrl);
     }
 
-    // Determine role (demoRole cookie takes precedence for multi-role testing)
-    const role = demoRole || "";
+    // Check user role (non-blocking — errors default to allowing access)
+    let role = "";
+    try {
+      const { data: profile } = await supabase
+        .from("fixflow_resident_profiles")
+        .select("role")
+        .eq("user_id", user.id)
+        .maybeSingle();
+      role = profile?.role || "";
+    } catch {
+      // If DB query fails, allow access (login page handles role check)
+    }
 
     // /owner/* — only owner/admin
     if (pathname.startsWith("/owner/")) {
-      if (role && role !== "owner" && role !== "admin") {
+      if (role !== "owner" && role !== "admin") {
+        if (role === "manager" || role === "serwis" || role === "ochrona") {
+          return NextResponse.redirect(new URL("/client/", request.url));
+        }
         if (role === "resident") {
           return NextResponse.redirect(new URL("/resident/", request.url));
         }
-        return NextResponse.redirect(new URL("/client/", request.url));
       }
     }
 
-    // /client/* — allow admin, manager, serwis, ochrona, zarzad, or demo admin
+    // /client/* — redirect residents to /resident/
     if (pathname.startsWith("/client/")) {
       if (role === "resident") {
         return NextResponse.redirect(new URL("/resident/", request.url));
       }
-      if (role === "owner") {
-        return NextResponse.redirect(new URL("/owner/dashboard", request.url));
-      }
     }
 
-    // /resident/* — allow resident or demo resident
+    // /resident/* — redirect non-residents away
     if (pathname.startsWith("/resident/")) {
-      if (role === "owner") {
+      if (role === "owner" || role === "admin") {
         return NextResponse.redirect(new URL("/owner/dashboard", request.url));
       }
-      if (role === "admin" || role === "manager" || role === "serwis" || role === "ochrona") {
+      if (role === "manager" || role === "serwis" || role === "ochrona") {
         return NextResponse.redirect(new URL("/client/", request.url));
       }
     }

@@ -1,9 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
 import Link from "next/link";
 import { ThemeToggle } from "@mestio/ui";
-import { LogoutButton } from "@/components/LogoutButton";
 import {
   LayoutDashboard,
   ClipboardList,
@@ -27,26 +25,19 @@ export default async function ResidentLayout({
   children: React.ReactNode;
 }) {
   const supabase = await createClient();
-  const cookieStore = await cookies();
-  const demoRole = cookieStore.get("mestio_demo_role")?.value;
-
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user && !demoRole) redirect("/login?redirect=/resident/");
+  if (!user) redirect("/login?redirect=/resident/");
 
-  let profileName: string | null = null;
-  if (user) {
-    const { data: profile } = await supabase
-      .from("fixflow_resident_profiles")
-      .select("role, name")
-      .eq("user_id", user.id)
-      .maybeSingle();
-    profileName = profile?.name ?? null;
-  }
+  const { data: profile } = await supabase
+    .from("fixflow_resident_profiles")
+    .select("role, name")
+    .eq("user_id", user.id)
+    .maybeSingle();
 
-  const userInitials = profileName?.slice(0, 2).toUpperCase() ?? user?.email?.slice(0, 2).toUpperCase() ?? "MK";
+  const userInitials = profile?.name?.slice(0, 2).toUpperCase() ?? user.email?.slice(0, 2).toUpperCase() ?? "M";
 
   return (
     <div className="flex min-h-screen" style={{ background: "var(--color-page)" }}>
@@ -82,16 +73,16 @@ export default async function ResidentLayout({
           ))}
         </nav>
 
-        {/* Theme toggle + logout + user */}
-        <div className="px-3 py-3 shrink-0 space-y-2" style={{ borderTop: "1px solid var(--color-dark-border)" }}>
+        {/* Theme toggle + user */}
+        <div className="px-3 py-3 shrink-0" style={{ borderTop: "1px solid var(--color-dark-border)" }}>
           <ThemeToggle />
-          <LogoutButton />
-          <div className="flex items-center gap-2.5 pt-2" style={{ borderTop: "1px solid rgba(255,255,255,.06)" }}>
+          <div className="my-2" style={{ borderTop: "1px solid rgba(255,255,255,.06)" }} />
+          <div className="flex items-center gap-2.5">
             <div className="w-7 h-7 rounded-full shrink-0 flex items-center justify-center" style={{ background: "#3E7BD6" }}>
               <span className="font-heading font-bold text-[10px] text-white">{userInitials}</span>
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-[12px] font-semibold truncate" style={{ color: "var(--color-dark-text)" }}>{profileName ?? "Mieszkaniec"}</div>
+              <div className="text-[12px] font-semibold truncate" style={{ color: "var(--color-dark-text)" }}>{profile?.name ?? "Mieszkaniec"}</div>
             </div>
           </div>
         </div>

@@ -4,19 +4,31 @@ import { cookies } from "next/headers";
 import { EstateSwitcher } from "./estate-switcher";
 import { SidebarNav, type NavItem } from "./sidebar-nav";
 import { ThemeToggle } from "@mestio/ui";
-import { LogoutButton } from "@/components/LogoutButton";
+
+import {
+  LayoutDashboard,
+  ClipboardList,
+  Users,
+  Phone,
+  CheckSquare,
+  Megaphone,
+  Scale,
+  Building2,
+  FileText,
+  Settings,
+} from "lucide-react";
 
 const NAV_ITEMS: Omit<NavItem, "badge">[] = [
-  { href: "/client/", label: "Pulpit", iconName: "dashboard" },
-  { href: "/client/reports", label: "Tablica spraw", iconName: "reports" },
-  { href: "/client/contacts", label: "Kontakty", iconName: "contacts" },
-  { href: "/client/phones", label: "Telefony", iconName: "phones" },
-  { href: "/client/tasks", label: "Zadania", iconName: "tasks" },
-  { href: "/client/announcements", label: "Komunikaty", iconName: "announcements" },
-  { href: "/client/resolutions", label: "Uchwały", iconName: "resolutions" },
-  { href: "/client/estate", label: "Osiedle", iconName: "estate" },
-  { href: "/client/invoices", label: "Faktury", iconName: "invoices" },
-  { href: "/client/settings", label: "Ustawienia", iconName: "settings" },
+  { href: "/client/", label: "Pulpit", icon: LayoutDashboard },
+  { href: "/client/reports", label: "Tablica spraw", icon: ClipboardList },
+  { href: "/client/contacts", label: "Kontakty", icon: Users },
+  { href: "/client/phones", label: "Telefony", icon: Phone },
+  { href: "/client/tasks", label: "Zadania", icon: CheckSquare },
+  { href: "/client/announcements", label: "Komunikaty", icon: Megaphone },
+  { href: "/client/resolutions", label: "Uchwały", icon: Scale },
+  { href: "/client/estate", label: "Osiedle", icon: Building2 },
+  { href: "/client/invoices", label: "Faktury", icon: FileText },
+  { href: "/client/settings", label: "Ustawienia", icon: Settings },
 ];
 
 export default async function AppLayout({
@@ -25,49 +37,37 @@ export default async function AppLayout({
   children: React.ReactNode;
 }) {
   const supabase = await createClient();
-  const cookieStore = await cookies();
-  const demoRole = cookieStore.get("mestio_demo_role")?.value;
 
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user && !demoRole) {
+  if (!user) {
     redirect("/login");
   }
 
-  let adminMemberships: { estate_id: string; role: string }[] = [];
-  if (user) {
-    const { data: memberships } = await supabase
-      .from("fixflow_user_estates")
-      .select("estate_id, role")
-      .eq("user_id", user.id);
+  const { data: memberships } = await supabase
+    .from("fixflow_user_estates")
+    .select("estate_id, role")
+    .eq("user_id", user.id);
 
-    adminMemberships = (memberships ?? []).filter(
-      (m: any) => m.role === "admin" || m.role === "board"
-    );
+  const adminMemberships = (memberships ?? []).filter(
+    (m) => m.role === "admin" || m.role === "board"
+  );
+
+  if (adminMemberships.length === 0) {
+    redirect("/login?error=role");
   }
 
   const estateIds = adminMemberships.map((m) => m.estate_id);
 
-  let estates: { id: string; name: string }[] = [];
-  if (estateIds.length > 0) {
-    const { data: fetchedEstates } = await supabase
-      .from("fixflow_estates")
-      .select("id, name")
-      .in("id", estateIds)
-      .eq("status", "active");
-    estates = (fetchedEstates as { id: string; name: string }[]) ?? [];
-  }
+  const { data: estates } = await supabase
+    .from("fixflow_estates")
+    .select("id, name")
+    .in("id", estateIds)
+    .eq("status", "active");
 
-  if (estates.length === 0) {
-    const { data: fallbackEstates } = await supabase
-      .from("fixflow_estates")
-      .select("id, name")
-      .limit(1);
-    estates = (fallbackEstates as { id: string; name: string }[]) ?? [{ id: "demo-estate-1", name: "Osiedle Słoneczne (Demo)" }];
-  }
-
+  const cookieStore = await cookies();
   const activeEstateId =
     cookieStore.get("active_estate_id")?.value ?? estates?.[0]?.id ?? null;
 
@@ -92,14 +92,14 @@ export default async function AppLayout({
   const navItems: NavItem[] = NAV_ITEMS.map((item) => ({
     ...item,
     badge:
-      item.href === "/client/reports"
+      item.href === "/reports"
         ? newReportsBadge
-        : item.href === "/client/tasks"
+        : item.href === "/tasks"
           ? openTasksBadge
           : undefined,
   }));
 
-  const userInitials = user?.email?.slice(0, 2).toUpperCase() ?? "AZ";
+  const userInitials = user.email?.slice(0, 2).toUpperCase() ?? "UZ";
 
   return (
     <div className="flex min-h-screen" style={{ background: "var(--color-page)" }}>
@@ -124,7 +124,12 @@ export default async function AppLayout({
         {/* Estate switcher */}
         <div className="px-3 mt-3 mb-1">
           <EstateSwitcher
-            estates={estates}
+            estates={
+              (estates ?? []).map((e) => ({ id: e.id, name: e.name })) as {
+                id: string;
+                name: string;
+              }[]
+            }
             activeId={activeEstateId}
           />
         </div>
@@ -132,16 +137,16 @@ export default async function AppLayout({
         {/* Navigation */}
         <SidebarNav items={navItems} />
 
-        {/* Theme toggle + logout + user footer */}
-        <div className="px-3 py-3 shrink-0 space-y-2" style={{ borderTop: "1px solid var(--color-dark-border)" }}>
+        {/* Theme toggle + user footer */}
+        <div className="px-3 py-3 shrink-0" style={{ borderTop: "1px solid var(--color-dark-border)" }}>
           <ThemeToggle />
-          <LogoutButton />
-          <div className="flex items-center gap-2.5 pt-2" style={{ borderTop: "1px solid rgba(255,255,255,.06)" }}>
+          <div className="my-2" style={{ borderTop: "1px solid rgba(255,255,255,.06)" }} />
+          <div className="flex items-center gap-2.5">
             <div className="w-7 h-7 rounded-full shrink-0 flex items-center justify-center" style={{ background: "#3E7BD6" }}>
               <span className="font-heading font-bold text-[10px] text-white">{userInitials}</span>
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-[12px] font-semibold truncate" style={{ color: "var(--color-dark-text)" }}>{user?.email?.split("@")[0] ?? "Zarządca"}</div>
+              <div className="text-[12px] font-semibold truncate" style={{ color: "var(--color-dark-text)" }}>{user.email?.split("@")[0] ?? "Użytkownik"}</div>
               <div style={{ fontSize: "10px", color: "var(--color-dark-text-muted)" }}>Zarząd osiedla</div>
             </div>
           </div>
