@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { Phone, FileText, MessageSquare, Search, Bell, Clock, Camera, TrendingUp, Check } from "lucide-react";
+import { Phone, FileText, MessageSquare, Search, Check } from "lucide-react";
 
 const BROKEN = [
   {
@@ -29,25 +29,25 @@ const BROKEN = [
 
 const FIXED = [
   {
-    icon: Camera,
+    img: "https://images.pexels.com/photos/5799082/pexels-photo-5799082.jpeg?auto=compress&cs=tinysrgb&w=600",
     label: "Zdjęcie + lokalizacja w 60 sekund",
     desc: "Mieszkaniec robi zdjęcie usterki, wybiera budynek i mieszkanie, wysyła. Koniec.",
     color: "#3E7BD6",
   },
   {
-    icon: Bell,
+    img: "https://images.pexels.com/photos/8428060/pexels-photo-8428060.jpeg?auto=compress&cs=tinysrgb&w=600",
     label: "Powiadomienia push na żywo",
     desc: "Każda zmiana statusu trafia do mieszkańca, zarządu i serwisu. Zero telefonów.",
     color: "#F2A900",
   },
   {
-    icon: Clock,
+    img: "https://images.pexels.com/photos/36764804/pexels-photo-36764804.jpeg?auto=compress&cs=tinysrgb&w=600",
     label: "Pełny ślad audytowy",
     desc: "Kto, co i kiedy — każda akcja zapisana. Dowód dla mieszkańców i zarządu.",
     color: "#22C55E",
   },
   {
-    icon: TrendingUp,
+    img: "https://images.pexels.com/photos/577210/pexels-photo-577210.jpeg?auto=compress&cs=tinysrgb&w=600",
     label: "Statystyki i ranking",
     desc: "Średni czas reakcji, liczba zgłoszeń, ranking osiedli. Dane, nie domysły.",
     color: "#3E7BD6",
@@ -145,51 +145,53 @@ export default function ProblemSolutionSection() {
         {/* ── Fixed items ── */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {FIXED.map((item, i) => {
-            const Icon = item.icon;
             return (
               <motion.div
                 key={item.label}
                 {...fadeUp(0.1 + i * 0.07)}
-                className="rounded-2xl p-5 relative overflow-hidden group"
+                className="rounded-2xl relative overflow-hidden group"
                 style={{
                   background: "rgba(255,255,255,0.03)",
                   border: "1px solid rgba(255,255,255,0.08)",
                   backdropFilter: "blur(10px)",
                 }}
               >
-                {/* Hover glow */}
-                <div
-                  className="absolute -top-16 -right-16 w-32 h-32 rounded-full pointer-events-none transition-opacity duration-300 opacity-0 group-hover:opacity-100"
-                  style={{ background: `radial-gradient(circle, ${item.color}12, transparent 70%)` }}
-                />
-
-                <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 relative z-10"
-                  style={{ background: `${item.color}15` }}
-                >
-                  <Icon className="w-4 h-4" style={{ color: item.color }} />
-                </div>
-                <h3 className="text-[14px] font-semibold mb-2 relative z-10" style={{ color: "#FFF" }}>
-                  {item.label}
-                </h3>
-                <p className="text-[13px] leading-relaxed relative z-10" style={{ color: "rgba(255,255,255,0.5)" }}>
-                  {item.desc}
-                </p>
-
-                {/* Check mark */}
-                <motion.div
-                  className="absolute top-4 right-4"
-                  initial={{ scale: 0 }}
-                  animate={isInView ? { scale: 1 } : {}}
-                  transition={{ delay: 0.3 + i * 0.1, type: "spring", stiffness: 300, damping: 20 }}
-                >
+                {/* Photo */}
+                <div className="relative h-32 overflow-hidden rounded-t-2xl">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={item.img}
+                    alt={item.label}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
                   <div
-                    className="w-5 h-5 rounded-full flex items-center justify-center"
-                    style={{ background: `${item.color}15` }}
+                    className="absolute inset-0"
+                    style={{ background: `linear-gradient(180deg, transparent 40%, rgba(10,21,36,0.9))` }}
+                  />
+                  {/* Check mark */}
+                  <motion.div
+                    className="absolute top-3 right-3"
+                    initial={{ scale: 0 }}
+                    animate={isInView ? { scale: 1 } : {}}
+                    transition={{ delay: 0.3 + i * 0.1, type: "spring", stiffness: 300, damping: 20 }}
                   >
-                    <Check className="w-3 h-3" style={{ color: item.color, strokeWidth: 3 }} />
-                  </div>
-                </motion.div>
+                    <div
+                      className="w-6 h-6 rounded-full flex items-center justify-center backdrop-blur-sm"
+                      style={{ background: `${item.color}30`, border: `1px solid ${item.color}40` }}
+                    >
+                      <Check className="w-3.5 h-3.5" style={{ color: item.color, strokeWidth: 3 }} />
+                    </div>
+                  </motion.div>
+                </div>
+
+                <div className="p-5 relative z-10">
+                  <h3 className="text-[14px] font-semibold mb-2" style={{ color: "#FFF" }}>
+                    {item.label}
+                  </h3>
+                  <p className="text-[13px] leading-relaxed" style={{ color: "rgba(255,255,255,0.5)" }}>
+                    {item.desc}
+                  </p>
+                </div>
               </motion.div>
             );
           })}

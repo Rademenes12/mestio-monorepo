@@ -3,13 +3,13 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { colors } from "@mestio/design-tokens";
-import { Camera, Send, Bell, CircleCheck as CheckCircle2, ArrowRight, Smartphone, Building2, Users } from "lucide-react";
+import { ArrowRight, Smartphone, Building2, Users } from "lucide-react";
 import Link from "next/link";
 
 const STEPS = [
   {
     n: "01",
-    icon: Camera,
+    img: "https://images.pexels.com/photos/5799082/pexels-photo-5799082.jpeg?auto=compress&cs=tinysrgb&w=400",
     label: "Mieszkaniec zgłasza usterkę",
     sublabel: "W 60 sekund z telefonu",
     desc: "Robi zdjęcie usterki, wybiera kategorię i lokalizację (budynek, klatka, mieszkanie), krótki opis. Zgłoszenie ląduje w systemie z unikalnym numerem — MS-2041.",
@@ -18,7 +18,7 @@ const STEPS = [
   },
   {
     n: "02",
-    icon: Bell,
+    img: "https://images.pexels.com/photos/8428060/pexels-photo-8428060.jpeg?auto=compress&cs=tinysrgb&w=400",
     label: "Zarząd i serwis dostają powiadomienie",
     sublabel: "Push w czasie rzeczywistym",
     desc: "Zarząd widzi nowe zgłoszenie na tablicy spraw. Serwisant dostaje push. Mieszkaniec dostaje potwierdzenie. Nikt nie dzwoni, nikt nie czeka.",
@@ -27,7 +27,7 @@ const STEPS = [
   },
   {
     n: "03",
-    icon: CheckCircle2,
+    img: "https://images.pexels.com/photos/5691544/pexels-photo-5691544.jpeg?auto=compress&cs=tinysrgb&w=400",
     label: "Status zmienia się na żywo",
     sublabel: "Nowe → W realizacji → Zamknięte",
     desc: "Zarząd nadaje priorytet. Serwis przejmuje, dodaje komentarz i zdjęcia z naprawy. Mieszkaniec widzi status w aplikacji — bez telefonów, bez pytań.",
@@ -73,22 +73,31 @@ export default function HowItWorksSection() {
         {/* Steps — mobile-first vertical flow */}
         <div className="flex flex-col gap-8 lg:gap-6">
           {STEPS.map((step, i) => {
-            const Icon = step.icon;
             const isLast = i === STEPS.length - 1;
 
             return (
               <motion.div key={step.n} {...fadeUp(0.15 + i * 0.12)}>
                 <div className="flex gap-6 lg:gap-8 items-start">
-                  {/* Step number + connecting line */}
+                  {/* Step photo + connecting line */}
                   <div className="flex flex-col items-center shrink-0">
                     <div
-                      className="w-14 h-14 rounded-2xl flex items-center justify-center relative z-10"
-                      style={{
-                        background: `${step.color}12`,
-                        border: `1px solid ${step.color}25`,
-                      }}
+                      className="w-16 h-16 rounded-2xl overflow-hidden relative z-10"
+                      style={{ border: `2px solid ${step.color}30` }}
                     >
-                      <Icon className="w-6 h-6" style={{ color: step.color }} />
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={step.img}
+                        alt={step.label}
+                        className="w-full h-full object-cover"
+                      />
+                      <div
+                        className="absolute inset-0 flex items-center justify-center"
+                        style={{ background: `${step.color}30` }}
+                      >
+                        <span className="font-mono text-sm font-bold text-white drop-shadow-lg">
+                          {step.n}
+                        </span>
+                      </div>
                     </div>
                     {!isLast && (
                       <div
@@ -103,19 +112,14 @@ export default function HowItWorksSection() {
 
                   {/* Content */}
                   <div className="flex-1 pt-1 pb-8">
-                    <div className="flex items-center gap-3 mb-2">
-                      <span className="font-mono text-sm font-bold" style={{ color: step.color }}>
-                        {step.n}
-                      </span>
-                      <span
-                        className="font-mono text-[10.5px] tracking-[0.5px] uppercase"
-                        style={{ color: colors.textMuted }}
-                      >
-                        {step.sublabel}
-                      </span>
-                    </div>
+                    <span
+                      className="font-mono text-[10.5px] tracking-[0.5px] uppercase"
+                      style={{ color: colors.textMuted }}
+                    >
+                      {step.sublabel}
+                    </span>
                     <h3
-                      className="font-heading font-semibold text-[24px] sm:text-[28px] tracking-[-0.5px] mb-3"
+                      className="font-heading font-semibold text-[24px] sm:text-[28px] tracking-[-0.5px] mb-3 mt-1"
                       style={{ color: colors.text }}
                     >
                       {step.label}
