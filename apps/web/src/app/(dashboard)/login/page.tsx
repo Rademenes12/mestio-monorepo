@@ -61,7 +61,8 @@ export default function LoginPage() {
       } else if (redirectTo !== "/") {
         router.push(redirectTo);
       } else {
-        router.push("/resident/");
+        // Fallback: jeśli brak profilu, idź na dashboard owner (pierwsze logowanie)
+        router.push("/owner/dashboard");
       }
     } else {
       router.push(redirectTo);
