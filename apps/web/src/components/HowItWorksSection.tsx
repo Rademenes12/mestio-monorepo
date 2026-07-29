@@ -9,7 +9,7 @@ import Link from "next/link";
 const STEPS = [
   {
     n: "01",
-    img: "https://images.pexels.com/photos/5799082/pexels-photo-5799082.jpeg?auto=compress&cs=tinysrgb&w=400",
+    img: "/images/stock-reporting.jpg",
     label: "Mieszkaniec zgłasza usterkę",
     sublabel: "W 60 sekund z telefonu",
     desc: "Robi zdjęcie usterki, wybiera kategorię i lokalizację (budynek, klatka, mieszkanie), krótki opis. Zgłoszenie ląduje w systemie z unikalnym numerem — MS-2041.",
@@ -18,7 +18,7 @@ const STEPS = [
   },
   {
     n: "02",
-    img: "https://images.pexels.com/photos/8428060/pexels-photo-8428060.jpeg?auto=compress&cs=tinysrgb&w=400",
+    img: "/images/stock-notifications.jpg",
     label: "Zarząd i serwis dostają powiadomienie",
     sublabel: "Push w czasie rzeczywistym",
     desc: "Zarząd widzi nowe zgłoszenie na tablicy spraw. Serwisant dostaje push. Mieszkaniec dostaje potwierdzenie. Nikt nie dzwoni, nikt nie czeka.",
@@ -27,7 +27,7 @@ const STEPS = [
   },
   {
     n: "03",
-    img: "https://images.pexels.com/photos/5691544/pexels-photo-5691544.jpeg?auto=compress&cs=tinysrgb&w=400",
+    img: "/images/stock-repair.jpg",
     label: "Status zmienia się na żywo",
     sublabel: "Nowe → W realizacji → Zamknięte",
     desc: "Zarząd nadaje priorytet. Serwis przejmuje, dodaje komentarz i zdjęcia z naprawy. Mieszkaniec widzi status w aplikacji — bez telefonów, bez pytań.",

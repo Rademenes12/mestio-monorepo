@@ -29,25 +29,25 @@ const BROKEN = [
 
 const FIXED = [
   {
-    img: "https://images.pexels.com/photos/5799082/pexels-photo-5799082.jpeg?auto=compress&cs=tinysrgb&w=600",
+    img: "/images/stock-reporting.jpg",
     label: "Zdjęcie + lokalizacja w 60 sekund",
     desc: "Mieszkaniec robi zdjęcie usterki, wybiera budynek i mieszkanie, wysyła. Koniec.",
     color: "#3E7BD6",
   },
   {
-    img: "https://images.pexels.com/photos/8428060/pexels-photo-8428060.jpeg?auto=compress&cs=tinysrgb&w=600",
+    img: "/images/stock-notifications.jpg",
     label: "Powiadomienia push na żywo",
     desc: "Każda zmiana statusu trafia do mieszkańca, zarządu i serwisu. Zero telefonów.",
     color: "#F2A900",
   },
   {
-    img: "https://images.pexels.com/photos/36764804/pexels-photo-36764804.jpeg?auto=compress&cs=tinysrgb&w=600",
+    img: "/images/stock-collaboration.jpg",
     label: "Pełny ślad audytowy",
     desc: "Kto, co i kiedy — każda akcja zapisana. Dowód dla mieszkańców i zarządu.",
     color: "#22C55E",
   },
   {
-    img: "https://images.pexels.com/photos/577210/pexels-photo-577210.jpeg?auto=compress&cs=tinysrgb&w=600",
+    img: "/images/stock-analytics.jpg",
     label: "Statystyki i ranking",
     desc: "Średni czas reakcji, liczba zgłoszeń, ranking osiedli. Dane, nie domysły.",
     color: "#3E7BD6",
