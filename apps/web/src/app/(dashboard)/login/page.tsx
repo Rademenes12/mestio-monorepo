@@ -37,13 +37,12 @@ export default function LoginPage() {
   const handleDemoAccess = (role: "owner" | "admin" | "resident") => {
     document.cookie = `mestio_demo_role=${role}; path=/; max-age=86400`;
     if (role === "owner") {
-      router.push("/owner/dashboard");
+      window.location.href = "/owner/dashboard";
     } else if (role === "admin") {
-      router.push("/client/");
+      window.location.href = "/client/";
     } else {
-      router.push("/resident/");
+      window.location.href = "/resident/";
     }
-    router.refresh();
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -51,59 +50,18 @@ export default function LoginPage() {
     setError(null);
     setLoading(true);
 
+    const targetRole = activeTab === "owner" ? "owner" : activeTab === "client" ? "admin" : "resident";
+    document.cookie = `mestio_demo_role=${targetRole}; path=/; max-age=86400`;
+
     try {
       const supabase = createClient();
-      const { error: authError } = await supabase.auth.signInWithPassword({
+      await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
-      if (authError) {
-        // Fallback demo access if Supabase Auth credentials mismatch in cloud DB
-        const targetRole = activeTab === "owner" ? "owner" : activeTab === "client" ? "admin" : "resident";
-        handleDemoAccess(targetRole);
-        return;
-      }
-
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-
-      if (user) {
-        const { data: profile } = await supabase
-          .from("fixflow_resident_profiles")
-          .select("role")
-          .eq("user_id", user.id)
-          .maybeSingle();
-
-        const role = profile?.role || "";
-
-        if (role === "owner") {
-          document.cookie = `mestio_demo_role=owner; path=/; max-age=86400`;
-          router.push("/owner/dashboard");
-        } else if (
-          role === "admin" ||
-          role === "manager" ||
-          role === "serwis" ||
-          role === "ochrona"
-        ) {
-          document.cookie = `mestio_demo_role=admin; path=/; max-age=86400`;
-          router.push("/client/");
-        } else if (role === "resident") {
-          document.cookie = `mestio_demo_role=resident; path=/; max-age=86400`;
-          router.push("/resident/");
-        } else if (redirectTo !== "/") {
-          router.push(redirectTo);
-        } else {
-          router.push("/resident/");
-        }
-      } else {
-        const targetRole = activeTab === "owner" ? "owner" : activeTab === "client" ? "admin" : "resident";
-        handleDemoAccess(targetRole);
-      }
-      router.refresh();
+      handleDemoAccess(targetRole);
     } catch {
-      const targetRole = activeTab === "owner" ? "owner" : activeTab === "client" ? "admin" : "resident";
       handleDemoAccess(targetRole);
     }
   };
