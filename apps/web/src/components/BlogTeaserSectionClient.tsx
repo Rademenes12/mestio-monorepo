@@ -62,7 +62,7 @@ export default function BlogTeaserSection({ posts }: { posts?: Array<Record<stri
                 wspólnot
               </span>
             </h2>
-            <p className="text-[15px] mt-4 max-w-md" style={{ color: "#4A5A6E" }}>
+            <p className="text-[15px] mt-4 w-full max-w-md" style={{ color: "#4A5A6E" }}>
               Praktyczne artykuły o zarządzaniu nieruchomościami i zgłoszeniach.
             </p>
           </div>

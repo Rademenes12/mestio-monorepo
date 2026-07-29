@@ -45,7 +45,7 @@ export default function PricingSectionClient({ plans }: { plans: PlanConfig[] })
               za osiedle
             </span>
           </h2>
-          <p className="text-[15px] mt-4 max-w-xl mx-auto" style={{ color: colors.textSecondary }}>
+          <p className="text-[15px] mt-4 w-full max-w-xl mx-auto" style={{ color: colors.textSecondary }}>
             Płaci firma zarządzająca. Rozliczenie miesięczne, faktura VAT. Anuluj kiedy chcesz.
           </p>
 
