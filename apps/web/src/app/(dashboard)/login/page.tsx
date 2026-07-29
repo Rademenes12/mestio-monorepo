@@ -97,7 +97,7 @@ export default function LoginPage() {
       className="min-h-screen flex items-center justify-center p-4"
       style={{ background: "var(--color-page, #F9FAFB)" }}
     >
-      <div className="w-full max-w-md">
+      <div className="w-full" style={{ maxWidth: "420px" }}>
         {/* Logo + nagłówek */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-12 h-12 rounded-[8px] mb-4"
