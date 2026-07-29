@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Camera, Send, Bell, Check, MapPin, Wrench, CheckCircle2 } from "lucide-react";
+import { Camera, Send, Bell, Check, MapPin, Wrench, CircleCheck as CheckCircle2 } from "lucide-react";
 
 type Phase = "camera" | "sending" | "push" | "status_new" | "status_progress" | "status_done";
 

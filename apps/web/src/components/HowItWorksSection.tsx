@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { colors } from "@mestio/design-tokens";
-import { Camera, Send, Bell, CheckCircle2, ArrowRight, Smartphone, Building2, Users } from "lucide-react";
+import { Camera, Send, Bell, CircleCheck as CheckCircle2, ArrowRight, Smartphone, Building2, Users } from "lucide-react";
 import Link from "next/link";
 
 const STEPS = [
