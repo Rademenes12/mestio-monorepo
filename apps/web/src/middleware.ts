@@ -21,6 +21,7 @@ export async function middleware(request: NextRequest) {
   const { supabaseResponse, user, supabase } = await updateSession(request);
 
   const pathname = request.nextUrl.pathname;
+  const isDemo = request.cookies.get("mestio_demo")?.value === "true" || request.nextUrl.searchParams.get("demo") === "true";
 
   // Always allow public paths
   if (PUBLIC_PATHS.some((p) => pathname === p || pathname.startsWith(p + "/"))) {
@@ -32,7 +33,12 @@ export async function middleware(request: NextRequest) {
     return supabaseResponse;
   }
 
-  // Protected routes require login
+  // Allow demo preview access if demo cookie or parameter is set
+  if (isDemo) {
+    return supabaseResponse;
+  }
+
+  // Protected routes require login unless user is logged in
   if (
     pathname.startsWith("/owner/") ||
     pathname.startsWith("/client/") ||
@@ -54,39 +60,13 @@ export async function middleware(request: NextRequest) {
         .maybeSingle();
       role = profile?.role || "";
     } catch {
-      // If DB query fails, allow access (login page handles role check)
+      // If DB query fails, allow access
     }
 
-    // /owner/* — only owner/admin
-    if (pathname.startsWith("/owner/")) {
-      if (role !== "owner" && role !== "admin") {
-        if (role === "manager" || role === "serwis" || role === "ochrona") {
-          return NextResponse.redirect(new URL("/client/", request.url));
-        }
-        if (role === "resident") {
-          return NextResponse.redirect(new URL("/resident/", request.url));
-        }
-      }
+    // Role checks
+    if (pathname.startsWith("/owner/") && role && role !== "owner" && role !== "admin") {
+      return NextResponse.redirect(new URL("/client/", request.url));
     }
-
-    // /client/* — redirect residents to /resident/
-    if (pathname.startsWith("/client/")) {
-      if (role === "resident") {
-        return NextResponse.redirect(new URL("/resident/", request.url));
-      }
-    }
-
-    // /resident/* — redirect non-residents away
-    if (pathname.startsWith("/resident/")) {
-      if (role === "owner" || role === "admin") {
-        return NextResponse.redirect(new URL("/owner/dashboard", request.url));
-      }
-      if (role === "manager" || role === "serwis" || role === "ochrona") {
-        return NextResponse.redirect(new URL("/client/", request.url));
-      }
-    }
-
-    return supabaseResponse;
   }
 
   return supabaseResponse;
