@@ -6,6 +6,7 @@ const NAV_LINKS = [
   { label: "Cennik", href: "/#cennik" },
   { label: "O nas", href: "/o-nas" },
   { label: "Blog", href: "/blog" },
+  { label: "Kontakt", href: "/kontakt" },
 ];
 
 export default function Header() {
@@ -45,7 +46,7 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center gap-[10px]">
-          <Link href="https://panel.mestio.pl" className="text-sm font-semibold text-blueprint px-[14px] py-[9px] cursor-pointer">
+          <Link href="/login" className="text-sm font-semibold text-blueprint px-[14px] py-[9px] cursor-pointer">
             Zaloguj
           </Link>
           <Link

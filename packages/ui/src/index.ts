@@ -1,8 +1,8 @@
 // Layout components
 export { Sidebar } from './components/Sidebar'
-export type { NavItem } from './components/Sidebar'
+export type { NavItem as SidebarNavItem } from './components/Sidebar'
 export { Navbar } from './components/Navbar'
-export type { SubmenuItem } from './components/Navbar'
+export type { NavItem as NavbarNavItem } from './components/Navbar'
 export { Footer } from './components/Footer'
 
 // Auth components
