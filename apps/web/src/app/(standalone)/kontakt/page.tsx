@@ -90,9 +90,9 @@ export default function KontaktPage() {
 
         <div className="relative z-10">
           {/* Logo */}
-          <div className="flex items-center gap-3 mb-12">
+          <Link href="/" className="flex items-center gap-3 mb-12 group">
             <div
-              className="w-10 h-10 rounded-[10px] flex items-center justify-center shrink-0"
+              className="w-10 h-10 rounded-[10px] flex items-center justify-center shrink-0 transition-transform group-hover:scale-105"
               style={{ background: "#3E7BD6" }}
             >
               <svg
@@ -111,7 +111,7 @@ export default function KontaktPage() {
             <span className="text-white font-heading font-bold text-xl tracking-tight">
               Mestio
             </span>
-          </div>
+          </Link>
 
           {/* Value prop */}
           <h2 className="text-white font-heading font-bold text-3xl lg:text-4xl leading-tight mb-5">
@@ -184,26 +184,28 @@ export default function KontaktPage() {
         <div className="w-full" style={{ maxWidth: "480px" }}>
           {/* Mobile logo */}
           <div className="lg:hidden text-center mb-8">
-            <div
-              className="inline-flex items-center justify-center w-12 h-12 rounded-[10px] mb-4"
-              style={{ background: "#3E7BD6" }}
-            >
-              <svg
-                width="22"
-                height="22"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#fff"
-                strokeWidth="2.1"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+            <Link href="/" className="inline-flex flex-col items-center gap-3">
+              <div
+                className="inline-flex items-center justify-center w-12 h-12 rounded-[10px]"
+                style={{ background: "#3E7BD6" }}
               >
-                <path d="M14 7a4 4 0 0 1-5.3 5.3L4 17l3 3 4.7-4.7A4 4 0 0 0 17 10l-2.2 2.2-2-2L15 8z" />
-              </svg>
-            </div>
-            <h1 className="text-2xl font-heading font-bold" style={{ color: "#0E1A2B" }}>
-              Mestio
-            </h1>
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#fff"
+                  strokeWidth="2.1"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M14 7a4 4 0 0 1-5.3 5.3L4 17l3 3 4.7-4.7A4 4 0 0 0 17 10l-2.2 2.2-2-2L15 8z" />
+                </svg>
+              </div>
+              <h1 className="text-2xl font-heading font-bold" style={{ color: "#0E1A2B" }}>
+                Mestio
+              </h1>
+            </Link>
           </div>
 
           {/* Mobile contact info */}
