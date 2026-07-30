@@ -19,6 +19,81 @@ const SLA_HOURS: Record<ReportPriority, number> = {
   low: 168,
 };
 
+const SAMPLE_DEMO_REPORTS: Report[] = [
+  {
+    id: "demo-rep-1",
+    estate_id: "demo-estate-id",
+    reporter_user_id: "demo-user-1",
+    reporter_name: "Anna Nowak",
+    reporter_building: "Budynek A / klatka 2",
+    reporter_footbridge: null,
+    reporter_floor: "2",
+    reporter_apartment: "m. 14",
+    title: "Awaria ogrzewania na klatce schodowej",
+    description: "Grzejnik na 2. piętrze wycieka wodę. Prośba o szybką interwencję serwisu.",
+    category: "Hydraulika",
+    status: "W realizacji",
+    status_enum: "in_progress",
+    priority: "critical",
+    sla_deadline: new Date(Date.now() + 2 * 3600 * 1000).toISOString(),
+    assigned_to_user_id: "serwis-1",
+    assigned_to_name: "Marek Serwisant",
+    assigned_to_role: "technician",
+    photo_path: null,
+    display_id: "UST-8492",
+    created_at: new Date(Date.now() - 5 * 3600 * 1000).toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: "demo-rep-2",
+    estate_id: "demo-estate-id",
+    reporter_user_id: "demo-user-2",
+    reporter_name: "Piotr Kowalski",
+    reporter_building: "Budynek B / m. 14",
+    reporter_footbridge: null,
+    reporter_floor: "1",
+    reporter_apartment: "m. 14",
+    title: "INCYDENT: Uszkodzony domofon przy wejściu",
+    description: "Brak możliwości otwarcia drzwi kodem. Ochrona została poinformowana.",
+    category: "Incydent",
+    status: "Nowe",
+    status_enum: "new",
+    priority: "high",
+    sla_deadline: new Date(Date.now() + 20 * 3600 * 1000).toISOString(),
+    assigned_to_user_id: null,
+    assigned_to_name: null,
+    assigned_to_role: null,
+    photo_path: null,
+    display_id: "INC-1029",
+    created_at: new Date(Date.now() - 1 * 3600 * 1000).toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: "demo-rep-3",
+    estate_id: "demo-estate-id",
+    reporter_user_id: "demo-user-3",
+    reporter_name: "Ochrona Osiedla",
+    reporter_building: "Brama Główna",
+    reporter_footbridge: null,
+    reporter_floor: "0",
+    reporter_apartment: "brama",
+    title: "Wymiana żarówki w windzie Budynek C",
+    description: "Oświetlenie w dźwigu B miga. Karta zlecenia przekazana do konserwatora.",
+    category: "Elektryka",
+    status: "Zamkniete",
+    status_enum: "closed",
+    priority: "normal",
+    sla_deadline: null,
+    assigned_to_user_id: "elektryk-1",
+    assigned_to_name: "Tomasz Elektryk",
+    assigned_to_role: "technician",
+    photo_path: null,
+    display_id: "UST-7712",
+    created_at: new Date(Date.now() - 48 * 3600 * 1000).toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+];
+
 function getSlaInfo(report: Report) {
   if (report.status === "Zamkniete" || report.status === "Odrzucone") {
     return { label: "SLA Spełnione", color: "#2E9E6B", expired: false, urgent: false };
@@ -62,27 +137,23 @@ export default async function ReportsPage() {
   if (!ctx) redirect("/login");
   const { supabase, estateId } = ctx;
 
-  if (!estateId) {
-    return (
-      <div className="space-y-6">
-        <h1 className="text-2xl font-heading font-bold text-ink">
-          Tablica spraw
-        </h1>
-        <div className="bg-white rounded-[12px] shadow-[0_2px_12px_rgba(14,26,43,.06)] p-12 text-center">
-          <p className="text-ink/50">Brak przypisanych osiedli</p>
-        </div>
-      </div>
-    );
+  let reportList: Report[] = [];
+
+  if (estateId) {
+    const { data: reports } = await supabase
+      .from("fixflow_reports")
+      .select("*")
+      .eq("estate_id", estateId)
+      .order("created_at", { ascending: false });
+    reportList = (reports ?? []) as Report[];
   }
 
-  const { data: reports } = await supabase
-    .from("fixflow_reports")
-    .select("*")
-    .eq("estate_id", estateId)
-    .order("created_at", { ascending: false });
+  if (reportList.length === 0) {
+    reportList = SAMPLE_DEMO_REPORTS;
+  }
 
   const grouped: Record<string, Report[]> = {};
-  for (const report of (reports ?? []) as Report[]) {
+  for (const report of reportList) {
     const status = report.status as ReportStatus;
     if (!grouped[status]) grouped[status] = [];
     grouped[status].push(report);
@@ -93,7 +164,7 @@ export default async function ReportsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-heading font-bold text-ink">
-            Tablica spraw i nadzór SLA
+            Tablica spraw i nadzór SLA (CRM Klienta)
           </h1>
           <p className="text-sm text-ink/60 mt-1">
             Zgłoszenia usterek osiedla, przypisani serwisanci oraz czas reakcji (SLA)
@@ -101,7 +172,7 @@ export default async function ReportsPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-4 gap-5 items-start">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-5 items-start">
         {KANBAN_COLUMNS.map((status) => {
           const items = grouped[status] ?? [];
           const config = STATUS_CONFIG[status];
