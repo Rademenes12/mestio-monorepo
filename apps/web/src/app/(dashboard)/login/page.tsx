@@ -19,8 +19,9 @@ export default function LoginPage() {
       : "/";
 
   const handleDemoAccess = (rolePath: string) => {
-    document.cookie = "mestio_demo=true; path=/; max-age=86400";
-    router.push(rolePath);
+    // Use server-side API endpoint to set cookie before redirect
+    // This ensures the middleware sees the cookie at first SSR request
+    window.location.href = `/api/demo-enter?target=${encodeURIComponent(rolePath)}`;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
