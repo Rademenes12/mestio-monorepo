@@ -19,9 +19,7 @@ export default function LoginPage() {
       : "/";
 
   const handleDemoAccess = (rolePath: string) => {
-    // Use server-side API endpoint to set cookie before redirect
-    // This ensures the middleware sees the cookie at first SSR request
-    window.location.href = `/api/demo-enter?target=${encodeURIComponent(rolePath)}`;
+    window.location.href = rolePath;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {

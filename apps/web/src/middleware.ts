@@ -15,15 +15,18 @@ const PUBLIC_PATHS = [
   "/login",
   "/auth",
   "/reset-password",
+  // Demo preview paths — publicly accessible for sales demos
+  "/client/reports",
+  "/resident/reports",
+  "/owner/customers",
 ];
 
 export async function middleware(request: NextRequest) {
   const { supabaseResponse, user, supabase } = await updateSession(request);
 
   const pathname = request.nextUrl.pathname;
-  const isDemo = request.cookies.get("mestio_demo")?.value === "true" || request.nextUrl.searchParams.get("demo") === "true";
 
-  // Always allow public paths
+  // Always allow public paths (includes demo preview paths)
   if (PUBLIC_PATHS.some((p) => pathname === p || pathname.startsWith(p + "/"))) {
     return supabaseResponse;
   }
@@ -33,12 +36,7 @@ export async function middleware(request: NextRequest) {
     return supabaseResponse;
   }
 
-  // Allow demo preview access if demo cookie or parameter is set
-  if (isDemo) {
-    return supabaseResponse;
-  }
-
-  // Protected routes require login unless user is logged in
+  // Protected routes require login
   if (
     pathname.startsWith("/owner/") ||
     pathname.startsWith("/client/") ||
@@ -60,7 +58,7 @@ export async function middleware(request: NextRequest) {
         .maybeSingle();
       role = profile?.role || "";
     } catch {
-      // If DB query fails, allow access
+      // If DB query fails, allow access (login page handles role check)
     }
 
     // Role checks
