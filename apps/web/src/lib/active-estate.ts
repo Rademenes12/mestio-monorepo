@@ -19,32 +19,11 @@ export type ActiveEstateContext = {
  */
 export async function getActiveEstate(): Promise<ActiveEstateContext | null> {
   const supabase = await createClient();
-  const cookieStore = await cookies();
-  const isDemo = cookieStore.get("mestio_demo")?.value === "true";
 
   const {
     data: { user },
   } = await supabase.auth.getUser();
-
-  if (!user) {
-    if (isDemo) {
-      return {
-        supabase,
-        user: {
-          id: "demo-user-id",
-          email: "zarzadca@mestio.pl",
-          app_metadata: {},
-          user_metadata: { name: "Zarządca (Demo)" },
-          aud: "authenticated",
-          created_at: new Date().toISOString(),
-        } as User,
-        estateId: "demo-estate-id",
-        estateIds: ["demo-estate-id"],
-        role: "admin",
-      };
-    }
-    return null;
-  }
+  if (!user) return null;
 
   const { data: memberships } = await supabase
     .from("fixflow_user_estates")
@@ -54,18 +33,10 @@ export async function getActiveEstate(): Promise<ActiveEstateContext | null> {
 
   const estateIds = (memberships ?? []).map((m) => m.estate_id as string);
   if (estateIds.length === 0) {
-    if (isDemo) {
-      return {
-        supabase,
-        user,
-        estateId: "demo-estate-id",
-        estateIds: ["demo-estate-id"],
-        role: "admin",
-      };
-    }
     return { supabase, user, estateId: null, estateIds: [], role: null };
   }
 
+  const cookieStore = await cookies();
   const cookieId = cookieStore.get("active_estate_id")?.value;
   const estateId =
     cookieId && estateIds.includes(cookieId) ? cookieId : estateIds[0];

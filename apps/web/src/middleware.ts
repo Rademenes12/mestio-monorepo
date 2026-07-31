@@ -15,10 +15,6 @@ const PUBLIC_PATHS = [
   "/login",
   "/auth",
   "/reset-password",
-  // Demo preview paths — publicly accessible for sales demos
-  "/client/reports",
-  "/resident/reports",
-  "/owner/customers",
 ];
 
 export async function middleware(request: NextRequest) {
@@ -26,7 +22,7 @@ export async function middleware(request: NextRequest) {
 
   const pathname = request.nextUrl.pathname;
 
-  // Always allow public paths (includes demo preview paths)
+  // Always allow public paths
   if (PUBLIC_PATHS.some((p) => pathname === p || pathname.startsWith(p + "/"))) {
     return supabaseResponse;
   }
@@ -61,10 +57,36 @@ export async function middleware(request: NextRequest) {
       // If DB query fails, allow access (login page handles role check)
     }
 
-    // Role checks
-    if (pathname.startsWith("/owner/") && role && role !== "owner" && role !== "admin") {
-      return NextResponse.redirect(new URL("/client/", request.url));
+    // /owner/* — only owner/admin
+    if (pathname.startsWith("/owner/")) {
+      if (role !== "owner" && role !== "admin") {
+        if (role === "manager" || role === "serwis" || role === "ochrona") {
+          return NextResponse.redirect(new URL("/client/", request.url));
+        }
+        if (role === "resident") {
+          return NextResponse.redirect(new URL("/resident/", request.url));
+        }
+      }
     }
+
+    // /client/* — redirect residents to /resident/
+    if (pathname.startsWith("/client/")) {
+      if (role === "resident") {
+        return NextResponse.redirect(new URL("/resident/", request.url));
+      }
+    }
+
+    // /resident/* — redirect non-residents away
+    if (pathname.startsWith("/resident/")) {
+      if (role === "owner" || role === "admin") {
+        return NextResponse.redirect(new URL("/owner/dashboard", request.url));
+      }
+      if (role === "manager" || role === "serwis" || role === "ochrona") {
+        return NextResponse.redirect(new URL("/client/", request.url));
+      }
+    }
+
+    return supabaseResponse;
   }
 
   return supabaseResponse;
